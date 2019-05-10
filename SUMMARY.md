@@ -39,5 +39,4 @@
 ## Advanced
 
 * [Verify a contract with Why3](advanced/verify-a-contract-with-why3.md)
-* [Untitled](advanced/untitled.md)
 
