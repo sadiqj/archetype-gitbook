@@ -20,7 +20,6 @@
     * [Delegable](archetype-language/extensions/delegable.md)
     * [Traceable](archetype-language/extensions/traceable.md)
   * [Reference](archetype-language/archetype-reference.md)
-* [Verify a contract with Why3](verify-a-contract-with-why3.md)
 * [Implementation](implementation.md)
 
 ## Contract library
@@ -36,4 +35,9 @@
 * [Insurance](contracts-examples/insurance.md)
 * [Hyper Ledger](contracts-examples/hyper-ledger.md)
 * [Clause.io](contracts-examples/clause.io.md)
+
+## Advanced
+
+* [Verify a contract with Why3](advanced/verify-a-contract-with-why3.md)
+* [Untitled](advanced/untitled.md)
 
