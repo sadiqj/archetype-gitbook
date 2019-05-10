@@ -6,7 +6,7 @@
 * [Archetype reference](archetype-reference.md)
 * [Verify a contract with why3](verify-a-contract-with-why3.md)
 
-## Contracts examples
+## Archetype examples
 
 * [Escrow](contracts-examples/escrow.md)
 * [Auction](contracts-examples/auction.md)
