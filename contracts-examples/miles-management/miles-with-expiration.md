@@ -10,6 +10,8 @@ A storage optimisation has been done directly in the design of the mile model: a
 
 This optimisation comes with a cost of algorithmic complexity in the consume transaction.
 
+{% code-tabs %}
+{% code-tabs-item title="miles\_with\_expiration.arl" %}
 ```text
 archetype miles_with_expiration
 
@@ -119,6 +121,8 @@ action clear_expired = {
   }
 }
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
 
 
