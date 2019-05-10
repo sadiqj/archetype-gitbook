@@ -18,7 +18,7 @@ A smart contract is similar to a stored procedure on a public distributed databa
 
 ## What's the problem?
 
-In a nutshell, they break one of the key principles of the blockchain, which is the _trust-less principle_.
+In a nutshell, smart contracts break one of the key principles of the blockchain, which is the _trust-less principle_.
 
 What is meant by _trust-less_ is that, with a blockchain, there is no need for a trusted third party to be confident in the fact the blockchain is doing what it is intended to, which is to manage transactions. Indeed blockchains are secure by design:  they are decentralised and immutable; plus every change in the system is validated by a consensus algorithm.
 
