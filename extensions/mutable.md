@@ -28,5 +28,3 @@ archetype extension mutable (
 }
 ```
 
-{% page-ref page="mutable.md" %}
-
