@@ -4,7 +4,7 @@
 * [Getting started](getting-started-1.md)
 * [Usage](usage.md)
 * [Archetype reference](archetype-reference.md)
-* [Verify a contract with why3](verify-a-contract-with-why3.md)
+* [Verify a contract with Why3](verify-a-contract-with-why3.md)
 
 ## Archetype examples
 
@@ -17,4 +17,6 @@
   * [Miles with expiration](contracts-examples/miles-management/miles-with-expiration.md)
 * [Finance](contracts-examples/finance.md)
 * [Insurance](contracts-examples/insurance.md)
+* [Hyper Ledger](contracts-examples/hyper-ledger.md)
+* [Clause.io](contracts-examples/clause.io.md)
 

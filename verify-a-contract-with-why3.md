@@ -1,2 +1,2 @@
-# Verify a contract with why3
+# Verify a contract with Why3
 
