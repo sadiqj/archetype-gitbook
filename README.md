@@ -24,7 +24,7 @@ What is meant by _trust-less_ is that, with a blockchain, there is no need for a
 
 A smart contract is a _standard_ program, and, as such, it does not come with any guarantee that it will function correctly. We all have in mind the DAO incident: a bug in the smart contract made it possible to withdraw several times the money you would put in the contract. As a result, more than 100 millions dollars were lost.
 
-It’s a highly non trivial question to decide whether a program is correct or not, even for the programmer. Before deploying a smart contract, current development best practices include a phase of testing. However, testing is limited by the capacity to imagine relevant tests and, even when a critical property is identified, testing is limited by the capacity to cover all possible situations of execution. 
+It’s a highly non trivial question to decide whether a program is correct or not, even for the programmer. Before deploying a smart contract, current development best practices include a phase of testing. However, testing is limited by the capacity to cover all possible situations of execution. 
 
 ## Services
 

@@ -17,7 +17,6 @@
   * [Delegable](extensions-1/delegable.md)
   * [Traceable](extensions-1/traceable.md)
 * [Try Archetype](https://try-archetype.com)
-* [Implementation](implementation.md)
 
 ## Contract library
 
@@ -35,5 +34,6 @@
 
 ## Advanced
 
+* [Implementation](advanced/implementation.md)
 * [Verify a contract with Why3](advanced/verify-a-contract-with-why3.md)
 
