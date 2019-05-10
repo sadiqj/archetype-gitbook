@@ -70,9 +70,7 @@ archetype extension extensionName (
 
 The code pattern defines the matching code to extend. The extension body defines the code to add and/or transform.
 
-An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the Signed by all extension for an example.
-
-{% page-ref page="signed-by-all.md" %}
+An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the [Signed by all](signed-by-all.md) extension for an example.
 
   
 
