@@ -6,7 +6,7 @@ description: >-
 
 # What is Archetype?
 
-The archetype project is developed by [edukera](https://edukera.com), and funded by [Tezos](https://tezos.com/).
+The archetype project is developed by [edukera](https://edukera.com) and funded by [Tezos](https://tezos.com/).
 
 ## Smart contracts
 
