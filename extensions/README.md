@@ -50,7 +50,7 @@ Why not use a more sophisticated code factorisation mechanism, like object inher
 
 More sophisticated mechanisms have the drawback to locate and hide contract code in other source files. Smart contracts need to be **fully transparent for security reasons**. 
 
-The extension preprocessing produces a single source contract with all the executable behaviour.
+The extension preprocessing produces a **single source** contract with all the executable behaviour.
 
 ## Create your own extension
 
