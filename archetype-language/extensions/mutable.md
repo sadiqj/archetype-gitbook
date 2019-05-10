@@ -9,10 +9,6 @@ This extension takes two arguments:
 1. the role expression to specify who can change the value
 2. the condition to change the value
 
-{% embed url="https://gist.github.com/rognierbenoit/d6a61c1e7b2ec02f8b24" %}
-
-
-
 ```text
 archetype extension mutable (
 
