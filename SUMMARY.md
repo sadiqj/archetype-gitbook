@@ -12,11 +12,11 @@
   * [Reference](archetype-language/archetype-reference.md)
 * [Extensions](extensions-1/README.md)
   * [Mutable](extensions-1/mutable.md)
-  * [Untitled](extensions-1/untitled.md)
   * [Transferable](extensions-1/transferable.md)
   * [Signed by all](extensions-1/signed-by-all.md)
   * [Delegable](extensions-1/delegable.md)
   * [Traceable](extensions-1/traceable.md)
+* [Try Archetype](https://try-archetype.com)
 * [Implementation](implementation.md)
 
 ## Contract library
