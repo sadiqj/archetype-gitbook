@@ -6,7 +6,7 @@
   * [Command Line](usage/command-line.md)
   * [Vs code extension](usage/vs-code-extension.md)
 * [Archetype language](archetype-language/README.md)
-  * [Data model](archetype-language/data-model/README.md)
+  * [Data storage](archetype-language/data-model/README.md)
     * [Variable](archetype-language/data-model/variable.md)
     * [Asset](archetype-language/data-model/asset.md)
   * [Action](archetype-language/action.md)
