@@ -10,7 +10,7 @@ The archetype project is developed by [edukera](https://edukera.com), and funded
 
 ## Smart contracts
 
-A smart contract is a program which is executed on the blockchain. They were introduced in 2015 by [Ethereum](https://www.ethereum.org/). They allow to read and write virtually any data on the blockchain. This literally unleashed the full potential of the blockchains because it created the possibility to develop a new class of application which integrate blockchains as a public and distributed database; These application are called Dapp. 
+Smart contracts are programs which are executed on the blockchain. They were introduced in 2015 by [Ethereum](https://www.ethereum.org/). They allow to read and write virtually any data on the blockchain. This literally unleashed the full potential of the blockchains because it created the possibility to develop a new class of application which integrate blockchains as a public and distributed database; These application are called Dapp. 
 
 A smart contract is similar to a stored procedure on a public distributed database. As such, they must ensure the **logical consistency and integrity** of the data.
 
