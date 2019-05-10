@@ -5,6 +5,11 @@
 * [Usage](usage.md)
 * [Archetype reference](archetype-reference.md)
 * [Verify a contract with Why3](verify-a-contract-with-why3.md)
+* [Extensions](extensions/README.md)
+  * [Mutable](extensions/mutable.md)
+  * [Transferable](extensions/transferable.md)
+  * [Signed by all](extensions/signed-by-all.md)
+  * [Traceable](extensions/traceable.md)
 
 ## Archetype examples
 
