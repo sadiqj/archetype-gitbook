@@ -11,6 +11,7 @@
   * [Mutable](extensions/mutable.md)
   * [Transferable](extensions/transferable.md)
   * [Signed by all](extensions/signed-by-all.md)
+  * [Delegable](extensions/delegable.md)
   * [Traceable](extensions/traceable.md)
 
 ## Archetype examples
