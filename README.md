@@ -24,9 +24,28 @@ A smart contract is a _standard_ program, and, as such, it does not come with an
 
 It’s a highly non trivial question to decide whether a program is correct or not, even for the programmer. Before deploying a smart contract, current development best practices include a phase of testing. However, testing is limited by the capacity to imagine relevant tests and, even when a critical property is identified, testing is limited by the capacity to cover all possible situations of execution. 
 
-## Services
+## Archetype services
+
+In order to circumvent the inherent potential inconsistency of the smart contract,  Archetype  provides several services which enhances the _apriori_ level of confidence you may have in a smart contract, before deploying it.
 
 ### Verification
+
+Program verification is the gold standard when it comes to trust-less software quality.
+
+What is program formal verification?
+
+Say you have a program and a specific property that the program is supposed to have; say this property is written in formal logic. Program verification consists in figuring out a **mathematical proof** that the program has the property.
+
+A mathematical proof is the perfect trust-less guarantee of the program quality because the only thing you need to is to check that the proof is correct towards the property and the program. This  question is known to be _decidable_, which means that it is possible to have a computer check the correctness of the proof automatically.
+
+Choice of why3
+
+Are there limits? 
+
+Yes of course. First, the guarantee you get is limited to the property you have been able to identify. A critical property may still be forgotten.
+
+Then, you need to be a specialist in formal methods to be able to formalise and prove the properties. And if the property is a bit sophisticated, that may require a lot of skills.  
+
 
 ### Simulation
 
