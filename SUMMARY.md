@@ -21,7 +21,7 @@
   * [Reference](archetype-language/archetype-reference.md)
 * [Verify a contract with Why3](verify-a-contract-with-why3.md)
 
-## Archetype examples
+## Contract library
 
 * [Escrow](contracts-examples/escrow.md)
 * [Auction](contracts-examples/auction.md)
