@@ -1,8 +1,8 @@
 ---
-description: Extensions are useful to factorise and reuse contract behaviour.
+description: An extension is useful to factorise and reuse contract behaviour.
 ---
 
-# Extensions
+# Extension
 
 ## Introduction
 
@@ -13,7 +13,7 @@ Contracts, even simple ones, offer a large number of possible variations :
 * if a key role may be changed, what is the protocol ?
 * …
 
-Archetype provides the possibility to develop extensions in order to factorize these kind of processes and reuse them in several contracts.
+Archetype provides the possibility to develop extensions in order to factorise these kind of processes and reuse them in several contracts.
 
 An extension may be invoked at specific places in the code :
 
@@ -70,7 +70,7 @@ archetype extension extensionName (
 
 The code pattern defines the matching code to extend. The extension body defines the code to add and/or transform.
 
-An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the [Signed by all](signed-by-all.md) extension for an example.
+An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the [Signed by all](../extensions-1/signed-by-all.md) extension for an example.
 
   
 
