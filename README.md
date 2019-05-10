@@ -6,9 +6,7 @@ description: >-
 
 # What is Archetype?
 
-{% hint style="info" %}
-Archetype is funded by [Tezos](https://tezos.com/) and developed by [edukera](https://edukera.com).
-{% endhint %}
+Archetype is funded by [Tezos](https://tezos.com) and developed by [edukera](https://edukera.com).
 
 ## Smart contracts
 
