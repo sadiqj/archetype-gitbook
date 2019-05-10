@@ -5,6 +5,7 @@
 * [Usage](usage/README.md)
   * [Command Line](usage/command-line.md)
   * [Vs code extension](usage/vs-code-extension.md)
+  * [Try Archetype](usage/try-archetype.md)
 * [Archetype language](archetype-language/README.md)
   * [Data storage](archetype-language/data-model/README.md)
     * [Variable](archetype-language/data-model/variable.md)
@@ -20,6 +21,7 @@
     * [Traceable](archetype-language/extensions/traceable.md)
   * [Reference](archetype-language/archetype-reference.md)
 * [Verify a contract with Why3](verify-a-contract-with-why3.md)
+* [Implementation](implementation.md)
 
 ## Contract library
 
