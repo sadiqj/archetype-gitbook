@@ -9,6 +9,8 @@ This extension takes two arguments:
 1. the role expression to specify who can change the value
 2. the condition to change the value
 
+{% code-tabs %}
+{% code-tabs-item title="mutable.arlx" %}
 ```text
 archetype extension mutable (
 
@@ -27,6 +29,16 @@ archetype extension mutable (
   }
 }
 ```
+{% endcode-tabs-item %}
+
+{% code-tabs-item title=undefined %}
+```
+
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
+
+
 
 
 
