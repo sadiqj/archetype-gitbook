@@ -14,6 +14,8 @@
 
 ## A single language
 
+## Integration in IDE
+
 ## A library of contract archetypes  
 
 Archetype comes with several dozen of examples.
