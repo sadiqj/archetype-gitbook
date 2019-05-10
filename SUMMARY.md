@@ -2,7 +2,9 @@
 
 * [What is Archetype?](README.md)
 * [Getting started](getting-started-1.md)
-* [Usage](usage.md)
+* [Usage](usage/README.md)
+  * [Command Line](usage/command-line.md)
+  * [Vs code extension](usage/vs-code-extension.md)
 * [Archetype reference](archetype-reference.md)
 * [Verify a contract with Why3](verify-a-contract-with-why3.md)
 * [Extensions](extensions/README.md)

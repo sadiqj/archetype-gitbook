@@ -1,7 +1,7 @@
 ---
 description: >-
-  The miles_with_expiration archetype manages the expiration date of a mile. An
-  expired mile cannot be consumed and may be cleared out by the administrator.
+  This contract archetype manages the expiration date of a mile. An expired mile
+  cannot be consumed and may be cleared out by the administrator.
 ---
 
 # Miles with expiration

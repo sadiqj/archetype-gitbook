@@ -70,7 +70,9 @@ archetype extension extensionName (
 
 The code pattern defines the matching code to extend. The extension body defines the code to add and/or transform.
 
-An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected \(see Signed by all extension\).
+An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the Signed by all extension for an example.
+
+{% page-ref page="signed-by-all.md" %}
 
 The code pattern used in the [delegable](https://docs.google.com/document/d/1biQ8ThZ8riNhH7bIKr8eWmfm8RT-fi2DukXH2LmMPjs/edit#heading=h.r0e3trmb8tpx) extension defines an extension on an address field of an asset. The pattern also defines a transaction with a “called by” instruction on such an address value. This means that the extension will add the 2 actions \(setDelegate and rmDelegate\) for each transaction with a called by instruction on a matched address field.  
 
