@@ -5,10 +5,10 @@
 The miles\_with\_expiration archetype manages the expiration date of a mile. An expired mile cannot be consumed and may be cleared out by the administrator.
 
   
-A storage optimization has been done directly in the design of the mile model: a mile is described with an amount field which enables to aggregate miles with same expiration dates. Typically 10 miles with the same expiration date are merged into one mile with the amount value set to 10.
+A storage optimisation has been done directly in the design of the mile model: a mile is described with an amount field which enables to aggregate miles with same expiration dates. For example, 10 miles with the same expiration date are merged into one mile with the amount value set to 10.
 
   
-****This storage optimization comes with a cost of algorithmic complexity in the consume transaction.
+****This optimisation comes with a cost of algorithmic complexity in the consume transaction.
 
 ```text
 archetype miles_with_expiration
