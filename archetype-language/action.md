@@ -10,11 +10,11 @@
 
 ### Effect
 
-## Expressions
+## Instructions
 
 ### Data assignment
 
-### Currency exchange
+### Currency transfer
 
 ### Condition
 
