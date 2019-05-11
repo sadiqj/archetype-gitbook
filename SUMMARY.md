@@ -11,7 +11,7 @@
   * [Extension](archetype-language/extensions.md)
   * [Formal semantics](archetype-language/formal-semantics.md)
   * [Reference](archetype-language/archetype-reference.md)
-* [Extensions](extensions-1/README.md)
+* [Extension library](extensions-1/README.md)
   * [Mutable](extensions-1/mutable.md)
   * [Transferable](extensions-1/transferable.md)
   * [Delegable](extensions-1/delegable.md)
