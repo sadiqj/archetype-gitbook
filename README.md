@@ -154,9 +154,13 @@ The library cover some key blockchain processes :
 
 {% page-ref page="contracts-examples/escrow/" %}
 
+{% page-ref page="contracts-examples/auction/" %}
+
+{% page-ref page="contracts-examples/governance/" %}
+
 {% page-ref page="contracts-examples/miles/" %}
 
-{% page-ref page="contracts-examples/auction/" %}
+{% page-ref page="contracts-examples/finance/" %}
 
 {% page-ref page="contracts-examples/tokens/" %}
 
