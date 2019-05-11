@@ -53,6 +53,7 @@
   * [Hyper Ledger](contract-library/framework-examples/hyper-ledger.md)
   * [Clause.io](contract-library/framework-examples/clause.io/README.md)
     * [Acceptance of delivery](contract-library/framework-examples/clause.io/acceptance-of-delivery.md)
+    * [Demand forecast](contract-library/framework-examples/clause.io/demand-forecast.md)
 
 ## Advanced
 
