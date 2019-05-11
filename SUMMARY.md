@@ -51,7 +51,8 @@
   * [Fizzy](contract-library/insurance/fizzy.md)
 * [Framework examples](contract-library/framework-examples/README.md)
   * [Hyper Ledger](contract-library/framework-examples/hyper-ledger.md)
-  * [Clause.io](contract-library/framework-examples/clause.io.md)
+  * [Clause.io](contract-library/framework-examples/clause.io/README.md)
+    * [Acceptance of delivery](contract-library/framework-examples/clause.io/acceptance-of-delivery.md)
 
 ## Advanced
 
