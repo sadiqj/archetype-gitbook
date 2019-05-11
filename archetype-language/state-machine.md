@@ -69,5 +69,7 @@ transition mayconfirm from Created = {
 
 ## Example
 
-The 
+Follow the link below to observe the basic escrow example implemented as a state machine.
+
+{% page-ref page="../contracts-examples/escrow/basic-escrow.md" %}
 
