@@ -25,13 +25,13 @@ You may refer to the [archetype grammar](https://github.com/edukera/archetype-la
 
 For example, the following invokes the ‘mutable’ extension on the amount variable:
 
-```text
+```ocaml
 variable[%mutable admin] amount tez = 10tz
 ```
 
 The mutable extension, presented in next section, adds to the contract an action to change the amount value. Once the extension processed, the declaration is extended to the following code:
 
-```text
+```ocaml
 variable amount tez = 10tz
 
 action set_amount (new_amount : tez) = {
@@ -56,7 +56,7 @@ The extension preprocessing produces a **single source** contract with all the e
 
 The skeleton of an extension is as follows:
 
-```text
+```ocaml
 archetype extension extensionName (
 
   (* code pattern *)
