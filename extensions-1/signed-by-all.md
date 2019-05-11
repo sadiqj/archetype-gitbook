@@ -1,5 +1,5 @@
 ---
-description: When multi signature is necessary
+description: Requires multi-signature
 ---
 
 # Signed by all

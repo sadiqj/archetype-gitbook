@@ -1,5 +1,5 @@
 ---
-description: Transfer a role you own to someone else
+description: Transfers a role you own to someone else
 ---
 
 # Transferable

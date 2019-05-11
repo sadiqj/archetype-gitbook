@@ -1,5 +1,5 @@
 ---
-description: To require an action is executed only once
+description: Specifies an action be executed only once
 ---
 
 # Only once
