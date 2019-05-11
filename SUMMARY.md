@@ -51,6 +51,8 @@
   * [Fizzy](contract-library/insurance/fizzy.md)
 * [Framework examples](contract-library/framework-examples/README.md)
   * [Hyper Ledger](contract-library/framework-examples/hyper-ledger/README.md)
+    * [Animal tracking](contract-library/framework-examples/hyper-ledger/animal-tracking.md)
+    * [Perishable Goods](contract-library/framework-examples/hyper-ledger/perishable-goods.md)
     * [Vehicle life cycle](contract-library/framework-examples/hyper-ledger/vehicle-life-cycle.md)
   * [Clause.io](contract-library/framework-examples/clause.io/README.md)
     * [Acceptance of delivery](contract-library/framework-examples/clause.io/acceptance-of-delivery.md)
