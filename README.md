@@ -30,7 +30,7 @@ It’s a highly non trivial question to decide whether a program is correct or n
 
 In order to circumvent the inherent potential inconsistency of the smart contract,  Archetype  has identified several services which enhances the _apriori_ level of confidence you may have in a smart contract, before deploying it.
 
-### Verify
+#### Verify
 
 Program verification is the gold standard when it comes to trust-less software quality.
 
@@ -46,19 +46,19 @@ Yes of course. First, the guarantee you get is limited to the property you have 
 
 Second, you need to be skilled in formal methods to formalise the contract properties, and even more to prove the properties, especially if the property is complex.
 
-### Test
+#### Test
 
 When program verification is too complex or too expensive, it is necessary to setup test batteries to provide standard quality insurance.
 
-### Simulate
+#### Simulate
 
 Observing a contract in action is a quick way to gain a reasonable level of insight into the behaviour of a smart contract.
 
-### Document
+#### Document
 
 It is always good to read what the smart contract designer thinks about what it is supposed to do! If it is aligned with the insights provided by program verification and simulation, it will reinforce the confidence you have in the contract.
 
-### Execute
+#### Execute
 
 This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
 
