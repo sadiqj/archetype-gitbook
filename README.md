@@ -1,7 +1,7 @@
 ---
 description: >-
   Archetype is a smart contract development solution dedicated to contract
-  safety and consistency.
+  consistency.
 ---
 
 # What is Archetype?

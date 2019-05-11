@@ -8,11 +8,13 @@ description: Formalise contract properties
 
 ## Data invariant
 
-## Action specification
+## Effect specification
 
 ### Post condition
 
 ### Loop invariant
+
+### Assert
 
 ## Contract specification
 
