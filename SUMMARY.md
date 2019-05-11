@@ -14,9 +14,12 @@
 * [Extensions](extensions-1/README.md)
   * [Mutable](extensions-1/mutable.md)
   * [Transferable](extensions-1/transferable.md)
-  * [Signed by all](extensions-1/signed-by-all.md)
   * [Delegable](extensions-1/delegable.md)
   * [Traceable](extensions-1/traceable.md)
+  * [Signed by all](extensions-1/signed-by-all.md)
+  * [Signed by](extensions-1/signed-by.md)
+  * [Mutable signed](extensions-1/mutable-signed.md)
+  * [Only once](extensions-1/only-once.md)
 
 ## Contract library
 
