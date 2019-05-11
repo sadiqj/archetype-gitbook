@@ -32,7 +32,3 @@ archetype extension mutable (
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-
-
-
-

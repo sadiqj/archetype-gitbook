@@ -154,15 +154,15 @@ The library cover some key blockchain processes :
 
 Some of these contracts come with relevant properties. Feel free to submit any new property you may find relevant.
 
-{% page-ref page="contracts-examples/escrow/" %}
+{% page-ref page="contract-library/escrow/" %}
 
-{% page-ref page="contracts-examples/auction/" %}
+{% page-ref page="contract-library/auction/" %}
 
-{% page-ref page="contracts-examples/governance/" %}
+{% page-ref page="contract-library/governance/" %}
 
-{% page-ref page="contracts-examples/miles/" %}
+{% page-ref page="contract-library/miles/" %}
 
-{% page-ref page="contracts-examples/finance/" %}
+{% page-ref page="contract-library/finance/" %}
 
-{% page-ref page="contracts-examples/tokens/" %}
+{% page-ref page="contract-library/tokens/" %}
 

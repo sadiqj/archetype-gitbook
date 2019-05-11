@@ -10,7 +10,7 @@ Note that role values must be provided at declaration for security reason.
 
 {% code-tabs %}
 {% code-tabs-item title="basic\_escrow.arl" %}
-```text
+```ocaml
 archetype escrow_simple
 
 variable buyer role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
