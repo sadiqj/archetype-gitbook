@@ -1,5 +1,5 @@
 ---
-description: An extension is useful to factorise and reuse contract behaviour.
+description: Factorise and reuse contract behaviour.
 ---
 
 # Extension
