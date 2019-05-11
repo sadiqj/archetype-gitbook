@@ -26,7 +26,7 @@ A smart contract is a _standard_ program, and, as such, it does not come with an
 
 It’s a highly non trivial question to decide whether a program is correct or not, even for the programmer. Before deploying a smart contract, current development best practices include a phase of testing. However, testing is limited by the capacity to cover all possible situations of execution. 
 
-## Services
+## Required services
 
 In order to circumvent the inherent potential inconsistency of the smart contract,  Archetype  has identified several services which enhances the _apriori_ level of confidence you may have in a smart contract, before deploying it.
 
@@ -62,7 +62,7 @@ It is always good to read what the smart contract designer thinks about what it 
 
 This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
 
-## Frameworks
+## Solution frameworks
 
 For each of the services identified above, an existing framework has been selected. A compromise between _ease of use_ and _performance_ was the selection criteria. 
 
