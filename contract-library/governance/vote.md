@@ -1,5 +1,5 @@
 ---
-description: basic voting process
+description: Basic voting process
 ---
 
 # Voting process
