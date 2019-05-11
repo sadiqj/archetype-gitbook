@@ -1,5 +1,5 @@
 ---
-description: Variable and asset
+description: Variable and asset collection
 ---
 
 # Data storage
