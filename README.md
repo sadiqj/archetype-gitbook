@@ -156,7 +156,7 @@ The library cover some key blockchain processes :
 
 {% page-ref page="contracts-examples/miles/" %}
 
-{% page-ref page="contracts-examples/auction.md" %}
+{% page-ref page="contracts-examples/auction/" %}
 
 {% page-ref page="contracts-examples/tokens/" %}
 
