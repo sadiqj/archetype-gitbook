@@ -1,4 +1,4 @@
-# Escrow with penalty
+# With penalty
 
 The escrow archetype presented below defines an escrow process with a penalty for the seller if the transaction fails \(for example if it does not happen before the deadline\).
 

@@ -1,4 +1,4 @@
-# Basic escrow
+# Basic
 
 This first example is a toy contract which defines a very basic escrow process.
 

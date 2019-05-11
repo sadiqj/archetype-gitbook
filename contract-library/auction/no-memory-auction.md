@@ -1,2 +1,2 @@
-# No memory auction
+# No memory
 

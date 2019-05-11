@@ -1,2 +1,2 @@
-# Lazy auction
+# Lazy
 

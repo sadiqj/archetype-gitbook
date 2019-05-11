@@ -22,12 +22,13 @@
 ## Contract library
 
 * [Escrow](contract-library/escrow/README.md)
-  * [Basic escrow](contract-library/escrow/basic-escrow.md)
-  * [Escrow with penalty](contract-library/escrow/escrow-with-penalty.md)
+  * [Basic](contract-library/escrow/basic-escrow.md)
+  * [With penalty](contract-library/escrow/escrow-with-penalty.md)
+  * [With oracle decision](contract-library/escrow/with-oracle-decision.md)
 * [Auction](contract-library/auction/README.md)
-  * [No memory auction](contract-library/auction/no-memory-auction.md)
-  * [Lazy auction](contract-library/auction/lazy-auction.md)
-  * [Basic auction](contract-library/auction/basic-auction.md)
+  * [No memory](contract-library/auction/no-memory-auction.md)
+  * [Lazy](contract-library/auction/lazy-auction.md)
+  * [Basic](contract-library/auction/basic-auction.md)
   * [Auction \(from Zilliqa\)](contract-library/auction/auction-from-zilliqa.md)
 * [Governance](contract-library/governance/README.md)
   * [Vote](contract-library/governance/vote.md)
