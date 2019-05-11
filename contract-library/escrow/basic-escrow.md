@@ -4,7 +4,7 @@ This first example is a toy contract which defines a very basic escrow process.
 
 It is mainly a state machine with 5 states and 4 transitions according to the following schema:
 
-![state machine diagram](../../.gitbook/assets/escrow_simple.png)
+![](../../.gitbook/assets/escrow_simple2.png)
 
 Note that role values must be provided at declaration for security reason. 
 

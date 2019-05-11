@@ -12,7 +12,7 @@ This optimisation comes with a cost of algorithmic complexity in the consume tra
 
 {% code-tabs %}
 {% code-tabs-item title="miles\_with\_expiration.arl" %}
-```text
+```ocaml
 archetype miles_with_expiration
 
 variable[%transferable] admin role
