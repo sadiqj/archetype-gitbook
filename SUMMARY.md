@@ -16,7 +16,7 @@
   * [Signed by all](extensions-1/signed-by-all.md)
   * [Delegable](extensions-1/delegable.md)
   * [Traceable](extensions-1/traceable.md)
-* [Try Archetype](https://try.archetype-lang.com)
+* [Try Archetype](https://try.archetype-lang.org)
 
 ## Contract library
 
