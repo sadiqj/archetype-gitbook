@@ -1,5 +1,5 @@
 ---
-description: The mutable extension adds a setter action for the extended variable.
+description: Adds a setter action for the extended variable.
 ---
 
 # Mutable

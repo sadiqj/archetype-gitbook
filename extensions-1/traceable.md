@@ -1,3 +1,7 @@
+---
+description: Generates a dedicated tez transfer action
+---
+
 # Traceable
 
 The traceable extension, when decorating a tez value, generates an dedicated contract transaction to load the corresponding amount.
@@ -12,6 +16,7 @@ archetype extension traceable (
 ) = {
 
   action transfer_<%anamount> = {
+    with transfer
     called by fromR
     (* accept transfer *)
     require {
