@@ -1,5 +1,5 @@
 ---
-description: See presentation in [Archetype language](../archetype-language/README.md)
+description: 'See presentation in [Archetype language] above'
 ---
 
 # Extensions
