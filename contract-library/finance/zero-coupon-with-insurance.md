@@ -83,5 +83,43 @@ transition repay from Confirmed = {
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
+{% code-tabs %}
+{% code-tabs-item title="guarantee\_fund.arl" %}
+```ocaml
+archetype guarantee_fund
 
+variable admin role
+
+asset insured_contract identified by addr = {
+  addr : address;
+  max_transfer : tez
+}
+
+action credit = {
+  called by admin
+  require {
+    c1 : transferred > 0
+  }
+}
+
+action add_contract (contract_ : insured_contract) = {
+  called by admin
+  effect {
+    insured_contract.addifnotexist contract_
+  }
+}
+
+action pay (recipient : address) (amount : tez) = {
+  require {
+    c1 : insured_contract.contains caller;
+    c2 : amount <= (insured_contract.get caller).max_transfer
+  }
+
+  effect {
+    transfer amount to recipient
+  }
+}
+```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
