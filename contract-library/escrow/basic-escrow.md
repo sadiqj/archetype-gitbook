@@ -2,7 +2,7 @@
 
 This first example is a toy contract which defines a very basic escrow process.
 
-It is mainly a state machine with 5 states and 4 transitions according to the following schema:
+It is mainly a state machine with 5 states and 4 transitions illustrated in the state diagram:
 
 ![](../../.gitbook/assets/escrow_simple2.png)
 
