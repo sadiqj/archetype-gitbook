@@ -72,10 +72,12 @@ The code pattern defines the matching code to extend. The extension body defines
 
 An extension may call another extension, hence the preprocessor detects cyclic calls and emits an explicit error when detected. See the the [Signed by all](../extensions-1/signed-by-all.md) extension for an example.
 
-Archetype comes with a list of existing extensions:
+## Extensions library
+
+Archetype comes with a list of useful extensions:
 
 {% page-ref page="../extensions-1/" %}
 
-  
+You may adapt them at your convenience.  
 
 
