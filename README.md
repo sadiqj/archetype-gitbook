@@ -152,6 +152,8 @@ The library cover some key blockchain processes :
 * insurance
 * other frameworks example for comparison \(Hyper ledger, clause.io, ...\)
 
+Some of these contracts come with relevant properties. Feel free to submit any new property you may find relevant.
+
 {% page-ref page="contracts-examples/escrow/" %}
 
 {% page-ref page="contracts-examples/auction/" %}
