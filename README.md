@@ -62,9 +62,9 @@ It is always good to read what the smart contract designer thinks about what it 
 
 This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
 
-## Solutions
+## Frameworks
 
-For each of the services identified above, an existing solution has been selected. The selection criteria was a good compromise between ease of use and performance. 
+For each of the services identified above, an existing framework has been selected. A compromise between _ease of use_ and _performance_ was the selection criteria. 
 
 This selection is not definitive nor exhaustive. It should be considered as a starting point.
 
@@ -112,16 +112,33 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">Execute</td>
       <td style="text-align:left"><a href="http://www.liquidity-lang.org/">Liquidity</a>
       </td>
-      <td style="text-align:left">High level ml-like language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
+      <td style="text-align:left">High level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
     </tr>
   </tbody>
 </table>{% hint style="info" %}
 Test and Simulate services will be available in a second phase.
 {% endhint %}
 
+The purpose of archetype is not to replace the standard test approach, but rather to enhance it when possible with formal verification, and assist it with random test generation. The idea of random test generation is to leverage formal properties to derive the tests.
+
 ## A single language
 
-Each of the 
+Each framework identified in the previous section comes with a specific language:
+
+| Solution | Language | Type of language |
+| :--- | :--- | :--- |
+| Why3 | Whyml \(\*.mlw\) | ml language, like ocaml,  with specific instructions for verification |
+| Google spreadsheets | Google script \(\*.gs\) | Similar to javascript |
+| Document | Markdown \(\*.md\) | plain text with minimalist formatting  instructions for maximum readability  \(unlike HTML markup tags\) |
+| Liquidity | \*.liq | ml language |
+
+As a consequence, in order to benefit from these framework, you need to develop several versions of the smart contract, one for each framework.
+
+The fondamental issue, beyond time and skills, is the issue of logical consistency between each version. 
+
+How to make sure that the version for formal verification is consistent with the version for execution? Some verification frameworks have their own solution \(namely extraction\), but what about the consistency over the entire set of services?
+
+Hence the need for a ****single language to describe the business logic of an archetype contract, from which the different operational versions may be derived.
 
 ## Integration in IDE
 
