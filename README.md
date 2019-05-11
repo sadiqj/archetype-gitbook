@@ -42,9 +42,9 @@ A mathematical proof is the perfect trust-less guarantee of the program quality 
 
 Are there limits? 
 
-Yes of course. First, the guarantee you get is limited to the property you have been able to identify. A critical property may still be forgotten.
+Yes of course. First, the guarantee you get is limited to the property you have been able to identify. A critical property may still be forgotten!
 
-Then, you need to be a specialist in formal methods to be able to formalise and prove the properties. And if the property is a bit sophisticated, that may require a lot of skills.
+Second, you need to be skilled in formal methods to formalise the contract properties, and even more to prove the properties, especially if the property is complex.
 
 ### Test
 
@@ -86,7 +86,8 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">
         <p>High level of automation.</p>
         <p>Why3 is a verification framework based on the Hoare Logic. It generates
-          verification tasks for external SMT solvers (alt-ergo, cvc, Z3, ...)</p>
+          verification tasks for external SMT solvers (alt-ergo, cvc, Z3, ...). Verification
+          tasks may also be exported to <a href="https://coq.inria.fr">coq</a>.</p>
       </td>
     </tr>
     <tr>
@@ -120,7 +121,7 @@ Test and Simulate services will be available in a second phase.
 
 ## A single language
 
-
+Each of the 
 
 ## Integration in IDE
 
