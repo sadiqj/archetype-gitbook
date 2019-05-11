@@ -140,9 +140,17 @@ How to make sure that the version for formal verification is consistent with the
 
 Hence the need for a ****single language to describe the business logic of an archetype contract, from which the different operational versions may be derived.
 
-## A library of contract archetypes  
+## Contract archetypes library
 
-Archetype comes with several dozen of examples.
+Archetype comes with a library of several dozen of contract archetypes. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
+
+The library cover some key block chain processes :
+
+* purchase transaction \(escrow\)
+* decision process \(voting, auction\)
+* investment \(market place, financial notes\)
+* insurance
+* other frameworks example for comparison \(Hyper ledger, clause.io, ...\)
 
 {% page-ref page="contracts-examples/escrow/" %}
 
