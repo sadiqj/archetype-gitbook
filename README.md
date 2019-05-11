@@ -140,8 +140,6 @@ How to make sure that the version for formal verification is consistent with the
 
 Hence the need for a ****single language to describe the business logic of an archetype contract, from which the different operational versions may be derived.
 
-## Integration in IDE
-
 ## A library of contract archetypes  
 
 Archetype comes with several dozen of examples.
