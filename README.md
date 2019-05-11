@@ -144,15 +144,17 @@ Hence the need for a ****single language to describe the business logic of an ar
 
 Archetype comes with a library of several dozen of contract archetypes. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
 
-The library cover some key block chain processes :
+The library cover some key blockchain processes :
 
 * purchase transaction \(escrow\)
 * decision process \(voting, auction\)
-* investment \(market place, financial notes\)
+* investment \(tokens, market place, financial notes\)
 * insurance
 * other frameworks example for comparison \(Hyper ledger, clause.io, ...\)
 
 {% page-ref page="contracts-examples/escrow/" %}
+
+{% page-ref page="contracts-examples/miles-management/" %}
 
 {% page-ref page="contracts-examples/auction.md" %}
 
