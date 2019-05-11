@@ -115,7 +115,7 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">High level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
     </tr>
   </tbody>
-</table>{% hint style="info" %}
+</table>{% hint style="warning" %}
 Test and Simulate services will be available in a second phase.
 {% endhint %}
 
@@ -139,6 +139,18 @@ The fondamental issue, beyond time and skills, is the issue of logical consisten
 How to make sure that the version for formal verification is consistent with the version for execution? Some verification frameworks have their own solution \(namely extraction\), but what about the consistency over the entire set of services?
 
 Hence the need for a ****single language to describe the business logic of an archetype contract, from which the different operational versions may be derived.
+
+![archetype target languages ](.gitbook/assets/arch_targets_2.png)
+
+{% hint style="info" %}
+In a nutshell, archetype is a programming language which is transcoded to service specific target languages.
+{% endhint %}
+
+As such, archetype may also serve as a target language for existing language to benefit from archetype services.  
+
+Follow the link below to read more about the archetype language features.
+
+{% page-ref page="archetype-language/" %}
 
 ## Contract library
 
