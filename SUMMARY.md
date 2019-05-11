@@ -9,6 +9,7 @@
   * [State machine](archetype-language/state-machine.md)
   * [Contract specification](archetype-language/contract-specification.md)
   * [Extension](archetype-language/extensions.md)
+  * [Formal semantics](archetype-language/formal-semantics.md)
   * [Reference](archetype-language/archetype-reference.md)
 * [Extensions](extensions-1/README.md)
   * [Mutable](extensions-1/mutable.md)
