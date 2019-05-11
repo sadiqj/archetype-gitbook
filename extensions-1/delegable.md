@@ -1,7 +1,5 @@
 ---
-description: >-
-  This extension factorises the delegation mechanism found in the ERC721
-  contract.
+description: Delegation mechanism found in the ERC720 contract.
 ---
 
 # Delegable
