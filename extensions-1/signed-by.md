@@ -1,5 +1,5 @@
 ---
-description: Requires a signed action argument
+description: Requires an action argument be signed
 ---
 
 # Signed by
