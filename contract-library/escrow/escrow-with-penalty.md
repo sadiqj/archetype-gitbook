@@ -8,7 +8,7 @@ A state machine is used to follow the different stages of the escrow transaction
 
 {% code-tabs %}
 {% code-tabs-item title="escrow\_penalty.arl" %}
-```text
+```ocaml
 archetype escrow
 
 variable buyer role
