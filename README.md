@@ -1,7 +1,7 @@
 ---
 description: >-
   Archetype is a smart contract development solution dedicated to contract
-  consistency.
+  quality insurance.
 ---
 
 # What is Archetype?
@@ -46,21 +46,21 @@ Yes of course. First, the guarantee you get is limited to the property you have 
 
 Then, you need to be a specialist in formal methods to be able to formalise and prove the properties. And if the property is a bit sophisticated, that may require a lot of skills.
 
+### Test
+
+When program verification is too complex or too expensive, it is necessary to setup test batteries to provide standard quality insurance.
+
 ### Simulate
 
-When program verification is too complex or too expensive, it should be possible to run the contract in a simulation environment where you can observe its behaviour as a function of specific data and inputs. 
-
-Simulation is a quick and easy way to gain a reasonable level of confidence in a smart contract by seeing it in action.
+Observing a contract in action is a quick way to gain a reasonable level of insight into the behaviour of a smart contract.
 
 ### Document
 
-It is always good to read what the party in charge of the smart contract thinks about what it is supposed to do. It will reinforce the confidence you have in the contract, especially if it is aligned with the insights provided by program verification and simulation.
+It is always good to read what the smart contract designer thinks about what it is supposed to do! If it is aligned with the insights provided by program verification and simulation, it will reinforce the confidence you have in the contract.
 
 ### Execute
 
-This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... 
-
-Without this service, the others would not be relevant.
+This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
 
 ## Solutions
 
@@ -68,9 +68,59 @@ For each of the services identified above, an existing solution has been selecte
 
 This selection is not definitive nor exhaustive. It should be considered as a starting point.
 
+The following table shows the selected solution foreach service and the main benefits from it:
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Service</th>
+      <th style="text-align:left">Solution</th>
+      <th style="text-align:left">Benefits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Verify</td>
+      <td style="text-align:left"><a href="http://why3.lri.fr/">Why3</a>
+      </td>
+      <td style="text-align:left">
+        <p>High level of automation.</p>
+        <p>Why3 is a verification framework based on the Hoare Logic. It generates
+          verification tasks for external SMT solvers (alt-ergo, cvc, Z3, ...)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Test</td>
+      <td style="text-align:left"><a href="https://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf">Quick-check</a>
+      </td>
+      <td style="text-align:left">Automated random test generation</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Simulate</td>
+      <td style="text-align:left"><a href="https://gsuite.google.com/intl/en_za/products/sheets/">Google spreadsheets</a>
+      </td>
+      <td style="text-align:left">Cloud based spreadsheet with complete scripting capability</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Document</td>
+      <td style="text-align:left"><a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>
+      </td>
+      <td style="text-align:left">Easy to write and read; easy to convert to other formats (HTML, pdf, ...)</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Execute</td>
+      <td style="text-align:left"><a href="http://www.liquidity-lang.org/">Liquidity</a>
+      </td>
+      <td style="text-align:left">High level ml-like language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
+    </tr>
+  </tbody>
+</table>{% hint style="info" %}
+Test and Simulate services will be available in a second phase.
+{% endhint %}
 
 ## A single language
+
+
 
 ## Integration in IDE
 
