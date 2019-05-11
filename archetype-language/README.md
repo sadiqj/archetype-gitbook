@@ -1,5 +1,5 @@
 ---
-description: Language dedicated to smart contract definition
+description: Language dedicated to smart contract definition and specification
 ---
 
 # Archetype language
