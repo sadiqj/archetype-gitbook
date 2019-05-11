@@ -1,4 +1,4 @@
-# Miles management
+# Miles
 
 Miles with expiration
 

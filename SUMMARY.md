@@ -27,12 +27,13 @@
 * [Tokens](contracts-examples/tokens/README.md)
   * [ERC20](contracts-examples/tokens/erc20.md)
   * [ERC720](contracts-examples/tokens/erc720.md)
-* [Miles management](contracts-examples/miles-management/README.md)
-  * [Miles with expiration](contracts-examples/miles-management/miles-with-expiration.md)
+* [Miles](contracts-examples/miles/README.md)
+  * [Miles with expiration](contracts-examples/miles/miles-with-expiration.md)
 * [Finance](contracts-examples/finance.md)
 * [Insurance](contracts-examples/insurance.md)
-* [Hyper Ledger](contracts-examples/hyper-ledger.md)
-* [Clause.io](contracts-examples/clause.io.md)
+* [Framework examples](contracts-examples/framework-examples/README.md)
+  * [Hyper Ledger](contracts-examples/framework-examples/hyper-ledger.md)
+  * [Clause.io](contracts-examples/framework-examples/clause.io.md)
 
 ## Advanced
 

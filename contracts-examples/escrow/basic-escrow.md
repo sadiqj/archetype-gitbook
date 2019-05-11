@@ -8,6 +8,8 @@ It is mainly a state machine with 5 states and 4 transitions according to the fo
 
 Note that role values must be provided at declaration for security reason. 
 
+{% code-tabs %}
+{% code-tabs-item title="basic\_escrow.arl" %}
 ```text
 archetype escrow_simple
 
@@ -58,4 +60,6 @@ transition cancel from Confirmed = {
   }
 }
 ```
+{% endcode-tabs-item %}
+{% endcode-tabs %}
 
