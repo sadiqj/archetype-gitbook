@@ -20,7 +20,9 @@
 
 ## Contract library
 
-* [Escrow](contracts-examples/escrow.md)
+* [Escrow](contracts-examples/escrow/README.md)
+  * [Basic escrow](contracts-examples/escrow/basic-escrow.md)
+  * [Escrow with penalty](contracts-examples/escrow/escrow-with-penalty.md)
 * [Auction](contracts-examples/auction.md)
 * [Tokens](contracts-examples/tokens/README.md)
   * [ERC20](contracts-examples/tokens/erc20.md)

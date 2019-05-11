@@ -78,7 +78,7 @@ This selection is not definitive nor exhaustive. It should be considered as a st
 
 Archetype comes with several dozen of examples.
 
-{% page-ref page="contracts-examples/escrow.md" %}
+{% page-ref page="contracts-examples/escrow/" %}
 
 {% page-ref page="contracts-examples/auction.md" %}
 
