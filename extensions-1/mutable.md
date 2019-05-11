@@ -11,7 +11,7 @@ This extension takes two arguments:
 
 {% code-tabs %}
 {% code-tabs-item title="mutable.arlx" %}
-```text
+```ocaml
 archetype extension mutable (
 
   variable[%mutable arole cond] avariable type
@@ -28,12 +28,6 @@ archetype extension mutable (
     }
   }
 }
-```
-{% endcode-tabs-item %}
-
-{% code-tabs-item title=undefined %}
-```
-
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
