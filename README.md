@@ -119,7 +119,7 @@ The following table shows the selected solution foreach service and the main ben
 'Test' and 'Simulate' services will be available in 2020.
 {% endhint %}
 
-The purpose of archetype is not to replace the standard test approach, but rather to enhance it when possible with formal verification, and assist it with random test generation. The idea of random test generation is to leverage formal properties to derive the tests.
+The purpose of the archetype Test service is not to replace the standard test approach, but rather to enhance it when possible with formal verification, and assist it with random test generation. The idea of random test generation is to leverage formal properties to randomly derive relevant tests.
 
 ## A single language
 
