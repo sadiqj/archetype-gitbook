@@ -10,7 +10,7 @@ The extension is anchored on an asset address field.
 
 The extension defines a transaction with a `called by` test on the extended address value. This means that the extension will add the 2 actions \(`setDelegate` and `rmDelegate`\) for each transaction with a `called by` instruction on a matched address field.
 
-```text
+```ocaml
 archetype extension delegable (
 
   asset anAsset identified by aRole = {
