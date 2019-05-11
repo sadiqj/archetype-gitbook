@@ -16,10 +16,10 @@ archetype competition
 variable[%transferable] organiser role
 
 (* start date *)
-variable[%mutable organiser (instate Created)] startdate date
+variable[%mutable organiser (sate = Created)] startdate date
 
 (* deadline *)
-variable[%mutable organiser (instate Created)] deadline date
+variable[%mutable organiser (state = Created)] deadline date
 
 variable[%traceable] prize tez from organizer = 3500
 

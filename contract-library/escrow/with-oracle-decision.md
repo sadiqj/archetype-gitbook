@@ -55,11 +55,11 @@ variable oracle role
 
 variable[%traceable] price tez from buyer to creditor 
 
-variable[%traceable] [%mutable_signed [buyer, debitor] (instate Created)] 
+variable[%traceable] [%mutable_signed [buyer, debitor] (state = Created)] 
      penalty tez from seller to debitor = 0.1 * price
 
 (* action deadline *)
-variable[%mutable (buyer or seller) (instate Created)] deadline date
+variable[%mutable (buyer or seller) (state = Created)] deadline date
 
 (* type taskStatus = { 
      date : date;

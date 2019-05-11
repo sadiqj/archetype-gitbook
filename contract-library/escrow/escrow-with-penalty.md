@@ -27,7 +27,7 @@ variable[%traceable] [%mutable_signed [buyer, debitor] (state = Created)]
      penalty tez from seller to debitor = 0.1 * price
 
 (* action deadline *)
-variable[%mutable (buyer or seller) (instate Created)] deadline date
+variable[%mutable (buyer or seller) (state = Created)] deadline date
 
 (* state machine *)
 states =
