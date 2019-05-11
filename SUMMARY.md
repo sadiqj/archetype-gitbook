@@ -36,6 +36,7 @@
 * [Tokens](contract-library/tokens/README.md)
   * [ERC20](contract-library/tokens/erc20.md)
   * [ERC720](contract-library/tokens/erc720.md)
+  * [ICO](contract-library/tokens/ico.md)
 * [Miles](contract-library/miles/README.md)
   * [Miles with expiration](contract-library/miles/miles-with-expiration.md)
 * [Finance](contract-library/finance/README.md)
