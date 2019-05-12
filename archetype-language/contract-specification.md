@@ -118,9 +118,9 @@ Say for example you want to express the _only_ obsolete `goods` assets may have 
 forall x : removed goods, x.expiration < now
 ```
 
-The schema below illustrates the three sets of assets resulting of the action effect:
+The schema below illustrates the three sets of assets resulting from the action effect:
 
-![sets of assets due to action effect](../.gitbook/assets/effect-asset.png)
+![action effect on asset collection](../.gitbook/assets/effect-asset.png)
 
 ### Loop invariant
 
