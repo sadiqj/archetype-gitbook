@@ -41,7 +41,7 @@ action declare_winner = {
 This generates a verification task which consists in proving that the effect of the `declare_winner` action on the `max_bid` is actually to set it to the maximum bid value. 
 
 {% hint style="info" %}
-To practice logical property formalisation, you can solve online [edukera](https://app.edukera.com) exercises.
+To practice logical property formalisation, you can solve online [edukera](https://app.edukera.com) formalisation exercises.
 {% endhint %}
 
 ## Data invariant
