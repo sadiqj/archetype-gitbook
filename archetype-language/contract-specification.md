@@ -8,7 +8,7 @@ description: Formalise contract properties
 
 A formal property is a _logical formula_ about the relations between data values and/or asset collections properties. It is made of:
 
-* logical connectors: and, or, implies, not
+* logical connectors: and, or, implies, not, if then else, ...
 * quantifiers: the universal quantifier _forall_ and the existential quantifier _exists_
 * atomic predicates, which are the relations between values and/or asset collection:
   *  between values \(integers, tez, ...\): =, &lt;=, &gt;=, &lt;, &gt;, ...
@@ -23,7 +23,7 @@ forall b : bid, b.value <= max_bid
 
 It reads that any stored bid value is less or equal than max\_bid.
 
-This property would typically serve as formal specification for the function which computes `max_bid` as follows:
+This property would typically serve as formal specification of the function `declare_winner` which computes `max_bid` as follows:
 
 ```ocaml
 variable max_bid tez = 0tz
@@ -40,7 +40,48 @@ action declare_winner = {
 
 This generates a verification task which consists in proving that the effect of the `declare_winner` action on the `max_bid` is actually to set it to the maximum bid value. 
 
+{% hint style="info" %}
+To practice logical property formalisation, you can solve online [edukera](https://app.edukera.com) exercises.
+{% endhint %}
+
 ## Data invariant
+
+It is possible to specify a property a data is supposed to have throughout the life of the contract, whatever the calls made to the contract and the values of the other data.
+
+For example,  say a `quantity` field of an asset `mile` should remain strictly positive. Use the with keyword to introduce the property after the asset declaration:
+
+```ocaml
+asset mile identified by id = {
+   id : string;
+   quantity : int;
+} with { 
+  i1 : quantity > 0
+}
+```
+
+This generates as many verification tasks as the number of actions/transitions in the contract. Each verification task consists in proving that the property below holds after it is executed, the _post-condition,_ under the assumption it holds before, the _pre-condition_:
+
+```text
+forall x : mile, x.quantity > 0
+```
+
+It is also possible to declare a state invariant.
+
+Say for example the contract should not hold any currency in the state `Terminated`. The following would generate the necessary verification tasks:
+
+```ocaml
+states =
+| Created initial
+| Confirmed
+| Canceled
+| Terminated with { i1 : balance = 0 }
+```
+
+This generates the following pre and post condition for all actions and transitions:
+
+```ocaml
+if state = Terminated then balance = 0
+```
 
 ## Effect specification
 
@@ -50,7 +91,7 @@ This generates a verification task which consists in proving that the effect of 
 
 ### Assert
 
-## Contract specification
+## Data access predicates
 
 proof of trace
 
