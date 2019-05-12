@@ -55,7 +55,7 @@ asset mile identified by id = {
    id : string;
    quantity : int;
 } with { 
-  i1 : quantity > 0
+  i : quantity > 0
 }
 ```
 
@@ -74,7 +74,7 @@ states =
 | Created initial
 | Confirmed
 | Canceled
-| Terminated with { i1 : balance = 0 }
+| Terminated with { i : balance = 0 }
 ```
 
 This generates the following pre and post condition for all actions and transitions:
@@ -85,9 +85,48 @@ if state = Terminated then balance = 0
 
 ## Effect specification
 
-### Post condition
+### Before \(and after\)
+
+When formalising action property, it is usually necessary to express that the value of a storage data _after_ the execution of the action has a certain relation towards the same value _before_ the execution.
+
+Say for example the data `amount` must increase due to the effect of action `add_amount`. The keyword _`before`_ is used to refer to the data value before action effect on the data. Hence this property is formalised:
+
+```ocaml
+before amount < amount
+```
+
+This property is placed in the `specification` section of the action:
+
+```ocaml
+variable amount int = 0
+
+action add_amount = {
+  specification {
+    p : before amount < amount
+  }
+  effect {
+    (* do something to increase amount *)
+  }
+}
+```
+
+For asset collection, archetype provides dedicated keywords to refer to _`added`_, _`removed`_ and _`unmoved`_ assets by action effect. 
+
+Say for example you want to express the _only_ obsolete `goods` assets may have been removed by the action effect, that is asset with `expiration` date before now. This property is formalised:
+
+```ocaml
+forall x : removed goods, x.expiration < now
+```
+
+The schema below illustrates the three sets of assets resulting of the action effect:
+
+![sets of assets due to action effect](../.gitbook/assets/effect-asset.png)
 
 ### Loop invariant
+
+
+
+
 
 ### Assert
 
