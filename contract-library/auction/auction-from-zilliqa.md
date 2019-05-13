@@ -14,8 +14,8 @@ Retranscription of zilliqa’s auction contract:
 archetype auction_zilliqa
 
 variable highest_bid tez = 0tz
-variable highest_bidder address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
+variable highest_bidder address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 variable beneficiary address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
 asset pending_return identified by incumbent = {
