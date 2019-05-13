@@ -74,12 +74,12 @@ An Action is made of sections listed below:
 </table>For example, the `complete` action example may be enhanced as follows:
 
 ```ocaml
-constant admin role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+constant owner role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
-constant threshold tez = 100tz
+variable threshold tez = 100tz
 
 action complete (value : string) (amount : int) = {
-  called by admin
+  called by owner
   
   accept transfer
   
@@ -97,15 +97,63 @@ action complete (value : string) (amount : int) = {
 
 ### Data assignment
 
+A variable is assigned a new value as exampled below:
+
+```ocaml
+threshold := amount;
+```
+
+After this instruction, the value of `threshold` is the value of `amount`.
+
 ### Currency transfer
 
-### Condition
+Transfers of currency use the transfer instruction as exampled below:
 
-#### if then else
+```ocaml
+transfer 10tz to owner
+```
 
-#### failif
+The recipient of the transfer may be omitted when it is specified in the tez value declaration. Given the following declaration:
 
-#### Require
+```ocaml
+constant price from buyer to seller = 50tz
+```
+
+The transfer of price to seller is simply executed with:
+
+```text
+transfer price;
+```
+
+The transfer to buyer is simply executed with:
+
+```text
+transfer back price;
+```
+
+### Conditional
+
+The basic conditional expression is exampled below :
+
+```ocaml
+if transferred > threshold then (
+  transfer price
+) else (
+  fail "not enough"
+)
+```
+
+The `require` expression fails if the condition is not met:
+
+```text
+require (transferred > threshold);
+```
+
+The failif expression fails if the condition is met:
+
+```text
+failif (transferred <= threshold)
+```
 
 ### Asset collection
 
