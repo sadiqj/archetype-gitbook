@@ -81,7 +81,7 @@ Declaring an asset implicitly creates the collection which contains asset instan
 
 In order to get a technical vision of asset collections, you may consider that the asset collection is equivalent to a map between the identifier field and a record made of the other fields.
 
-For example, the ocaml equivalent of the `car` asset above is a record declaration and a map declaration.
+For example, the Ocaml equivalent of the `car` asset above is a record declaration and a map declaration.
 
 ```ocaml
 type car = {
@@ -92,7 +92,7 @@ type car = {
 module CarColl = Map.make(String)
 ```
 
-Storage of asset is abstract in Archetype in order for the transcoder to apply optimisation strategy when generating execution code. For example, if the car collection is only accessed via get and set methods, then it will be generated as a set container.
+Storage of asset is abstract in Archetype in order for the transcoder to apply optimisation strategy when generating execution code. For example, if the car collection is only accessed via get and set methods, then it will be generated as a _set_ container.
 
 
 
