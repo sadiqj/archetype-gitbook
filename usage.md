@@ -46,6 +46,12 @@ Available options:
 
 ## VS code extension
 
+The archetype extension provides:
+
+* syntax highlighting
+* [LSP](https://microsoft.github.io/language-server-protocol/) support
+* transcoding commands
+
 {% hint style="warning" %}
 coming soon
 {% endhint %}
