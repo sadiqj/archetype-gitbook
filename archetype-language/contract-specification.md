@@ -207,7 +207,7 @@ The following specifies that only the `admin` role can do any kind of storage da
 anychange may be performed only by role admin
 ```
 
-The following specifies that role owner does not have change any data:
+The following specifies that the role `owner` does not change any data:
 
 ```text
 nochange may be performed by owner
