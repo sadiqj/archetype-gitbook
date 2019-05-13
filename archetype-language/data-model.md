@@ -47,7 +47,7 @@ asset car identified by vin = {
 }
 ```
 
-The type of a field may be a basic type, but can also be one of `collection` or `partition`. 
+The type of a field may be a basic type, or one of `collection` or `partition`. 
 
 A collection is the generic name for an asset container. For example, if `part` is the asset for vehicle part, it is possible to describe which parts a car is made of:
 
@@ -64,7 +64,7 @@ asset car identified by vin = {
 }
 ```
 
-Say now that the contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields contains a collection of animal. Rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
+Say now that the contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields has a collection of animas. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
 
 ```ocaml
 asset animal identidied by = {
