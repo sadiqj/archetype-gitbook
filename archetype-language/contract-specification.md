@@ -230,11 +230,11 @@ The value of `ROLE` is:
 The value of `CHANGE` is:
 
 * `add ASSET` 
-* `rm ASSET` where ASSET is the name of an asset
+* `remove ASSET` 
 * `update ASSET` 
 * a list of above `CHANGE` separated by `or`
 * _`anychange`_
-* `anychange but` 
+* _`anychange but`_ `ACTION`
 * _`nochange`_
 
 where `ASSET` is the name of an asset.
