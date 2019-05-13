@@ -156,7 +156,7 @@ Follow the link below to read more about the archetype language features.
 
 Archetype comes with a library of several dozen of contract archetypes. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
 
-The library cover some key blockchain processes :
+The library covers some key blockchain processes :
 
 * purchase transaction \(escrow\)
 * decision process \(voting, auction\)
