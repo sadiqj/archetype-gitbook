@@ -230,13 +230,15 @@ Archetype provides the following predicates:
 | `transferred by ACTION` |  transferred \(ie. emitted\)  amount by `ACTION` |
 | `transferred to ACTION` | transferred \(ie. received\)  amount by `ACTION` |
 
-The value of `ROLE` is:
+The possible values of predicates arguments are:
 
+{% tabs %}
+{% tab title="ROLE" %}
 * a variable typed `role`  
 * a list of `ROLE` separated by `or`
+{% endtab %}
 
-The value of `CHANGE` is:
-
+{% tab title="CHANGE" %}
 * `add ASSET` 
 * `remove ASSET` 
 * `update (ASSET FIELD | VARIABLE)` 
@@ -244,16 +246,16 @@ The value of `CHANGE` is:
 * _`anychange`_
 * _`anychange but`_ `ACTION`
 * _`nochange`_
+{% endtab %}
 
-where `ASSET` is the name of an asset.
-
-The value of `ACTION` is:
-
-* an action
+{% tab title="ACTION" %}
+* a contract action name
 * a list of `ACTION` separated by `or`
 * _`anyaction`_
 * _`anyaction but`_ `ACTION`
 * _`noaction`_
+{% endtab %}
+{% endtabs %}
 
 
 
