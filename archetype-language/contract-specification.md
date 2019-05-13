@@ -89,7 +89,7 @@ if state = Terminated then balance = 0
 
 When formalising action property, it is usually necessary to express that the value of a storage data _after_ the execution of the action has a certain relation towards the same value _before_ the execution.
 
-Say for example the data `amount` must increase due to the effect of action `add_amount`. The keyword _`before`_ is used to refer to the data value before action effect on the data. Hence this property is formalised:
+Say for example the variable `amount` must increase due to the effect of action `add_amount`. The keyword _`before`_ is used to refer to the variable value before the effect of the action. Hence this property is formalised:
 
 ```ocaml
 before amount < amount
@@ -124,12 +124,12 @@ The schema below illustrates the three sets of assets resulting from the action 
 
 ### Loop invariant
 
-With imperative language like archetype, iterations are done with loops. For formal verification purpose, it is necessary to provide _loop invariant_ properties.
+With imperative languages like archetype, iterations are done with loops. For formal verification purpose, it is necessary to provide _loop invariant_ properties.
 
-A loop invariant is a property true at each step of the iteration. More precisely, the property holds true:
+A loop invariant is a property which is true at each step of the iteration. More precisely, the invariant holds:
 
 * at the beginning of the loop, when no object has been iterated yet \(loop initialisation\)
-* at any iteration
+* during iteration
 * at the end of the iteration \(loop terminaison\)
 
  A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections: 
@@ -151,8 +151,7 @@ asset goods identified by id= {
 
 action empty_stock = {
   specification {
-    p : stock = 0   (* this action leaves the stock empty *)
-  }
+    p : stock = 0   (* this action is supposed to empty the stock of goods *)  }
   invariant goods_loop {
     i : 0 <= stock <= toiterate goods.sum(quantity)
   }
@@ -165,6 +164,8 @@ action empty_stock = {
   }
 }
 ```
+
+Note the `invariant` section for the loop labeled `goods_loop` at line 13.
 
 At the end of the iteration, the `toiterate` collection is empty, and the loop invariant reduces to:
 
@@ -184,9 +185,67 @@ Archetype ensures iteration terminaison by design.
 
 ### Assert
 
-## Data access predicates
+As in many languages, it is possible to insert `assert` instructions in the effect of actions and transitions.
 
-proof of trace
+The difference in archetype is that an assert instruction generates a verification task, which means that it is verified _before_ the contract is deployed.
+
+As such, an `assert` instruction does not generate any execution code.
+
+## Contract predicates
+
+In order to provide security guarantee to contract readers, it is usually useful to state which action may change an asset collection or a variable. 
+
+For example, the following specifies that only the action `add_goods` may add a `goods` asset:
+
+```text
+add goods may be performed only by add_goods
+```
+
+The following specifies that only the `admin` role can do any kind of storage data:
+
+```text
+anychange may be performed only by role admin
+```
+
+The following specifies that no currency is received by the contract:
+
+```text
+transferred to anyaction = 0
+```
+
+Archetype provides the following predicates:
+
+| predicate | description |
+| :--- | :--- |
+| `CHANGE may be performed only by role ROLE` | specifies that only role `ROLE` can perform `CHANGE` |
+| `CHANGE may be performed only by ACTION`  | specifies that only `ACTION` can perform `CHANGE` |
+| `transferred by ACTION` |  transferred \(ie. emitted\) amount by `ACTION` |
+| `transferred to ACTION` | transferred \(ie. received\) amount by `ACTION` |
+
+The value of `ROLE` is:
+
+* a variable typed `role`  
+* a list of `ROLE` separated by `or`
+
+The value of `CHANGE` is:
+
+* `add ASSET` 
+* `rm ASSET` where ASSET is the name of an asset
+* `update ASSET` 
+* a list of above `CHANGE` separated by `or`
+* _`anychange`_
+* `anychange but` 
+* _`nochange`_
+
+where `ASSET` is the name of an asset.
+
+The value of `ACTION` is:
+
+* an action
+* a list of `ACTION` separated by `or`
+* _`anyaction`_
+* _`anyaction but`_ `ACTION`
+* _`noaction`_
 
 
 
