@@ -124,9 +124,63 @@ The schema below illustrates the three sets of assets resulting from the action 
 
 ### Loop invariant
 
+With imperative language like archetype, iterations are done with loops. For formal verification purpose, it is necessary to provide _loop invariant_ properties.
 
+A loop invariant is a property true at each step of the iteration. More precisely, the property holds true:
 
+* at the beginning of the loop, when no object has been iterated yet \(loop initialisation\)
+* at any iteration
+* at the end of the iteration \(loop terminaison\)
 
+ A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections: 
+
+* `toiterate` refers to the assets stil to iterate on
+* `iterated` refers to the assets already iterated 
+
+For example say you need to express that a certain value `remainder` has is upper-bounded by  the sum of the field `quantity` over the `goods` assets stil to iterate. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
+
+```ocaml
+variable stock int = 0
+
+asset goods identified by id= {
+   id : string
+   quantity : int
+} with {
+  a : stock = goods.sum(quantity)
+}
+
+action empty_stock = {
+  specification {
+    p : stock = 0   (* this action leaves the stock empty *)
+  }
+  invariant goods_loop {
+    i : 0 <= stock <= toiterate goods.sum(quantity)
+  }
+  effect {
+    ... 
+    goods_loop : for (g in goods) {
+       ... (* decrease stock somehow *)
+    }
+    ...
+  }
+}
+```
+
+At the end of the iteration, the `toiterate` collection is empty, and the loop invariant reduces to:
+
+```ocaml
+0 <= stock <= 0
+```
+
+which ensures post condition `p` \(line 12\). The loop invariant generates verification tasks on its own.
+
+{% hint style="info" %}
+Loop invariants may refer to local variables declared in the effect section.
+{% endhint %}
+
+{% hint style="info" %}
+Archetype ensures iteration terminaison by design.
+{% endhint %}
 
 ### Assert
 

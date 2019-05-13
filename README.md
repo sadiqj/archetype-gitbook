@@ -143,7 +143,7 @@ Hence the need for a ****single language to describe the business logic of an ar
 ![archetype target languages ](.gitbook/assets/arch_targets_2.png)
 
 {% hint style="info" %}
-In a nutshell, archetype is a programming language which is transcoded to service specific target languages.
+In a nutshell, archetype is a programming language which is transcoded to target languages for specific services.
 {% endhint %}
 
 As such, archetype may also serve as a target language for existing language to benefit from archetype services.  
