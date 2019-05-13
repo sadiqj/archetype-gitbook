@@ -207,6 +207,12 @@ The following specifies that only the `admin` role can do any kind of storage da
 anychange may be performed only by role admin
 ```
 
+The following specifies that role owner does not have change any data:
+
+```text
+nochange may be performed by owner
+```
+
 The following specifies that no currency is received by the contract:
 
 ```text
@@ -233,7 +239,7 @@ The value of `CHANGE` is:
 
 * `add ASSET` 
 * `remove ASSET` 
-* `update ASSET` 
+* `update (ASSET FIELD | VARIABLE)` 
 * a list of above `CHANGE` separated by `or`
 * _`anychange`_
 * _`anychange but`_ `ACTION`
