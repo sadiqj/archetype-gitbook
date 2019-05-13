@@ -20,7 +20,20 @@ constant msg string = "Hello world"
 
 ## Variable
 
+A variable is a global value that can be changed. The following snippet defines 2 global variables named `seller` and `buyer` typed role equal to a \(here random\) addresses:
 
+```ocaml
+variable seller role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+variable buyer  role = @tz1KUbontHGor25CztkksC8RvjUWAbXYJuNr
+```
+
+The following defines a variable `price` typed `tez`  received from `buyer`, to transfer to `seller`.
+
+```ocaml
+variable price tez from buyer to seller = 100tz
+```
 
 ## Asset
+
+
 
