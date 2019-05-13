@@ -44,14 +44,15 @@ Available options:
  Some features are still under development
 {% endhint %}
 
-## Vs code extension
+## VS code extension
 
-Once you're strong enough, save the world:
-
-```
-// Ain't no code for that yet, sorry
-echo 'You got to trust me on this, I saved the world'
-```
+{% hint style="warning" %}
+coming soon
+{% endhint %}
 
 ## Try Archetype
+
+{% hint style="warning" %}
+coming soon
+{% endhint %}
 
