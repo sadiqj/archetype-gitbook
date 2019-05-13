@@ -46,7 +46,7 @@ To practice formalisation of logical properties, you can solve online [edukera](
 
 ## Data invariant
 
-It is possible to specify a property a data is supposed to have throughout the life of the contract, whatever the calls made to the contract and the values of the other data.
+It is possible to specify the property a data is supposed to have throughout the life of the contract, regardless of the calls made to the contract and the changes of values of other data.
 
 For example,  say a `quantity` field of an asset `mile` should remain strictly positive. Use the with keyword to introduce the property after the asset declaration:
 
@@ -59,7 +59,7 @@ asset mile identified by id = {
 }
 ```
 
-This generates as many verification tasks as the number of actions/transitions in the contract. Each verification task consists in proving that the property below holds after it is executed, the _post-condition,_ under the assumption it holds before, the _pre-condition_:
+This generates as many verification tasks as the number of actions/transitions in the contract. Each verification task consists in proving that the property below holds after it is executed \(it's called the _post-condition\),_ under the assumption it holds before \(called the _pre-condition_\):
 
 ```text
 forall x : mile, x.quantity > 0
@@ -85,7 +85,7 @@ if state = Terminated then balance = 0
 
 ## Effect specification
 
-### Before \(and after\)
+### Before and after
 
 When formalising action property, it is usually necessary to express that the value of a storage data _after_ the execution of the action has a certain relation towards the same value _before_ the execution.
 
