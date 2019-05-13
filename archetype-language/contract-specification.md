@@ -217,10 +217,12 @@ Archetype provides the following predicates:
 
 | predicate | description |
 | :--- | :--- |
-| `CHANGE may be performed only by role ROLE` | specifies that only role `ROLE` can perform `CHANGE` |
-| `CHANGE may be performed only by ACTION`  | specifies that only `ACTION` can perform `CHANGE` |
-| `transferred by ACTION` |  transferred \(ie. emitted\) amount by `ACTION` |
-| `transferred to ACTION` | transferred \(ie. received\) amount by `ACTION` |
+| `CHANGE may be performed only by role ROLE` | specifies that **only** role `ROLE`  can perform `CHANGE` |
+| `CHANGE may be performed by role ROLE` | specifies that role `ROLE`  can perform `CHANGE` |
+| `CHANGE may be performed only by action ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
+| `CHANGE may be performed by action ACTION` | specifies that action`ACTION`  can perform `CHANGE` |
+| `transferred by ACTION` |  transferred \(ie. emitted\)  amount by `ACTION` |
+| `transferred to ACTION` | transferred \(ie. received\)  amount by `ACTION` |
 
 The value of `ROLE` is:
 
