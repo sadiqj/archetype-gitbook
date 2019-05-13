@@ -18,7 +18,7 @@ The following defines a `string` typed constant named `msg` :
 constant msg string = "Hello world"
 ```
 
-## Variables
+## Variable
 
 
 
