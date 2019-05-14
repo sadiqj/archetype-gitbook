@@ -26,7 +26,9 @@ Development progress dashboard:
 
 Travis status:
 
-{% embed url="https://travis-ci.org/edukera/solidity-parser-ocaml" %}
+{% embed url="https://travis-ci.org/edukera/archetype-lang" %}
+
+
 
 
 
