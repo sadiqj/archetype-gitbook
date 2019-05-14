@@ -95,25 +95,34 @@ action complete (value : string) (amount : int) = {
 
 ## Effect
 
-### Data assignment
+### Local variable 
 
-A variable is assigned a new value as exampled below:
+A local variable is declared as exampled below:
 
 ```ocaml
-threshold := amount;
+let p = amount + 10tz in
+...
+```
+
+### Data assignment
+
+A variable \(global or local\) is assigned a new value as exampled below:
+
+```ocaml
+p := amount;
 ```
 
 After this instruction, the value of `threshold` is the value of `amount`.
 
 ### Currency transfer
 
-Transfers of currency use the transfer instruction as exampled below:
+The instruction to transfer currency is exampled below:
 
 ```ocaml
 transfer 10tz to owner
 ```
 
-The recipient of the transfer may be omitted when it is specified in the tez value declaration. Given the following declaration:
+The recipient of the transfer may be omitted when it is specified in the tez value declaration. Consider the following declaration:
 
 ```ocaml
 constant price from buyer to seller = 50tz
@@ -149,7 +158,7 @@ The `require` expression fails if the condition is not met:
 require (transferred > threshold);
 ```
 
-The failif expression fails if the condition is met:
+The `failif` expression fails if the condition is met:
 
 ```text
 failif (transferred <= threshold)
@@ -157,13 +166,43 @@ failif (transferred <= threshold)
 
 ### Asset collection
 
-#### Aggregation
+Consider the following car asset identified by its vin id:
 
-#### Filter
+```text
+asset car identified by vin = {
+  vin : string;
+  model : string;
+  year : int
+}
+```
 
-#### Loop
+The following table gives the basic instructions to get, add, remove, update an asset. 
 
+| operation | expression |
+| :--- | :--- |
+| get an asset | `car.get vid` |
+| add an asset | `car.add { "1GNEK13ZX3R298984", "Bugatti Chiron", "2018" }`  |
+| remove an asset | `car.remove vid` |
+| update an asset | `car.update "1GNEK13ZX3R298984" { year = 2019 }` |
 
+Advanced operations over a collection are listed in the table below:
+
+| operation | expression |
+| :--- | :--- |
+| count | `car.count`  |
+| maximum of a field | `car.max { year }` |
+| minimum of a field | `car.min { year }` |
+| sum of a field | `car.sum { year }` |
+| select a subset collection | `car.select { year >= 2019 }`  |
+| sort a collection | `car.sort { year }` |
+
+_Iteration_ over a collection is as follows:
+
+```ocaml
+for (c in car) (
+  ...
+)
+```
 
 
 
