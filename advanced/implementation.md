@@ -4,7 +4,7 @@ Archetype is an open source project:
 
 {% embed url="https://github.com/edukera/archetype-lang" %}
 
-It is implemented in Ocaml. 
+Archetype is implemented in Ocaml. 
 
 The code generation is developed as a [why3](http://why3.lri.fr/) plugin. Why3 indeed has the possibility to accept an input language as long as it is provided with a converter from this language to the why3 format.
 
