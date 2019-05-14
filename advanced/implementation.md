@@ -20,3 +20,13 @@ The schema below illustrates the structure of the plugin:
 
 ![archetype plugin architecture](../.gitbook/assets/archtype_archi.png)
 
+Development progress dashboard:
+
+{% embed url="https://github.com/edukera/archetype-lang/projects" %}
+
+Travis status:
+
+{% embed url="https://travis-ci.org/edukera/solidity-parser-ocaml" %}
+
+
+
