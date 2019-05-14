@@ -181,7 +181,7 @@ The following table gives the basic instructions to get, add, remove, update an 
 | operation | expression |
 | :--- | :--- |
 | get an asset | `car.get vid` |
-| add an asset | `car.add { "1GNEK13ZX3R298984", "Bugatti Chiron", "2018" }`  |
+| add an asset | `car.add { "1GNEK13ZX3R298984"; "Bugatti Chiron"; "2018" }`  |
 | remove an asset | `car.remove vid` |
 | update an asset | `car.update "1GNEK13ZX3R298984" { year = 2019 }` |
 | retrieve asset nb. i | `car.nth i` \(an asset collection is sorted\) |
