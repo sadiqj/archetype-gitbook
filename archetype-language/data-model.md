@@ -47,6 +47,16 @@ asset car identified by vin = {
 }
 ```
 
+By default, assets are sorted on the identifier value. It is possible to specify another default sort. For example to sort car assets on the `year` field value:
+
+```text
+asset car identified by vin sorted by year = {
+  vin : string;
+  model : string;
+  year : int
+}
+```
+
 The type of a field may be a basic type, or one of `collection` or `partition`. 
 
 A collection is the generic name for an asset container. For example, if `part` is the asset for vehicle part, it is possible to describe which parts a car is made of:
