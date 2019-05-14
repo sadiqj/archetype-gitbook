@@ -4,7 +4,7 @@ description: >-
   quality insurance.
 ---
 
-# What is Archetype?
+# What is Archetype
 
 Archetype is funded by [Tezos](https://tezos.com) and developed by [edukera](https://edukera.com).
 
