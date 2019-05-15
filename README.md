@@ -6,7 +6,7 @@ description: >-
 
 # What is Archetype
 
-Archetype is funded by [Tezos](https://tezos.com) and developed by [edukera](https://edukera.com).
+Archetype is funded by [Tezos](https://tezos.com) and developed by [edukera](https://www.edukera.com).
 
 ## Smart contracts
 
