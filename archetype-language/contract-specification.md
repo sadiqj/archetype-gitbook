@@ -198,7 +198,7 @@ In order to provide security guarantee to contract readers, it is usually useful
 For example, the following specifies that only the action `add_goods` may add a `goods` asset:
 
 ```text
-add goods may be performed only by add_goods
+(add goods) may be performed only by action add_goods
 ```
 
 The following specifies that only the `admin` role can do any kind of storage data:
