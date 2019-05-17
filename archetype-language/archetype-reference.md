@@ -6,6 +6,8 @@ coming soon
 
 ## Grammar
 
+<bold>Test</bold>
+
 ```ocaml
  <loc(X)> ::= X
 
