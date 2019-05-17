@@ -5,9 +5,9 @@ coming soon
 {% endhint %}
 
 ## Grammar
-    
-```ocaml
- <loc(X)> ::= X
+
+```coffeescript
+<loc(X)> ::= X
 
 <snl(separator, X)> ::= X
                       | X separator
@@ -385,6 +385,5 @@ coming soon
                          | AT_UPDATE
 
 <asset_operation> ::= <asset_operation_enum>+ [<simple_expr>+]
-
 ```
 
