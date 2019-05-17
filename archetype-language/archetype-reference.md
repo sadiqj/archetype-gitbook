@@ -6,7 +6,7 @@ coming soon
 
 ## Grammar
 
-`
+```ocaml
  <loc(X)> ::= X
 
 <snl(separator, X)> ::= X
@@ -386,5 +386,5 @@ coming soon
 
 <asset_operation> ::= <asset_operation_enum>+ [<simple_expr>+]
 
-`
+```
 
