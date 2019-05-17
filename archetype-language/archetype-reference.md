@@ -5,61 +5,6 @@ coming soon
 {% endhint %}
 
 ## Grammar
-
-
- 
-    <style>
-      .specification td, th{
-          vertical-align: baseline;
-          padding: 0;
-          margin: 0;
-          font-weight: normal;
-      }
-      .specification td {
-          text-align: left;
-      }
-      .specification th {
-          text-align: right;
-          white-space: nowrap;
-      }
-      .specification th::after {
-          content: "\a0::=\a0";
-      }
-      .specification th.bar {
-          text-align: right;
-      }
-      .specification th.bar::after {
-          content: "|\a0";
-      }
-      .rule th, td {
-          padding-top: .5em;
-      }
-      .nonterminal::before {
-          content: "<";
-      }
-      .nonterminal::after {
-          content: ">";
-      }
-      .list::after {
-          content: "*";
-          vertical-align: super;
-          font-size: smaller;
-      }
-      .ne_list::after {
-          content: "+";
-          vertical-align: super;
-          font-size: smaller;
-      }
-      .option::before {
-          content: "[";
-      }
-      .option::after {
-          content: "]";
-      }
-    </style>
-  </head>
-  
-  <body>
     
     <table class="specification">
       
