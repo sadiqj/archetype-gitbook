@@ -152,7 +152,7 @@ asset goods identified by id= {
 action empty_stock = {
   specification {
     p : stock = 0   (* this specifies that the effect of empty_stock is to
-                       sets 'stock' to zero *)
+                       set 'stock' to zero *)
   }
   invariant goods_loop {
     i : 0 <= stock <= toiterate goods.sum(quantity)
