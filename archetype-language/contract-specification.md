@@ -48,7 +48,7 @@ To practice formalisation of logical properties, you can solve online [edukera](
 
 It is possible to specify the property a data is supposed to have throughout the life of the contract, regardless of the calls made to the contract and the changes of values of other data.
 
-For example,  say a `quantity` field of an asset `mile` should remain strictly positive. Use the with keyword to introduce the property after the asset declaration:
+For example,  say a `quantity` field of an asset `mile` should remain strictly positive. Use the `with` keyword to introduce the property, as illustrated below:
 
 ```ocaml
 asset mile identified by id = {
