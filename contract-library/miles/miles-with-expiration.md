@@ -127,17 +127,7 @@ action clear_expired = {
 ```ocaml
 module Miles
 
-  use int.Int
-  use ref.Ref
-  use option.Option
-  use list.List
-  use list.Append
-
-  use archetype.Types
-  use archetype.Contract
-  use archetype.Map
-  use archetype.AssetCollection
-  use archetype.Trace
+  use archetype.Lib
 
 (* TRACES *)
 
