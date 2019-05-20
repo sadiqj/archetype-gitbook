@@ -40,9 +40,7 @@ action add (ow : address) (newmile : mile) = {
    }
 
    effect {
-     owner.addifnotexist { addr = ow; mile = [] };
-     (* action must fail if mile already exists *)
-     (owner.get ow).miles.add newmile
+     owner.addifnotexist { addr = ow; mile = [newmile] }
    }
 }
 
