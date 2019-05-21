@@ -279,7 +279,7 @@ This contract supposes that fixing values are public, which is an issue because 
 There are two solutions :
 
 * find a way to cipher fixing data
-* wait for a new business model from Exchange institution
+* provide exchange institutions with a business model which do not rely on data licensing \(typically SCAP \(smart contract as a platform\) servicing\)
 
 One could imagine for example that exchange institutions provide fixing data for free and license such auto-callable contract services on a blockchain.
 
