@@ -287,7 +287,7 @@ Note that if underlying values were quoted on the blockchain itself, then the da
 
 TODO :
 
-* do contract for quotation already exist? Are existing market places a model of that?
+* Search for quotation contracts. Are existing market places a model of that?
 * Add formal properties :
   * Sum of payments are above a constant \(here 0, that is proving that payments are positive\)
   * Temporal consistency : adding a fixing at time t does not change the amount due at time before t
