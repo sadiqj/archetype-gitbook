@@ -1,6 +1,6 @@
 # Auto-callable note
 
-This contract is the transcription to archetype of the following auto-callable note :
+This contract is the transcription to archetype of the following auto-callable note from Goldman Sachs:
 
 [https://www.eavest.com/products/e1f62344-818a-39a1-a77c-75ad849a07d6/tsheet](https://www.eavest.com/products/e1f62344-818a-39a1-a77c-75ad849a07d6/tsheet)
 
