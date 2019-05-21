@@ -279,9 +279,9 @@ This contract supposes that fixing values are public, which is an issue because 
 There are two solutions :
 
 * find a way to cipher fixing data
-* provide exchange institutions with a business model which does not rely on fixing data licensing \(typically SCAP \(smart contract as a platform\) servicing\)
+* provide exchange institutions with a business model which does not rely on fixing data licensing
 
-One could imagine for example that exchange institutions provide fixing data for free and license such auto-callable contract services on a blockchain.
+One could imagine for example that exchange institutions provide fixing data for free and provide SCAAS \(smart contract as a service\); typically this auto-callable note as a service to deploy on the blockchain. 
 
 Note that if underlying values were quoted on the blockchain itself, then the data could be natively public and available. The contract could then rely on calls to the exchange contract.
 
