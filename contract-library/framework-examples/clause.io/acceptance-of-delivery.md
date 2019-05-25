@@ -39,7 +39,7 @@ states =
  | Success
  | Fail
 
-transition[%signedbyall [{shipper}; {receiver}]] sign from Created = {
+transition[%signedbyall [{shipper}; {receiver}]%] sign from Created = {
   to Signed
   when { balance = payment + incentiveR + incentiveS }
 }
