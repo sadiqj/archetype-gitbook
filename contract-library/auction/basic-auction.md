@@ -19,9 +19,10 @@ action place_bid = {
     c1 : now < deadline
   }
 
-  effect
+  effect {
     bid.add { incumbent = caller; value = transferred };
     max_bid := max transferred max_bid  
+  }
 }
 
 (* Users need to exhibit proof they are not the winner to reclaim their bid *)

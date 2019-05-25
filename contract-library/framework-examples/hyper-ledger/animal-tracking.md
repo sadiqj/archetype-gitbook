@@ -25,7 +25,7 @@ enum animal =
  | Pig
  | Other
 
-states movement =
+enum movement =
  | In_field initial
  | In_transit
 

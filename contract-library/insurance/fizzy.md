@@ -16,7 +16,7 @@ Below is the direct  transcription of the fizzy contract in archetype.
 ```ocaml
 archetype fizzy
 
-role creator = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk 
+variable creator role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk 
 
 enum status = 
 | Created         
@@ -90,9 +90,8 @@ specification {
 
    (* transaction “updatestatus” is not the only one to potentially 
       perform an update of insurance status *)
-   s3 : (update insurance.stat) may be performed only by tx 
-                                                   updatestatus or manual           
-}
+   s3 : (update insurance.stat) may be performed only by action
+                                                (updatestatus or manual)}
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}

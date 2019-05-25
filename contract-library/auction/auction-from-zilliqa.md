@@ -88,7 +88,7 @@ action place_bid = {
 }
 
 (* onlyonce extension specifies that one cannot withdraw more than once *)
-action[%onlyonce] withdraw = {
+action[%onlyonce%] withdraw = {
 
   require {
     c2 : pending_return.contains caller

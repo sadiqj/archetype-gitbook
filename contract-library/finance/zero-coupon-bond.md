@@ -35,7 +35,7 @@ states =
 
 transition confirm from Created = {
 
-  to Confirmed when transferred = price
+  to Confirmed when { transferred = price }
   with effect {
     maturity := now + 1Y;
     transfer price to issuer

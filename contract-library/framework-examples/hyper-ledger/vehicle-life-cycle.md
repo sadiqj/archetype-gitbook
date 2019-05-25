@@ -21,12 +21,13 @@
 ```ocaml
 archetype vehicle_lifecycle
 
-asset owner as role = {
+asset owner = {
+  id : role;
   fn : string;
   ln : string
 }
 
-states order_state =
+enum order_state =
   | Placed                      initial
   | Scheduled_for_manufacture
   | Vin_assigned
@@ -44,7 +45,7 @@ asset order = {
    details      : vehicledetail
 }
 
-states vehicle_state =
+enum vehicle_state =
   | Off_the_road               initial
   | Active
   | Scrapped
@@ -78,12 +79,12 @@ transition assign_owner on ok : order from any = {
     (* set vehicule state *)
     (order.get ok).vehicule.state := Active;
     (* set vehicule owner *)
-    (order.get ok).vehicule.owner := order.orderer)
+    (order.get ok).vehicule.owner := order.orderer
   }
 }
 
 action vehiculeTransfer (buyer : owner) (vehicule : vehicule) = {
-  called by [%delegable] vehicule.owner
+  called by [%delegable%] vehicule.owner
   effect {
     vehicule.owner := buyer
   }

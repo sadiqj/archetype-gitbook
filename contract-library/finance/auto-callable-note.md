@@ -174,13 +174,13 @@ function compute_expected (d : date) : tez = {
   effect {
     let expected = 0tz in
     let terminated = false in
-    let redeem_date = final in 
+    let redeem_date = final in
     (* early redemption *)
     redeemloop : for (e in early) (
-      if e.redemption <= cd 
+      if e.redemption <= cd
       then (* is there early redemption ? *)
         let v = fixing.get e.observation in
-        if     v.bac >= e.trigger * bac_initial 
+        if     v.bac >= e.trigger * bac_initial
            and v.sg  >= e.trigger * sg_initial
            and v.ubs >= e.trigger * ubs_initial
         then (
@@ -189,13 +189,13 @@ function compute_expected (d : date) : tez = {
            terminated := true
         )
       else (* no need to check future observation *)
-        break;
+        break
     );
     (* redemption *)
     if not terminated and redemption <= cd
-    then 
+    then
       let f = fixing.get redemption in
-      if     f.bac >= bac_strike 
+      if     f.bac >= bac_strike
          and f.sg  >= sg_strike
          and f.ubs >= usb_strike
       then
@@ -203,7 +203,7 @@ function compute_expected (d : date) : tez = {
       else
          let bac_trigger = f.bac / bac_strike in
          let sg_trigger  = f.sg  / sg_strike  in
-         let ubs_trigger = f.ubs / ubs_strike in 
+         let ubs_trigger = f.ubs / ubs_strike in
          let worst = min (min bac_trigger sg_trigger) ubs_trigger in
          expected += worst * nominal;
     (* expected interests *)
@@ -212,10 +212,10 @@ function compute_expected (d : date) : tez = {
       if i.observation <= redem_date and i.payment <= cd
       then
         let v = fixing.get i.observation in
-        if     v.bac >= i.barrier * bac_initial 
+        if     v.bac >= i.barrier * bac_initial
            and v.sg  >= i.barrier * sg_initial
            and v.ubs >= i.barrier * ubs_initial
-        then exp_interests := i.rate * nominal;
+        then exp_interests := i.rate * nominal
     );
     expected += exp_interests;
     return expected

@@ -11,7 +11,7 @@ This extension provides an approval condition to trigger a transaction: each rol
 ```ocaml
 archetype extension signedbyall (
 
-  action[%signedbyall roles] aTransaction
+  action[%signedbyall roles%] aTransaction
 
 ) = {
 

@@ -13,15 +13,15 @@ The result of the vote is computed with the `bury` action: winners are ballots w
 ```ocaml
 archetype vote
 
-variable[%transferable] chairperson role
+variable[%transferable%] chairperson role
 
 (* vote start *)
-variable[%mutable chairperson (state = Created)] startDate date
+variable[%mutable chairperson (state = Created)%] startDate date
 
 (* vote deadline *)
-variable[%mutable chairperson (state = Created)] deadline date
+variable[%mutable chairperson (state = Created)%] deadline date
 
-asset voter as role identified by address = {
+asset voter identified by address = {
   address : address;
   hasVoted : boolean
 } 
@@ -31,7 +31,7 @@ asset ballot identified by value = {
   nbvotes : uint
 }
 
-asset winner {
+asset winner = {
   value : string
 }
 
@@ -83,8 +83,8 @@ transition bury from Voting = {
 }
 
 specification {
-  s3 : startdate < deadline
-  s4 : (voter.when(voter.hasVoted = true)).count() = ballot.sum(nbvotes);
+  s3 : startdate < deadline;
+  s4 : (voter.select(voter.hasVoted = true)).count() = ballot.sum(nbvotes);
   s5 : forall w : winner,
          forall b : ballot,
            b.nbvotes <= ballot.get(w.value).nbvotes

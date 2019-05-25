@@ -23,11 +23,11 @@ variable oracle role
 
 variable[%traceable%] price tez from buyer to creditor
 
-variable[%traceable%] [%mutable_signed [buyer, debitor] (state = Created)%]
+variable[%traceable%] [%mutable_signed [{buyer}; {debitor}] (state = Created)%]
      penalty tez from seller to debitor = 0.1 * price
 
 (* action deadline *)
-variable[%mutable (buyer or seller) (state = Created)%] deadline date
+variable[%mutable (buyer or seller) (instate Created)%] deadline date
 
 (* state machine *)
 states =
@@ -35,7 +35,7 @@ states =
  | Aborted
  | Confirmed
  | Canceled
- | Transferred with { i1 : balance = 0}
+ | Transferred with { i1 : balance = 0 }
 
 transition abort from Created = {
   called by buyer or seller
@@ -43,14 +43,14 @@ transition abort from Created = {
   to Aborted
 }
 
-transition[%signedbyall [{buyer}; {seller}]%] confirm from Created = {
-  to Confirmed when balance = price + penalty
+transition[%signedbyall [buyer; seller]%] confirm from Created = {
+  to Confirmed when { balance = price + penalty }
 }
 
 transition transfer_ from Confirmed = {
   called by oracle
 
-  to Transferred when now < deadline
+  to Transferred when { now < deadline }
   with effect {
     transfer price;
     transfer back penalty
@@ -66,6 +66,7 @@ transition cancel from Confirmed = {
     transfer back price
   }
 }
+
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}

@@ -13,7 +13,7 @@ It is implemented with a simple function’s action execution counter.
 ```ocaml
 archetype extension onlyonce (
 
-  action[%onlyonce] tr
+  action[%onlyonce%] tr
 
 ) = {
 

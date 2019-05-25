@@ -16,7 +16,7 @@ variable incumbent address = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
 variable deadline date = 2019-01-01T00:00:00
 
-transaction place_bid (id : address) (b : tez) = {
+action place_bid (id : address) (b : tez) = {
   require { 
     c1 : now < deadline;
     c2 : b > bid

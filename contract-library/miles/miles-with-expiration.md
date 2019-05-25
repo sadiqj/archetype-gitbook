@@ -27,7 +27,7 @@ asset mile identified by id sorted by expiration = {
 }
 
 (* a partition ensures there is no direct access to mile collection *)
-asset owner as role identified by addr = {
+asset owner identified by addr = {
   addr  : address;
   miles : mile partition (* injective (owner x mile) *)
 }

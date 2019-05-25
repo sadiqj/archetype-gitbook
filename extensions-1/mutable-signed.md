@@ -11,11 +11,11 @@ This extension defines a mutable value. The action to change its value must be s
 ```ocaml
 archetype extension mutable_signed (
 
-  variable[%mutable_signed roles cond] avariable type
+  variable[%mutable_signed roles cond%] avariable type
 
 ) = {
 
-  action[%signedbyall roles] set_<%avariable> (newvariable : type) = {
+  action[%signedbyall roles%] set_<%avariable> (newvariable : type) = {
     require { 
       set_<%avariable>_c1 : cond
     }

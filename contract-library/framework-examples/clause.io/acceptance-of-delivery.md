@@ -55,7 +55,7 @@ transition unilateral_abort from Created = {
   }
 }
 
-transition[%signedbyall [{shipper}; {receiver}]] abort from Signed = {
+transition[%signedbyall [{shipper}; {receiver}]%] abort from Signed = {
   called by shipper or receiver
 
   to Aborted

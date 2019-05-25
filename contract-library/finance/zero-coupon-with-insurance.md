@@ -9,63 +9,41 @@ The solution is to use a guarantee fund to ensure pay back. This fund plays the 
 ```ocaml
 archetype zero_coupon_bond_with_insurance
 
-variable issuer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk 
-                       (* seller ‘Alice’ *)
+variable issuer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk (* seller ‘Alice’ *)
 
 variable owner role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
-                       (* buyer ‘Bob’; receives 11 tez in one-year *)
+(* buyer ‘Bob’; receives 11 tez in one-year *)
 
 contract insurance = {
-   action pay : role, tez;
+   action pay : address, tez
 } = @KT1GabhR5P52hw6xs5P69BXJYAURaznhvN1k
 
-value price tez from owner = 10
+variable price tez from owner = 10
 
-value payment tez from issuer to owner = 1.1 * price
+variable payment tez from issuer to owner = 11 * price
 
-value maturity date = now
+variable maturity date
 
 states =
-  | Created initial 
-  | Insured         (* Guarantee Fund has accepted issuer *)
-  | Confirmed       (* owner has purchased bond *)
-  | Collected       (* owner has collected payment *)
-  | Defaulted       (* at maturity, issuer hasn’t transferred payment *)
-
-
-transition confirm from Created = {
-
-  to Confirmed when { transferred = price }
-  with effect {
-    maturity := now + 1Y;
-    transfer price to issuer
-  }
-}
+ | Created initial
+ | Insured   (* Guarantee Fund has accepted issuer *)
+ | Confirmed (* owner has purchased bond *)
+ | Repaid    (* issuer has transferred payment to contract *)
+ | Collected (* owner has collected payment *)
 
 transition insured from Created = {
   called by insurance
+
   to Insured
-}
-
-transition collect from Confirmed = {
-  called by owner
-
-  to Collected when { now >= maturity }
-  with effect {
-    if balance >= payment
-    then transfer balance to owner
-    else guarantee_fund.pay owner payment
-  }
-
-  to Defaulted when { now >= maturity and balance < payment }
 }
 
 transition confirm from Insured = {
   specification {
-    balance = 0
+    s1 : balance = 0
   }
 
-  to Confirmed when { transferred = price }
+  to Confirmed
+  when { transferred = price }
   with effect {
     maturity := now + 1Y;
     transfer price to issuer
@@ -76,7 +54,21 @@ transition repay from Confirmed = {
   called by issuer
 
   to Repaid
-  when { transferred = payment }
+  when {
+    transferred = payment
+  }
+}
+
+transition collect from Repaid = {
+  called by owner
+
+  to Collected
+  when { now > maturity }
+  with effect {
+    if balance >= payment
+    then transfer balance to owner
+    else guarantee_fund.pay owner payment
+  }
 }
 
 ```

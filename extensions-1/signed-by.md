@@ -13,7 +13,7 @@ This extension applies to an action field; it adds to the action the certificate
 ```ocaml
 archetype extension signedby (
   
-  action aTransaction (anarg[%signedby arole] : type)
+  action aTransaction (anarg[%signedby arole%] : type)
 
 ) = {
    
@@ -21,7 +21,7 @@ archetype extension signedby (
 
   action aTransaction (signed_<%anarg> : signature) = {
     require {
-      c1 : check_signature anarg signed_<%anarg> key_<%arole>;
+      c1 : check_signature anarg signed_<%anarg> key_<%arole>
     }
   }
 
@@ -39,7 +39,7 @@ This extension applies to an object and adds to the action the certificate that 
 ```ocaml
 archetype extension signedby_at_object_level (
   
-  variable[%signedby_at_object_level arole] anObject object
+  variable[%signedby_at_object_level arole%] anObject object
 
   action anAction (obj : anObject)
 

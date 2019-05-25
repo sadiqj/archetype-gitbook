@@ -47,7 +47,7 @@ archetype extension delegable (
   action aTransaction (anasset : anAsset) = {
     called by none
     require {
-      (<%aRole>Operators.get anasset.arole).operators.contains caller
+      r1 : (<%aRole>Operators.get anasset.arole).operators.contains caller
     }
   }
 }
@@ -62,10 +62,10 @@ The extension is anchored on a called-by role.
 {% code-tabs %}
 {% code-tabs-item title="action\_delelagable.arlx" %}
 ```ocaml
-archetype extension actiondelegation (
+archetype extension action_delegation (
 
   action aTransaction (anasset : anAsset) = {
-    called by [%delegable] anasset.arole
+    called by [%delegable%] anAsset.arole
   }
 
 ) = {
@@ -108,15 +108,9 @@ archetype extension actiondelegation (
         Operator.remove (Operator.get anasset)
       }
     }
-
-    specification = {
-      (* assert that after token transfer no one 
-                  is a delegate of this token … *)
-
-    }
   }
-
 }
+
 
 ```
 {% endcode-tabs-item %}

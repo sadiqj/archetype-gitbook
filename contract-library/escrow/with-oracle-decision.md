@@ -45,36 +45,35 @@ archetype escrow_with_object
 
 variable buyer role
 
-variable[%transferable] debitor role = buyer
+variable[%transferable%] debitor role = buyer
 
 variable seller role
 
-variable[%transferable] creditor role = seller
+variable[%transferable%] creditor role = seller
 
 variable oracle role
 
-variable[%traceable] price tez from buyer to creditor 
+variable[%traceable%] price tez from buyer to creditor
 
-variable[%traceable] [%mutable_signed [buyer, debitor] (state = Created)] 
+variable[%traceable%] [%mutable_signed [buyer, debitor] (instate Created)%]
      penalty tez from seller to debitor = 0.1 * price
 
 (* action deadline *)
-variable[%mutable (buyer or seller) (state = Created)] deadline date
+variable[%mutable (buyer or seller) (instate Created)%] deadline date
 
-(* type taskStatus = { 
+(* type taskStatus = {
      date : date;
-     status : string of [ “OK” | “KO” ] 
+     status : string of [ “OK” | “KO” ]
    }
 *)
-variable[%signedby oracle] taskStatus object = "https://oracle.io/tskstat.schema.json"
-
+variable[%signedby oracle%] taskStatus object = "https://oracle.io/tskstat.schema.json"
 
 (* state machine *)
 states =
  | Created initial
  | Aborted
- | Confirmed      
- | Canceled    with { s1 : balance = 0 }        
+ | Confirmed
+ | Canceled    with { s1 : balance = 0 }
  | Transferred with { s2 : transferred_to(buyer) = price;
                       s3 : balance = 0;
                       s4 : needs oracle
@@ -82,19 +81,19 @@ states =
 
 transition abort from Created = {
   called by buyer or seller
+
   to Aborted
 }
 
-transition[%signedbyall [{buyer}; {seller}]] confirm from Created = {
-  to Confirmed when balance = price + penalty
+transition[%signedbyall [{buyer}; {seller}]%] confirm from Created = {
+  to Confirmed when { balance = price + penalty }
 }
- 
-transition finalize (task : taskStatus) from Created or Confirmed = {
 
-  to Transferred 
-  when { task.date <= deadline }
+transition finalize (task : taskStatus) from any = {
+  to Transferred
+  when { task.date <= deadline and task.status }
   with effect {
-    transfer price; 
+    transfer price;
     transfer back penalty
   }
 
@@ -103,8 +102,14 @@ transition finalize (task : taskStatus) from Created or Confirmed = {
     transfer penalty;
     transfer back price
   }
-
 }
+
+specification {
+  s5 : state = Transferred or state = Canceled -> balance = 0;
+  s6 : state = Transferred or state = Canceled -> needs oracle;
+  s7 : state = Transferred -> receives buyer = price
+}
+
 
 ```
 {% endcode-tabs-item %}

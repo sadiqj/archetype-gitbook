@@ -13,15 +13,15 @@ The decision process specified in the decide transaction allocates the prize to 
 ```ocaml
 archetype competition
 
-variable[%transferable] organiser role
+variable[%transferable%] organiser role
 
 (* start date *)
-variable[%mutable organiser (sate = Created)] startdate date
+variable[%mutable organiser (sate = Created)%] startdate date
 
 (* deadline *)
-variable[%mutable organiser (state = Created)] deadline date
+variable[%mutable organiser (state = Created)%] deadline date
 
-variable[%traceable] prize tez from organizer = 3500
+variable[%traceable%] prize tez from organizer = 3500
 
 variable competitor role
 
@@ -44,7 +44,7 @@ transition confirm from Created = {
    to InProgress when { now > startdate }
 }
 
-action submit (competitor : competitor) (score[%signedby oracle] : uint) = {
+action submit (competitor : competitor) (score[%signedby oracle%] : uint) = {
   require {
     c1 : state = InProgress
   }
