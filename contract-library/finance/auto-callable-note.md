@@ -232,7 +232,7 @@ action pay_note = {
   }
 }
 
-action add_fixing (f[%signedby oracle] : fixing) = {
+action add_fixing (f[%signedby oracle%] : fixing) = {
   effect {
     fixing.add f
   }

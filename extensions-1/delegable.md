@@ -16,7 +16,7 @@ The extension defines a transaction with a `called by` test on the extended addr
 archetype extension delegable (
 
   asset anAsset identified by aRole = {
-    aRole[%delegable] : role
+    aRole[%delegable%] : role
   }
 
   action aTransaction (anasset : anAsset) = {

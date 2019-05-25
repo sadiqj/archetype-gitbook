@@ -9,7 +9,7 @@ archetype miles
 
 variable owner role
 
-variable[%transferable] validator role
+variable[%transferable%] validator role
 
 asset account identified by owner = {
   owner  : address;

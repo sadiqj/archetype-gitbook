@@ -18,7 +18,7 @@ constant name string = "myerc20"
 constant total uint = 1000
 
 asset tokenHolder identified by holder = {
-    holder[%delegable] : role;
+    holder[%delegable%] : role;
     tokens : uint;
 } initialized by [
   { caller; total }

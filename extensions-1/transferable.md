@@ -14,7 +14,7 @@ The transferable extension defines a basic two-step process to transfer a role v
 ```ocaml
 archetype extension transferable (
 
- variable[%transferable] aRole role
+ variable[%transferable%] aRole role
 
 ) = {
   variable <%aRole>_tmp role

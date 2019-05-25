@@ -26,7 +26,7 @@ You may refer to the [archetype grammar](https://github.com/edukera/archetype-la
 For example, the following invokes the ‘mutable’ extension on the amount variable:
 
 ```ocaml
-variable[%mutable admin] amount tez = 10tz
+variable[%mutable admin%] amount tez = 10tz
 ```
 
 The mutable extension, presented in next section, adds to the contract an action to change the amount value. Once the extension processed, the declaration is extended to the following code:

@@ -14,7 +14,7 @@ This extension takes two arguments:
 ```ocaml
 archetype extension mutable (
 
-  variable[%mutable arole cond] avariable type
+  variable[%mutable arole cond%] avariable type
 
 ) = {
 

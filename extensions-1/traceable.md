@@ -11,7 +11,7 @@ The traceable extension, when decorating a tez value, generates an dedicated con
 ```ocaml
 archetype extension traceable (
 
-   variable[%traceable] anamount tez from fromR to toR
+   variable[%traceable%] anamount tez from fromR to toR
 
 ) = {
 

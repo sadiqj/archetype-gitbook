@@ -15,7 +15,7 @@ This optimisation comes with a cost of algorithmic complexity in the consume tra
 ```ocaml
 archetype miles_with_expiration
 
-variable[%transferable] admin role
+variable[%transferable%] admin role
 
 (* id is a string because it is generated off-chain *)
 asset mile identified by id sorted by expiration = {

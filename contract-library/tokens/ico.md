@@ -9,26 +9,26 @@ This is the archetype version of the ICO process set up by [BCDiploma](https://w
 {% embed url="https://github.com/VinceBCD/BCDiploma/blob/master/sources/BCDT/contracts/BCDToken/" %}
 
 ```ocaml
-archetype[%erc20] bcd_ico
+archetype[%erc20%] bcd_ico
 
 (* contribution thresholds *)
-variable[%mutable owner (state = Init)] min_contribution tez = 0.001tz
+variable[%mutable owner (state = Init)%] min_contribution tez = 0.001tz
 
-variable[%mutable owner (state = Init)] max_contribution_silver tez = 10tz
+variable[%mutable owner (state = Init)%] max_contribution_silver tez = 10tz
 
 (* bcd token data *)
 
-variable[%mutable owner (state = Init)] max_bcd_to_sell int = 100000000
+variable[%mutable owner (state = Init)%] max_bcd_to_sell int = 100000000
 
-variable[%mutable owner (state = Init)] exchange_rate_tez_bcd int = 13000
+variable[%mutable owner (state = Init)%] exchange_rate_tez_bcd int = 13000
 
 (* round caps *)
 
-variable[%mutable owner (state = Init)] soft_cap tez = 1800tz
+variable[%mutable owner (state = Init)%] soft_cap tez = 1800tz
 
-variable[%mutable owner (state = Init)] presales_cap tez = 3200tz
+variable[%mutable owner (state = Init)%] presales_cap tez = 3200tz
 
-variable[%mutable owner (state = Init)] round1_cap tez = 3200tz
+variable[%mutable owner (state = Init)%] round1_cap tez = 3200tz
 (* presales_cap + 1600 *)
 
 (* Number tokens sent, eth raised, … *)
@@ -39,13 +39,13 @@ variable nb_tez_raised int = 0
 
 (* Roles *)
 
-role[%transferable] owner
+role[%transferable%] owner
 
-role[%mutable owner (state = Init)] whitelister 
+role[%mutable owner (state = Init)%] whitelister 
 
-role[%mutable owner (state = Init)] reserve 
-role[%mutable owner (state = Init)] community 
-role[%mutable owner (state = Init)] vested 
+role[%mutable owner (state = Init)%] reserve 
+role[%mutable owner (state = Init)%] community 
+role[%mutable owner (state = Init)%] vested 
 
 (* contributor *)
 
@@ -62,7 +62,7 @@ asset[@add @remove @update owner (state = Init)]
    i1 : list = Silver -> contrib <= max_contribution_silver;
 }
 
-enum[%mutable_enum owner][%incr] phase = 
+enum[%mutable_enum owner%][%incr%] phase = 
 | Init initial     
 | PresaleRunning   with { i2 : nb_tez_raised <= presales_cap }
 | PresaleFinished  
@@ -168,7 +168,7 @@ transaction mintAside from Round2Finnished = {
 
 (* the onlyonce extension specifies that withdraw action can be 
    executed only once, that is a contributor can withdraw only once. *)
-action[%onlyonce] withdraw = {
+action[%onlyonce%] withdraw = {
 
   require { 
      c1 : state = Round2Finished;
