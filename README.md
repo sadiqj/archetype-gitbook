@@ -1,6 +1,6 @@
 ---
 description: >-
-  Archetype is a smart contract development solution dedicated to contract
+  Archetype is a Tezos smart contract development solution dedicated to contract
   quality insurance.
 ---
 
