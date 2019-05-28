@@ -6,21 +6,17 @@ description: >-
 
 # What is Archetype
 
-Archetype is funded by [Tezos](https://tezos.com) and developed by [edukera](https://www.edukera.com).
+Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and developed by [edukera](https://www.edukera.com).
 
 ## Smart contracts
 
-[Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs which are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were introduced in 2015 by Ethereum. They allow to read and write simple data on the blockchain. 
+[Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs which are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were popularised in 2015 by Ethereum. They allow to read and write simple data on the blockchain. 
 
 This has literally unleashed the full potential of the blockchain because it gives the possibility to develop a new class of application, called [Dapp](https://www.youtube.com/watch?v=CDQX8inMCt0), which benefits from blockchain's strengths \(decentralised, trust-less, immutable, governed by consensus in Tezos case, ...\). 
 
 A smart contract is similar to a [stored procedure](https://en.wikipedia.org/wiki/Stored_procedure) on a public distributed database. As such, it must ensure the **logical consistency and integrity** of the data.
 
 ## What's the problem?
-
-In a nutshell, smart contracts break one of the key principles of the blockchain, which is the _trust-less principle_.
-
-What is meant by _trust-less_ is that, with a blockchain, there is no need for a trusted third party to be confident in the fact the blockchain is doing what it is intended to, which is to manage transactions. Indeed blockchains are secure by design:  they are decentralised and immutable; plus every change in the system is validated by a consensus algorithm.
 
 A smart contract is a _standard_ program, and, as such, it does not come with any guarantee that it will function correctly. We all have in mind the [TheDAO incident](https://www.vice.com/en_us/article/qkjz4x/thedao): a bug in the smart contract made it possible to withdraw several times the money you would put in the contract. As a result, more than 50 millions dollars were lost.
 
