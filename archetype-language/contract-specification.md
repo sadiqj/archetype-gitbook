@@ -126,18 +126,18 @@ The schema below illustrates the three sets of assets resulting from the action 
 
 With imperative languages like archetype, iterations are done with loops. For formal verification purpose, it is necessary to provide _loop invariant_ properties.
 
-A loop invariant is a property which is true at each step of the iteration. More precisely, the invariant holds:
+A loop invariant is a property which is true during iteration. More precisely, the invariant holds:
 
-* at the beginning of the loop, when no object has been iterated yet \(loop initialisation\)
-* during iteration
-* at the end of the iteration \(loop terminaison\)
+* at the beginning of the loop, when no object has been iterated yet \(_initialisation_\)
+* at each step of the iteration \(_conservation_\)
+* at the end of the iteration \(_terminaison_\)
 
  A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections: 
 
 * `toiterate` refers to the assets stil to iterate on
 * `iterated` refers to the assets already iterated 
 
-For example say you need to express that a certain value `remainder` has is upper-bounded by  the sum of the field `quantity` over the `goods` assets stil to iterate. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
+For example say you want to prove that the `stock` value is equal to 0 after iterating over the collection of `goods`. The loop invariant states that `stock` is upper-bounded by the sum of the `quantity` value over the `goods` assets _stil to iterate_. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
 
 ```ocaml
 variable stock int = 0
