@@ -41,6 +41,10 @@ ext install edukera.vscode-archetype
 
 The vscode extension is configured via the normal vscode settings screen.
 
+{% hint style="warning" %}
+VS code extension coming soon.
+{% endhint %}
+
 
 
 
