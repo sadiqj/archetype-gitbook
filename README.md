@@ -12,7 +12,7 @@ Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and dev
 
 [Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs which are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were popularised in 2015 by Ethereum. They allow to read and write simple data on the blockchain. 
 
-This has literally unleashed the full potential of the blockchain because it gives the possibility to develop a new class of application, called [Dapp](https://www.youtube.com/watch?v=CDQX8inMCt0), which benefits from blockchain's strengths \(decentralised, trust-less, immutable, governed by consensus in Tezos case, ...\). 
+Smart contracts unleash the full potential of the blockchain because they enable the development of a new class of application, called [Dapp](https://www.youtube.com/watch?v=CDQX8inMCt0), which benefits from blockchain's strengths \(decentralised, trust-less, immutable, governed by consensus in Tezos case, ...\). 
 
 A smart contract is similar to a [stored procedure](https://en.wikipedia.org/wiki/Stored_procedure) on a public distributed database. As such, it must ensure the **logical consistency and integrity** of the data.
 
