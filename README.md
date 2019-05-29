@@ -38,9 +38,11 @@ A mathematical proof is the perfect trust-less guarantee of the program quality 
 
 Are there limits? 
 
-Yes of course. First, the guarantee you get is limited to the property you have been able to identify. A critical property may still be forgotten!
+Yes of course. 
 
-Second, you need to be skilled in formal methods to formalise the contract properties, and even more to prove the properties, especially if the property is complex.
+First, the guarantee you get is limited to the properties you have been able to identify. A critical property may still be forgotten!
+
+Second, you need to be skilled in _formal methods_ to formalise the contract properties, and even more to prove them, especially if they are complex.
 
 #### Test
 
