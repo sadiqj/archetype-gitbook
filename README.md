@@ -24,7 +24,7 @@ It’s a highly non trivial question to decide whether a program is correct or n
 
 ## Required services
 
-In order to circumvent the inherent potential inconsistency of the smart contract,  Archetype  has identified several services which enhances the _apriori_ level of confidence you may have in a smart contract, before deploying it.
+In order to circumvent the inherent potential inconsistency of the smart contract, several services are required to increase the _apriori_ level of confidence you may have in a smart contract, before deploying it.
 
 #### Verify
 
