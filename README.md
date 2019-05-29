@@ -34,7 +34,7 @@ What is program formal verification?
 
 Say you have a program and a specific property that the program is supposed to have; say this property is written in formal logic. Program verification consists in figuring out a **mathematical proof** that the program has the property.
 
-A mathematical proof is the perfect trust-less guarantee of the program quality because the only thing you need to is to check that the proof is correct towards the property and the program. This  question is known to be _decidable_, which means that it is possible to have a computer check the correctness of the proof automatically.
+A mathematical proof is the perfect trust-less guarantee of the program quality, because the only thing you need is to check that the proof is correct, and this question is known to be _decidable;_ decidability means here that it is possible to have a computer check the correctness of the proof _automatically_.
 
 Are there limits? 
 
