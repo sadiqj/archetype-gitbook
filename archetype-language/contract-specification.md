@@ -193,7 +193,7 @@ The difference in archetype is that an assert instruction generates a verificati
 
 As such, an `assert` instruction does not generate any execution code.
 
-## Contract predicates
+## Security predicates
 
 In order to provide security guarantee to contract readers, it is usually useful to state which action may change an asset collection or a variable. 
 
