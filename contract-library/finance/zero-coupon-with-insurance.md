@@ -16,7 +16,9 @@ variable owner role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
 contract insurance = {
    action pay : address, tez
-} = @KT1GabhR5P52hw6xs5P69BXJYAURaznhvN1k
+} 
+
+variable zero_insur insurance = @KT1GabhR5P52hw6xs5P69BXJYAURaznhvN1k
 
 variable price tez from owner = 10
 
