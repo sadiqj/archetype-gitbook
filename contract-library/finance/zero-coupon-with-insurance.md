@@ -34,7 +34,7 @@ states =
  | Collected (* owner has collected payment *)
 
 transition insured from Created = {
-  called by insurance
+  called by zero_insur
 
   to Insured
 }
@@ -69,7 +69,7 @@ transition collect from Repaid = {
   with effect {
     if balance >= payment
     then transfer balance to owner
-    else guarantee_fund.pay owner payment
+    else zero_insur.pay owner payment
   }
 }
 
