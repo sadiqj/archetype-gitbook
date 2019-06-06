@@ -20,6 +20,7 @@ $ opam install archetype
 > * ocaml &gt;= 4.07.0
 > * dune &gt;= 1.5.0
 > * menhir
+> * omd
 > * why3 &gt;= 1.2.0
 > * yojson &gt;= 1.5.0
 > * ppx\_deriving &gt;= 4.2.1
