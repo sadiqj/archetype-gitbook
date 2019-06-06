@@ -27,10 +27,10 @@ variable deadline date = 2019-06-01T00:00:00
 (* state machine *)
 states =
  | Created initial
- | Aborted
- | Confirmed
- | Canceled
- | Completed
+ | Aborted   with { balance = 0 }
+ | Confirmed with { balance = price }
+ | Canceled  with { balance = 0 } 
+ | Completed with { balance = 0 }
 
 transition abort from Created = {
   called by buyer or seller
@@ -42,7 +42,7 @@ transition confirm from Created = {
   to Confirmed when { balance = price }
 }
 
-transition complete from Confirmed = {
+transition[%onlyonce%] complete from Confirmed = {
   called by oracle
 
   to Completed when { now < deadline }
@@ -51,13 +51,17 @@ transition complete from Confirmed = {
   }
 }
 
-transition cancel from Confirmed = {
+transition[%onlyonce%] cancel from Confirmed = {
   called by oracle
 
   to Canceled
   with effect {
     transfer back price
   }
+}
+
+specification {
+  s1 : transfers may only be performed only by oracle
 }
 ```
 {% endcode-tabs-item %}

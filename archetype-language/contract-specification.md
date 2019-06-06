@@ -245,6 +245,8 @@ The possible values of predicates arguments are:
 * `remove ASSET` 
 * `update (ASSET FIELD | VARIABLE)` 
 * a list of above `CHANGE` separated by `or`
+* `transfers`
+* `transfer to ROLE`
 * _`anychange`_
 * _`anychange but`_ `ACTION`
 * _`nochange`_
