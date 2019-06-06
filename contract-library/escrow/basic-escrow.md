@@ -61,7 +61,7 @@ transition[%onlyonce%] cancel from Confirmed = {
 }
 
 specification {
-  s1 : transfers may only be performed only by oracle
+  s1 : transfers may be performed only by oracle
 }
 ```
 {% endcode-tabs-item %}
