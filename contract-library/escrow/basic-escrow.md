@@ -9,9 +9,9 @@ It is mainly a state machine with 5 states and 4 transitions illustrated in the 
 Note that role values must be provided at declaration for security reason. 
 
 {% code-tabs %}
-{% code-tabs-item title="basic\_escrow.arl" %}
+{% code-tabs-item title="escrow\_basic.arl" %}
 ```ocaml
-archetype escrow_simple
+archetype escrow_basic
 
 variable buyer role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
@@ -27,10 +27,10 @@ variable deadline date = 2019-06-01T00:00:00
 (* state machine *)
 states =
  | Created initial
- | Aborted   with { balance = 0 }
- | Confirmed with { balance = price }
- | Canceled  with { balance = 0 } 
- | Completed with { balance = 0 }
+ | Aborted   with { i1 : balance = 0 }
+ | Confirmed with { i2 : balance = price }
+ | Canceled  with { i3 : balance = 0 }
+ | Completed with { i4 : balance = 0 }
 
 transition abort from Created = {
   called by buyer or seller
@@ -61,8 +61,9 @@ transition[%onlyonce%] cancel from Confirmed = {
 }
 
 specification {
-  s1 : transfers may be performed only by oracle
+  s1 : transfers may be performed only by role oracle
 }
+
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
