@@ -108,7 +108,7 @@ The following table shows the selected solution foreach service and the main ben
     </tr>
     <tr>
       <td style="text-align:left">Execute</td>
-      <td style="text-align:left"><a href="http://www.liquidity-lang.org/">Liquidity</a>
+      <td style="text-align:left"><a href="http://ligolang.org/">Ligo</a>
       </td>
       <td style="text-align:left">High level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
     </tr>
@@ -128,7 +128,7 @@ Each framework identified in the previous section comes with a specific language
 | Why3 | Whyml \(\*.mlw\) | ml language, like ocaml,  with specific instructions for verification |
 | Google spreadsheets | Google script \(\*.gs\) | Similar to javascript |
 | Document | Markdown \(\*.md\) | plain text with minimalist formatting  instructions for maximum readability  \(unlike HTML markup tags\) |
-| Liquidity | \*.liq | ml language |
+| Ligo | \*.ligo | ml language \(or pascal like\) |
 
 As a consequence, in order to benefit from these framework, you need to develop several versions of the smart contract, one for each framework.
 
@@ -138,7 +138,7 @@ How to make sure that the version for formal verification is consistent with the
 
 Hence the need for a ****single language to describe the business logic of an archetype contract, from which the different operational versions may be derived.
 
-![archetype target languages ](.gitbook/assets/arch_targets_2.png)
+![](.gitbook/assets/targets.png)
 
 {% hint style="info" %}
 In a nutshell, archetype is a programming language which is transcoded to target languages for specific services.
