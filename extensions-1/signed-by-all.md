@@ -4,7 +4,7 @@ description: Requires multi-signature
 
 # Signed by all
 
-This extension provides an approval condition to trigger a transaction: each role in the roles argument must call the transaction signed in order to be able to call the target transaction.
+This extension provides an approval condition to trigger a transaction: each role in the _roles_ argument must call the _sign_ transaction in order to be able to call the signed transaction.
 
 {% code-tabs %}
 {% code-tabs-item title="signed\_by\_all.arlx" %}
