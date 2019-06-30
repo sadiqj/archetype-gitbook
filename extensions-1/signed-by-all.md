@@ -15,23 +15,22 @@ archetype extension signedbyall (
 
 ) = {
 
-  asset signer_<%aTransaction> = {
-    signer    : address;
-    hasSigned : bool = false;
-  } initialized by roles
+  asset signer_<%aTransaction> identified by id_<%aTransation> = {
+    id_<%aTransaction> : address;
+  }
 
   action sign_<%aTransaction> = {
+    called by roles
     effect {
-      signer.update caller {hasSigned = true}
+      signer.add { id_<%aTransaction> = caller }
     }
   }
 
   action aTransaction = {
     require {
       requires;
-      <%aTransaction>_cond :
-       (signer_<%aTransaction>.select(hasSigned = true)).count()
-          = signer_<%aTransaction>.count()
+      <%aTransaction>_signedbyall : 
+         signer_<%aTransaction>.count() = roles.length
     }
   }
 }
