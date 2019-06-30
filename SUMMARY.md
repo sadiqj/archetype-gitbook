@@ -49,6 +49,7 @@
   * [Auto-callable note](contract-library/finance/auto-callable-note.md)
 * [Insurance](contract-library/insurance/README.md)
   * [Fizzy](contract-library/insurance/fizzy.md)
+  * [Health care](contract-library/insurance/health-care.md)
 * [Framework examples](contract-library/framework-examples/README.md)
   * [Hyper Ledger](contract-library/framework-examples/hyper-ledger/README.md)
     * [Animal tracking](contract-library/framework-examples/hyper-ledger/animal-tracking.md)
