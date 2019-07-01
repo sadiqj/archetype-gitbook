@@ -1,6 +1,25 @@
 # Health care
 
-```text
+This contract is adapted from the DAML 's  [introductory insurance contract](https://docs.daml.com/getting-started/introduction.html).
+
+DAML is a distributed private ledger. As such it cannot enforce payments and the contract just generates bills of insurer and patient for accounting purposes. 
+
+The strength of a public blockchain with a crypto money, is that it allows payments and accounting of payments in a single business process. The main differences between the contract below and the DAML version are:
+
+* payments are executed through contract entries
+* the contract enters the _Running_ state with validation from both insurer and patient parties
+
+The main benefit of this version is that it may serve as an opposable document in the case of a default in payment: indeed, since the contract is used to channel payments, the contract is accounting for any default of payment \(in the _debts_ variables\).
+
+For example, a doctor may go to court and exhibit the _debt_ value of his corresponding doctor asset as a proof of the default in payment.
+
+From a design point of vue, the contract manages several doctors. A doctor is registered with approvals from both patient and insurer parties.
+
+{% hint style="info" %}
+We see in this basic example, that a smart contract on a public blockchain with a crypto money, enables organisations to capture the critical aspects of a business process : payments, permissions and accounting.
+{% endhint %}
+
+```ocaml
 archetype health_care
 
 constant insurer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
@@ -57,9 +76,7 @@ action declare_consultation (v : tez) = {
 
 action pay_doctor (docid : address) = {
     verification {
-      specification idem_balance_pay_doctor = {
-        balance = before balance
-      }
+      s1 : balance = before balance
     }
     called by insurer
     accept transfer
@@ -75,9 +92,7 @@ action pay_doctor (docid : address) = {
 
 action pay_fee = {
     verification {
-      specification idem_balance_pay_fee = {
-         balance = before balance
-      }
+        s2 : balance = before balance
     }
     called by patient
     accept transfer
@@ -94,9 +109,7 @@ action pay_fee = {
 
 action pay_consulation = {
     verification {
-        specification idem_balance_pay_consultation = {
-            balance = before balance
-        }
+        s3 : balance = before balance
     }
     called by patient
     accept transfer
@@ -108,9 +121,6 @@ action pay_consulation = {
         consultation_debt -= decrease
     }
 }
-
-
-
 
 ```
 
