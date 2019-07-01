@@ -22,7 +22,7 @@ archetype extension signedbyall (
   action sign_<%aTransaction> = {
     called by roles
     effect {
-      signer.add { id_<%aTransaction> = caller }
+      signer_<%aTransaction>.add { id_<%aTransaction> = caller }
     }
   }
 
