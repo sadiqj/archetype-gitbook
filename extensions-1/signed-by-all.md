@@ -32,7 +32,7 @@ archetype extension signedbyall (
     require {
       requires;
       <%aTransaction>_signedbyall : 
-         signer_<%aTransaction>.count() = roles.length
+         signer_<%aTransaction>.count() = roles.count()
     }
   }
 }
