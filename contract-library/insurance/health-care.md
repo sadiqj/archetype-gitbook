@@ -124,3 +124,5 @@ action pay_consulation = {
 
 ```
 
+\(See the [signedbyall](../../extensions-1/signed-by-all.md) extension\)
+
