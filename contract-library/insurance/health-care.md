@@ -1,3 +1,7 @@
+---
+description: Health insurance example
+---
+
 # Health care
 
 This contract is adapted from the DAML 's  [introductory insurance contract](https://docs.daml.com/getting-started/introduction.html).
