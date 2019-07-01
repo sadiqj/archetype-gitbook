@@ -6,6 +6,8 @@ description: Requires multi-signature
 
 This extension provides an approval condition to trigger a transaction: each role in the _roles_ argument must call the _sign_ transaction in order to be able to call the signed transaction.
 
+It is very likely that this extension be soon promoted to a native _action_ instruction.
+
 {% code-tabs %}
 {% code-tabs-item title="signed\_by\_all.arlx" %}
 ```ocaml
