@@ -105,7 +105,7 @@ action pay_fee = {
         let nb_periods = (now - last_fee) / period in  (* div is euclidean *)
         let due = nb_periods * fee in
         let decrease = min transferred due in
-        transfer decrease to insrurer;
+        transfer decrease to insurer;
         transfer (transferred - decrease) to patient;
         last_fee := last_fee + period * nb_periods     
     }
