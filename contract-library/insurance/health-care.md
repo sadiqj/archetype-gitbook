@@ -2,7 +2,7 @@
 
 This contract is adapted from the DAML 's  [introductory insurance contract](https://docs.daml.com/getting-started/introduction.html).
 
-DAML is a distributed private ledger and does not enforce payments; the example contract just generates bills of insurer and patient, for accounting purposes. 
+DAML is a distributed private ledger and does not enforce payments; the contract just generates bills of insurer and patient, for accounting purposes. 
 
 The strength of a public blockchain with a crypto money, is that it allows payments and accounting of payments in a _single business process_. The main differences between the contract below and the DAML version are:
 
