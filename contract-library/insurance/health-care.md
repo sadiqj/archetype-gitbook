@@ -119,7 +119,7 @@ action pay_consulation = {
     accept transfer
     require { r5 : state = Running }
     effect {
-        let decrease = min (transferred, consultation_debt) in
+        let decrease = min transferred consultation_debt in
         transfer decrease to insurer;
         transfer (transferred - decrease) to patient;
         consultation_debt -= decrease
