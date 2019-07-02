@@ -6,21 +6,21 @@ description: Health insurance example
 
 This contract is adapted from the DAML 's  [introductory insurance contract](https://docs.daml.com/getting-started/introduction.html).
 
-DAML is a distributed private ledger and does not enforce payments; the contract just generates bills of insurer and patient, for accounting purposes. 
+DAML is a distributed private ledger and does not manage payments; the contract allows the doctor to generate bills for insurer and patient. 
 
-The strength of a public blockchain with a crypto money, is that it allows payments and accounting of payments in a _single business process_. The main differences between the contract below and the DAML version are:
+The strength of a public blockchain with a cryptocurrency, is that it allows payments and accounting of payments in a _single business process_. The main differences between the contract below and the DAML version are:
 
 * payments are executed through contract entries
 * the contract enters the _Running_ state with validation from both insurer and patient parties
 
 The main benefit of this version is that it may serve as an opposable document in the case of a default in payment: indeed, since the contract is used to channel payments, the contract is accounting for any default of payment \(in the _debts_ variables\).
 
-For example, a doctor may go to court and exhibit the _debt_ value of his corresponding doctor asset as a proof of the default in payment.
+For example, a doctor may go to court and exhibit the _debt_ value of his corresponding _doctor_ asset as a proof of the default in payment.
 
 From a design point of vue, the contract manages several doctors. A doctor is registered with approvals from both patient and insurer parties.
 
 {% hint style="info" %}
-We see in this basic example, that a smart contract on a public blockchain with a crypto money, enables organisations to capture the critical aspects of a business process : payments, permissions and accounting.
+We see in this basic example, that a smart contract on a public blockchain with a cryptocurrency, enables organisations to capture the critical aspects of a business process : payments, permissions and accounting.
 {% endhint %}
 
 ```ocaml
@@ -29,9 +29,9 @@ archetype health_care
 constant insurer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 constant patient role = @tz1uNrUbontHGor25CztkKksC8RvjUWAbXYJ
 
-constant fee tez = 100tz
-constant deductible tez = 500tz
-constant period duration = 30D
+constant fee tez         = 100tz
+constant deductible tez  = 500tz
+constant period duration = 30d (* 30 days *)
 
 variable last_fee date
 
