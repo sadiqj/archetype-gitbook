@@ -29,8 +29,8 @@ archetype health_care
 constant insurer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 constant patient role = @tz1uNrUbontHGor25CztkKksC8RvjUWAbXYJ
 
-constant fee tez         = 100tz
-constant deductible tez  = 500tz
+constant fee        tez from patient to insurer = 100tz
+constant deductible tez from patient to insurer = 500tz
 constant period duration = 30d (* 30 days *)
 
 variable last_fee date
@@ -39,7 +39,7 @@ variable consultation_debt tez = 0tz
 
 asset doctor identified by id = {
     id   : role;
-    debt : tez = 0tz;
+    debt : tez from insurer to doctor = 0tz;
 }
 
 states =
