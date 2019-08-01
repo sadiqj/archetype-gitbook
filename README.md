@@ -8,6 +8,8 @@ description: >-
 
 Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and developed by [edukera](https://www.edukera.com).
 
+{% embed url="https://medium.com/@benoit.rognier/archetype-a-dsl-for-tezos-6f55c92d1035?source=friends\_link&sk=aff026858b2fad66f2251da87ec6e881" %}
+
 ## Smart contracts
 
 [Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs which are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were popularised in 2015 by Ethereum. They allow to read and write simple data on the blockchain. 
