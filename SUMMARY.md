@@ -62,5 +62,4 @@
 ## Advanced
 
 * [Implementation](advanced/implementation.md)
-* [Verify a contract with Why3](advanced/verify-a-contract-with-why3.md)
 
