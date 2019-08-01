@@ -14,7 +14,7 @@ This section describes the different steps of the transcoding process.
 
 ### Lexing / Parsing 
 
-The language syntax is checked and the parse tree is generated with [menhir](http://gallium.inria.fr/~fpottier/menhir/) generated  parsing module. It is done with error recovery mechanism in order to be compliant with [LSP](https://microsoft.github.io/language-server-protocol/) \(for integration in IDE\).
+The parse tree is generated with [menhir](http://gallium.inria.fr/~fpottier/menhir/) generated  parsing module. It is done with error recovery mechanism in order to be compliant with [LSP](https://microsoft.github.io/language-server-protocol/) \(for integration in IDE\).
 
 Thank you to Yann Regis Gianas for setting up a example of error recovery mechanism with menhir:
 

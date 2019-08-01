@@ -62,4 +62,5 @@
 ## Advanced
 
 * [Implementation](advanced/implementation.md)
+* [Archetype grammar](advanced/archetype-grammar.md)
 
