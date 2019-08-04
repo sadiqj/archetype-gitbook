@@ -64,7 +64,9 @@ let complete =
 
 IL is the language to start from when transcoding to a new language. The Printer\_model module pretty prints the IL representation.
 
-It is possible to apply specific  transformations depending on the target language.
+### IL transforms
+
+Target languages \(OCamLIGO, smartpy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
 
 #### Side effect removal
 
