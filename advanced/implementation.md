@@ -143,7 +143,7 @@ The IL with the no-side-effect and asset-shallowing transforms is very close to 
 
 Why ml is the why3 format. Like ocaml, it accepts side effects. Hence no need for the no-side-effect transform.
 
-The current version also uses shallow types, but it is planned, for easy of code and verification to use deep asset type \(as in the Archetype model\) in a future release.
+The current version also uses shallow types, but it is planned, for ease of code verification to use deep asset type \(as in the Archetype model\) in a future release.
 
 On the logical side, it is necessary to compute asset invariants' preconditions for the storage API.
 
