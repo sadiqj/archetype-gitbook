@@ -20,8 +20,6 @@ Thank you to Yann Regis Gianas for setting up a example of error recovery mechan
 
 {% embed url="https://github.com/yurug/menhir-error-recovery" %}
 
-Archetype grammar
-
 ### Typing
 
 Thank you to Pierre Yves Strub for the implementation.
