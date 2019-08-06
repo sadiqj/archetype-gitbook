@@ -52,7 +52,7 @@ The archetype extension provides:
 * [LSP](https://microsoft.github.io/language-server-protocol/) support
 * transcoding commands
 
-![archetype syntax highlighting and syntax error detection in VS code](.gitbook/assets/screenshot-from-2019-05-14-09-41-02.png)
+![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
 
 {% hint style="warning" %}
 coming soon
