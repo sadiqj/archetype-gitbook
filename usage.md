@@ -19,6 +19,9 @@ To list available target languages:
 ```text
 $ archetype --list-target
   liquidity
+  liquidity_url
+  smartpy
+  ocaml
   whyml
   markdown
 ```
@@ -27,17 +30,30 @@ To list available commands:
 
 ```bash
 $ archetype --help
-archetype [OPTIONS] FILE
+usage : archetype [-t <lang> | -pt | -ext | -tast | [-as] [-nse] | -lsp <request>] [-r | -json] <file>
 
 Available options:
-  -t <LANG>               Transcode to LANG language
-  --target <LANG>         Transcode to LANG language
-  --list-target           List available target languages
-  --json                  Output Archetype in JSON representation
-  --storage-policy <TYPE> Set storage policy
-  --list-storage-policy   List available storage policy
-  -h                      Display this list of options
-  --help                  Display this list of options
+  -t <lang>           Transcode to <lang> language
+  --target            Same as -t
+  --list-target       List available target languages
+  -pt                 Generate parse tree
+  --parse-tree        Same as -pt
+  -ext                Process extensions
+  --extensions        Same as -ext
+  -tast               Generate typed ast
+  --typed-ast         Same as -tast
+  -sa                 Transform to shallow asset
+  --shallow-asset     Same as -sa
+  -nse                Remove side effect
+  --no-side-effect    Same as -nse
+  -lsp <request>      Generate language server protocol response to <resquest>
+  --list-lsp-request  List available request for lsp
+  -r                  Print raw tree
+  --raw               Same as -r
+  -json               Print JSON format
+  -help               Display this list of options
+  --help              Display this list of options
+
 ```
 
 {% hint style="warning" %}
