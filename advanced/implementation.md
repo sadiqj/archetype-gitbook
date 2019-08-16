@@ -113,7 +113,7 @@ storage {
 }
 ```
 
-The other impact of this transform is to consider that all operations asset collection take collection of keys rather that plain assets.
+The other impact of this transform is to consider that all operations asset collection take collection of keys rather than plain assets.
 
 #### Shallow assets
 
