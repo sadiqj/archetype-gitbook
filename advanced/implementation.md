@@ -86,7 +86,36 @@ let complete =
   t  
 ```
 
-#### Asset shallowing
+#### Split key-value
+
+In order to minimise the necessary computation to access an asset from its key, It is necessary to store assets in a map which associates the key to the asset record.
+
+With this transform, assets are stored in maps, as exemplified below with the generated storage of the [miles with expiration](../contract-library/miles/miles-with-expiration.md) contracts :
+
+```ocaml
+record mile identified by id {
+  id : string
+  amount : int
+  expiration : date
+}
+
+record owner identified by addr {
+  addr : role
+  miles : mile partition
+}
+
+storage {
+  admin : address := tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+  mile_keys : string collection := []
+  mile_assets : (string, mile) map := []
+  owner_keys : role collection := []
+  owner_assets : (role, owner) map := []
+}
+```
+
+The other impact of this transform is to consider that all operations asset collection take collection of keys rather that plain assets.
+
+#### Shallow assets
 
 When the target language's asset storage policy is to use a map between an asset identifier and the asset record, asset fields that are collections of assets needs to be transformed to a list of identifiers. Such assets are called _shallow assets_ \(they do not contain actual asset values\)
 
@@ -131,7 +160,7 @@ Here the types `a1` `a2` and `a3` are shallow types.
 
 ### Printers 
 
-A printer is the process to transform and print IL to the target language.
+A printer pretty-prints the IL as the target language.
 
 #### CamLIGO
 
@@ -140,8 +169,6 @@ The IL with the no-side-effect and asset-shallowing transforms is very close to 
 #### Why ml
 
 Why ml is the why3 format. Like ocaml, it accepts side effects. Hence no need for the no-side-effect transform.
-
-The current version also uses shallow types, but it is planned, for ease of code verification to use deep asset type \(as in the Archetype model\) in a future release.
 
 On the logical side, it is necessary to compute asset invariants' preconditions for the storage API.
 
