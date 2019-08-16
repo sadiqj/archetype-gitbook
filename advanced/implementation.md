@@ -64,7 +64,7 @@ IL is the language to start from when transcoding to a new language. The Printer
 
 ### IL transforms
 
-Target languages \(OCamLIGO, smartpy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
+Target languages \(CamLIGO, smartpy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
 
 #### Side effect removal
 
