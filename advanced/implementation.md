@@ -113,7 +113,7 @@ storage {
 }
 ```
 
-The other impact of this transform is to consider that all operations asset collection take collection of keys rather than plain assets.
+The other impact of this transform is to consider that all operations on asset collections \(select, sum, max, ...\) take a collection of keys for argument, rather than a collection of assets.
 
 #### Shallow assets
 
