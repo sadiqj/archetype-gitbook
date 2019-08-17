@@ -62,10 +62,10 @@ let complete =
 
 IL is the language to start from when transcoding to a new language. The [Printer\_model](https://github.com/edukera/archetype-lang/blob/master/src/printer_model.ml) module pretty prints the IL representation.
 
-Printing the IL of a contract is the default action of the archetype compiler; the following prints the IL for the contract _simple\_escrow.arl_:
+Printing the IL of a contract is the default action of the archetype compiler; the following prints the IL for the contract [_basic\_escrow.arl_](../contract-library/escrow/basic-escrow.md):
 
 ```text
-$ archetype simple_escrow.arl
+$ archetype basic_escrow.arl
 ```
 
 ### IL transforms
