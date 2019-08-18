@@ -1,14 +1,10 @@
----
-description: >-
-  Archetype is a Tezos smart contract development solution dedicated to contract
-  quality insurance.
----
-
 # What is Archetype
 
-Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and developed by [edukera](https://www.edukera.com).
+Archetype is a domain-specific language \(DSL\) to develop smart contracts on the Tezos blockchain, with a specific focus on the formal verification of the contract ... 
 
-{% embed url="https://medium.com/@benoit.rognier/archetype-a-dsl-for-tezos-6f55c92d1035?source=friends\_link&sk=aff026858b2fad66f2251da87ec6e881" %}
+{% embed url="https://medium.com/@benoit.rognier/archetype-a-dsl-for-tezos-6f55c92d1035?source=friends\_link&sk=aff026858b2fad66f2251da87ec6e881" caption="Medium article" %}
+
+Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and developed by [edukera](https://www.edukera.com).
 
 ## Smart contracts
 
