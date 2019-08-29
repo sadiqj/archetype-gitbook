@@ -22,6 +22,15 @@ Thank you to Yann Regis Gianas for setting up a example of error recovery mechan
 
 ### Typing
 
+The parse tree is then checked for basic programming errors (e.g. unknown
+variables, non well-formed expressions, etc...) and assigns types
+(i.e. structural informations) to the different parts of the contracts.
+This allows to check that the contract satisfies some well-formedness
+rules and reduces the possibility of bugs in the contract.
+
+This phase outputs a *typed AST* (Abstract Syntax Tree) that is at
+the root of the next phases.
+
 Thank you to Pierre Yves Strub for the implementation.
 
 ### Intermediate language
