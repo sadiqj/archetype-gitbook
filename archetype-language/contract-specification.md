@@ -212,13 +212,7 @@ anychange may be performed only by role admin
 The following specifies that the role `owner` does not change any data:
 
 ```text
-nochange may be performed by owner
-```
-
-The following specifies that no currency is received by the contract:
-
-```text
-transferred to anyaction = 0
+owner can not perform any change
 ```
 
 Archetype provides the following predicates:
@@ -226,11 +220,9 @@ Archetype provides the following predicates:
 | predicate | description |
 | :--- | :--- |
 | `CHANGE may be performed only by role ROLE` | specifies that **only** role `ROLE`  can perform `CHANGE` |
-| `CHANGE may be performed by role ROLE` | specifies that role `ROLE`  can perform `CHANGE` |
 | `CHANGE may be performed only by action ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
-| `CHANGE may be performed by action ACTION` | specifies that action`ACTION`  can perform `CHANGE` |
-| `transferred by ACTION` |  transferred \(ie. emitted\)  amount by `ACTION` |
-| `transferred to ACTION` | transferred \(ie. received\)  amount by `ACTION` |
+| `ROLE can not perform any change` | specifies that role ROLE can **not**  perform any change |
+| `ACTION can not perform any change` | specifies that role ROLE can **not**  perform any change |
 
 The possible values of predicates arguments are:
 
