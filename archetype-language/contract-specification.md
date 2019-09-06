@@ -221,6 +221,7 @@ Archetype provides the following predicates:
 | :--- | :--- |
 | `CHANGE may be performed only by role ROLE` | specifies that **only** role `ROLE`  can perform `CHANGE` |
 | `CHANGE may be performed only by action ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
+| `CHANGE may be performed only by role ROLE in action ACTION` | specifies that only role `ROLE`  can perform `CHANGE` in `ACTION` |
 | `ROLE can not perform any change` | specifies that role ROLE can **not**  perform any change |
 | `ACTION can not perform any change` | specifies that role ROLE can **not**  perform any change |
 
