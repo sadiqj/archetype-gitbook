@@ -2,10 +2,10 @@
 
 ## Command line
 
-To transcode say an archetype file escrow.arl to `liquidity`:
+To transcode say an archetype file escrow.arl to `ligo`:
 
 ```text
-$ archetype -t liquidity escrow.arl
+$ archetype -t ligo escrow.arl
 ```
 
 To transcode to `whyml`:
@@ -18,8 +18,7 @@ To list available target languages:
 
 ```text
 $ archetype --list-target
-  liquidity
-  liquidity_url
+  ligo
   smartpy
   ocaml
   whyml
