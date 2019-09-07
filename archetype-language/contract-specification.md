@@ -219,11 +219,12 @@ Archetype provides the following predicates:
 
 | predicate | description |
 | :--- | :--- |
-| `CHANGE may be performed only by role ROLE` | specifies that **only** role `ROLE`  can perform `CHANGE` |
-| `CHANGE may be performed only by action ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
-| `CHANGE may be performed only by role ROLE in action ACTION` | specifies that only role `ROLE`  can perform `CHANGE` in `ACTION` |
-| `ROLE can not perform any change` | specifies that role ROLE can **not**  perform any change |
-| `ACTION can not perform any change` | specifies that role ROLE can **not**  perform any change |
+| `only_by_role CHANGE ROLE` | specifies that **only** `ROLE`  can perform `CHANGE` |
+| `only_in_action CHANGE ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
+| `only_by_role_in_action CHANGE ROLE ACTION` | specifies that only `ROLE`  can perform `CHANGE` in `ACTION` |
+| `not_by_role CHANGE ROLE` | specifies that ROLE can **not**  perform`CHANGE` |
+| `not_in_action CHANGE ACTION` | specifies that ACTION can **not**  perform  `CHANGE` |
+| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform `CHANGE` in `ACTION` |
 
 The possible values of predicates arguments are:
 
