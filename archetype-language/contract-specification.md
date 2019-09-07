@@ -224,7 +224,7 @@ Archetype provides the following predicates:
 | `only_by_role_in_action CHANGE ROLE ACTION` | specifies that only `ROLE`  can perform `CHANGE` in `ACTION` |
 | `not_by_role CHANGE ROLE` | specifies that ROLE can **not**  perform`CHANGE` |
 | `not_in_action CHANGE ACTION` | specifies that ACTION can **not**  perform  `CHANGE` |
-| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform `CHANGE` in `ACTION` |
+| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform  `CHANGE` in `ACTION` |
 
 The possible values of predicates arguments are:
 
