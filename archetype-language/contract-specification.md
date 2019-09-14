@@ -200,19 +200,19 @@ In order to provide security guarantee to contract readers, it is usually useful
 For example, the following specifies that only the action `add_goods` may add a `goods` asset:
 
 ```text
-(add goods) may be performed only by action add_goods
+only_in_action (add goods) add_goods
 ```
 
 The following specifies that only the `admin` role can do any kind of storage data:
 
 ```text
-anychange may be performed only by role admin
+only_by_role anychange admin
 ```
 
 The following specifies that the role `owner` does not change any data:
 
 ```text
-owner can not perform any change
+not_by_role anychange owner
 ```
 
 Archetype provides the following predicates:
