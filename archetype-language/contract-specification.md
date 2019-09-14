@@ -217,16 +217,68 @@ owner can not perform any change
 
 Archetype provides the following predicates:
 
-| predicate | description |
-| :--- | :--- |
-| `only_by_role CHANGE ROLE` | specifies that **only** `ROLE`  can perform `CHANGE` |
-| `only_in_action CHANGE ACTION`  | specifies that **only** `ACTION`  can perform `CHANGE` |
-| `only_by_role_in_action CHANGE ROLE ACTION` | specifies that only `ROLE`  can perform `CHANGE` in `ACTION` |
-| `not_by_role CHANGE ROLE` | specifies that ROLE can **not**  perform`CHANGE` |
-| `not_in_action CHANGE ACTION` | specifies that ACTION can **not**  perform  `CHANGE` |
-| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform  `CHANGE` in `ACTION` |
-
-The possible values of predicates arguments are:
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">predicate</th>
+      <th style="text-align:left">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left"><code>no_storage_fail ACTION</code>
+      </td>
+      <td style="text-align:left">
+        <p>specifies that <code>ACTION</code>  <b>cannot</b> logically fail
+          <br />on storage access (key not found when</p>
+        <p>reading and setting, and key already
+          <br />present when adding an asset)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>only_by_role CHANGE ROLE</code>
+      </td>
+      <td style="text-align:left">specifies that <b>only</b>  <code>ROLE</code> 
+        <br />can perform <code>CHANGE</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>only_in_action CHANGE ACTION </code>
+      </td>
+      <td style="text-align:left">specifies that <b>only</b>  <code>ACTION</code> 
+        <br />can perform <code>CHANGE</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>only_by_role_in_action CHANGE ROLE ACTION</code>
+      </td>
+      <td style="text-align:left">specifies that only <code>ROLE</code> 
+        <br />can perform <code>CHANGE</code> in <code>ACTION</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>not_by_role CHANGE ROLE</code>
+      </td>
+      <td style="text-align:left">specifies that ROLE can <b>not</b> 
+        <br />perform<code>CHANGE</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>not_in_action CHANGE ACTION</code>
+      </td>
+      <td style="text-align:left">specifies that ACTION can <b>not</b> 
+        <br />perform <code>CHANGE</code>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left"><code>not_by_role_in_action CHANGE ROLE ACTION</code>
+      </td>
+      <td style="text-align:left">specifies that <code>ROLE</code> can not perform
+        <br /><code>CHANGE</code> in <code>ACTION</code>
+      </td>
+    </tr>
+  </tbody>
+</table>The possible values of predicates arguments are:
 
 {% tabs %}
 {% tab title="ROLE" %}
