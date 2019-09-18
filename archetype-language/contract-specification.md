@@ -30,7 +30,7 @@ variable max_bid tez = 0tz
 
 action declare_winner = {
   specification {
-     p : forall b : bid, b.value <= max_bid
+     p : forall b : bid, b.value <= max_bid;
   }
   effect {
      max_bid := ... (* code to compute max_bid *)
@@ -55,7 +55,7 @@ asset mile identified by id = {
    id : string;
    quantity : int;
 } with { 
-  i : quantity > 0
+  i : quantity > 0;
 }
 ```
 
@@ -74,7 +74,7 @@ states =
 | Created initial
 | Confirmed
 | Canceled
-| Terminated with { i : balance = 0 }
+| Terminated with { i : balance = 0; }
 ```
 
 This generates the following pre and post condition for all actions and transitions:
@@ -102,7 +102,7 @@ variable amount int = 0
 
 action add_amount = {
   specification {
-    p : before amount < amount
+    p : before amount < amount;
   }
   effect {
     (* do something to increase amount *)
@@ -146,7 +146,7 @@ asset goods identified by id= {
    id : string
    quantity : int
 } with {
-  a : stock = goods.sum(quantity)
+  a : stock = goods.sum(quantity);
 }
 
 action empty_stock = {
