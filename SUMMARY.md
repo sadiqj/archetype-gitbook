@@ -35,7 +35,7 @@
 * [Governance](contract-library/governance/README.md)
   * [Voting process](contract-library/governance/vote.md)
   * [Competition](contract-library/governance/competition.md)
-  * [DAO](contract-library/governance/dao.md)
+  * [Mini DAO](contract-library/governance/dao.md)
 * [Tokens](contract-library/tokens/README.md)
   * [ERC20](contract-library/tokens/erc20.md)
   * [ERC720](contract-library/tokens/erc720.md)
