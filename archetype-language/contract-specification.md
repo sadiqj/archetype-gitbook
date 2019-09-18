@@ -151,15 +151,17 @@ asset goods identified by id= {
 
 action empty_stock = {
   specification {
-    p : stock = 0   (* this specifies that the effect of empty_stock is to
-                       set 'stock' to zero *)
-  }
-  invariant goods_loop {
-    i : 0 <= stock <= toiterate goods.sum(quantity)
+    postcondition p = {
+       stock = 0   (* this specifies that the effect of empty_stock is to
+                      set 'stock' to zero *)
+       invariant for goods_loop {
+          i : 0 <= stock <= toiterate goods.sum(quantity)
+       }
+    }
   }
   effect {
     ... 
-    goods_loop : for (g in goods) {
+    for : goods_loop (g in goods) {
        ... (* decrease stock somehow *)
     }
     ...
