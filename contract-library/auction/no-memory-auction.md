@@ -8,7 +8,6 @@ This is the most basic version of an auction process. It does not memorise who b
 
 {% code-tabs %}
 {% code-tabs-item title="auction\_no\_memory.arl" %}
-{% code-tabs-item title="auction\_lazy.arl" %}
 ```ocaml
 archetype auction_no_memory
 
