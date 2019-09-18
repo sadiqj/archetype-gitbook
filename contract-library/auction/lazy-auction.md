@@ -2,23 +2,23 @@
 
 {% code-tabs %}
 {% code-tabs-item title="auction\_lazy.arl" %}
+<!-- contract: auction_lazy -->
 ```ocaml
 archetype auction_lazy
 
 asset bid identified by incumbent = {
   incumbent : address;
-  val       : tez
+  val : mtez;
 }
 
 variable deadline date = 2019-01-01T00:00:00
 
 action place_bid = {
-  require { 
-    c1 : now < deadline
+  require {
+    c1 : now < deadline;
   }
-
   effect {
-    bid.add { incumbent = caller; val = transferred }
+    bid.add({ incumbent = caller; val = transferred })
   }
 }
 
@@ -26,19 +26,20 @@ action place_bid = {
 action reclaim (witness : address) = {
   require {
     c2 : now < deadline;
-    c3 : let bc = (bid.get caller).val in
-         let bw = (bid.get witness).val in
-         bc < bw 
+    c3 : (let bc = bid.get(caller).val in
+          let bw = bid.get(witness).val in
+          bc < bw);
   }
-   
   effect {
-    transfer (bid.get caller).val to caller
+    transfer bid.get(caller).val to caller
   }
 }
 
 specification {
-  s1 : forall a : address, 
-         bid.contains a -> balance > (bid.get a).value
+  postcondition s1 = {
+    forall a in address,
+      bid.contains(a) -> balance > bid.get(a).val
+  }
 }
 
 ```

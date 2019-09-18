@@ -10,93 +10,85 @@ Retranscription of zilliqa’s auction contract:
 
 {% code-tabs %}
 {% code-tabs-item title="auction\_zilliqa.arl" %}
+<!-- contract: auction_zilliqa -->
 ```ocaml
 archetype auction_zilliqa
 
-variable highest_bid tez = 0tz
+variable highest_bid mtez = 0mtz
+variable highest_bidder address = 0
 
-variable highest_bidder address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 variable beneficiary address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
-asset pending_return identified by incumbent = {
+asset pending_returns identified by incumbent = {
   incumbent   : address;
-  val         : tez
+  val         : mtez;
 }
 
-states = 
-  | Open   initial 
-  | Closed
+states =
+| Open initial
+| Closed
 
 variable auction_start date = 2019-01-01T00:00:00
 variable auction_end   date = 2019-02-01T00:00:00
 
 specification {
-    highest_is_not_pending : 
-      not (pending_return.contains highest_bidder);
-   
-    highest_is_highest : 
-      forall pr : prending_return, 
-        pr.val <= highest_bid and pr.incumbent <> highest_bidder
+  postcondition highest_is_not_pending = {
+    not (pending_return.contains(highest_bidder))
+  }
+  postcondition highest_is_highest = {
+    forall pr in prending_return,
+      pr.val <= highest_bid and pr.incumbent <> highest_bidder
+  }
 }
 
 action place_bid = {
 
-  specification {
-    (* if there is an update of highest_bidder, then the bid must be
-       *strictly* greater *)
-    first_highest_wins : 
-      before highest_bidder <> highest_bidder ->
-      before highest_bid < highest_bid 
-  }
-
   require {
-    c1 : auction_start <= now <= auction_end
+    c1 : auction_start <= now <= auction_end;
   }
 
   effect {
-    if pending_return.contains caller
+    if pending_return.contains(caller)
     then
-      let bid = (pending_return.get caller).val in
+      let bid = pending_return.get(caller).val in
       let new_bid = bid + transferred in
-      if new_bid > highest_bid 
+      if new_bid > highest_bid
       then (
         (* update pending_return *)
-        pending_return.add { incumbent = highest_bidder;
-                             val       = highest_bid };
-        pending_return.remove caller;
+        pending_return.add ({ incumbent = highest_bidder;
+                              val       = highest_bid });
+        pending_return.remove(caller);
         (* update highest *)
         highest_bid    := new_bid;
         highest_bidder := caller)
       else
-        pending_return.update caller { val = new_bid } 
+        pending_return.update (caller, { val = new_bid })
     else
       if caller = highest_bidder
-      then 
+      then
         (* caller is highest_bidder! accumulate *)
         highest_bid += transferred
       else if transferred > highest_bid
       then (
         (* update pending_return *)
-        pending_return.add {incumbent = highest_bidder; 
-                            val       = highest_bid };
+        pending_return.add ({incumbent = highest_bidder;
+                             val       = highest_bid });
         (* update highest *)
         highest_bid := transferred;
         highest_bidder := caller)
-      else fail (* no need to add bidder since there will 
-                          be nothing to withdraw *)
+      else fail (* no need to add bidder since there will
+                           be nothing to withdraw *)
   }
 }
 
 (* onlyonce extension specifies that one cannot withdraw more than once *)
 action[%onlyonce%] withdraw = {
-
   require {
-    c2 : pending_return.contains caller
+    c2 : pending_returns.contains(caller);
   }
-     
   effect {
-    transfer (pending_return.get caller).val to caller;
-    pending_return.remove caller 
+    transfer pending_returns.get(caller).val to caller;
+    pending_return.remove(caller)
   }
 }
 
@@ -106,7 +98,8 @@ transition endAuction from Open = {
   with effect {
     transfer highest_bid to beneficiary
   }
-} 
+}
+
 
 ```
 {% endcode-tabs-item %}
