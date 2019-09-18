@@ -10,7 +10,6 @@ Note that role values must be provided at declaration for security reason.
 
 {% code-tabs %}
 {% code-tabs-item title="escrow\_basic.arl" %}
-<!-- contract: escrow_basic -->
 ```ocaml
 archetype escrow_basic
 
@@ -64,7 +63,6 @@ transition[%onlyonce%] cancel from Confirmed = {
 security {
   s1 : only_by_role transfers oracle;
 }
-
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}

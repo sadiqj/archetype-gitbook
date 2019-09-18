@@ -2,7 +2,6 @@
 
 {% code-tabs %}
 {% code-tabs-item title="auction\_lazy.arl" %}
-<!-- contract: auction_lazy -->
 ```ocaml
 archetype auction_lazy
 
@@ -41,7 +40,6 @@ specification {
       bid.contains(a) -> balance > bid.get(a).val
   }
 }
-
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}

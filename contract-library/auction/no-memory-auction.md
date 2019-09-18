@@ -27,10 +27,7 @@ action place_bid (id : address) (b : mtez) = {
       bid := transferred
    }
 }
-
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
-
-
 
