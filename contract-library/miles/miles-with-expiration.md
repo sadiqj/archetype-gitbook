@@ -15,108 +15,131 @@ This optimisation comes with a cost of algorithmic complexity in the consume tra
 ```ocaml
 archetype miles_with_expiration
 
-variable[%transferable%] admin role
+variable[%transferable%] admin role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
 (* id is a string because it is generated off-chain *)
 asset mile identified by id sorted by expiration = {
    id         : string;
-   amount     : uint;
-   expiration : date
+   amount     : int;
+   expiration : date;
 } with {
-  m1 : amount > 0
+  m1 : amount > 0;
 }
 
 (* a partition ensures there is no direct access to mile collection *)
 asset owner identified by addr = {
-  addr  : address;
-  miles : mile partition (* injective (owner x mile) *)
+  addr  : role;
+  miles : mile partition; (* injective (owner x mile) *)
 }
 
 action add (ow : address) (newmile : mile) = {
    called by admin
 
    require {
-     c1 : newmile.amount > 0
+     c1 : newmile.amount > 0;
+   }
+
+   failif {
+     c2 : mile.contains(newmile.id);
    }
 
    effect {
-     owner.addifnotexist { addr = ow; mile = [newmile] }
+     if owner.contains(ow) then
+      owner.get(ow).miles.add (newmile)
+     else
+      owner.add ({ addr = ow; miles = [newmile] })
    }
 }
 
-action consume (a : address) (quantity : uint) = {
+action consume (a : address) (quantity : int) = {
+
+  specification {
+
+    assert p1 = {
+      remainder = 0
+    }
+
+    postcondition p2 = {
+      mile.sum(the.amount) = mile.before.sum(the.amount) - quantity
+      invariant for loop {
+        0 <= remainder <= toiterate.sum(the.amount);
+        mile.before.sum(the.amount) = mile.sum(the.amount) + quantity - remainder
+      }
+    }
+
+    postcondition p3 = {
+      forall m in mile.removed, m.expiration >= now
+      invariant for loop {
+        mile.removed.subsetof(by_expiration)
+      }
+    }
+
+    postcondition p4 = {
+      mile.added.isempty
+      invariant for loop {
+        mile.added.isempty
+      }
+    }
+  }
 
   called by admin
 
-  verification {
-    invariant loop = {
-         (* remainder has a decreasing upper bound *)
-         i1 : 0 <= remainder <= to_iter.sum(amount);
-         (* removed miles *)
-         i2 : (subset (removed miles) (o.miles.select(expiration >= now)));
-         (* right amount consumed *)
-         i3 : before miles.sum(amount) = miles.sum(amount) + nbmiles - remainder;
-         i4 : is_empty added.mile
-    }
-
-    specification {
-         (* the globla quantity of miles is decreased by nbmiles *)
-         p1 : mile.sum(quantity) = before miles.sum(quantity) - nbmiles;
-         (* all removed miles are valid miles *)
-         p2 : forall m : removed miles, m.expiration >= now;
-         (* no added mile *)
-         p3 : is_empty added.mile
-    }
+  require {
+    r2 : quantity >= 0;
   }
 
   effect {
-     let ow = owner.get a in
-     let by_expiration = ow.miles.select(mile.expiration > now) in
-     require (by_expiration.sum(quantity) >= amount);
-     let remainder = quantitiy in
-     loop : for (m in by_expiration) (
-       if remainder > 0
-       then (
-         if m.amount > remainder
-         then (
-           remainder := 0;  (* this should be after instruction below
-                               this is to demonstrate verification
-                               capacity to not verify contract in this
-                               state *)
-           m.amount  -= remainder
-         )
-         else if m.amount = remainder
-         then (
-           remainder := 0;
-           o.miles.remove m
-         ) else (
-           remainder -= m.amount;
-           o.miles.remove m
-         )
-       );
-     assert (remainder = 0))
+    let ow = owner.get(a) in
+    let by_expiration = ow.miles.select(the.expiration > now) in
+    require (by_expiration.sum(the.amount) >= quantity);
+    let remainder = quantity in
+    for : loop (m in by_expiration) (
+      if remainder > 0
+      then (
+        if m.amount > remainder
+        then (
+          mile.update(m.id, { amount  -= remainder });
+          remainder := 0
+        )
+        else if m.amount = remainder
+        then (
+          remainder := 0;
+          ow.miles.remove(m.id)
+        ) else (
+          remainder -= m.amount;
+          ow.miles.remove(m.id)
+        )
+      )
+    );
+    assert p1
   }
-}
-
-(* this ensures that any mile was added with the ‘add’ action *)
-specification {
-   g1 : anyaction may be performed only by role admin;
-   g2 : (remove mile) may be performed only by action (consume or clear_expired);
-   g3 : not ((add mile) may be performed only by action consume)
 }
 
 action clear_expired = {
+  specification {
+    postcondition s3 = {
+      forall m in mile.removed, m.expiration < now
+      invariant for loop2 {
+        forall m in mile.removed, m.expiration < now
+      }
+    }
+  }
+
   called by admin
 
-  specification {
-    s3 : forall m : removed mile, m.expiration < now
-  }
-
   effect {
-    for (o in owner) (
-      o.miles.removeif (expiration < now)
+    for : loop2 (o in owner) (
+      o.miles.removeif (the.expiration < now)
     )
   }
+}
+
+security {
+  (*  this ensures that any mile was added with the 'add' action *)
+  g1 : only_by_role anyaction admin;
+  g2 : only_in_action (remove mile) [consume or clear_expired];
+  g3 : not_in_action (add mile) consume;
+  g4 : no_storage_fail add;
 }
 ```
 {% endcode-tabs-item %}
