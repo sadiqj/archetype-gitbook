@@ -11,7 +11,7 @@ $ opam install archetype
 ```
 
 {% hint style="warning" %}
- archetype package coming soon
+ archetype is still in alpha version \(0.1.5\) 
 {% endhint %}
 
 > For information, list of dependencies:
@@ -32,7 +32,7 @@ Please refer to this [page](https://code.visualstudio.com/download) to download 
 
 Install through VS Code extensions. Search for `vscode-archetype`:
 
-[Visual Studio Code Marketplace: vscode-archetype](https://marketplace.visualstudio.com/items?itemName=edukera.vscode-archetype)
+[Visual Studio Code Marketplace: vscode-archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
 
 Can also be installed with VS Code Quick Open: press `Cmd/Ctrl + P`, paste the following command, and press enter.
 
@@ -41,10 +41,6 @@ ext install edukera.vscode-archetype
 ```
 
 The vscode extension is configured via the normal vscode settings screen.
-
-{% hint style="warning" %}
-VS code extension coming soon.
-{% endhint %}
 
 
 

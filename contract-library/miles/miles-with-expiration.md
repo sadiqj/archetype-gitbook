@@ -415,7 +415,7 @@ module Miles
           let m = nth j l in
           remove_miles o m s;
         done;
-        
+
       done;
       Contract.empty
 
@@ -485,13 +485,12 @@ module Miles
           let m = nth j l in
           s.tr <- s.tr ++ Tr.mk_trace Consume Mile Tr.Rm
         done;
-        
+
       done;
       Contract.empty
    | None -> Contract.empty
   end
 end
-
 ```
 {% endcode-tabs-item %}
 
@@ -561,6 +560,4 @@ end
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
-
-
 

@@ -9,13 +9,13 @@ description: Formalise contract properties
 A formal property is a _logical formula_ about the relations between data values and/or asset collections properties. It is made of:
 
 * logical connectors: `and`, `or`, `->` \(logical implication\), `not`, ...
-* quantifiers: the universal quantifier `forall` __and the existential quantifier `exists`
+* quantifiers: the universal quantifier `forall` \_\_and the existential quantifier `exists`
 * atomic predicates, which are the relations between values and/or asset collection:
-  *  between values \(integers, tez, ...\): `=`, `<=`, `>=`, `<`, `>`, ...
+  * between values \(integers, tez, ...\): `=`, `<=`, `>=`, `<`, `>`, ...
   * between asset collections: `subset`, `diff`, ...
   * between an asset and a collection: `mem` \(member of\), ... 
 
-For example, say you are dealing with an auction contract which has to decide the maximum bid over all bids stored in the `bid` asset collection, and say this value is stored in the `max_bid` variable over.  The following is the way to express that `max_bid` is the highest bid:
+For example, say you are dealing with an auction contract which has to decide the maximum bid over all bids stored in the `bid` asset collection, and say this value is stored in the `max_bid` variable over. The following is the way to express that `max_bid` is the highest bid:
 
 ```ocaml
 forall b : bid, b.value <= max_bid
@@ -38,7 +38,7 @@ action declare_winner = {
 }
 ```
 
-This generates a verification task which consists in proving that the effect of the `declare_winner` action on the `max_bid` is actually to set it to the maximum bid value. 
+This generates a verification task which consists in proving that the effect of the `declare_winner` action on the `max_bid` is actually to set it to the maximum bid value.
 
 {% hint style="info" %}
 To practice formalisation of logical properties, you can solve online [edukera](https://app.edukera.com/?qt=4) formalisation exercises.
@@ -48,7 +48,7 @@ To practice formalisation of logical properties, you can solve online [edukera](
 
 It is possible to specify the property a data is supposed to have throughout the life of the contract, regardless of the calls made to the contract and the changes of values of other data.
 
-For example,  say a `quantity` field of an asset `mile` should remain strictly positive. Use the `with` keyword to introduce the property, as illustrated below:
+For example, say a `quantity` field of an asset `mile` should remain strictly positive. Use the `with` keyword to introduce the property, as illustrated below:
 
 ```ocaml
 asset mile identified by id = {
@@ -110,7 +110,7 @@ action add_amount = {
 }
 ```
 
-For asset collection, archetype provides dedicated keywords to refer to _`added`_, _`removed`_ and _`unmoved`_ assets by action effect. 
+For asset collection, archetype provides dedicated keywords to refer to _`added`_, _`removed`_ and _`unmoved`_ assets by action effect.
 
 Say for example you want to express the _only_ obsolete `goods` assets may have been removed by the action effect, that is asset with `expiration` date before now. This property is formalised:
 
@@ -132,7 +132,7 @@ A loop invariant is a property which is true during iteration. More precisely, t
 * at each step of the iteration \(_conservation_\)
 * at the end of the iteration \(_terminaison_\)
 
- A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections: 
+  A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections:
 
 * `toiterate` refers to the assets stil to iterate on
 * `iterated` refers to the assets already iterated 
@@ -197,7 +197,7 @@ As such, an `assert` instruction does not generate any execution code.
 
 ## Security predicates
 
-In order to provide security guarantee to contract readers, it is usually useful to state which action may change an asset collection or a variable. 
+In order to provide security guarantee to contract readers, it is usually useful to state which action may change an asset collection or a variable.
 
 For example, the following specifies that only the action `add_goods` may add a `goods` asset:
 
@@ -219,68 +219,47 @@ not_by_role anychange owner
 
 Archetype provides the following predicates:
 
+| predicate | description |
+| :--- | :--- |
+
+
 <table>
   <thead>
     <tr>
-      <th style="text-align:left">predicate</th>
-      <th style="text-align:left">description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:left"><code>no_storage_fail ACTION</code>
-      </td>
-      <td style="text-align:left">
+      <th style="text-align:left"><code>no_storage_fail ACTION</code>
+      </th>
+      <th style="text-align:left">
         <p>specifies that <code>ACTION</code>  <b>cannot</b> logically fail
           <br />on storage access (key not found when</p>
         <p>reading and setting, and key already
           <br />present when adding an asset)</p>
-      </td>
+      </th>
     </tr>
-    <tr>
-      <td style="text-align:left"><code>only_by_role CHANGE ROLE</code>
-      </td>
-      <td style="text-align:left">specifies that <b>only</b>  <code>ROLE</code> 
-        <br />can perform <code>CHANGE</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left"><code>only_in_action CHANGE ACTION </code>
-      </td>
-      <td style="text-align:left">specifies that <b>only</b>  <code>ACTION</code> 
-        <br />can perform <code>CHANGE</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left"><code>only_by_role_in_action CHANGE ROLE ACTION</code>
-      </td>
-      <td style="text-align:left">specifies that only <code>ROLE</code> 
-        <br />can perform <code>CHANGE</code> in <code>ACTION</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left"><code>not_by_role CHANGE ROLE</code>
-      </td>
-      <td style="text-align:left">specifies that ROLE can <b>not</b> 
-        <br />perform<code>CHANGE</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left"><code>not_in_action CHANGE ACTION</code>
-      </td>
-      <td style="text-align:left">specifies that ACTION can <b>not</b> 
-        <br />perform <code>CHANGE</code>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:left"><code>not_by_role_in_action CHANGE ROLE ACTION</code>
-      </td>
-      <td style="text-align:left">specifies that <code>ROLE</code> can not perform
-        <br /><code>CHANGE</code> in <code>ACTION</code>
-      </td>
-    </tr>
-  </tbody>
-</table>The possible values of predicates arguments are:
+  </thead>
+  <tbody></tbody>
+</table>| `only_by_role CHANGE ROLE` | specifies that **only** `ROLE` can perform `CHANGE` |
+| :--- | :--- |
+
+
+| `only_in_action CHANGE ACTION` | specifies that **only** `ACTION` can perform `CHANGE` |
+| :--- | :--- |
+
+
+| `only_by_role_in_action CHANGE ROLE ACTION` | specifies that only `ROLE` can perform `CHANGE` in `ACTION` |
+| :--- | :--- |
+
+
+| `not_by_role CHANGE ROLE` | specifies that ROLE can **not** perform`CHANGE` |
+| :--- | :--- |
+
+
+| `not_in_action CHANGE ACTION` | specifies that ACTION can **not** perform `CHANGE` |
+| :--- | :--- |
+
+
+| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform `CHANGE` in `ACTION` |
+| :--- | :--- |
+
 
 {% tabs %}
 {% tab title="ROLE" %}
@@ -308,6 +287,4 @@ Archetype provides the following predicates:
 * _`noaction`_
 {% endtab %}
 {% endtabs %}
-
-
 
