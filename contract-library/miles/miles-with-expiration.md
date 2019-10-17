@@ -6,9 +6,21 @@ description: >-
 
 # With expiration
 
-A storage optimisation has been done directly in the design of the mile model: a mile is described with an amount field which enables to aggregate miles with same expiration dates. For example, 10 miles with the same expiration date are merged into one mile with the amount value set to 10.
+A mille owner is identified by an address and possesses some miles. A mile is identified by a string id and has an expiration date. Every mile is possessed by one and only one owner:
 
-This optimisation comes with a cost of algorithmic complexity in the consume transaction.
+![basic model](../../.gitbook/assets/screenshot-2019-10-17-at-10.01.07.png)
+
+A mile can be added and consumed if its expiration date is in the future. 
+
+A storage optimisation is added to the above model. A mile is augmented with a _quantity_ value to gather several miles with the same expiration date. For example, 3 miles with the same expiration date are merged into one mile with the _quantity_ value set to 3:
+
+![3 miles with same expiration date ...](../../.gitbook/assets/screenshot-2019-10-17-at-10.09.02.png)
+
+![... modeled as one mile with a quantity value](../../.gitbook/assets/screenshot-2019-10-17-at-10.10.10.png)
+
+This optimisation comes with a cost of algorithmic complexity in the _consume_ action \(line 39\).
+
+All actions are called by the _admin_ role, which is ensured by security predicate _s1_ \(line 109\).
 
 {% code-tabs %}
 {% code-tabs-item title="miles\_with\_expiration.arl" %}
@@ -18,21 +30,21 @@ archetype miles_with_expiration
 variable[%transferable%] admin role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
 (* id is a string because it is generated off-chain *)
-asset mile identified by id sorted by expiration = {
+asset mile identified by id sorted by expiration {
    id         : string;
    amount     : int;
    expiration : date;
 } with {
-  m1 : amount > 0;
+  i1 : amount > 0;
 }
 
 (* a partition ensures there is no direct access to mile collection *)
-asset owner identified by addr = {
+asset owner identified by addr {
   addr  : role;
   miles : mile partition; (* injective (owner x mile) *)
 }
 
-action add (ow : address) (newmile : mile) = {
+action add (ow : address) (newmile : mile) {
    called by admin
 
    require {
@@ -55,31 +67,21 @@ action consume (a : address) (quantity : int) = {
 
   specification {
 
-    assert p1 = {
-      remainder = 0
-    }
-
-    postcondition p2 = {
+    postcondition p1 = {
       mile.sum(the.amount) = mile.before.sum(the.amount) - quantity
       invariant for loop {
+        mile.sum(the.amount) = mile.before.sum(the.amount) - quantity + remainder
         0 <= remainder <= toiterate.sum(the.amount);
-        mile.before.sum(the.amount) = mile.sum(the.amount) + quantity - remainder
       }
     }
 
-    postcondition p3 = {
+    postcondition p2 = {
       forall m in mile.removed, m.expiration >= now
       invariant for loop {
         mile.removed.subsetof(by_expiration)
       }
     }
 
-    postcondition p4 = {
-      mile.added.isempty
-      invariant for loop {
-        mile.added.isempty
-      }
-    }
   }
 
   called by admin
@@ -101,17 +103,12 @@ action consume (a : address) (quantity : int) = {
           mile.update(m.id, { amount  -= remainder });
           remainder := 0
         )
-        else if m.amount = remainder
-        then (
-          remainder := 0;
-          ow.miles.remove(m.id)
-        ) else (
+        else (
           remainder -= m.amount;
           ow.miles.remove(m.id)
         )
       )
-    );
-    assert p1
+    )
   }
 }
 
@@ -136,10 +133,10 @@ action clear_expired = {
 
 security {
   (*  this ensures that any mile was added with the 'add' action *)
-  g1 : only_by_role anyaction admin;
-  g2 : only_in_action (remove mile) [consume or clear_expired];
-  g3 : not_in_action (add mile) consume;
-  g4 : no_storage_fail add;
+  s1 : only_by_role(anyaction, admin);
+  s2 : only_in_action(remove mile, [consume or clear_expired]);
+  s3 : not_in_action(add mile, consume);
+  s4 : no_storage_fail(add);
 }
 ```
 {% endcode-tabs-item %}
