@@ -29,7 +29,7 @@ archetype miles_with_expiration
 
 variable[%transferable%] admin role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
-(* id is a string because it is generated off-chain *)
+/* id is a string because it is generated off-chain */
 asset mile identified by id sorted by expiration {
    id         : string;
    amount     : int;
@@ -38,10 +38,10 @@ asset mile identified by id sorted by expiration {
   i1 : amount > 0;
 }
 
-(* a partition ensures there is no direct access to mile collection *)
+/* a partition ensures there is no direct access to mile collection */
 asset owner identified by addr {
   addr  : role;
-  miles : mile partition; (* injective (owner x mile) *)
+  miles : mile partition; /* injective (owner x mile) */
 }
 
 action add (ow : address) (newmile : mile) {
@@ -132,7 +132,7 @@ action clear_expired = {
 }
 
 security {
-  (*  this ensures that any mile was added with the 'add' action *)
+  /*  this ensures that any mile was added with the 'add' action */
   s1 : only_by_role(anyaction, admin);
   s2 : only_in_action(remove mile, [consume or clear_expired]);
   s3 : not_in_action(add mile, consume);
