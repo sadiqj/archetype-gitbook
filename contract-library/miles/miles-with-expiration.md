@@ -24,7 +24,7 @@ All actions are called by the _admin_ role, which is ensured by security predica
 
 {% code-tabs %}
 {% code-tabs-item title="miles\_with\_expiration.arl" %}
-```ocaml
+```javascript
 archetype miles_with_expiration
 
 variable[%transferable%] admin role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
@@ -91,10 +91,10 @@ action consume (a : address) (quantity : int) = {
   }
 
   effect {
-    let ow = owner.get(a) in
-    let by_expiration = ow.miles.select(the.expiration > now) in
+    var ow = owner.get(a);
+    var by_expiration = ow.miles.select(the.expiration > now);
     require (by_expiration.sum(the.amount) >= quantity);
-    let remainder = quantity in
+    var remainder = quantity;
     for : loop (m in by_expiration) (
       if remainder > 0
       then (
