@@ -91,10 +91,10 @@ action consume (a : address) (quantity : int) = {
   }
 
   effect {
-    var ow = owner.get(a);
-    var by_expiration = ow.miles.select(the.expiration > now);
+    let ow = owner.get(a) in
+    let by_expiration = ow.miles.select(the.expiration > now) in
     require (by_expiration.sum(the.amount) >= quantity);
-    var remainder = quantity;
+    let remainder = quantity in
     for : loop (m in by_expiration) (
       if remainder > 0
       then (
