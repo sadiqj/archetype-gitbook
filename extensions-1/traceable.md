@@ -6,8 +6,8 @@ description: Generates a dedicated tez transfer action
 
 The traceable extension, when decorating a tez value, generates an dedicated contract transaction to load the corresponding amount.
 
-{% code-tabs %}
-{% code-tabs-item title="traceable.arlx" %}
+{% tabs %}
+{% tab title="traceable.arlx" %}
 ```ocaml
 archetype extension traceable (
 
@@ -25,6 +25,6 @@ archetype extension traceable (
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

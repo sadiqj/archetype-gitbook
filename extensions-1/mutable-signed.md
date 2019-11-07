@@ -6,8 +6,8 @@ description: Adds a signed setter
 
 This extension defines a mutable value. The action to change its value must be signed by roles passed as argument.
 
-{% code-tabs %}
-{% code-tabs-item title="mutable\_signed.arlx" %}
+{% tabs %}
+{% tab title="mutable\_signed.arlx" %}
 ```ocaml
 archetype extension mutable_signed (
 
@@ -25,6 +25,6 @@ archetype extension mutable_signed (
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

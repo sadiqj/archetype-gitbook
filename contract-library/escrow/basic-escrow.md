@@ -8,8 +8,8 @@ It is mainly a state machine with 5 states and 4 transitions illustrated in the 
 
 Note that role values must be provided at declaration for security reason.
 
-{% code-tabs %}
-{% code-tabs-item title="escrow\_basic.arl" %}
+{% tabs %}
+{% tab title="escrow\_basic.arl" %}
 ```ocaml
 archetype escrow_basic
 
@@ -64,6 +64,6 @@ security {
   s1 : only_by_role transfers oracle;
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

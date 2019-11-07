@@ -8,8 +8,8 @@ This archetype defines a basic voting process. The chairman is responsible for r
 
 The result of the vote is computed with the `bury` action: winners are ballots with the highest number of votes.
 
-{% code-tabs %}
-{% code-tabs-item title="voting\_process.arl" %}
+{% tabs %}
+{% tab title="voting\_process.arl" %}
 ```ocaml
 archetype vote
 
@@ -90,6 +90,6 @@ specification {
            b.nbvotes <= ballot.get(w.value).nbvotes
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

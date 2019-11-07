@@ -1,7 +1,7 @@
 # Basic
 
-{% code-tabs %}
-{% code-tabs-item title="auction\_basic.arl" %}
+{% tabs %}
+{% tab title="auction\_basic.arl" %}
 ```ocaml
 archetype auction
 
@@ -49,6 +49,6 @@ specification {
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

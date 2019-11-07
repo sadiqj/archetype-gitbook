@@ -11,8 +11,8 @@ The [fizzy](https://fizzy.axa/fr/) contract is an insurance against flight delay
 
 Below is the direct  transcription of the fizzy contract in archetype.
 
-{% code-tabs %}
-{% code-tabs-item title="fizzy.arl" %}
+{% tabs %}
+{% tab title="fizzy.arl" %}
 ```ocaml
 archetype fizzy
 
@@ -93,6 +93,6 @@ specification {
    s3 : (update insurance.stat) may be performed only by action
                                                 (updatestatus or manual)}
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

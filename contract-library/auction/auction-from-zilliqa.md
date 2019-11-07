@@ -8,8 +8,8 @@ Retranscription of zilliqa’s auction contract:
 
 [https://github.com/Zilliqa/scilla/blob/master/tests/contracts/auction.scilla](https://github.com/Zilliqa/scilla/blob/master/tests/contracts/auction.scilla)
 
-{% code-tabs %}
-{% code-tabs-item title="auction\_zilliqa.arl" %}
+{% tabs %}
+{% tab title="auction\_zilliqa.arl" %}
 ```ocaml
 archetype auction_zilliqa
 
@@ -99,6 +99,6 @@ transition endAuction from Open = {
   }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

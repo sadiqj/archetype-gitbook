@@ -38,8 +38,8 @@ The oracle provides with a description of the pojo in the [JSON SCHEMA](https://
 
 The code below illustrates the use of the above schema with the object keyword:
 
-{% code-tabs %}
-{% code-tabs-item title="escrow\_with\_oracle\_decision.arl" %}
+{% tabs %}
+{% tab title="escrow\_with\_oracle\_decision.arl" %}
 ```ocaml
 archetype escrow_with_object
 
@@ -112,6 +112,6 @@ specification {
 
 
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

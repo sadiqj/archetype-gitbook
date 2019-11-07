@@ -14,8 +14,8 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/animaltracking-network" %}
 
-{% code-tabs %}
-{% code-tabs-item title="animal-tracking.arl" %}
+{% tabs %}
+{% tab title="animal-tracking.arl" %}
 ```ocaml
 archetype animal_tracking
 
@@ -62,6 +62,6 @@ transition arrival (toField : field) on ak : animal from In_transit = {
 }
 
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

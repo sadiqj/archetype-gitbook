@@ -30,8 +30,8 @@ Below is the contract state machine diagram :
 
 
 
-{% code-tabs %}
-{% code-tabs-item title="autocallable.arl" %}
+{% tabs %}
+{% tab title="autocallable.arl" %}
 ```ocaml
 archetype autocallable
 
@@ -267,8 +267,8 @@ transition terminate from Confirmed = {
   to Terminated when { actual_payment >= compute_expected now }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
 
 

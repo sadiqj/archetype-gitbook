@@ -10,8 +10,8 @@ The findel expression below describes this contract:
 And ( Give( Scale( 10; One( USD ))); At( now+1 years; Scale( 11 ; One( USD ))))
 ```
 
-{% code-tabs %}
-{% code-tabs-item title="zero\_coupon\_bond.arl" %}
+{% tabs %}
+{% tab title="zero\_coupon\_bond.arl" %}
 ```ocaml
 archetype zero_coupon_bond
 
@@ -54,6 +54,6 @@ transition terminate from Confirmed = {
 
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

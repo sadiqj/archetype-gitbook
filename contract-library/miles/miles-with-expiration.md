@@ -22,8 +22,8 @@ This optimisation comes with a cost of algorithmic complexity in the _consume_ a
 
 All actions are called by the _admin_ role, which is ensured by security predicate _s1_ \(line 109\).
 
-{% code-tabs %}
-{% code-tabs-item title="miles\_with\_expiration.arl" %}
+{% tabs %}
+{% tab title="miles\_with\_expiration.arl" %}
 ```javascript
 archetype miles_with_expiration
 
@@ -139,9 +139,9 @@ security {
   s4 : no_storage_fail(add);
 }
 ```
-{% endcode-tabs-item %}
+{% endtab %}
 
-{% code-tabs-item title="miles\_with\_expiration.mlw" %}
+{% tab title="miles\_with\_expiration.mlw" %}
 ```ocaml
 module Miles
 
@@ -489,9 +489,9 @@ module Miles
   end
 end
 ```
-{% endcode-tabs-item %}
+{% endtab %}
 
-{% code-tabs-item title="miles\_with\_expiration.md" %}
+{% tab title="miles\_with\_expiration.md" %}
 ```bash
 # Miles with Expiration
 > Genrated with [Archetype](https://archetype-lang.org/) v0.1 (2019-04-09)
@@ -555,6 +555,6 @@ end
 ##### s3
 `transfers_by_tx  anytx = 0`
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 

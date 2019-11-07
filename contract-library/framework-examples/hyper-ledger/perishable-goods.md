@@ -14,8 +14,8 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/perishable-network" %}
 
-{% code-tabs %}
-{% code-tabs-item title="perishable.arl" %}
+{% tabs %}
+{% tab title="perishable.arl" %}
 ```ocaml
 archetype perishable
 
@@ -62,6 +62,6 @@ transition payOut (arrival : date) on sk : shipment from In_transit = {
 }
 
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
+{% endtab %}
+{% endtabs %}
 
