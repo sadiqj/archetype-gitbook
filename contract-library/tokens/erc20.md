@@ -8,9 +8,7 @@ The standard may be found at this address:
 
 [https://theethereum.wiki/w/index.php/ERC20\_Token\_Standard](https://theethereum.wiki/w/index.php/ERC20_Token_Standard)
 
-{% tabs %}
-{% tab title="erc20.arl" %}
-```ocaml
+```text
 archetype erc20
 
 constant name string = "myerc20"
@@ -61,6 +59,4 @@ action transfer (to : key of tokenHolder) (value : uint) = {
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
 
