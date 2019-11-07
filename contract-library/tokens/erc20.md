@@ -24,10 +24,10 @@ asset allowance {
     i2 : amount > 0;
 }
 
-asset tokenHolder identified by holder = {
+asset tokenHolder identified by holder {
     holder     : address;
     tokens     : int;
-    allowances : allowance partition
+    allowances : allowance collection
 } with {
     i1: tokens >= 0;
     i2: allowances.sum(the.amount) <= tokens;
@@ -35,7 +35,7 @@ asset tokenHolder identified by holder = {
   { holder = caller; tokens = total; allowances = [] }
 ]
 
-action transfer (to : key of tokenHolder) (value : uint) = {
+action transfer (to : key of tokenHolder) (value : int) {
 
   specification {
     p1 : before tokenHolder.sum(tokens) = tokenHolder.sum(tokens);
@@ -52,6 +52,7 @@ action transfer (to : key of tokenHolder) (value : uint) = {
   }
 
   failif {
+    f0 : value < 0;
     f1 : tokenHolder.get(caller).tokens < value
   }
 
@@ -59,6 +60,21 @@ action transfer (to : key of tokenHolder) (value : uint) = {
     tokenHolder.update( to.holder, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
   }
+}
+
+action allow (spender : address) (value : int) {
+
+  require {
+    r1 : 
+  }
+  failif {
+    f2 : value <= 0; 
+  }   
+
+  effect {
+      
+  }
+
 }
 ```
 {% endtab %}
