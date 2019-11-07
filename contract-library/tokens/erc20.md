@@ -17,13 +17,22 @@ constant name string = "myerc20"
 
 constant total uint = 1000
 
+asset allowance {
+    allowed : address;
+    amount  : int;
+} with {
+    i2 : amount > 0;
+}
+
 asset tokenHolder identified by holder = {
-    holder : role;
-    tokens : int;
+    holder     : address;
+    tokens     : int;
+    allowances : allowance partition
 } with {
     i1: tokens >= 0;
+    i2: allowances.sum(the.amount) <= tokens;
 } initialized by [
-  { holder = caller; tokens = total }
+  { holder = caller; tokens = total; allowances = [] }
 ]
 
 action transfer (to : key of tokenHolder) (value : uint) = {
@@ -50,10 +59,6 @@ action transfer (to : key of tokenHolder) (value : uint) = {
     tokenHolder.update( to.holder, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
   }
-}
-
-security {
-   s1 : only_in ();
 }
 ```
 {% endtab %}
