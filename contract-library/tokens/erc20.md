@@ -35,16 +35,16 @@ asset tokenHolder identified by holder {
   { holder = caller; tokens = total; allowances = [] }
 ]
 
-action transfer (to : key of tokenHolder) (value : int) {
+action dotransfer (dest : key of tokenHolder) (value : int) {
 
   specification {
-    p1 : before tokenHolder.sum(tokens) = tokenHolder.sum(tokens);
+    p1 : before.tokenHolder.sum(tokens) = tokenHolder.sum(tokens);
     p2 : let th = tokenHolder.get(th) in
          th.tokens = before.th.tokens + value
-         otherwise true
+         otherwise true;
     p3 : let thc = tokenHolder.get(caller) in 
          thc.tokens = before.thc.tokens - value
-         otherwise true
+         otherwise true;
     p4 : forall t in tokenHolder,
          if t <> th then
          if t <> caller then
@@ -57,7 +57,7 @@ action transfer (to : key of tokenHolder) (value : int) {
   }
 
   effect {
-    tokenHolder.update( to.holder, { tokens += value });
+    tokenHolder.update( dest.holder, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
   }
 }
