@@ -4,7 +4,7 @@ description: Real life insurance contract
 
 # Fizzy
 
-The [fizzy](https://fizzy.axa/fr/) contract is an insurance against flight delay issued by the [Axa](https://www.axa.com/en/) insurance company :
+The [fizzy](https://fizzy.axa/fr/) contract was an insurance against flight delay issued in 2018 by the [Axa](https://www.axa.com/en/) insurance company :
 
 * the insurance [contract](https://fizzy.axa/fr/static/media/conditions-generales.38af84e2.pdf) \(in french\).
 * the ethereum [smart contract](https://etherscan.io/address/0xe083515d1541f2a9fd0ca03f189f5d321c73b872#code)
