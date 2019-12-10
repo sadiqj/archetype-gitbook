@@ -8,8 +8,7 @@ This extension is anchored at action level; it adds the specification that the f
 
 It is implemented with a simple function’s action execution counter.
 
-{% tabs %}
-{% tab title="only\_once.arlx" %}
+{% code title="only\_once.arlx" %}
 ```ocaml
 archetype extension onlyonce (
 
@@ -34,8 +33,7 @@ archetype extension onlyonce (
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 Variables and action declared in specification are mapped to why3 ghost code. The invariant section is mapped to why3 storage type \(record\) invariants.
 

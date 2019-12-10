@@ -16,8 +16,7 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/vehicle-lifecycle-network" %}
 
-{% tabs %}
-{% tab title="vehicle\_lifecycle.arl" %}
+{% code title="vehicle\_lifecycle.arl" %}
 ```ocaml
 archetype vehicle_lifecycle
 
@@ -104,8 +103,7 @@ action scrapVehiclebyColor (color : string) = {
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 
 

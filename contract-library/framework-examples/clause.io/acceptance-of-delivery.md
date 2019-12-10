@@ -8,8 +8,7 @@
 
 {% embed url="https://github.com/clauseHQ/cicero-template-library/tree/master/src/acceptance-of-delivery" %}
 
-{% tabs %}
-{% tab title="acceptance\_of\_delivery.arl" %}
+{% code title="acceptance\_of\_delivery.arl" %}
 ```ocaml
 archetype clause_io_acceptance_of_delivery
 
@@ -93,6 +92,5 @@ transition fail_ from Delivered = {
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

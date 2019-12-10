@@ -6,8 +6,7 @@ Factoring is enabled: the seller can sell the “invoice” to a creditor, and t
 
 A state machine is used to follow the different stages of the escrow transaction.
 
-{% tabs %}
-{% tab title="escrow\_penalty.arl" %}
+{% code title="escrow\_penalty.arl" %}
 ```ocaml
 archetype escrow
 
@@ -68,8 +67,7 @@ transition cancel from Confirmed = {
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 
 

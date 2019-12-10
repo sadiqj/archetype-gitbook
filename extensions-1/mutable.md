@@ -9,8 +9,7 @@ This extension takes two arguments:
 1. the role expression to specify who can change the value
 2. the condition to change the value
 
-{% tabs %}
-{% tab title="mutable.arlx" %}
+{% code title="mutable.arlx" %}
 ```ocaml
 archetype extension mutable (
 
@@ -29,6 +28,5 @@ archetype extension mutable (
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

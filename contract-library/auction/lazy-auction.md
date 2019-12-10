@@ -1,7 +1,6 @@
 # Lazy
 
-{% tabs %}
-{% tab title="auction\_lazy.arl" %}
+{% code title="auction\_lazy.arl" %}
 ```ocaml
 archetype auction_lazy
 
@@ -41,6 +40,5 @@ specification {
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

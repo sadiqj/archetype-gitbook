@@ -8,8 +8,7 @@ This extension provides an approval condition to trigger a transaction: each rol
 
 It is very likely that this extension be soon promoted to a native _action_ instruction.
 
-{% tabs %}
-{% tab title="signed\_by\_all.arlx" %}
+{% code title="signed\_by\_all.arlx" %}
 ```ocaml
 archetype extension signedbyall (
 
@@ -37,6 +36,5 @@ archetype extension signedbyall (
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

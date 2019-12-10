@@ -6,8 +6,7 @@ description: Most basic auction process
 
 This is the most basic version of an auction process. It does not memorise who bid what.
 
-{% tabs %}
-{% tab title="auction\_no\_memory.arl" %}
+{% code title="auction\_no\_memory.arl" %}
 ```ocaml
 archetype auction_no_memory
 
@@ -28,6 +27,5 @@ action place_bid (id : address) (b : mtez) = {
    }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

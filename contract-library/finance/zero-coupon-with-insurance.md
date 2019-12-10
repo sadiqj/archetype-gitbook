@@ -4,8 +4,7 @@ The issue is that the previous zero coupon bond is that the owner has zero guara
 
 The solution is to use a guarantee fund to ensure pay back. This fund plays the role of trusted third party for the zero coupon bond contract.
 
-{% tabs %}
-{% tab title="zcb\_with\_insurance.arl" %}
+{% code title="zcb\_with\_insurance.arl" %}
 ```ocaml
 archetype zero_coupon_bond_with_insurance
 
@@ -74,11 +73,9 @@ transition collect from Repaid = {
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
-{% tabs %}
-{% tab title="guarantee\_fund.arl" %}
+{% code title="guarantee\_fund.arl" %}
 ```ocaml
 archetype guarantee_fund
 
@@ -114,6 +111,5 @@ action pay (recipient : address) (amount : tez) = {
   }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

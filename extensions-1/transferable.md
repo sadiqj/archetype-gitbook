@@ -9,8 +9,7 @@ The transferable extension defines a basic two-step process to transfer a role v
 1. current role assigns a new address for the role
 2. new address confirms the transfer
 
-{% tabs %}
-{% tab title="transferable.arlx" %}
+{% code title="transferable.arlx" %}
 ```ocaml
 archetype extension transferable (
 
@@ -35,6 +34,5 @@ archetype extension transferable (
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

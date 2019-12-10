@@ -2,8 +2,7 @@
 
 This archetype is a very basic miles management system with add and consume transactions. It may be considered as a simplified version of ERC20.
 
-{% tabs %}
-{% tab title="miles.arl" %}
+{% code title="miles.arl" %}
 ```ocaml
 archetype miles
 
@@ -42,6 +41,5 @@ action consume (owner : address) (value : uint) = {
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 

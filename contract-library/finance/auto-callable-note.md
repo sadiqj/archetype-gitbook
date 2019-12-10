@@ -2,7 +2,7 @@
 
 This contract is the transcription to archetype of the following auto-callable note from Goldman Sachs:
 
-[https://www.eavest.com/products/e1f62344-818a-39a1-a77c-75ad849a07d6/tsheet](https://www.eavest.com/products/e1f62344-818a-39a1-a77c-75ad849a07d6/tsheet)
+[https://www.eavest.com/products/e1f62344-818a-39a1-a77c-75ad849a07d6/tsheet](https://drive.google.com/file/d/0B64p1w9JOO-QQlhFQWEzMVl0cmRRVk5Td3d6czR5ZDRsWTRN/view?usp=sharing)
 
 Thank you to Alain Frisch, CTO at [Lexifi](https://www.lexifi.com/), for this example contract and his help to transcode it. Lexifi provides financial services with a DSL \(Domain Specific Language\) to execute and simulate financial contracts. Alain Frish also provided the corresponding Lexifi code, automatically extracted by Lexifi drivers from the above document.
 
@@ -30,8 +30,7 @@ Below is the contract state machine diagram :
 
 
 
-{% tabs %}
-{% tab title="autocallable.arl" %}
+{% code title="autocallable.arl" %}
 ```ocaml
 archetype autocallable
 
@@ -267,8 +266,7 @@ transition terminate from Confirmed = {
   to Terminated when { actual_payment >= compute_expected now }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 
 

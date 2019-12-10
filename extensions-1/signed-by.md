@@ -8,8 +8,7 @@ description: Requires an action argument be signed
 
 This extension applies to an action field; it adds to the action the certificate that the argument comes from the role passed as the argument.
 
-{% tabs %}
-{% tab title="signedby.arlx" %}
+{% code title="signedby.arlx" %}
 ```ocaml
 archetype extension signedby (
   
@@ -27,15 +26,13 @@ archetype extension signedby (
 
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 ## Signed Object
 
 This extension applies to an object and adds to the action the certificate that the argument comes from the role passed as the argument.
 
-{% tabs %}
-{% tab title="object\_signed\_by.arlx" %}
+{% code title="object\_signed\_by.arlx" %}
 ```ocaml
 archetype extension signedby_at_object_level (
   
@@ -56,6 +53,5 @@ archetype extension signedby_at_object_level (
 }
 
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
