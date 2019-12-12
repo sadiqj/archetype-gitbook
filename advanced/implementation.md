@@ -100,7 +100,7 @@ let complete =
 
 In order to minimise the necessary computation to access an asset from its key, It is necessary to store assets in a map which associates the key to the asset record.
 
-With this transform, assets are stored in maps, as exemplified below with the generated storage of the [miles with expiration](../contract-library/miles/miles-with-expiration.md) contracts :
+With this transform, assets are stored in maps, as exemplified below with the generated storage of the [miles with expiration](../contract-library/tokens/miles-with-expiration.md) contracts :
 
 ```ocaml
 record mile identified by id {

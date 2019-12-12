@@ -168,8 +168,6 @@ Some of these contracts come with relevant properties. Feel free to submit any n
 
 {% page-ref page="contract-library/governance/" %}
 
-{% page-ref page="contract-library/miles/" %}
-
 {% page-ref page="contract-library/finance/" %}
 
 {% page-ref page="contract-library/tokens/" %}

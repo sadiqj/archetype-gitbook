@@ -4,7 +4,7 @@ description: >-
   cannot be consumed and may be cleared out by the administrator.
 ---
 
-# With expiration
+# Miles with expiration
 
 A mille owner is identified by an address and possesses some miles. A mile is identified by a string id and has an expiration date. Every mile is possessed by one and only one owner:
 

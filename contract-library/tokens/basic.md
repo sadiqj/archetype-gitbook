@@ -1,4 +1,4 @@
-# Basic
+# Miles
 
 This archetype is a very basic miles management system with add and consume transactions. It may be considered as a simplified version of ERC20.
 
