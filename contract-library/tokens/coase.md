@@ -10,72 +10,6 @@ The smart contract version we are considering here is the one that comes as a Li
 
 {% embed url="https://gitlab.com/ligolang/ligo/blob/dev/src%2Ftest%2Fcontracts%2Fcoase.ligo" %}
 
-The Archetype contract defines two assets: _card\_pattern_ which holds the number of cards in stock and _card_ which hods its owner and its pattern:
-
-```text
-asset card_pattern identified by card_pattern_id {
-  card_pattern_id : int;
-  coefficient     : tez;
-  quantity        : int;
-} shadow {
-  sellcount       : int = 0;
-}
-```
-
-```text
-asset card identified by card_id {
-  card_id           : int;
-  card_owner        : address;
-  card_pattern_card : pkey of card_pattern;
-}
-```
-
-**First**, we note that the concept of _asset collection_ makes the code very straightforward compared to lower-level code: for example, the _transfer\_single_ entry point sets the _card\_owner_ field of the card with id _card\_to\_transfer_. 
-
-Below the LIGO version:
-
-```text
-const cards : cards = s.cards ;
-const card : card = get_force(action.card_to_transfer , cards) ;
-if (card.card_owner =/= source) 
-then failwith ("This card doesn't belong to you") 
-else skip ;
-card.card_owner := action.destination ;
-cards[action.card_to_transfer] := card ;
-s.cards := cards ;
-```
-
-Below the Archetype version:
-
-```text
-require {
-  ts1: caller = card.get(card_to_transfer).card_owner;
-}
-effect {
-  card.update(card_to_transfer, {card_owner = destination})
-}
-```
-
-**Second**, we note that, in Archetype, it is possible for example to provide the formula of the balance of the contract:
-
-```text
-specification {
-  g1: balance = card_pattern.sum(coefficient * ((quantity * (quantity + 1)) / 2 + sellcount))
-}
-```
-
-which writes mathematically as:
-
-![](https://cdn-images-1.medium.com/max/1600/1*4OcbCg37HGfuGkBLb2vxtQ.png)
-
-where _sellcount_ is the number of times a card has been sold. Note that _sellcount_ is not computed in the original contract. It is defined in Archetype as a s_hadow field_ \(see “Asset shadow field” section below\).
-
-This property makes the contract’s business model explicit: each time a card is sold, the contract earns the value of the card’s coefficient; when every card has been sold \(∀c,quantity\(c\)=0\), the following relation stands:
-
-![](https://cdn-images-1.medium.com/max/1600/1*QX8A4kgmHaIQkBsj2QEkPg.png)
-
-We see that a high-level non-trivial property is a very powerful way to convey information about the contract.
-
 The Archetype version:
 
 ```text
@@ -166,6 +100,54 @@ specification {
 }
 
 ```
+
+The Archetype contract defines two assets: _card\_pattern_ which holds the number of cards in stock and _card_ which hods its owner and its pattern.
+
+We note that the concept of _asset collection_ makes the code very straightforward compared to lower-level code: for example, the _transfer\_single_ entry point sets the _card\_owner_ field of the card with id _card\_to\_transfer_. 
+
+Below the LIGO version:
+
+```text
+const cards : cards = s.cards ;
+const card : card = get_force(action.card_to_transfer , cards) ;
+if (card.card_owner =/= source) 
+then failwith ("This card doesn't belong to you") 
+else skip ;
+card.card_owner := action.destination ;
+cards[action.card_to_transfer] := card ;
+s.cards := cards ;
+```
+
+Below the Archetype version:
+
+```text
+require {
+  ts1: caller = card.get(card_to_transfer).card_owner;
+}
+effect {
+  card.update(card_to_transfer, {card_owner = destination})
+}
+```
+
+We note that, in Archetype, it is possible for example to provide the formula of the balance of the contract:
+
+```text
+specification {
+  g1: balance = card_pattern.sum(coefficient * ((quantity * (quantity + 1)) / 2 + sellcount))
+}
+```
+
+which writes mathematically as:
+
+![](https://cdn-images-1.medium.com/max/1600/1*4OcbCg37HGfuGkBLb2vxtQ.png)
+
+where _sellcount_ is the number of times a card has been sold. Note that _sellcount_ is not computed in the original contract. It is defined in Archetype as a s_hadow field_ \(see “Asset shadow field” section below\).
+
+This property makes the contract’s business model explicit: each time a card is sold, the contract earns the value of the card’s coefficient; when every card has been sold \(∀c,quantity\(c\)=0\), the following relation stands:
+
+![](https://cdn-images-1.medium.com/max/1600/1*QX8A4kgmHaIQkBsj2QEkPg.png)
+
+We see that a high-level non-trivial property is a very powerful way to convey information about the contract.
 
 
 
