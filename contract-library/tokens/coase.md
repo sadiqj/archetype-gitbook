@@ -6,7 +6,7 @@ The smart contract version we are considering here is the one that comes as a Li
 
 {% embed url="https://medium.com/tezoscommons/a-digital-collectible-card-game-coming-soon-to-tezos-ddd939f3b119" %}
 
-The smart contract version we are considering here is the one that comes as a Ligo example:
+The smart contract version we are considering here is the one that comes as a Ligo example \(_Copyright Coase, Inc 2019_\):
 
 {% embed url="https://gitlab.com/ligolang/ligo/blob/dev/src%2Ftest%2Fcontracts%2Fcoase.ligo" %}
 
