@@ -12,7 +12,7 @@ The smart contract version we are considering here is the one that comes as a Li
 
 The Archetype version:
 
-```text
+```coffeescript
 archetype coase
 
 asset card_pattern identified by card_pattern_id {
