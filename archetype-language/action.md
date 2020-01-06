@@ -93,7 +93,7 @@ action complete (value : string) (amount : int) {
 }
 ```
 
-In the expression `r : ...` line 11 above, `r` is a _label_ for the _require_ expression \(see Label section below\).
+In the expression `r : ...` line 11 above, `r` is a _label_ for the _require_ expression \(see [Label](action.md#label) section below\).
 
 ## Label
 
@@ -148,7 +148,7 @@ The following is the list of expressions that require a label:
         </p>
         <p><code>}</code>
         </p>
-        <p>(see Contract specification)</p>
+        <p>(see <a href="contract-specification.md">Contract specification</a>)</p>
       </td>
     </tr>
     <tr>
@@ -160,7 +160,7 @@ The following is the list of expressions that require a label:
         </p>
         <p><code>}</code>
         </p>
-        <p>(see Contract specification)</p>
+        <p>(see <a href="contract-specification.md">Contract specification</a>)</p>
       </td>
     </tr>
   </tbody>
