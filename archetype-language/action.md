@@ -183,7 +183,7 @@ A variable \(global or local\) is assigned a new value as exampled below:
 p := amount;
 ```
 
-After this instruction, the value of `threshold` is the value of `amount`.
+After this instruction, the value of `p` is the value of `amount`.
 
 ### Currency transfer
 
