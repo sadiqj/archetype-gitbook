@@ -78,7 +78,7 @@ constant owner role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
 variable threshold tez = 100tz
 
-action complete (value : string) (amount : int) = {
+action complete (value : string) (amount : int) {
   called by owner
   
   accept transfer
@@ -92,6 +92,8 @@ action complete (value : string) (amount : int) = {
   }
 }
 ```
+
+In the expression `r : ...` line 11 above, `r` is a label for the _require_ expression \(see Label section below\).
 
 ## Effect
 

@@ -69,3 +69,13 @@ The archetype extension provides:
 
 ![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
 
+{% hint style="warning" %}
+coming soon
+{% endhint %}
+
+## Try Archetype
+
+{% hint style="warning" %}
+coming soon
+{% endhint %}
+
