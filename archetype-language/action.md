@@ -93,9 +93,78 @@ action complete (value : string) (amount : int) {
 }
 ```
 
-In the expression `r : ...` line 11 above, `r` is a label for the _require_ expression \(see Label section below\).
+In the expression `r : ...` line 11 above, `r` is a _label_ for the _require_ expression \(see Label section below\).
 
-## Effect
+## Label
+
+In Archetype, some expressions are named. The following syntax is used to name an expression:
+
+```cpp
+l : ... expression ... /* l is a label */
+```
+
+The following is the list of expressions that require a label:
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Type</th>
+      <th style="text-align:left">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">Require</td>
+      <td style="text-align:left">
+        <p><code>require {</code>
+        </p>
+        <p><code>  enough_transfer : transferred &gt; threshold</code>
+        </p>
+        <p><code>}</code>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Fail if</td>
+      <td style="text-align:left">
+        <p><code>failif {</code>
+        </p>
+        <p><code>  not_enough_transfer : transferred &lt;= threshold</code>
+        </p>
+        <p><code>}</code>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Asset invariant</td>
+      <td style="text-align:left">
+        <p><code>asset mile {</code>
+        </p>
+        <p><code>  quantity : int</code>
+        </p>
+        <p><code>} with {</code>
+        </p>
+        <p><code>  quant_strictly_pos : quantity &gt; 0</code>
+        </p>
+        <p><code>}</code>
+        </p>
+        <p>(see Contract specification)</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">Security predicate</td>
+      <td style="text-align:left">
+        <p><code>security {</code>
+        </p>
+        <p><code>  s1 : only_by_role(add,admin)</code>
+        </p>
+        <p><code>}</code>
+        </p>
+        <p>(see Contract specification)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>## Effect
 
 ### Local variable 
 
