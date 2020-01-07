@@ -41,7 +41,7 @@ effect {
 Transitions are necessary to change the state of the contract. For example the following snippet declares the transition `confirm` to go from `Created` to `Confirmed`:
 
 ```ocaml
-transition confirm () from Created {
+transition confirm from Created = {
   to Confirmed 
   with effect {
     ...          (* after this, state is set to Created *)
@@ -54,7 +54,7 @@ Like actions, transitions may have arguments, and also have the `called by` `spe
 It is also possible to decide the resulting state. For example the following `decide` transition determine the resulting state based on a condition `<COND>` :
 
 ```ocaml
-transition mayconfirm () from Created {
+transition mayconfirm from Created = {
   to Confirmed when (<COND>)
   with effect {
      ...       (* after this, state is set to Created *)
