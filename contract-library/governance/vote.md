@@ -10,96 +10,84 @@ The result of the vote is computed with the `bury` action: winners are ballots w
 
 {% code title="voting\_process.arl" %}
 ```ocaml
-archetype voting_process
+archetype vote
 
-variable[%transferable%] chairperson : role = @tz1chairperson
+variable[%transferable%] chairperson role
 
 (* vote start *)
-variable[%mutable chairperson (instate (Created))%] startDate : date = 2019-11-12T00:00:00
+variable[%mutable chairperson (state = Created)%] startDate date
 
 (* vote deadline *)
-variable[%mutable chairperson (instate (Created))%] deadline : date = 2020-11-12T00:00:00
+variable[%mutable chairperson (state = Created)%] deadline date
 
-asset voter identified by addr {
-  addr : role;
-  hasVoted : bool
-}
+asset voter identified by address = {
+  address : address;
+  hasVoted : boolean
+} 
 
-asset ballot identified by value {
+asset ballot identified by value = {
   value   : string;
-  nbvotes : int;
+  nbvotes : uint
 }
 
-asset winner {
-  winvalue : string
+asset winner = {
+  value : string
 }
 
 (* state machine *)
 states =
- | Created initial with { s1 : winner.isempty(); }
- | Voting          with { s2 : winner.isempty(); }
+ | Created initial  with { s1 : is_empty winner }
+ | Voting           with { s2 : is_empty winner }
  | Buried
 
-action register (v : role) {
+action register (voter : address) = {
   called by chairperson
   require {
-    c1 : state = Created;
+    c1 : state = Created
   }
   effect {
-    voter.add({ addr = v; hasVoted = false })
+     voter.add { voter; false }
   }
 }
 
-transition start () from Created {
-   to Voting when { now > startDate }
+transition start from Created = {
+   to Vote when { now > startDate }
 }
 
-action vote (val : pkey of ballot) {
+action vote (val : string) = {
+   called by voter
    require {
-     c2 : voter.contains(caller);
-     c3 : state = Voting;
-     c4 : voter.get(caller).hasVoted = false;
+      c2 : state = Voting;
+      c3 : (voter.get caller).hasVoted = false
    }
-
+   
    effect {
-     voter.update (caller, { hasVoted = true });
-     if ballot.contains(val) then
-      ballot.update(val,{ nbvotes += 1})
-     else
-      ballot.add({ value = val; nbvotes = 1})
+      (voter.get caller).hasVoted := true;
+       ballot.update value { nbvotes += 1 } { nbvotes = 0 }
    }
+   
 }
 
-transition bury () from Voting {
+transition bury from Voting = {
   require {
-    c5 : now > deadline;
+    c4 : now > deadline
   }
   to Buried
   with effect {
-    let nbvotesMax = ballot.max(the.nbvotes) in
-    for b in ballot do
+    let nbvotesMax = ballot.max(nbvotes) in
+    for (b in ballot)
       if (b.nbvotes = nbvotesMax)
-      then winner.add({ winvalue = b.value })
-    done
+      then winner.add {value = b.val}
   }
 }
 
 specification {
-  contract invariant s3 {
-    startDate < deadline
-  }
-  contract invariant s4 {
-    (voter.select(the.hasVoted = true)).count() = ballot.sum(the.nbvotes)
-  }
-  contract invariant s5 {
-    forall w in winner,
-           forall b in ballot,
-             let some wb = ballot.get(w.winvalue) in
-             b.nbvotes <= wb.nbvotes
-             otherwise false
-  }
+  s3 : startdate < deadline;
+  s4 : (voter.select(voter.hasVoted = true)).count() = ballot.sum(nbvotes);
+  s5 : forall w : winner,
+         forall b : ballot,
+           b.nbvotes <= ballot.get(w.value).nbvotes
 }
-
 ```
 {% endcode %}
 

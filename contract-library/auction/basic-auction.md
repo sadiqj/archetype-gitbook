@@ -4,20 +4,20 @@
 ```ocaml
 archetype auction
 
-variable max_bid : tez = 0tz
+variable max_bid mtez = 0mtz
 
-asset bid identified by incumbent {
+asset bid identified by incumbent = {
   incumbent : address;
-  value : tez;
+  value : mtez;
 }
 
-variable deadline : date = 2019-01-01T00:00:00
+variable deadline date = 2019-01-01T00:00:00
 
 
-action place_bid () {
+action place_bid = {
 
   require {
-    c1 : now < deadline
+    c1 : now < deadline;
   }
 
   effect {
@@ -28,24 +28,25 @@ action place_bid () {
 
 
 (* Users need to exhibit proof they are not the winner to reclaim their bid *)
-action reclaim () {
+action reclaim = {
 
-  require {
-    c2 : now < deadline;
-    c3 : bid.get(caller).value < max_bid;
-  }
+ require {
+   c1 : now < deadline;
+   c2 : (let bc = bid.get(caller) in
+         bc < max_bid);
+ }
 
-  effect {
-    transfer bid.get(caller).value to caller
-  }
+ effect {
+   transfer bid.get(caller) to caller
+ }
 }
 
 specification {
-  contract invariant s1 {
-    forall b in bid, balance > b.value
+  postcondition s1 = {
+    forall a in address,
+      bid.contains (a) -> balance > bid.get(a).value
   }
 }
-
 ```
 {% endcode %}
 

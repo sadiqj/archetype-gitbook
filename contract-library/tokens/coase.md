@@ -34,13 +34,13 @@ asset card identified by card_id {
   c1: card_id >= 0;
 }
 
-variable next_id int = 0
+variable next_id : int = 0
 with {
   n1: next_id >= 0;
   n2: forall c in card, next_id <> c.card_id
 }
 
-action transfer_single (card_to_transfer : pkey of card) (destination : address) {
+action transfer_single (card_to_transfer : pkey of card, destination : address) {
   require {
     ts1: caller = card.get(card_to_transfer).card_owner;
   }
@@ -51,7 +51,7 @@ action transfer_single (card_to_transfer : pkey of card) (destination : address)
 
 action sell_single (card_to_sell : pkey of card) {
   specification {
-    effect {
+    shadow effect {
       var c = card.get(card_to_sell);
       card_pattern.update(c.card_pattern_card, {sellcount += 1})
     }
@@ -76,7 +76,7 @@ action buy_single (card_to_buy : pkey of card_pattern) {
       card.count() = before.card.count() + 1
     }
     postcondition bs2 {
-      let cp = card_pattern.get(card_to_buy) in
+      let some cp = card_pattern.get(card_to_buy) in
       balance = before.balance + cp.coefficient * cp.quantity
       otherwise true
     }

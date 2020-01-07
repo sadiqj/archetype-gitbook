@@ -4,14 +4,14 @@
 ```ocaml
 archetype auction_lazy
 
-asset bid identified by incumbent {
+asset bid identified by incumbent = {
   incumbent : address;
-  val : tez;
+  val : mtez;
 }
 
-variable deadline : date = 2019-01-01T00:00:00
+variable deadline date = 2019-01-01T00:00:00
 
-action place_bid () {
+action place_bid = {
   require {
     c1 : now < deadline;
   }
@@ -21,7 +21,7 @@ action place_bid () {
 }
 
 (*Users need to exhibit proof they are not the winner to reclaim their bid*)
-action reclaim (witness : address) {
+action reclaim (witness : address) = {
   require {
     c2 : now < deadline;
     c3 : (let bc = bid.get(caller).val in
@@ -34,11 +34,11 @@ action reclaim (witness : address) {
 }
 
 specification {
-  contract invariant s1 {
-    forall b in bid, balance > b.val
+  postcondition s1 = {
+    forall a in address,
+      bid.contains(a) -> balance > bid.get(a).val
   }
 }
-
 ```
 {% endcode %}
 

@@ -39,7 +39,7 @@
   * [C3N](contract-library/governance/c3n.md)
 * [Digital Assets](contract-library/tokens/README.md)
   * [ERC20](contract-library/tokens/erc20.md)
-  * [ERC720](contract-library/tokens/erc720.md)
+  * [ERC721](contract-library/tokens/erc720.md)
   * [ICO](contract-library/tokens/ico.md)
   * [Coase](contract-library/tokens/coase.md)
   * [Miles](contract-library/tokens/basic.md)

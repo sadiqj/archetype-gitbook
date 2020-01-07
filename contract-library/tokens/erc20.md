@@ -13,9 +13,12 @@ The standard may be found at this address:
 ```ocaml
 archetype erc20
 
-constant name string = "myerc20"
+constant name : string = "mytoken"
 
-constant total uint = 1000
+constant total : int = 1000
+with {
+  i0: total > 0
+}
 
 asset allowance {
     allowed : address;
@@ -27,28 +30,35 @@ asset allowance {
 asset tokenHolder identified by holder {
     holder     : address;
     tokens     : int;
-    allowances : allowance collection
+    allowances : allowance collection;
 } with {
     i1: tokens >= 0;
-    i2: allowances.sum(the.amount) <= tokens;
+    i3: allowances.sum(the.amount) <= tokens;
 } initialized by [
   { holder = caller; tokens = total; allowances = [] }
 ]
 
-action dotransfer (dest : key of tokenHolder) (value : int) {
+action dotransfer (dest : pkey of tokenHolder, value : int) {
 
   specification {
     p1 : before.tokenHolder.sum(tokens) = tokenHolder.sum(tokens);
-    p2 : let th = tokenHolder.get(th) in
-         th.tokens = before.th.tokens + value
+    p2 : let some th = tokenHolder.get(dest) in
+         let some bth = before.tokenHolder.get(dest) in
+         th.tokens = bth.tokens + value
+         otherwise true
          otherwise true;
-    p3 : let thc = tokenHolder.get(caller) in 
-         thc.tokens = before.thc.tokens - value
+    p3 : let some thc = tokenHolder.get(caller) in
+         let some bthc = before.tokenHolder.get(caller) in
+         thc.tokens = bthc.tokens - value
+         otherwise true
          otherwise true;
-    p4 : forall t in tokenHolder,
-         if t <> th then
-         if t <> caller then
-         t.tokens = before.t.tokens
+    p4 : let some th = tokenHolder.get(dest) in
+         forall t in tokenHolder,
+         forall bt in before.tokenHolder,
+         t.holder <> th.holder ->
+         t.holder <> caller ->
+         t.tokens = bt.tokens
+         otherwise true;
   }
 
   failif {
@@ -57,25 +67,11 @@ action dotransfer (dest : key of tokenHolder) (value : int) {
   }
 
   effect {
-    tokenHolder.update( dest.holder, { tokens += value });
+    tokenHolder.update( tokenHolder.get(dest).holder, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
   }
 }
 
-action allow (spender : address) (value : int) {
-
-  require {
-    r1 : 
-  }
-  failif {
-    f2 : value <= 0; 
-  }   
-
-  effect {
-      
-  }
-
-}
 ```
 {% endtab %}
 {% endtabs %}

@@ -39,28 +39,27 @@ NIL operation ;
 For those who are not fluent in stack machine, here is the transcription to Archetype:
 
 ```text
-archetype c3n
-
 asset admins {
   addr : address;
 }
+
 variable hash : string = "..." (* to set to initial value *)
-action register (newadmins : admins collection option,
-                 oldhash   : string,
-                 newhash   : string) {
+
+action register (newadmins : admins collection option) 
+                (oldhash   : string) 
+                (newhash   : string) {
   require {
     r1 : oldhash = hash;
     r2 : admins.contains(caller);
   }
   effect {
     hash := newhash;
-    let some newa = newadmins in
+    let newa = newadmins in
       admins := newa
-    otherwise
+    otherwise 
       ()
   }
 }
-
 ```
 
 Quite straightforward, isn’t it?
