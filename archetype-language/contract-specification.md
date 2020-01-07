@@ -18,7 +18,7 @@ A formal property is a _logical formula_ about the relations between data values
 For example, say you are dealing with an auction contract which has to decide the maximum bid over all bids stored in the `bid` asset collection, and say this value is stored in the `max_bid` variable over. The following is the way to express that `max_bid` is the highest bid:
 
 ```ocaml
-forall b : bid, b.value <= max_bid
+forall b in bid, b.value <= max_bid
 ```
 
 It reads that any stored bid value is less or equal than max\_bid.
@@ -26,11 +26,11 @@ It reads that any stored bid value is less or equal than max\_bid.
 This property would typically serve as formal specification of the function `declare_winner` which computes `max_bid` as follows:
 
 ```ocaml
-variable max_bid tez = 0tz
+variable max_bid : tez = 0tz
 
-action declare_winner = {
+action declare_winner () {
   specification {
-     p : forall b : bid, b.value <= max_bid;
+     p : forall b in bid, b.value <= max_bid;
   }
   effect {
      max_bid := ... (* code to compute max_bid *)
@@ -51,18 +51,18 @@ It is possible to specify the property a data is supposed to have throughout the
 For example, say a `quantity` field of an asset `mile` should remain strictly positive. Use the `with` keyword to introduce the property, as illustrated below:
 
 ```ocaml
-asset mile identified by id = {
+asset mile identified by id {
    id : string;
    quantity : int;
 } with { 
-  i : quantity > 0
+  i : quantity > 0;
 }
 ```
 
 This generates as many verification tasks as the number of actions/transitions in the contract. Each verification task consists in proving that the property below holds after it is executed \(it's called the _post-condition\),_ under the assumption it holds before \(called the _pre-condition_\):
 
 ```text
-forall x : mile, x.quantity > 0
+forall x in mile, x.quantity > 0
 ```
 
 It is also possible to declare a state invariant.
@@ -92,17 +92,17 @@ When formalising action property, it is usually necessary to express that the va
 Say for example the variable `amount` must increase due to the effect of action `add_amount`. The keyword _`before`_ is used to refer to the variable value before the effect of the action. Hence this property is formalised:
 
 ```ocaml
-before amount < amount
+before.amount < amount
 ```
 
 This property is placed in the `specification` section of the action:
 
 ```ocaml
-variable amount int = 0
+variable amount : int = 0
 
-action add_amount = {
+action add_amount () {
   specification {
-    p : before amount < amount
+    p : before.amount < amount
   }
   effect {
     (* do something to increase amount *)
@@ -115,7 +115,7 @@ For asset collection, archetype provides dedicated keywords to refer to _`added`
 Say for example you want to express the _only_ obsolete `goods` assets may have been removed by the action effect, that is asset with `expiration` date before now. This property is formalised:
 
 ```ocaml
-forall x : removed goods, x.expiration < now
+forall x in goods.removed, x.expiration < now
 ```
 
 The schema below illustrates the three sets of assets resulting from the action effect:
@@ -140,30 +140,30 @@ A loop invariant is a property which is true during iteration. More precisely, t
 For example say you want to prove that the `stock` value is equal to 0 after iterating over the collection of `goods`. The loop invariant states that `stock` is upper-bounded by the sum of the `quantity` value over the `goods` assets _stil to iterate_. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
 
 ```ocaml
-variable stock int = 0
+variable stock : int = 0
 
-asset goods identified by id= {
-   id : string
-   quantity : int
+asset goods identified by id {
+   id : string;
+   quantity : int;
 } with {
   a : stock = goods.sum(quantity)
 }
 
-action empty_stock = {
+action empty_stock () {
   specification {
-    postcondition p = {
+    postcondition p {
        stock = 0   (* this specifies that the effect of empty_stock is to
                       set 'stock' to zero *)
        invariant for goods_loop {
-          i : 0 <= stock <= toiterate goods.sum(quantity)
+          0 <= stock <= toiterate goods.sum(quantity)
        }
     }
   }
   effect {
     ... 
-    for : goods_loop (g in goods) {
+    for : goods_loop g in goods do
        ... (* decrease stock somehow *)
-    }
+    done
     ...
   }
 }
@@ -202,19 +202,19 @@ In order to provide security guarantee to contract readers, it is usually useful
 For example, the following specifies that only the action `add_goods` may add a `goods` asset:
 
 ```text
-only_in_action (add goods) add_goods
+only_in_action (add goods, add_goods)
 ```
 
 The following specifies that only the `admin` role can do any kind of storage data:
 
 ```text
-only_by_role anychange admin
+only_by_role (anychange, admin)
 ```
 
 The following specifies that the role `owner` does not change any data:
 
 ```text
-not_by_role anychange owner
+not_by_role (anychange, owner)
 ```
 
 Archetype provides the following predicates:
@@ -226,7 +226,7 @@ Archetype provides the following predicates:
 <table>
   <thead>
     <tr>
-      <th style="text-align:left"><code>no_storage_fail ACTION</code>
+      <th style="text-align:left"><code>no_storage_fail (ACTION)</code>
       </th>
       <th style="text-align:left">
         <p>specifies that <code>ACTION</code>  <b>cannot</b> logically fail
@@ -237,27 +237,27 @@ Archetype provides the following predicates:
     </tr>
   </thead>
   <tbody></tbody>
-</table>| `only_by_role CHANGE ROLE` | specifies that **only** `ROLE` can perform `CHANGE` |
+</table>| `only_by_role (CHANGE, ROLE)` | specifies that **only** `ROLE` can perform `CHANGE` |
 | :--- | :--- |
 
 
-| `only_in_action CHANGE ACTION` | specifies that **only** `ACTION` can perform `CHANGE` |
+| `only_in_action (CHANGE, ACTION)` | specifies that **only** `ACTION` can perform `CHANGE` |
 | :--- | :--- |
 
 
-| `only_by_role_in_action CHANGE ROLE ACTION` | specifies that only `ROLE` can perform `CHANGE` in `ACTION` |
+| `only_by_role_in_action (CHANGE, ROLE, ACTION)` | specifies that only `ROLE` can perform `CHANGE` in `ACTION` |
 | :--- | :--- |
 
 
-| `not_by_role CHANGE ROLE` | specifies that ROLE can **not** perform`CHANGE` |
+| `not_by_role (CHANGE, ROLE)` | specifies that ROLE can **not** perform`CHANGE` |
 | :--- | :--- |
 
 
-| `not_in_action CHANGE ACTION` | specifies that ACTION can **not** perform `CHANGE` |
+| `not_in_action (CHANGE, ACTION)` | specifies that ACTION can **not** perform `CHANGE` |
 | :--- | :--- |
 
 
-| `not_by_role_in_action CHANGE ROLE ACTION` | specifies that `ROLE` can not perform `CHANGE` in `ACTION` |
+| `not_by_role_in_action (CHANGE, ROLE, ACTION)` | specifies that `ROLE` can not perform `CHANGE` in `ACTION` |
 | :--- | :--- |
 
 

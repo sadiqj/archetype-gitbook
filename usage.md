@@ -19,8 +19,7 @@ To list available target languages:
 ```text
 $ archetype --list-target
   ligo
-  smartpy
-  ocaml
+  scaml
   whyml
   markdown
 ```
@@ -29,7 +28,7 @@ To list available commands:
 
 ```bash
 $ archetype --help
-usage : archetype [-t <lang> | -pt | -ext | -tast | [-as] [-nse] | -lsp <request>] [-r | -json] <file>
+usage : archetype [-t <lang> | -pt | -ext | -tast | [-ws] [-sa] [-skv] [-nse] | -lsp <request>] [-r | -json] <file>
 
 Available options:
   -t <lang>           Transcode to <lang> language
@@ -39,17 +38,33 @@ Available options:
   --parse-tree        Same as -pt
   -ext                Process extensions
   --extensions        Same as -ext
-  -tast               Generate typed ast
-  --typed-ast         Same as -tast
+  -ast                Generate typed ast
+  --typed-ast         Same as -ast
+  --typed             Display type in ast output
+  -ap                 Display all parenthesis in printer
+  --typed             Same as -ap
+  -ws                 With storage
+  --with-storage      Same as -ws
   -sa                 Transform to shallow asset
   --shallow-asset     Same as -sa
-  -nse                Remove side effect
+  -skv                Split key value of collection of asset
+  --split-key-values  Same as -skv
+  -nse                Transform to no side effect
   --no-side-effect    Same as -nse
+  -fp                 Focus property (with whyml target only)
+  --focus-property    Same as -fp
   -lsp <request>      Generate language server protocol response to <resquest>
   --list-lsp-request  List available request for lsp
-  -r                  Print raw tree
+  --service <service> Generate service response to <service>
+  --list-services     List available services
+  -r                  Print raw model tree
   --raw               Same as -r
+  -ry                 Print raw model tree
+  --raw-whytree       Same as -r
   -json               Print JSON format
+  -V <id>             process specication identifiers
+  -v                  Show version number and exit
+  --version           Same as -v
   -help               Display this list of options
   --help              Display this list of options
 
@@ -68,14 +83,4 @@ The archetype extension provides:
 * transcoding commands
 
 ![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
-
-{% hint style="warning" %}
-coming soon
-{% endhint %}
-
-## Try Archetype
-
-{% hint style="warning" %}
-coming soon
-{% endhint %}
 
