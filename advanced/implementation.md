@@ -39,12 +39,12 @@ Transitions and special actions' instruction \(called by, accept transfer, ...\)
 For example, consider the following transition from the escrow contract:
 
 ```ocaml
-transition complete () from Confirmed {
+transition complete from Confirmed = {
   called by oracle
 
   to Completed when { now < deadline }
   with effect {
-    transfer price to seller
+    transfer price
   }
 }
 ```
@@ -104,22 +104,22 @@ With this transform, assets are stored in maps, as exemplified below with the ge
 
 ```ocaml
 record mile identified by id {
-  id : string;
-  amount : int;
-  expiration : date;
+  id : string
+  amount : int
+  expiration : date
 }
 
 record owner identified by addr {
-  addr : role;
-  miles : mile partition;
+  addr : role
+  miles : mile partition
 }
 
 storage {
-  admin : address = tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB;
-  mile_keys : string collection = [];
-  mile_assets : (string, mile) map = [];
-  owner_keys : role collection = [];
-  owner_assets : (role, owner) map = [];
+  admin : address := tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+  mile_keys : string collection := []
+  mile_assets : (string, mile) map := []
+  owner_keys : role collection := []
+  owner_assets : (role, owner) map := []
 }
 ```
 
@@ -132,22 +132,22 @@ When the target language's asset storage policy is to use a map between an asset
 For example, consider the following Archetype situation:
 
 ```ocaml
-asset a1 identified by id1 {
+asset a1 identified by id1 = {
   id1 : int;
 }
 
-asset a2 identified by id2 {
+asset a2 identified by id2 = {
   id2 : int;
   a1s : a1 partition;
 }
 
-asset a3 identified by id3 {
+asset a3 identified by id3 = {
   id3       : int;
   a2s       : a2 partition;
   other_a1s : a1 partition;
 }
 
-action add (a : a3) {
+action add (a : a3) = {
   effect {
       a3.add a
   }
@@ -193,10 +193,10 @@ The Why3 framework, while based on WP, does not provide a way to generate these 
 For example, consider the following asset with the invariant property on the `amount` value:
 
 ```ocaml
-asset mile identified by id {
+asset mile identified by id = {
    id         : string;
    amount     : int;
-   expiration : date;
+   expiration : date
 } with {
   i : amount > 0
 }
