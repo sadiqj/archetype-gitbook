@@ -26,20 +26,20 @@ We see in this basic example, that a smart contract on a public blockchain with 
 ```ocaml
 archetype health_care
 
-constant insurer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
-constant patient role = @tz1uNrUbontHGor25CztkKksC8RvjUWAbXYJ
+constant insurer : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+constant patient : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
-constant fee        tez from patient to insurer = 100tz
-constant deductible tez from patient to insurer = 500tz
-constant period duration = 30d (* 30 days *)
+constant fee : tez = 100tz
+constant deductible : tez = 500tz
+constant period : duration = 30d
 
-variable last_fee date
+variable last_fee : date = 2019-11-12
 
-variable consultation_debt tez = 0tz
+variable consultation_debt : tez = 0tz
 
-asset doctor identified by id = {
-    id   : role;
-    debt : tez from insurer to doctor = 0tz;
+asset doctor identified by id {
+  id   : role;
+  debt : tez = 0tz;
 }
 
 states =
@@ -47,86 +47,97 @@ states =
 | Running
 | Canceled
 
-transition[%signedbyall [patient; insurer]%] confirm from Created = {
-    (*signed by [insrurer; patient]*)
-    to Running
-    with effect {
-        last_fee := now
-    }
+transition[%signedbyall [patient; insurer]%] confirm () from Created {
+  (*signed by [insrurer; patient]*)
+  to Running
+  with effect {
+    last_fee := now
+  }
 }
 
-transition cancel from Created = {
-    called by insurer or patient
-    to Canceled
+transition cancel () from Created {
+  called by insurer or patient
+  to Canceled
 }
 
-action[%signedbyall [patient; insurer]%] register_doctor (docid : address) = {
-    (*signed by [insurer; patient]*)
-    require { r1 : state = Running }
-    effect {
-        doctor.add { id = docid }
-    }
+action[%signedbyall [patient; insurer]%] register_doctor (docid : address) {
+  (*signed by [insurer; patient]*)
+  require {
+     r1 : state = Running;
+  }
+  effect {
+    doctor.add ({ id = docid })
+  }
 }
 
-action declare_consultation (v : tez) = {
-    called by doctor  (* <-> require { doctor.contains caller } *)
-
-    require { r2 : state = Running }
-    effect {
-        doctor.update caller { debt += v };
-        consultation_debt += min v deductible
-    }
+action declare_consultation (v : tez) {
+  require {
+     r2 : state = Running;
+     r3 : doctor.contains(caller);
+  }
+  effect {
+    doctor.update(caller, { debt += v });
+    consultation_debt += min (v, deductible)
+  }
 }
 
-action pay_doctor (docid : address) = {
-    verification {
-      s1 : balance = before balance
+action pay_doctor (docid : address) {
+  specification {
+    postcondition idem_balance_pay_doctor {
+      balance = before.balance
     }
-    called by insurer
-    accept transfer
-    require { r3 : state = Running }
-    effect {
-        let debt = (doctor.get docid).debt in
-        let decrease = min transferred debt in
-        transfer decrease to docid;
-        transfer (transferred - decrease) to insurer;
-        doctor.update docid { debt -= decrease }
-    }
+  }
+  accept transfer
+  called by insurer
+  require {
+    r4 : state = Running;
+  }
+  effect {
+    var ldebt = doctor.get(docid).debt;
+    var decrease : tez = min (transferred, ldebt);
+    transfer decrease to docid;
+    transfer (transferred - decrease) to insurer;
+    doctor.update (docid, { debt -= decrease })
+  }
 }
 
-action pay_fee = {
-    verification {
-        s2 : balance = before balance
+action pay_fee () {
+  specification {
+    postcondition idem_balance_pay_fee {
+      balance = before.balance
     }
-    called by patient
-    accept transfer
-    require { r4 : state = Running }
-    effect {
-        let nb_periods = (now - last_fee) / period in  (* div is euclidean *)
-        let due = nb_periods * fee in
-        let decrease = min transferred due in
-        transfer decrease to insurer;
-        transfer (transferred - decrease) to patient;
-        last_fee := last_fee + period * nb_periods     
-    }
+  }
+  accept transfer
+  called by patient
+  require {
+    r5 : state = Running;
+  }
+  effect {
+    let nb_periods : int = (now - last_fee) / period in  (* div is euclidean *)
+    let due = nb_periods * fee in
+    let decrease : tez = min (transferred, due) in
+    transfer decrease to insurer;
+    transfer (transferred - decrease) to patient;
+    last_fee += period * nb_periods     (* last_fee <> now because div is euclidean *)
+  }
 }
 
-action pay_consulation = {
-    verification {
-        s3 : balance = before balance
-    }
-    called by patient
-    accept transfer
-    require { r5 : state = Running }
-    effect {
-        let decrease = min transferred consultation_debt in
-        transfer decrease to insurer;
-        transfer (transferred - decrease) to patient;
-        consultation_debt -= decrease
-    }
+action pay_consulation () {
+  specification {
+    idem_balance_pay_consultation : balance = before.balance;
+  }
+  accept transfer
+  called by patient
+  require {
+    r6 : state = Running;
+  }
+  effect {
+    let decrease : tez = min (transferred, consultation_debt) in
+    transfer decrease to insurer;
+    transfer (transferred - decrease) to patient;
+    consultation_debt -= decrease
+  }
 }
 
 ```
-
-\(See the [signedbyall](../../extensions-1/signed-by-all.md) extension\)
 

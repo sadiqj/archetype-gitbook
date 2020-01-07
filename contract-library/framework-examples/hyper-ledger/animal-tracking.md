@@ -18,45 +18,44 @@
 ```ocaml
 archetype animal_tracking
 
-enum animal =
+enum animal_e =
  | Sheep
  | Cattle
  | Pig
  | Other
 
-enum movement =
+enum movement_e =
  | In_field initial
  | In_transit
 
-asset animal identified by id = {
- id       : string;
- status   : movement;
- typ      : animal;
- location : field
+asset business_a identified by id {
+  id        : string;
+  incomings : animal_a collection;
 }
 
-asset field identified by name = {
+asset field_a identified by name {
   name     : string;
-  business : business
-} with states movement
-
-asset business identified by id = {
-  id              : string;
-  incomingAnimals : animal set
+  business : pkey of business_a;
 }
 
-transition transit (fk : string) on ak : animal from In_field = {
-  to In_transit
-  with effect {
-    (field.get fk).business.incomingAnimals.add (animal.get ak)
-  }
+asset animal_a identified by ida {
+ ida      : string;
+ typ      : animal_e;
+ location : pkey of field_a;
+} with states movement_e
+
+transition transit (fk : string) on (ak : pkey of animal_a) from In_field {
+ to In_transit
+ with effect {
+   business_a.get(field_a.get(fk).business).incomings.add(animal_a.get(ak))
+ }
 }
 
-transition arrival (toField : field) on ak : animal from In_transit = {
+transition arrival (toField : pkey of field_a) on (ak : pkey of animal_a) from In_transit {
   to In_field
   with effect {
-    (animal.get ak).field := toField;
-    toField.business.incomingAnimals.remove ak
+    animal_a.get(ak).location := toField;
+    business_a.get(field_a.get(toField).business).incomings.remove(ak)
   }
 }
 

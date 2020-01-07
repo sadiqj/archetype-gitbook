@@ -6,42 +6,37 @@ This archetype is a very basic miles management system with add and consume tran
 ```ocaml
 archetype miles
 
-variable[%transferable%] validator : role = @fake_validator
+variable owner role
 
-asset account identified by owner {
-  owner  : role;
-  amount : int;
+variable[%transferable%] validator role
+
+asset account identified by owner = {
+  owner  : address;
+  amount : uint
 }
 
-action add (ow : role, value : int) {
+action add (owner : address) (value : uint) = {
   called by validator
   effect {
-    if account.contains(ow) then
-      account.update (ow, { amount += value })
-    else
-      account.add({ owner = ow; amount = 0 })
+    account.update owner { amount += value } { amount = 0 }
   }
 }
 
-action consume (ow : role, value : int) {
-  specification {
-    postcondition s1 {
-      let some ba = before.account.get(ow) in
-      let some a = account.get(ow) in
-      ba.amount = a.amount + value
-      otherwise true
-      otherwise true
-    }
-  }
-
+action consume (owner : address) (value : uint) = {
   called by validator
 
   require {
-    c1 : account.get(ow).amount >= value;
+    c1 : (account.get owner).amount >= value
+  }
+
+
+  specification {
+    s1 : (before.account.get owner).amount =
+           (after.account.get owner).amount + value
   }
 
   effect {
-    account.update (ow, { amount -= value })
+    account.update owner {amount -= value}
   }
 }
 

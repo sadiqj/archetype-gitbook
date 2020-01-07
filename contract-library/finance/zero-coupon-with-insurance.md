@@ -8,22 +8,22 @@ The solution is to use a guarantee fund to ensure pay back. This fund plays the 
 ```ocaml
 archetype zero_coupon_bond_with_insurance
 
-variable issuer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk (* seller ‘Alice’ *)
+variable issuer : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk (* seller 'Alice' *)
 
-variable owner role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
-(* buyer ‘Bob’; receives 11 tez in one-year *)
+variable owner : role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
+(* buyer 'Bob'; receives 11 tez in one-year *)
 
-contract insurance = {
+contract insurance {
    action pay : address, tez
-} 
+}
 
-variable zero_insur insurance = @KT1GabhR5P52hw6xs5P69BXJYAURaznhvN1k
+variable zero_insur : insurance = @KT1GabhR5P52hw6xs5P69BXJYAURaznhvN1k
 
-variable price tez from owner = 10
+variable price : tez = 10tz
 
-variable payment tez from issuer to owner = 11 * price
+variable payment : tez = 11 * price
 
-variable maturity date
+variable maturity : date = now
 
 states =
  | Created initial
@@ -32,26 +32,26 @@ states =
  | Repaid    (* issuer has transferred payment to contract *)
  | Collected (* owner has collected payment *)
 
-transition insured from Created = {
+transition insured () from Created {
   called by zero_insur
 
   to Insured
 }
 
-transition confirm from Insured = {
+transition confirm () from Insured {
   specification {
-    s1 : balance = 0
+    s1 : balance = 0tz
   }
 
   to Confirmed
   when { transferred = price }
   with effect {
-    maturity := now + 1Y;
+    maturity := now + 365d;
     transfer price to issuer
   }
 }
 
-transition repay from Confirmed = {
+transition repay () from Confirmed {
   called by issuer
 
   to Repaid
@@ -60,7 +60,7 @@ transition repay from Confirmed = {
   }
 }
 
-transition collect from Repaid = {
+transition collect () from Repaid {
   called by owner
 
   to Collected
@@ -68,7 +68,7 @@ transition collect from Repaid = {
   with effect {
     if balance >= payment
     then transfer balance to owner
-    else zero_insur.pay owner payment
+    else zero_insur.pay (owner, payment)
   }
 }
 
@@ -79,37 +79,39 @@ transition collect from Repaid = {
 ```ocaml
 archetype guarantee_fund
 
-variable admin role
+variable admin : role = @tz1_admin
 
-asset insured_contract identified by addr = {
+asset insured_contract identified by addr {
   addr : address;
-  max_transfer : tez
+  max_transfer : tez;
 }
 
-action credit = {
+action credit () {
   called by admin
   require {
-    c1 : transferred > 0
+    c1 : transferred > 0tz;
   }
 }
 
-action add_contract (contract_ : insured_contract) = {
+action add_contract (contract_ : insured_contract) {
   called by admin
   effect {
-    insured_contract.addifnotexist contract_
+    if (not insured_contract.contains(contract_.addr)) then
+    insured_contract.add(contract_)
   }
 }
 
-action pay (recipient : address) (amount : tez) = {
+action pay (recipient : address, amount : tez) {
   require {
-    c1 : insured_contract.contains caller;
-    c2 : amount <= (insured_contract.get caller).max_transfer
+    c2 : insured_contract.contains(caller);
+    c3 : amount <= insured_contract.get(caller).max_transfer;
   }
 
   effect {
     transfer amount to recipient
   }
 }
+
 ```
 {% endcode %}
 

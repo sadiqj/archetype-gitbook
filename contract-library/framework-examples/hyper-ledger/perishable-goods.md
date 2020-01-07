@@ -30,33 +30,34 @@ enum shipmentStatus =
  | In_transit
  | Arrived
 
-asset grower identified by id = {
-  id : role
+asset grower identified by gid {
+  gid : role
 }
 
-asset importer identified by id = {
-  id : role
+asset importer identified by iid {
+  iid : role;
 }
 
-asset importer identified by id = {
-  id : role
+asset shipper identified by sid {
+  sid : role;
 }
 
-asset p_contract = {
-  grower          : grower;
-  shipper         : shipper;
-  importer        : importer;
+asset p_contract {
+  id              : string;
+  grower          : pkey of grower;
+  shipper         : pkey of shipper;
+  importer        : pkey of importer;
   arrivalDateTime : date;
-  unitPrice       : rational
+  unitPrice       : rational;
 }
 
-asset shipment = {
+asset shipment {
   type     : productType;
-  count    : uint;
+  count    : int;
   p_c      : p_contract
 } with states shipmentStatus
 
-transition payOut (arrival : date) on sk : shipment from In_transit = {
+transition payOut (arrival : date) on (sk : pkey of shipment) from In_transit {
   to Arrived
 }
 

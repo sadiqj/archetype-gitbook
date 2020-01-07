@@ -34,33 +34,36 @@ Below is the contract state machine diagram :
 ```ocaml
 archetype autocallable
 
-constant issuer role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
-constant owner  role = @tz1uNrUbontHGor25CztkKksC8RvjUWAbXYJ
-constant oracle role = @tz1r25CztkKksC8RvjuNrUWAbXYJUbontHGo (* exchange *)
+constant issuer : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+constant owner  : role = @tz1uNrUbontHGor25CztkKksC8RvjUWAbXYJ
+constant oracle : role = @tz1r25CztkKksC8RvjuNrUWAbXYJUbontHGo (* exchange *)
 
-constant nominal tez = 1000tz
+constant nominal : tez = 1000tz
 
-constant trade      date = 2017-03-14T00:00:00
-constant init       date = 2017-03-14T00:00:00
-constant issue      date = 2017-03-28T00:00:00
-constant final      date = 2020-03-16T00:00:00
-constant redemption date = 2020-03-30T00:00:00
+constant trade       : date = 2017-03-14T00:00:00
+constant init        : date = 2017-03-14T00:00:00
+constant issue       : date = 2017-03-28T00:00:00
+constant final       : date = 2020-03-16T00:00:00
+constant gredemption : date = 2020-03-30T00:00:00
 
 (* UNDERLYINGS *)
-constant bac_initial rational = 25.32
-constant sg_initial  rational = 46.945
-constant ubs_initial rational = 15.98
+constant bac_initial : rational = 25.32
+constant sg_initial  : rational = 46.945
+constant ubs_initial : rational = 15.98
 
-constant bac_strike rational = 12.66   (* ~ 0.5 * bac_initial *)
-constant sg_strike  rational = 23.4725 (* ~ 0.5 * sg_initial  *) 
-constant ubs_strike rational = 15.98   (* ~ 0.5 * ubs_initial *)
+constant bac_strike : rational = 12.66   (* ~ 0.5 * bac_initial *)
+constant sg_strike  : rational = 23.4725 (* ~ 0.5 * sg_initial  *)
+constant ubs_strike : rational = 15.98   (* ~ 0.5 * ubs_initial *)
 
 (* CONTRACT DATA *)
-asset early identified by observation = {
-  observation : date;
-  redemption  : date;
-  trigger     : rational;
-  value       : rational;
+asset early identified by eobservation {
+  eobservation : date;
+  redemption   : date;
+  trigger      : rational;
+  value        : rational;
+} with {
+  i1 : 0 <= trigger <= 1;
+  i2 : 0 <= value   <= 1;
 } initialized by [
   { 2018-03-14T00:00:00; 2018-03-28T00:00:00; 0.95; 1 };
   { 2018-06-14T00:00:00; 2018-06-28T00:00:00; 0.95; 1 };
@@ -73,13 +76,13 @@ asset early identified by observation = {
   { 2020-03-16T00:00:00; 2020-03-30T00:00:00; 0.70; 1 }
 ]
 
-asset interest identified by observation = {
-  observation : date;
+asset interest identified by iobservation {
+  iobservation : date;
   payment     : date;
   barrier     : rational;
   rate        : rational;
 } with {
-  i3 : 0 <= barrier <= 1
+  i3 : 0 <= barrier <= 1;
 } initialized by [
   { 2017-06-14T00:00:00; 2017-06-28T00:00:00; 0.5; 2.025  };
   { 2017-09-14T00:00:00; 2017-09-28T00:00:00; 0.5; 4.05   };
@@ -96,144 +99,146 @@ asset interest identified by observation = {
 ]
 
 (* underlyings values *)
-asset fixing identified by observation = {
-  observation : date;
+asset fixing identified by fobservation {
+  fobservation : date;
   bac : rational;  (* Bank of America Corporation *)
-  sg  : rational;  (* Société Générale *)
+  sg  : rational;  (* Societe Generale *)
   ubs : rational;  (* Union des Banques Suisses *)
 }
 
 (* EXPECTED PAYMENT COMPUTATION *)
 
-function compute_expected (d : date) : tez = {
+function compute_expected (d : date) : tez {
 
-  verification {
+  specification {
 
-    (** etrigger is defined as the set of early assets for which 
+    (** etrigger is defined as the set of early assets for which
         the trigger condition is true *)
-    definition etrigger = { e : early |
-      forall f : fixing, 
-        if e.obs = f.obs
+    definition etrigger { e : early |
+      forall f in fixing,
+        if e.eobservation = f.fobservation
         then (* trigger condition *)
-              f.bac >= e.trigger * bac_initial 
+              f.bac >= e.trigger * bac_initial
           and f.sg  >= e.trigger * sg_initial
           and f.ubs >= e.trigger * ubs_initial
+        else false
     }
 
-    (** ibarrier is defined as the set of interest assets for which 
+    (** ibarrier is defined as the set of interest assets for which
         the barrier condition is true *)
-    definition ibarrier = { i : interest | 
-      forall f : fixing,
+    definition ibarrier { i : interest |
+      forall f in fixing,
         (* retrieving the first element of etrigger *)
-        let efirst = first etrigger in 
-          if i.obs = f.obs and i.obs <= efirst.obs
+        let some efirst = etrigger.nth(0) in
+          if i.iobservation = f.fobservation and i.iobservation <= efirst.eobservation
           then (* barrier condition *)
-                    f.bac >= bac_strike 
+                    f.bac >= bac_strike
                 and f.sg  >= sg_strike
-                and f.ubs >= usb_strike
-        otherwise interest
+                and f.ubs >= ubs_strike
+          else false
+        otherwise false
     }
 
-    specification {
-      (** expected is the sum of redemption nominal and interests *)
-      p_expected : 
-        let expected =  
-          let ftrigger = first etrigger in
-            (* early redemption *)
-            ftrigger.value * nominal
-          otherwise (* etrigger is empty, no early redemption *)
+    (* TODO finish specs *)
+    (** expected is the sum of redemption nominal and interests *)
+    postcondition p_expected {
+        let expected : tez =
+          let some ftrigger = etrigger.nth(0) in
+          (* early redemption *)
+          ftrigger.value * nominal
+          otherwise
           (* redemption *)
-            let f = fixing.get redemption in
-            if    f.bac >= bac_strike 
-              and f.sg  >= sg_strike
-              and f.ubs >= usb_strike
-            then
-              nominal
-            else
-              let bac_trigger = f.bac / bac_strike in
-              let sg_trigger  = f.sg  / sg_strike  in
-              let ubs_trigger = f.ubs / ubs_strike in 
-              let worst = min (min bac_trigger sg_trigger) ubs_trigger in
-              worst * nominal
+          let some f = fixing.get(gredemption) in
+          if     f.bac >= bac_strike
+             and f.sg  >= sg_strike
+             and f.ubs >= ubs_strike
+          then
+             nominal
+          else
+            let bac_trigger = f.bac / bac_strike in
+            let sg_trigger  = f.sg  / sg_strike  in
+            let ubs_trigger = f.ubs / ubs_strike in
+            let worst = min ((min (bac_trigger, sg_trigger)), ubs_trigger) in
+            worst * nominal
+          otherwise true
         in
         (* interests *)
         let interests =
-          let lbarrier = last ibarrier in
-            let v = fixing.get i.observation in
-            if    v.bac >= i.barrier * bac_initial 
-              and v.sg  >= i.barrier * sg_initial
-              and v.ubs >= i.barrier * ubs_initial
-            then i.rate * nominal
-          otherwise 0 
+          let some lbarrier = ibarrier.last(0) in
+            let v = fixing.get(lbarrier.iobservation) in
+            if    v.bac >= lbarrier.barrier * bac_initial
+              and v.sg  >= lbarrier.barrier * sg_initial
+              and v.ubs >= lbarrier.barrier * ubs_initial
+            then lbarrier.rate * nominal
+            else 0tz
+          otherwise 0tz
         in
-         result = expected + interests 
+         result = expected + interests
     }
   }
-  
+
   effect {
     let expected = 0tz in
     let terminated = false in
     let redeem_date = final in
     (* early redemption *)
-    redeemloop : for (e in early) (
-      if e.redemption <= cd
+    for : redeemloop e in early do
+      if e.redemption <= d
       then (* is there early redemption ? *)
-        let v = fixing.get e.observation in
+        let v = fixing.get(e.eobservation) in
         if     v.bac >= e.trigger * bac_initial
            and v.sg  >= e.trigger * sg_initial
            and v.ubs >= e.trigger * ubs_initial
         then (
            expected += e.value * nominal;
-           redem_date := e.observation;
+           redeem_date := e.eobservation;
            terminated := true
         )
-      else (* no need to check future observation *)
-        break
-    );
+    done;
     (* redemption *)
-    if not terminated and redemption <= cd
+    if not terminated and gredemption <= d
     then
-      let f = fixing.get redemption in
+      let f = fixing.get(gredemption) in
       if     f.bac >= bac_strike
          and f.sg  >= sg_strike
-         and f.ubs >= usb_strike
+         and f.ubs >= ubs_strike
       then
          expected += nominal
       else
          let bac_trigger = f.bac / bac_strike in
          let sg_trigger  = f.sg  / sg_strike  in
          let ubs_trigger = f.ubs / ubs_strike in
-         let worst = min (min bac_trigger sg_trigger) ubs_trigger in
+         let worst = min ((min (bac_trigger, sg_trigger)), ubs_trigger) in
          expected += worst * nominal;
     (* expected interests *)
     let exp_interests = 0.0 in
-    interestloop : for (i in interest) (
-      if i.observation <= redem_date and i.payment <= cd
+    for : interestloop i in interest do
+      if i.iobservation <= redeem_date and i.payment <= d
       then
-        let v = fixing.get i.observation in
+        let v = fixing.get(i.iobservation) in
         if     v.bac >= i.barrier * bac_initial
            and v.sg  >= i.barrier * sg_initial
            and v.ubs >= i.barrier * ubs_initial
         then exp_interests := i.rate * nominal
-    );
+    done;
     expected += exp_interests;
     return expected
   }
 }
 
 (* PAYMENT action *)
-variable actual_payment tez = 0
+variable actual_payment : tez = 0tz
 
-action pay_note = {
-  called by issuer
-  effect {
-    actual_payment += transferred
-  }
+action pay_note () {
+   called by issuer
+   effect {
+      actual_payment += transferred
+   }
 }
 
-action add_fixing (f[%signedby oracle%] : fixing) = {
+action add_fixing (f[%signedby oracle%] : fixing) {
   effect {
-    fixing.add f
+    fixing.add(f)
   }
 }
 
@@ -243,28 +248,29 @@ states =
  | Canceled        (** owner or issuer has canceled the transaction. *)
  | Confirmed       (** owner has confirmed. *)
  | Defaulted
- | Terminated      
+ | Terminated
 
 (** Used by owner to confirm transaction. It transfers the price of contract (nominal) *)
-transition confirm from Created = {
+transition confirm () from Created {
    called by owner
    to Confirmed when { transferred = nominal }
 }
 
-transition cancel from Created = {
+transition cancel () from Created {
    called by owner or issuer
    to Canceled
 }
 
-transition check from Confirmed = {
+transition check () from Confirmed {
   called by owner
-  to Defaulted when { actual_payment < compute_expected now }
+  to Defaulted when { actual_payment < compute_expected(now) }
 }
 
-transition terminate from Confirmed = {
+transition terminate () from Confirmed {
   called by issuer
-  to Terminated when { actual_payment >= compute_expected now }
+  to Terminated when { actual_payment >= compute_expected(now) }
 }
+
 ```
 {% endcode %}
 

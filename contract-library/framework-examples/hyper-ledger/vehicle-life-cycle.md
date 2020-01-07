@@ -20,10 +20,10 @@
 ```ocaml
 archetype vehicle_lifecycle
 
-asset owner = {
-  id : role;
-  fn : string;
-  ln : string
+asset owner {
+  ido : role;
+  fn  : string;
+  ln  : string;
 }
 
 enum order_state =
@@ -33,72 +33,76 @@ enum order_state =
   | Owner_assigned
   | Delivered
 
-asset vehicledetail = {
-  id : string
+asset vehicledetail {
+  idv : string;
+  dcolor : string;
 }
 
-asset order = {
-   status       : order_sate;
-   manufacturer : manufacturer;
-   orderer      : owner;
-   details      : vehicledetail
+asset manufacturer {
+  mid : string;
 }
+
+asset order {
+  oid           : string;
+  amanufacturer : pkey of manufacturer;
+  orderer       : pkey of owner;
+  details       : pkey of vehicledetail;
+} with states order_state
 
 enum vehicle_state =
   | Off_the_road               initial
   | Active
   | Scrapped
 
-asset vehicle identified by vin = {
+asset vehicle identified by vin {
    vin          : string;
-   owner        : owner;
-   detail       : vehicledetail;
-   color        : string
+   aowner       : pkey of owner;
+   detail       : pkey of vehicledetail;
+   color        : string;
 } with states vehicle_state
 
-action placeOrder (neworder : order) = {
+action placeOrder (neworder : order) {
   called by neworder.orderer
   effect {
-    order.add neworder
+    order.add(neworder)
   }
 }
 
-transition assign_vin (vin : string) (detail : vehicledetail) on ok : order from Placed = {
-  called by order.orderer
+transition assign_vin (avin : string, adetail : pkey of vehicledetail) on (ok : pkey of order) from Placed {
+  called by order.get(ok).orderer
 
   to Vin_assigned
   with effect {
-     vehicule.add { vin = vin; detail = detail }
+     vehicle.add ({ vin = avin; aowner = order.get(ok).orderer; detail = adetail; color = vehicledetail.get(adetail).dcolor })
   }
 }
 
-transition assign_owner on ok : order from any = {
+transition assign_owner () on (ok : pkey of order) from any {
   to Owner_assigned
   with effect {
-    (* set vehicule state *)
-    (order.get ok).vehicule.state := Active;
-    (* set vehicule owner *)
-    (order.get ok).vehicule.owner := order.orderer
+    (* set vehicle state *)
+    vehicle.get(order.get(ok)).set_state(Active)
   }
 }
 
-action vehiculeTransfer (buyer : owner) (vehicule : vehicule) = {
-  called by [%delegable%] vehicule.owner
+action vehicleTransfer (buyer : pkey of owner, vk : pkey of vehicle) {
+  called by [%delegable%] vehicle.get(vk).aowner
   effect {
-    vehicule.owner := buyer
+    vehicle.get(vk).aowner := buyer
   }
 }
 
-transition scrapVehicle on vk : vehicule from (Off_the_road or Active) = {
-  called by vehicle.owner
+transition scrapVehicle () on (vk : pkey of vehicle) from (Off_the_road or Active) {
+  called by vehicle.get(vk).aowner
 
   to Scrapped
 }
 
-action scrapVehiclebyColor (color : string) = {
+action scrapVehiclebyColor (acolor : string) {
   effect {
-    for (v in vehicule.select(vehicule.color = color))
-      v.state := Scrapped
+    for v in vehicle.select(color = acolor) do
+      v.set_state(Scrapped)
+    done
   }
 }
 

@@ -15,10 +15,10 @@ Below is the direct  transcription of the fizzy contract in archetype.
 ```ocaml
 archetype fizzy
 
-variable creator role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk 
+variable creator : role = @tz1fake
 
-enum status = 
-| Created         
+enum status =
+| Created
 | Before           (* flight landed before the limit      *)
 | After            (* flight landed after the limit       *)
 | Cancelled        (* cancelled by the user               *)
@@ -26,71 +26,79 @@ enum status =
 | Redirected       (* flight redirected                   *)
 | Diverted         (* flight diverted                     *)
 
-asset insurance = {
+asset insurance {
   productid : string;
   limit     : date;
   premium   : tez;
   indemnity : tez;
   stat      : status = Created;
-} 
+}
 
-asset[@add creator none] flight identified by id = {
+asset[@add creator (none)] flight identified by id {
   id         : string;
   insurances : insurance partition;
 }
 
-action addflightinsurance (fi : string) (* flight id *)
-                          (i : insurance) = {
-  called by creator
+action addflightinsurance (fi : string, i : insurance) {
+    called by creator
 
-  effect {
-    flight.addifnotexist { id = fi };
-    let f = flight.get id in
-    f.insurances.add i
-  }
+    effect {
+      if (not flight.contains (fi)) then
+      flight.add({ id = fi; insurances = [] });
+      let f = flight.get(fi) in
+      f.insurances.add(i)
+    }
 }
 
 (* data should be signed by oracle ... *)
-action updatestatus (fi : string) (arrival : date) = {
-  called by creator
+action updatestatus (fi : string, arrival : date) {
 
-  effect {
-    let f = flight.get id in
-    for (i in f.insurances)
-      match i.status with
-      | Created -> 
-         if arrival > i.limit
-         then i.status := After
-      | _ -> none
-      end
-  }
+    called by creator
+
+    effect {
+      let f = flight.get(fi) in
+      for i in f.insurances do
+        match i.stat with
+        | Created ->
+           if arrival > i.limit
+           then i.stat := After
+        | _ -> ()
+        end
+      done
+    }
 }
 
-action manual (fi : string) (pr : string) (newst : status) = {
-   
-  called by creator
+action manual (fi : string, pr : string, newst : status) {
 
-  effect {
-    let f = flight.get fi in
-    for (i in f.insurances.select (product = pr))
-      match i.status with
-       | Created -> i.status := newst
-       | _ -> none
-      end
-  }
+    called by creator
+
+    effect {
+      let f = flight.get(fi) in
+      for i in f.insurances.select(product = pr) do
+        match i.status with
+         | Created -> i.status := newst
+         | _ -> none
+        end
+      done
+    }
 }
 
 specification {
-   (* any action on storage is performed only by the owner *)
-   s1 : anyaction may be performed only by role owner;
+  (* this contract does not transfer any tez *)
+  contract invariant s2 {
+    transfers_by_tx(anytx) = 0
+  }
+}
 
-   (* this contract does not transfer any tez *)
-   s2 : transfers_by_tx anytx = 0;
+security {
+  (* any action on storage is performed only by the owner *)
+  s1 : only_by_role (anyaction, creator);
 
-   (* transaction “updatestatus” is not the only one to potentially 
-      perform an update of insurance status *)
-   s3 : (update insurance.stat) may be performed only by action
-                                                (updatestatus or manual)}
+  (* transaction "updatestatus" is not the only one to potentially
+    perform an update of insurance status *)
+  s3 : only_in_action (update (insurance.stat), [updatestatus or manual]);
+}
+
 ```
 {% endcode %}
 
