@@ -27,17 +27,6 @@ states =
 
  `initial`  is used to declare the initial state value of the contract. 
 
-* `asset`  declares a collection of asset and the data an asset is composed of. For example the following declares a collection of real estates described by an address, a location and an owner:
-
-```yaml
-asset real_estate identified by addr {
-  addr : string;
-  xlocation : string;
-  ylocation : string;
-  owner : address;
-}
-```
-
 * `action` declares an entry point of the contract. An action has the following sections:
   * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have 
   * `called` by \(optional\) to declare which role may call this action
@@ -79,6 +68,17 @@ action an_action_1 (arg1 : string, arg2 : int) {
 * `tez` : Tezos currency
 
 ## Composite types
+
+* `asset`  declares a collection of asset and the data an asset is composed of. For example the following declares a collection of real estates described by an address, a location and an owner:
+
+```yaml
+asset real_estate identified by addr {
+  addr : string;
+  xlocation : string;
+  ylocation : string;
+  owner : address;
+}
+```
 
 * `enum`  is used to declare an enumeration value. It is read with a `match ... with` command \(see below\). 
 
