@@ -7,11 +7,11 @@ An archetype contract is composed of declarations, actions \(aka entry points\) 
 * `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's actions.
 
 ```ocaml
-constant rate rational = 0.2
+constant rate : rational = 0.2
 ```
 
 ```ocaml
-variable price tez = 10tz
+variable price : tez = 10tz
 ```
 
 * `states`  declares contract's possible states. It is then possible to use _transitions_ to change the contract states \(see below\)
@@ -93,8 +93,23 @@ enum color =
 It is then possible to declare a variable of type _color_:
 
 ```ocaml
-variable c color = Green
+variable c : color = Green
 ```
 
-* `contract` is used to declare the signature of another existing contract to call in the actions.
+* `contract` is used to declare the signature of another existing contract to call in actions.
+
+```c
+contract called_contract_sig {
+   action set_value (n : int)
+   action add_value (a : int, b : int)
+}
+```
+
+It is then possible to declare a contract value of type _called\_contract\_sig_ and set its address:
+
+```c
+constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+```
+
+
 
