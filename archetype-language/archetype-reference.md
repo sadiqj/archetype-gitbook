@@ -111,5 +111,16 @@ It is then possible to declare a contract value of type _called\_contract\_sig_ 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 ```
 
+* `collection` declares an asset field as a collection of another asset.
+
+```yaml
+asset an_asset identified by id {
+  id : string;
+  asset_col : another_asset collection
+}
+```
+
+* `partition` declares an asset field as a collection of another asset. 
+
 
 
