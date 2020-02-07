@@ -120,7 +120,20 @@ asset an_asset identified by id {
 }
 ```
 
-* `partition` declares an asset field as a collection of another asset. 
+* `partition` declares an asset field as a collection of another asset. The difference with `collection` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
+
+```yaml
+asset partitioning_asset identified by id {
+  id : string;
+  asset_part : partitioned_asset partition
+}
+```
+
+As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see operation below\). This has to be done via a partition field:
+
+```yaml
+my_partitioning_asset.asset_part.add(a_new_partitioned_asset)
+```
 
 
 
