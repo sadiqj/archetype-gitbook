@@ -64,10 +64,16 @@ action an_action_1 (arg1 : string, arg2 : int) {
 * `date` : date values \(ISO format\)
 * `duration` : duration values \(in day, week, month or year\)
 * `string` : string of characters
-* `bytes` : bytes sequence
+* `bytes` : bytes sequence 
 * `tez` : Tezos currency
 
 ## Composite types
+
+* `list` declares a list of any type \(builtin or composed\)
+
+```javascript
+variable vals : string list = []
+```
 
 * `asset`  declares a collection of asset and the data an asset is composed of. For example the following declares a collection of real estates described by an address, a location and an owner:
 
@@ -80,7 +86,7 @@ asset real_estate identified by addr {
 }
 ```
 
-* `enum`  is used to declare an enumeration value. It is read with a `match ... with` command \(see below\). 
+* `enum`  declares an enumeration value. It is read with a `match ... with` command \(see below\). 
 
 ```ocaml
 enum color =
@@ -96,7 +102,7 @@ It is then possible to declare a variable of type _color_:
 variable c : color = Green
 ```
 
-* `contract` is used to declare the signature of another existing contract to call in actions.
+* `contract` declares the signature of another existing contract to call in actions.
 
 ```c
 contract called_contract_sig {
@@ -116,6 +122,7 @@ constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 ```yaml
 asset an_asset identified by id {
   id : string;
+  a_val : int;
   asset_col : another_asset collection
 }
 ```
@@ -135,5 +142,90 @@ As a consequence of the partition, a _partitioned_ asset cannot be straightforwa
 my_partitioning_asset.asset_part.add(a_new_partitioned_asset)
 ```
 
+## Effect
 
+An action's effect is composed of instructions separated by a semi-colon. 
+
+* `var` declares a local variable with its value. While possible, it is not necessary to declare the type a local variable. Local variables' identifier must be unique \(no name capture in Archetype\).
+
+```javascript
+var i = 0;
+```
+
+* `:=` enables to assign a new value to a global or local variable. 
+
+```javascript
+i := 1;
+```
+
+* `+=` and `-=` enable to respectively increment and decrement an integer variable \(local or global\).
+
+```javascript
+i += 2;
+```
+
+* `add` enables to add an asset to an asset collection. It fails if the asset key is already present in the collection.
+
+```javascript
+an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' example
+```
+
+* `update` enables to update an existing asset; it takes as arguments the id of the asset to update and the list of effects on the asset. It fails if the id is not present in the asset collection.
+
+```javascript
+an_asset.update("RJRUEQDECSTG", { a_value += 3 });
+```
+
+* `add_update` is similar to update except that it adds the asset if the id is not present in the collection.
+
+
+
+* `remove` removes a an asset from its collection. 
+
+```javascript
+an_asset.remove("RJRUEQDECSTG");
+```
+
+* `clear` clears an asset collection.
+
+```javascript
+an_asset.clear();
+```
+
+* `prepend` adds an element to a list at the first position. 
+
+```javascript
+var l : string list = ["1"; "2"; "3"];
+l.prepend("0"); // l is ["0"; "1"; "2"; "3"]
+```
+
+* `if then` and `if then else` are the conditional branchings instructions. 
+
+```ocaml
+if i > 0 then (
+  // (* effect when i > 0 *) 
+) else (
+  // (* effect when i <= 0 *)
+);
+```
+
+* `for in do done` iterates over a collection.
+
+```ocaml
+ var res = 0;
+ for a in an_asset do
+      res += a.a_val;
+ done;
+```
+
+* `iter to do done` iterates over a sequence of integer values \(starting from 1\).
+
+```javascript
+var res = 0
+iter i to 3 do      // iterates from 1 to 3 included
+      res += i
+done;               // res is 6
+```
+
+* with the `contract` keyword presented above, it is then possible to call a contract. 
 
