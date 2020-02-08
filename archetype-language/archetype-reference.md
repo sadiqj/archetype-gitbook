@@ -158,10 +158,11 @@ var i = 0;
 i := 1;
 ```
 
-* `+=` and `-=` enable to respectively increment and decrement an integer variable \(local or global\).
+* `+=` , `-=` , `*=` and `/=` enable to respectively increment and decrement an integer variable \(local or global\).
 
 ```javascript
-i += 2;
+i *= 2;  // i := i * 2
+d += 3w; // d := i + 3w, date d is now previous d plus 3 weeks
 ```
 
 * `add` enables to add an asset to an asset collection. It fails if the asset key is already present in the collection.
