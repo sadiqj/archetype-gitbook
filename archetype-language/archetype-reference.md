@@ -227,5 +227,26 @@ iter i to 3 do      // iterates from 1 to 3 included
 done;               // res is 6
 ```
 
-* with the `contract` keyword presented above, it is then possible to call a contract. 
+* `transfer` transfers an amount of tez to an address or a contract.
+
+```c
+transfer 2tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
+```
+
+With the `contract` keyword presented above, it is then possible to call a contract. In the example below, the entry point `set_value` of contract `c` is called and `2tz` is transferred.
+
+```c
+contract contract_called_sig {
+   action set_value (n : int)
+   action add_value (a : int, b : int)
+}
+variable c : contract_called_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+
+
+action update_value(n : int) {
+  effect {
+    transfer 2tz to c call set_value(n);
+  }
+}
+```
 
