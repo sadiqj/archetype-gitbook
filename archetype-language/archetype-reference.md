@@ -241,9 +241,11 @@ contract contract_called_sig {
    action add_value (a : int, b : int)
 }
 
+constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+
 action update_value(n : int) {
   effect {
-    transfer 2tz to @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm call set_value(n);
+    transfer 2tz to c call set_value(n);
   }
 }
 ```
