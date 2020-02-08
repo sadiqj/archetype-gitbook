@@ -240,12 +240,10 @@ contract contract_called_sig {
    action set_value (n : int)
    action add_value (a : int, b : int)
 }
-variable c : contract_called_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
-
 
 action update_value(n : int) {
   effect {
-    transfer 2tz to c call set_value(n);
+    transfer 2tz to @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm call set_value(n);
   }
 }
 ```
