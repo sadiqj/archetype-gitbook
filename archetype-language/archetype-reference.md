@@ -29,7 +29,7 @@ states =
 
 * `action` declares an entry point of the contract. An action has the following sections:
   * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have 
-  * `called` by \(optional\) to declare which role may call this action
+  * `called by` \(optional\) to declare which role may call this action
   * `require` \(optional\) to list the necessary conditions for the action to be executed
   * `failif` \(optional\)to list the conditions which prevent from execution 
   * `effect` is the code to execute by the action
@@ -52,7 +52,39 @@ action an_action_1 (arg1 : string, arg2 : int) {
 }
 ```
 
-* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the following sections:
+* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an action \(except `effect`, see above\) plus:
+  * `from` to specify the states the transition starts from
+  * `to` to specify the states after the transition 
+  * `when` \(optional\) to specify the transition condition
+  * `with effect` to specify the effect of the transition
+
+```c
+states 
+| Created initial
+| Confirmed
+| Canceled
+| Success
+| Fail
+
+transition confirm {
+  from Created
+  to Confirmed
+  when { transferred > 10 tz }
+  with effect {
+    transfer 1tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+  }
+}
+```
+
+It is possible to specify several `to ... when .... with effect ...` sections in a transition. It is possible to specify a list of original states for the transition to start from:
+
+```c
+transition fail {
+  from Created or Confirmed
+  to Fail
+  when { ... }
+}
+```
 
 ## Builtin types
 
@@ -68,6 +100,18 @@ action an_action_1 (arg1 : string, arg2 : int) {
 * `tez` : Tezos currency
 
 ## Composite types
+
+* `*` declares a tuple made of other types.
+
+```c
+constant pair : int * string = 1, "astr"
+```
+
+* `option` declares an option of type.
+
+```c
+constant value : int option = none
+```
 
 * `list` declares a list of any type \(builtin or composed\)
 
@@ -250,6 +294,51 @@ action update_value(n : int) {
   }
 }
 ```
+
+## Expressions
+
+### Literals
+
+```c
+// boolean
+constant x : bool = true
+constant y : bool = false
+// integer
+constant i : int = 1
+constant j : int = -1
+// rational
+constant f : rational = 1.1
+constant g : rational = -1.1
+constant r : rational = 2 div 6
+constant t : rational = -2 div 6
+// string
+constant s : string = "str"
+// tez
+constant ctz  : tez = 1tz
+constant cmtz : tez = 1mtz
+constant cutz : tez = 1utz
+// address / role
+constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
+// duration of 3 weeks 8 days 4 hours 34 minutes 18 seconds
+constant d : duration = 3w8d4h34m18s 
+// date (ISO 8601)
+constant date0 : date = 2019-01-01                
+constant date1 : date = 2019-01-01T01:02:03       
+constant date2 : date = 2019-01-01T01:02:03Z      
+constant date3 : date = 2019-01-01T00:00:00+01:00 
+constant date4 : date = 2019-01-01T00:00:00-05:30 
+// list 
+constant mylist : int list = [1; 2; 3]
+// option
+constant op1 : int option = none
+constant op2 : int option = some(0)
+// bytes
+...
+```
+
+### Operators
+
+#### Logical
 
 
 
