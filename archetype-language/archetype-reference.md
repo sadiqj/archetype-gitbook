@@ -234,7 +234,7 @@ done;               // res is 6
 transfer 2tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
 ```
 
-With the `contract` keyword presented above, it is then possible to call a contract. In the example below, the entry point `set_value` of contract `c` is called and `2tz` is transferred.
+With the `contract` keyword presented above, it is possible to transfer to a contract and call an entry point. In the example below, the entry point `set_value` of contract `c` is called and `2tz` is transferred.
 
 ```c
 contract contract_called_sig {
