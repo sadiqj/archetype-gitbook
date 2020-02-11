@@ -299,7 +299,7 @@ action update_value(n : int) {
 }
 ```
 
-* `fail` enables to prevent from executing and deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
+* `fail` enables to abort the execution. It prevents from deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
 
 ```c
 fail "a message";
