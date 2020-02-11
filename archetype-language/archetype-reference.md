@@ -28,7 +28,8 @@ states =
  `initial`  is used to declare the initial state value of the contract. 
 
 * `action` declares an entry point of the contract. An action has the following sections:
-  * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have 
+  * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have
+  * `accept transfer` \(optional\) to specify that transfer of tez is accepted 
   * `called by` \(optional\) to declare which role may call this action
   * `require` \(optional\) to list the necessary conditions for the action to be executed
   * `failif` \(optional\)to list the conditions which prevent from execution 
@@ -221,14 +222,17 @@ an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' examp
 an_asset.update("RJRUEQDECSTG", { a_value += 3 });
 ```
 
-* `add_update` is similar to update except that it adds the asset if the id is not present in the collection.
-
-
-
+* `addupdate` is similar to update except that it adds the asset if the id is not present in the collection.
 * `remove` removes a an asset from its collection. 
 
 ```javascript
 an_asset.remove("RJRUEQDECSTG");
+```
+
+* `removeif` enables removing assets under a condition.
+
+```c
+an_asset.removeif(a_val > 10); // "a_val" is an asset field
 ```
 
 * `clear` clears an asset collection.
@@ -295,6 +299,12 @@ action update_value(n : int) {
 }
 ```
 
+* `fail` enables to prevent from executing and deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
+
+```c
+fail "a message";
+```
+
 ## Expressions
 
 ### Literals
@@ -333,7 +343,7 @@ constant mylist : int list = [1; 2; 3]
 constant op1 : int option = none
 constant op2 : int option = some(0)
 // bytes
-...
+constant bl : bytes = 0x12f12354356a 
 ```
 
 ### Operators
