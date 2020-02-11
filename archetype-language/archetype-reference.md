@@ -222,7 +222,7 @@ an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' examp
 an_asset.update("RJRUEQDECSTG", { a_value += 3 });
 ```
 
-* `addupdate` is similar to update except that it adds the asset if the id is not present in the collection.
+* `addupdate` is similar to update except that it adds the asset if its identifier is not present in the collection.
 * `remove` removes a an asset from its collection. 
 
 ```javascript
