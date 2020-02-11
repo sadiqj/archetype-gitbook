@@ -302,7 +302,14 @@ action update_value(n : int) {
 * `fail` aborts the execution. It prevents from deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
 
 ```c
-fail "a message";
+fail("a message");
+```
+
+* `require` and `failif` fail if the argument condition is respectively false and true. `require(t)` is  sugar for `if t then fail("")`.
+
+```c
+require(val > 0);
+failif(val <= 0);
 ```
 
 ## Expressions
