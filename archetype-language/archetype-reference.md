@@ -316,46 +316,149 @@ failif(val <= 0);
 
 ### Literals
 
+* `boolean`
+
 ```c
-// boolean
 constant x : bool = true
 constant y : bool = false
-// integer
+```
+
+* `integer`
+
+```c
 constant i : int = 1
-constant j : int = -1
-// rational
+constant j : int = -42
+```
+
+* `rational`
+
+```c
 constant f : rational = 1.1
 constant g : rational = -1.1
 constant r : rational = 2 div 6
 constant t : rational = -2 div 6
-// string
-constant s : string = "str"
-// tez
+```
+
+* `string`
+
+```c
+constant s : string = "hello world"
+```
+
+* `tez`
+
+```c
 constant ctz  : tez = 1tz
 constant cmtz : tez = 1mtz
 constant cutz : tez = 1utz
-// address / role
+```
+
+* `address` / `role`
+
+```c
 constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
+```
+
+* `duration`
+
+```c
 // duration of 3 weeks 8 days 4 hours 34 minutes 18 seconds
 constant d : duration = 3w8d4h34m18s 
-// date (ISO 8601)
+```
+
+* `date`
+
+```c
 constant date0 : date = 2019-01-01                
 constant date1 : date = 2019-01-01T01:02:03       
 constant date2 : date = 2019-01-01T01:02:03Z      
 constant date3 : date = 2019-01-01T00:00:00+01:00 
 constant date4 : date = 2019-01-01T00:00:00-05:30 
-// list 
+```
+
+* `list`
+
+```c
 constant mylist : int list = [1; 2; 3]
-// option
+```
+
+* `option`
+
+```c
 constant op1 : int option = none
 constant op2 : int option = some(0)
-// bytes
+```
+
+* `bytes`
+
+```c
 constant bl : bytes = 0x12f12354356a 
 ```
 
 ### Operators
 
 #### Logical
+
+* `and`
+* `or`
+* `not`
+
+### Operator
+
+* `=`
+* `<>`
+* `<`
+* `<=`
+* `>`
+* `>=`
+
+### Arithmetic
+
+* `+`
+* `-`
+* `*`
+* `/`
+* `%`
+
+### Constant
+
+* `sender`
+* `balance`
+* `transferred`
+* `now`
+* `source`
+* `state` 
+
+### List
+
+* `contains`
+* `count`
+* `nth`
+
+### Asset Collection
+
+* `contains`
+* `count`
+* `get`
+* `head`
+* `max`
+* `min`
+* `nth`
+* `select`
+* `sort`
+* `sum`
+* `tail`
+* `update` 
+
+## Verification
+
+
+
+  
+  
+
+
+
 
 
 
