@@ -438,17 +438,16 @@ constant bl : bytes = 0x12f12354356a
 ### Asset Collection
 
 * `contains`
-* `count`
 * `get`
-* `head`
-* `max`
-* `min`
 * `nth`
+* `head`
+* `tail`
 * `select`
 * `sort`
+* `max`
+* `min`
 * `sum`
-* `tail`
-* `update`
+* `count`
 
 ## Verification
 
