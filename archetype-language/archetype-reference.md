@@ -423,11 +423,11 @@ constant bl : bytes = 0x12f12354356a
 ### Constant
 
 * `sender`
+* `source`
 * `balance`
 * `transferred`
 * `now`
-* `source`
-* `state` 
+* `state`
 
 ### List
 
@@ -448,7 +448,7 @@ constant bl : bytes = 0x12f12354356a
 * `sort`
 * `sum`
 * `tail`
-* `update` 
+* `update`
 
 ## Verification
 
