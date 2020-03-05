@@ -12,83 +12,81 @@ The decision process specified in the decide transaction allocates the prize to 
 ```ocaml
 archetype competition
 
-variable[%transferable%] organiser role
+variable[%transferable%] organizer : role = @tz1organizer
 
 (* start date *)
-variable[%mutable organiser (sate = Created)%] startdate date
+variable[%mutable organiser (instate (Created))%] startdate : date = 2019-11-12T00:00:00
 
 (* deadline *)
-variable[%mutable organiser (state = Created)%] deadline date
+variable[%mutable organiser (instate (Created))%] deadline : date = 2020-11-12T00:00:00
 
-variable[%traceable%] prize tez from organizer = 3500
+variable[%traceable%] prize : tez = 3500tz
 
-variable competitor role
+variable oracle : role = @tz1oracle
 
-variable oracle role
-
-asset submission = {
-  competitor : competitor;
-  score      : uint;
-  date       : date
+asset submission {
+  competitor : role;
+  score      : int;
+  timestamp  : date;
 }
 
 (* state machine *)
 states =
  | Created     initial
  | InProgress
- | Done        with { s1 : balance = 0 }
+ | Done        with { s1 : balance = 0tz; }
  | Closed
 
-transition confirm from Created = {
+transition confirm () from Created {
    to InProgress when { now > startdate }
 }
 
-action submit (competitor : competitor) (score[%signedby oracle%] : uint) = {
+action submit (ckey : pkey of submission, pscore[%signedby oracle%] : int) {
   require {
-    c1 : state = InProgress
+    c1 : state = InProgress;
   }
 
   effect {
-    submission.add { competitor = competitor;
-                     score = score;
-                     date = now }
+    submission.add ({ competitor = ckey;
+                      score = pscore;
+                      timestamp = now })
   }
 }
 
-transition decide from InProgress  = {
+transition decide () from InProgress {
+
   require {
-    c2 : now > deadline
+    c2 : now > deadline;
   }
-  
   to Done
-  with effect { 
-    let submissions = submission.sort(asc(date)).sort(desc(score)) in
+  with effect {
+    let submissions = submission.sort(timestamp).sort(desc(score)) in
       if submissions.count() >= 3
       then (
-        let first = submissions.nth(0) in
-        let second = submissions.nth(1) in
-        let third = submissions.nth(2) in
+        let first = submissions.nth(0).competitor in
+        let second = submissions.nth(1).competitor in
+        let third = submissions.nth(2).competitor in
         let q1 = 0.5 * prize in
         let q2 = 0.3 * prize in
         let q3 = 0.2 * prize in
-        transfer q1 to first.competitor;
-        transfer q2 to second.competitor;
-        transfer q3 to third.competitor;
+        transfer q1 to first;
+        transfer q2 to second;
+        transfer q3 to third;
         transfer (prize - q1 - q2 - q3) to organizer)
         else if (submissions.count() >= 2)
              then (
-               let first = submissions.nth(0) in
-               let second = submissions.nth(1) in
+               let first = submissions.nth(0).competitor in
+               let second = submissions.nth(1).competitor in
                let q1 = 0.6 * prize in
                let q2 = 0.4 * prize in
-               transfer q1 to first.competitor;
-               transfer q2 to second.competitor;
+               transfer q1 to first;
+               transfer q2 to second;
                transfer (prize - q1 - q2) to organizer)
              else if (submissions.count() >= 1)
                then (
-                 let first = submissions.nth(0) in
-                 transfer prize to first.competitor)
-               else transfer back prize
+                 let first = submissions.nth(0).competitor in
+                 transfer prize to first)
+               else transfer prize to organizer
   }
 }
 

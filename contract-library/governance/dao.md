@@ -3,26 +3,30 @@
 ```ocaml
 archetype mini_dao
 
-asset shares identified by addr = {
-    addr : address;
-    value : mtez;
+asset shares identified by addr {
+  addr : address;
+  value : tez
 }
 
-action withdraw = {
-    specification {
-        postcondition p1 = {
-            balance = before.balance - shares.get(caller).value
-        }
+action withdraw () {
+  specification {
+    postcondition p1 {
+      let some s = shares.get(caller) in
+      balance = before.balance - s.value
+      otherwise true
     }
-    require {
-        r1 : shares.get(caller).value > 0;
-        r2 : balance >= shares.get(caller).value;
-    }
-    effect {
-        let v = shares.get(caller).value in
-        transfer v to caller;
-        shares.update (caller, { value = 0mtz })
-    }
+  }
+  require {
+    r0 : shares.contains(caller);
+    r1 : shares.get(caller).value > 0tz;
+    r2 : balance >= shares.get(caller).value;
+  }
+  effect {
+    let v = shares.get(caller).value in
+    transfer v to caller;
+    shares.update (caller, { value = 0tz })
+  }
 }
+
 ```
 

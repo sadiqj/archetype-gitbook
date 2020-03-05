@@ -10,12 +10,12 @@ This is the most basic version of an auction process. It does not memorise who b
 ```ocaml
 archetype auction_no_memory
 
-variable bid mtez = 0mtz
-variable incumbent address
+variable bid : tez = 0tz
+variable incumbent : address = @fake_address
 
-variable deadline date = 2019-01-01T00:00:00
+variable deadline : date = 2019-01-01T00:00:00
 
-action place_bid (id : address) (b : mtez) = {
+action place_bid (id : address, b : tez) {
    require {
       c1 : now < deadline;
       c2 : b > bid;
@@ -26,6 +26,7 @@ action place_bid (id : address) (b : mtez) = {
       bid := transferred
    }
 }
+
 ```
 {% endcode %}
 

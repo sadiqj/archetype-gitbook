@@ -27,24 +27,24 @@ All actions are called by the _admin_ role, which is ensured by security predica
 ```javascript
 archetype miles_with_expiration
 
-variable[%transferable%] admin role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+variable[%transferable%] admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
-/* id is a string because it is generated off-chain */
+(* id is a string because it is generated off-chain *)
 asset mile identified by id sorted by expiration {
    id         : string;
    amount     : int;
-   expiration : date;
+   expiration : date
 } with {
-  i1 : amount > 0;
+  m1 : amount > 0;
 }
 
-/* a partition ensures there is no direct access to mile collection */
+(* a partition ensures there is no direct access to mile collection *)
 asset owner identified by addr {
   addr  : role;
-  miles : mile partition; /* injective (owner x mile) */
+  miles : mile partition (* injective (owner x mile) *)
 }
 
-action add (ow : address) (newmile : mile) {
+action add (ow : address, newmile : mile) {
    called by admin
 
    require {
@@ -63,25 +63,35 @@ action add (ow : address) (newmile : mile) {
    }
 }
 
-action consume (a : address) (quantity : int) = {
+action consume (a : address, quantity : int) {
 
   specification {
 
-    postcondition p1 = {
-      mile.sum(the.amount) = mile.before.sum(the.amount) - quantity
+    assert p1 {
+      remainder = 0
+    }
+
+    postcondition p2 {
+      mile.sum(the.amount) = before.mile.sum(the.amount) - quantity
       invariant for loop {
-        mile.sum(the.amount) = mile.before.sum(the.amount) - quantity + remainder
         0 <= remainder <= toiterate.sum(the.amount);
+        before.mile.sum(the.amount) = mile.sum(the.amount) + quantity - remainder
       }
     }
 
-    postcondition p2 = {
+    postcondition p3 {
       forall m in mile.removed, m.expiration >= now
       invariant for loop {
         mile.removed.subsetof(by_expiration)
       }
     }
 
+    postcondition p4 {
+      mile.added.isempty
+      invariant for loop {
+        mile.added.isempty
+      }
+    }
   }
 
   called by admin
@@ -95,7 +105,7 @@ action consume (a : address) (quantity : int) = {
     let by_expiration = ow.miles.select(the.expiration > now) in
     require (by_expiration.sum(the.amount) >= quantity);
     let remainder = quantity in
-    for : loop (m in by_expiration) (
+    for : loop m in by_expiration do
       if remainder > 0
       then (
         if m.amount > remainder
@@ -103,18 +113,23 @@ action consume (a : address) (quantity : int) = {
           mile.update(m.id, { amount  -= remainder });
           remainder := 0
         )
-        else (
+        else if m.amount = remainder
+        then (
+          remainder := 0;
+          ow.miles.remove(m.id)
+        ) else (
           remainder -= m.amount;
           ow.miles.remove(m.id)
         )
       )
-    )
+    done;
+    assert p1
   }
 }
 
-action clear_expired = {
+action clear_expired () {
   specification {
-    postcondition s3 = {
+    postcondition s3 {
       forall m in mile.removed, m.expiration < now
       invariant for loop2 {
         forall m in mile.removed, m.expiration < now
@@ -125,19 +140,20 @@ action clear_expired = {
   called by admin
 
   effect {
-    for : loop2 (o in owner) (
+    for : loop2 o in owner do
       o.miles.removeif (the.expiration < now)
-    )
+    done
   }
 }
 
 security {
-  /*  this ensures that any mile was added with the 'add' action */
-  s1 : only_by_role(anyaction, admin);
-  s2 : only_in_action(remove mile, [consume or clear_expired]);
-  s3 : not_in_action(add mile, consume);
-  s4 : no_storage_fail(add);
+  (*  this ensures that any mile was added with the 'add' action *)
+  g1 : only_by_role (anyaction, admin);
+  g2 : only_in_action (remove (mile), [consume or clear_expired]);
+  g3 : not_in_action (add (mile), consume);
+  g4 : no_storage_fail (add)
 }
+
 ```
 {% endtab %}
 

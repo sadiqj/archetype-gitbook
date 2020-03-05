@@ -11,7 +11,7 @@ Contract data is read and written with actions. They are the entry points of the
 An action may take input arguments. For example the snippet below declare an action named `complete` which takes two arguments `value` and `amount` , respectively of type `string` and `int`:
 
 ```ocaml
-action complete (value : string) (amount : int) = {
+action complete (value : string, amount : int) {
 
   ...  (* action body *)
 
@@ -38,10 +38,10 @@ An Action is made of sections listed below:
       <td style="text-align:left">yes</td>
     </tr>
     <tr>
-      <td style="text-align:left"><code>accept transfer</code>
+      <td style="text-align:left"><code>refuse transfer</code>
       </td>
-      <td style="text-align:left">specifies whether the action accepts incoming
-        <br />currency transfer (refused by default).</td>
+      <td style="text-align:left">specifies whether the action refuses incoming
+        <br />currency transfer (accepted by default).</td>
       <td style="text-align:left">yes</td>
     </tr>
     <tr>
@@ -74,14 +74,12 @@ An Action is made of sections listed below:
 </table>For example, the `complete` action example may be enhanced as follows:
 
 ```ocaml
-constant owner role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+constant owner : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
-variable threshold tez = 100tz
+variable threshold : tez = 100tz
 
-action complete (value : string) (amount : int) {
+action complete (value : string, amount : int) {
   called by owner
-  
-  accept transfer
   
   require {
     r : transferred > threshold
@@ -93,7 +91,7 @@ action complete (value : string) (amount : int) {
 }
 ```
 
-In the expression `r : ...` line 11 above, `r` is a _label_ for the _require_ expression \(see [Label](action.md#label) section below\).
+In the expression `r : ...` line 8 above, `r` is a _label_ for the _require_ expression \(see [Label](action.md#label) section below\).
 
 ## Label
 
@@ -193,40 +191,21 @@ The instruction to transfer currency is exampled below:
 transfer 10tz to owner
 ```
 
-The recipient of the transfer may be omitted when it is specified in the tez value declaration. Consider the following declaration:
-
-```ocaml
-constant price from buyer to seller = 50tz
-```
-
-The transfer of price to seller is simply executed with:
-
-```text
-transfer price;
-```
-
-The transfer to buyer is simply executed with:
-
-```text
-transfer back price;
-```
-
 ### Conditional
 
 The basic conditional expression is exampled below :
 
 ```ocaml
-if transferred > threshold then (
+if transferred > threshold then
   transfer price
-) else (
+else
   fail "not enough"
-)
 ```
 
 The `require` expression fails if the condition is not met:
 
 ```text
-require (transferred > threshold);
+require (transferred > threshold)
 ```
 
 The `failif` expression fails if the condition is met:
@@ -240,10 +219,10 @@ failif (transferred <= threshold)
 Consider the following car asset identified by its vin id:
 
 ```text
-asset car identified by vin = {
+asset car identified by vin {
   vin : string;
   model : string;
-  year : int
+  year : int;
 }
 ```
 
@@ -251,29 +230,29 @@ The following table gives the basic instructions to get, add, remove, update an 
 
 | operation | expression |
 | :--- | :--- |
-| get an asset | `car.get vid` |
-| add an asset | `car.add { "1GNEK13ZX3R298984"; "Bugatti Chiron"; "2018" }`  |
-| remove an asset | `car.remove vid` |
-| update an asset | `car.update "1GNEK13ZX3R298984" { year = 2019 }` |
-| retrieve asset nb. i | `car.nth i` \(an asset collection is sorted\) |
+| get an asset | `car.get (vid)` |
+| add an asset | `car.add ({ vin = "1GNEK13ZX3R298984"; model = "Bugatti Chiron"; year = 2018 })` |
+| remove an asset | `car.remove (vid)` |
+| update an asset | `car.update ("1GNEK13ZX3R298984", {year = 2019})` |
+| retrieve asset nb. i | `car.nth (i)` \(an asset collection is sorted\) |
 
 Advanced operations over a collection are listed in the table below:
 
 | operation | expression |
 | :--- | :--- |
-| count | `car.count`  |
-| maximum of a field | `car.max { year }` |
-| minimum of a field | `car.min { year }` |
-| sum of a field | `car.sum { year }` |
-| select a subset collection | `car.select { year >= 2019 }`  |
-| sort a collection | `car.sort { year }` |
+| count | `car.count ()`  |
+| maximum of a field | `car.max (year)` |
+| minimum of a field | `car.min (year)` |
+| sum of a field | `car.sum (year)` |
+| select a subset collection | `car.select (year >= 2019)` |
+| sort a collection | `car.sort (year)` |
 
 _Iteration_ over a collection is as follows:
 
 ```ocaml
-for (c in car) (
+for c in car do
   ...
-)
+done
 ```
 
 
