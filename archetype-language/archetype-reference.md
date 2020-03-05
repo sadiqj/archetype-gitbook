@@ -272,6 +272,36 @@ if i > 0 then (
 );
 ```
 
+* `match ... with ... end` FIXME
+
+```javascript
+archetype effect_control_matchwith
+
+enum t =
+  | C1
+  | C2
+  | C3
+  | C4
+  | C5
+
+variable res : int = 0
+
+action exec () {
+  specification {
+    s0: res = 1;
+  }
+  effect {
+    var x : t = C3;
+    match x with
+    | C1 | C2 -> res := 0
+    | C3 -> res := 1
+    | _ -> res := 2
+    end
+  }
+}
+
+```
+
 * `for in do done` iterates over a collection.
 
 ```ocaml
@@ -552,7 +582,7 @@ var int_tez_mult   : tez      = 1 * 1tz;
 var rat_tez_mult   : tez      = 1.1 * 1tz;
 ```
 
-* / FIXME
+* `/` FIXME
 
 ```javascript
 var int_int_div    : int = 1 / 2;
@@ -562,7 +592,7 @@ var rat_int_div    : rational = 1.1 / 2;
 var dur_int_div    : duration = 1h / 2;
 ```
 
-* % FIXME
+* `%` FIXME
 
 ```javascript
 var int_int_modulo : int = 1 % 2;
@@ -1258,6 +1288,50 @@ s4: my_asset.added.isempty();
 
 ```javascript
 s5: my_asset.removed.isempty();
+```
+
+* `iterated` FIXME
+
+```javascript
+action exec2 () {
+  specification {
+    postcondition p1 {
+      true
+      invariant for loop {
+         iterated.isempty()
+      }
+    }
+  }
+
+  effect {
+    var res : int = 0;
+    for:loop i in my_asset do
+      res += 1;
+    done
+  }
+}
+```
+
+* `toiterate` FIXME
+
+```javascript
+action exec3 () {
+  specification {
+    postcondition p1 {
+      true
+      invariant for loop {
+         toiterate.isempty() 
+      }
+    }
+  }
+
+  effect {
+    var res : int = 0;
+    for:loop i in my_asset do
+      res += 1;
+    done
+  }
+}
 ```
 
 ### 
