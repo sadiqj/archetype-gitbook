@@ -10,19 +10,19 @@ A state machine is used to follow the different stages of the escrow transaction
 ```ocaml
 archetype escrow_penalty
 
-variable buyer : role = @tz1buyer
+variable buyer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 variable[%transferable%] debitor : role = buyer
 
-variable seller : role = @tz1seller
+variable seller : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
 
 variable[%transferable%] creditor : role = seller
 
-variable oracle : role = @tz1oracle
+variable oracle : role = @tz1iawHeddgggn6P5r5jtq2wDRqcJVksGVSa
 
 variable[%traceable%] price : tez = 10tz
 
-variable[%traceable%] [%mutable_signed ([{buyer}; {debitor}], (state = Created))%]
+variable[%traceable%] [%mutable_signed (([{buyer}; {debitor}]), (state = Created))%]
      penalty : tez = 0.1 * price
 
 (* action deadline *)
@@ -36,19 +36,22 @@ states =
  | Canceled
  | Transferred with { i1 : balance = 0tz; }
 
-transition abort () from Created {
+transition abort () {
   called by buyer or seller
 
+  from Created
   to Aborted
 }
 
-transition[%signedbyall [buyer; seller]%] confirm () from Created {
+transition[%signedbyall ([buyer; seller])%] confirm () {
+  from Created
   to Confirmed when { balance = price + penalty }
 }
 
-transition transfer_ () from Confirmed {
+transition transfer_ () {
   called by oracle
 
+  from Confirmed
   to Transferred when { now < deadline }
   with effect {
     transfer price to creditor;
@@ -56,9 +59,10 @@ transition transfer_ () from Confirmed {
   }
 }
 
-transition cancel () from Confirmed {
+transition cancel () {
   called by oracle
 
+  from Confirmed
   to Canceled
   with effect {
     transfer penalty to debitor;

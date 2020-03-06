@@ -16,17 +16,17 @@ constant symbol : string = "BCDT"
 constant decimals : int  = 18
 
 (* contribution thresholds *)
-variable[%mutable owner (state = Init)%] min_contribution : tez = 1tz
-variable[%mutable owner (state = Init)%] max_contribution_silver : tez = 10tz
+variable[%mutable (owner, (state = Init))%] min_contribution : tez = 1tz
+variable[%mutable (owner, (state = Init))%] max_contribution_silver : tez = 10tz
 
 (* bcd token data *)
-variable[%mutable owner (state = Init)%] max_bcd_to_sell : tez = 100000000tz
-variable[%mutable owner (state = Init)%] exchange_rate_bcd_tez : int = 13000
+variable[%mutable (owner, (state = Init))%] max_bcd_to_sell : tez = 100000000tz
+variable[%mutable (owner, (state = Init))%] exchange_rate_bcd_tez : int = 13000
 
 (* round caps *)
-variable[%mutable owner (state = Init)%] soft_cap : tez = 1800tz
-variable[%mutable owner (state = Init)%] presales_cap : tez = 1800tz
-variable[%mutable owner (state = Init)%] round1_cap : tez = 3600tz
+variable[%mutable (owner, (state = Init))%] soft_cap : tez = 1800tz
+variable[%mutable (owner, (state = Init))%] presales_cap : tez = 1800tz
+variable[%mutable (owner, (state = Init))%] round1_cap : tez = 3600tz
 (* presales_cap + 1600 *)
 
 (* Number tokens sent, eth raised, ... *)
@@ -37,11 +37,11 @@ variable nb_tez_raised : tez = 0tz
 
 variable[%transferable%] owner : role = @tz1_owner
 
-variable whitelister : role = @tz1_whitelister
+variable whitelister : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-variable reserve : role = @tz1_reserve
+variable reserve : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
 
-variable community : role = @tz1_community
+variable community : role = @tz1iawHeddgggn6P5r5jtq2wDRqcJVksGVSa
 
 (* contributor *)
 
@@ -52,7 +52,7 @@ enum whitelist =
 asset[@add @remove @update owner (state = Init)]
      contributor identified by id {
    id           : address;
-   list         : whitelist;
+   wlist        : whitelist;
    contrib      : tez = 0tz;
 }
 
@@ -124,14 +124,14 @@ action contribute () {
      c2 : is_running ();
      c3 : transferred >= min_contribution;
      c4 : (let c = contributor.get(caller) in
-           not (c.list = Silver and transferred >= max_contribution_silver));
+           not (c.wlist = Silver and transferred >= max_contribution_silver));
   }
 
   effect {
     let c = contributor.get(caller) in
     (* cap contribution to max_contrib if necessary *)
     let lcontrib = transferred in
-    if    c.list = Silver
+    if    c.wlist = Silver
       and c.contrib + lcontrib >= max_contribution_silver
     then lcontrib := max_contribution_silver - c.contrib;
     (* cap contribution to round cap if necessary *)

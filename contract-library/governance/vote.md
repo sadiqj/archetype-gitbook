@@ -12,13 +12,13 @@ The result of the vote is computed with the `bury` action: winners are ballots w
 ```ocaml
 archetype voting_process
 
-variable[%transferable%] chairperson : role = @tz1chairperson
+variable[%transferable%] chairperson : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 (* vote start *)
-variable[%mutable chairperson (instate (Created))%] startDate : date = 2019-11-12T00:00:00
+variable[%mutable (chairperson, (instate (Created)))%] startDate : date = 2019-11-12T00:00:00
 
 (* vote deadline *)
-variable[%mutable chairperson (instate (Created))%] deadline : date = 2020-11-12T00:00:00
+variable[%mutable (chairperson, (instate (Created)))%] deadline : date = 2020-11-12T00:00:00
 
 asset voter identified by addr {
   addr : role;
@@ -50,8 +50,9 @@ action register (v : role) {
   }
 }
 
-transition start () from Created {
-   to Voting when { now > startDate }
+transition start () {
+  from Created
+  to Voting when { now > startDate }
 }
 
 action vote (val : pkey of ballot) {
@@ -70,10 +71,11 @@ action vote (val : pkey of ballot) {
    }
 }
 
-transition bury () from Voting {
+transition bury () {
   require {
     c5 : now > deadline;
   }
+  from Voting
   to Buried
   with effect {
     let nbvotesMax = ballot.max(the.nbvotes) in

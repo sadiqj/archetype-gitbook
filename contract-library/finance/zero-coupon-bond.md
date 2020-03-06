@@ -14,15 +14,15 @@ And ( Give( Scale( 10; One( USD ))); At( now+1 years; Scale( 11 ; One( USD ))))
 ```ocaml
 archetype zero_coupon_bond
 
-variable issuer : role  = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk (* seller 'Alice' *)
+variable issuer : role  = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk (* seller 'Alice' *)
 
-variable owner : role = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
+variable owner : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 (* buyer 'Bob'; receives 11 tez in one-year *)
 
 
 variable price : tez = 10tz
 
-variable payment : tez = 11 * price
+variable payment : tez = 1.1 * price
 
 variable maturity : date = 2020-12-31
 
@@ -32,13 +32,14 @@ states =
   | Repaid    (* issuer has transferred payment to contract *)
   | Collected (* owner has collected payment *)
 
-transition confirm () from Created {
+transition confirm () {
   specification {
     postcondition s1 {
       balance = 0tz
     }
   }
 
+  from Created
   to Confirmed
   when { transferred = price }
   with effect {
@@ -47,15 +48,17 @@ transition confirm () from Created {
   }
 }
 
-transition repay () from Confirmed {
+transition repay () {
   called by issuer
 
+  from Confirmed
   to Repaid when { transferred = payment }
 }
 
-transition collect () from Repaid {
+transition collect () {
   called by owner
 
+  from Repaid
   to Collected
   when { now >= maturity }
   with effect {

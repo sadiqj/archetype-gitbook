@@ -15,7 +15,7 @@ Below is the direct  transcription of the fizzy contract in archetype.
 ```ocaml
 archetype fizzy
 
-variable creator : role = @tz1fake
+variable creator : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 enum status =
 | Created
@@ -31,6 +31,7 @@ asset insurance {
   limit     : date;
   premium   : tez;
   indemnity : tez;
+  product   : string;
   stat      : status = Created;
 }
 
@@ -75,9 +76,9 @@ action manual (fi : string, pr : string, newst : status) {
     effect {
       let f = flight.get(fi) in
       for i in f.insurances.select(product = pr) do
-        match i.status with
-         | Created -> i.status := newst
-         | _ -> none
+        match i.stat with
+         | Created -> i.stat := newst
+         | _ -> ()
         end
       done
     }

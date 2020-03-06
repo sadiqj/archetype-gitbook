@@ -12,17 +12,17 @@ The decision process specified in the decide transaction allocates the prize to 
 ```ocaml
 archetype competition
 
-variable[%transferable%] organizer : role = @tz1organizer
+variable[%transferable%] organizer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 (* start date *)
-variable[%mutable organiser (instate (Created))%] startdate : date = 2019-11-12T00:00:00
+variable[%mutable (organiser, (instate (Created)))%] startdate : date = 2019-11-12T00:00:00
 
 (* deadline *)
-variable[%mutable organiser (instate (Created))%] deadline : date = 2020-11-12T00:00:00
+variable[%mutable (organiser, (instate (Created)))%] deadline : date = 2020-11-12T00:00:00
 
 variable[%traceable%] prize : tez = 3500tz
 
-variable oracle : role = @tz1oracle
+variable oracle : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
 
 asset submission {
   competitor : role;
@@ -37,11 +37,12 @@ states =
  | Done        with { s1 : balance = 0tz; }
  | Closed
 
-transition confirm () from Created {
-   to InProgress when { now > startdate }
+transition confirm () {
+  from Created
+  to InProgress when { now > startdate }
 }
 
-action submit (ckey : pkey of submission, pscore[%signedby oracle%] : int) {
+action submit (ckey : pkey of submission, pscore[%signedby (oracle)%] : int) {
   require {
     c1 : state = InProgress;
   }
@@ -53,14 +54,14 @@ action submit (ckey : pkey of submission, pscore[%signedby oracle%] : int) {
   }
 }
 
-transition decide () from InProgress {
-
+transition decide () {
   require {
     c2 : now > deadline;
   }
+  from InProgress
   to Done
   with effect {
-    let submissions = submission.sort(timestamp).sort(desc(score)) in
+    let submissions = submission.sort(desc(score), timestamp) in
       if submissions.count() >= 3
       then (
         let first = submissions.nth(0).competitor in

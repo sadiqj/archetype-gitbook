@@ -6,7 +6,7 @@ This archetype is a very basic miles management system with add and consume tran
 ```ocaml
 archetype miles
 
-variable[%transferable%] validator : role = @fake_validator
+variable[%transferable%] validator : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 asset account identified by owner {
   owner  : role;

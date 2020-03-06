@@ -47,7 +47,8 @@ states =
 | Running
 | Canceled
 
-transition[%signedbyall [patient; insurer]%] confirm () from Created {
+transition[%signedbyall ([patient; insurer])%] confirm () {
+  from Created
   (*signed by [insrurer; patient]*)
   to Running
   with effect {
@@ -55,12 +56,13 @@ transition[%signedbyall [patient; insurer]%] confirm () from Created {
   }
 }
 
-transition cancel () from Created {
+transition cancel () {
   called by insurer or patient
+  from Created
   to Canceled
 }
 
-action[%signedbyall [patient; insurer]%] register_doctor (docid : address) {
+action[%signedbyall ([patient; insurer])%] register_doctor (docid : address) {
   (*signed by [insurer; patient]*)
   require {
      r1 : state = Running;

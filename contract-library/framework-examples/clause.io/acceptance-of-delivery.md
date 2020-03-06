@@ -12,23 +12,23 @@
 ```ocaml
 archetype clause_io_acceptance_of_delivery
 
-variable shipper role
+variable shipper : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-variable receiver role
+variable receiver : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
 
-variable payment tez from receiver to shipper
+variable payment : tez = 10tz
 
-variable deliveryDate date
+variable deliveryDate : date = 2020-12-31
 
-variable businessDays day
+variable businessDays : duration = 14d
 
 (* extra blockchain incentives *)
-variable incentiveR tez from receiver = payment
+variable incentiveR : tez = payment
 
-variable incentiveS tez from receiver = 0.2 * payment
+variable incentiveS : tez = 0.2 * payment
 
-%traceable (payment + incentiveR) (receiver)
-%traceable (incentiveS) (shipper)
+(* %traceable (payment + incentiveR, receiver) *)
+(* %traceable (incentiveS, shipper) *)
 
 states =
  | Created initial
@@ -38,57 +38,63 @@ states =
  | Success
  | Fail
 
-transition[%signedbyall [{shipper}; {receiver}]%] sign from Created = {
+transition[%signedbyall ([shipper; receiver])%] sign () {
+  from Created
   to Signed
   when { balance = payment + incentiveR + incentiveS }
 }
 
-transition unilateral_abort from Created = {
+transition unilateral_abort () {
   called by shipper or receiver
 
+  from Created
   to Aborted
   with effect {
-    transfer back incentiveR;
-    transfer back payment;
-    transfer back incentiveS
+    transfer incentiveR to receiver;
+    transfer payment to receiver;
+    transfer incentiveS to receiver
   }
 }
 
-transition[%signedbyall [{shipper}; {receiver}]%] abort from Signed = {
+transition[%signedbyall ([shipper; receiver])%] abort () {
   called by shipper or receiver
 
+  from Signed
   to Aborted
   with effect {
-    transfer back incentiveR;
-    transfer back payment;
-    transfer back incentiveS
+    transfer incentiveR to receiver;
+    transfer payment to receiver;
+    transfer incentiveS to receiver
   }
 }
 
-transition confirm from Signed = {
+transition confirm () {
   called by receiver
 
+  from Signed
   to Delivered
   with effect {
      deliveryDate := now;
-     transfer back incentiveR;
-     transfer payment;
-     transfer back incentiveS
+     transfer incentiveR to receiver;
+     transfer payment to shipper;
+     transfer incentiveS to receiver
   }
 }
 
-transition success from Delivered = {
+transition success () {
   called by shipper
 
+  from Delivered
   to Success
-  when { now > deliverydate + businessDays }
+  when { now > (deliveryDate + businessDays) }
 }
 
-transition fail_ from Delivered = {
+transition fail () {
   called by receiver
 
+  from Delivered
   to Fail
-  when { now <= deliverydate + businessDays }
+  when { now <= deliveryDate + businessDays }
 }
 
 ```

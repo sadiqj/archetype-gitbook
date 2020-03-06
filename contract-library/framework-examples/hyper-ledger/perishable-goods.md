@@ -44,20 +44,22 @@ asset shipper identified by sid {
 
 asset p_contract {
   id              : string;
-  grower          : pkey of grower;
-  shipper         : pkey of shipper;
-  importer        : pkey of importer;
+  grower_id       : pkey of grower;
+  shipper_id      : pkey of shipper;
+  importer_id     : pkey of importer;
   arrivalDateTime : date;
   unitPrice       : rational;
 }
 
-asset shipment {
+asset shipment identified by ship_id {
+  ship_id  : string;
   type     : productType;
   count    : int;
   p_c      : p_contract
 } with states shipmentStatus
 
-transition payOut (arrival : date) on (sk : pkey of shipment) from In_transit {
+transition payOut (arrival : date) on (sk : pkey of shipment) {
+  from In_transit
   to Arrived
 }
 

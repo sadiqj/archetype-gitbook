@@ -11,7 +11,7 @@ This is the most basic version of an auction process. It does not memorise who b
 archetype auction_no_memory
 
 variable bid : tez = 0tz
-variable incumbent : address = @fake_address
+variable incumbent : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 variable deadline : date = 2019-01-01T00:00:00
 
