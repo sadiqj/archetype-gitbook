@@ -71,7 +71,7 @@ asset car identified by vin {
 Say now that the contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields has a collection of animals. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
 
 ```ocaml
-asset animal identidied by aid {
+asset animal identified by aid {
   aid : string
 }
 

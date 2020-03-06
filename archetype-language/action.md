@@ -154,7 +154,7 @@ The following is the list of expressions that require a label:
       <td style="text-align:left">
         <p><code>security {</code>
         </p>
-        <p><code>  s1 : only_by_role(add,admin)</code>
+        <p><code>  s1 : only_by_role(anyaction, admin)</code>
         </p>
         <p><code>}</code>
         </p>
@@ -169,7 +169,7 @@ The following is the list of expressions that require a label:
 A local variable is declared as exampled below:
 
 ```ocaml
-let p = amount + 10tz in
+var p = amount + 10tz;
 ...
 ```
 
@@ -197,9 +197,9 @@ The basic conditional expression is exampled below :
 
 ```ocaml
 if transferred > threshold then
-  transfer price
+  transfer price to owner
 else
-  fail "not enough"
+  fail ("not enough")
 ```
 
 The `require` expression fails if the condition is not met:
@@ -241,8 +241,6 @@ Advanced operations over a collection are listed in the table below:
 | operation | expression |
 | :--- | :--- |
 | count | `car.count ()`  |
-| maximum of a field | `car.max (year)` |
-| minimum of a field | `car.min (year)` |
 | sum of a field | `car.sum (year)` |
 | select a subset collection | `car.select (year >= 2019)` |
 | sort a collection | `car.sort (year)` |
