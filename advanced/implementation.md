@@ -55,11 +55,11 @@ The IL version is presented below:
 let complete = 
   match s.state with
   | Confirmed ->
-      if caller <> oracle then fail;
+      if caller <> oracle then fail ("invalid caller");
       if now < s.deadline then
-       transfer s.price seller
-      else fail
-  | _ -> fail
+       transfer s.price to seller
+      else fail ("invalid condition")
+  | _ -> fail ("invalid state")
 ```
 
 `s` is the static storage variable.
