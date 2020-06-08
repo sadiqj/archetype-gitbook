@@ -40,14 +40,13 @@ asset[@add creator (none)] flight identified by id {
   insurances : insurance partition;
 }
 
-action addflightinsurance (fi : string, i : insurance) {
+action addflightinsurance (fi : string, iproductid : string, ilimit : date, ipremium : tez, iindemnity : tez, iproduct : string, istat : status) {
     called by creator
 
     effect {
       if (not flight.contains (fi)) then
       flight.add({ id = fi; insurances = [] });
-      let f = flight.get(fi) in
-      f.insurances.add(i)
+      flight[fi].insurances.add({iproductid; ilimit; ipremium; iindemnity; iproduct; istat})
     }
 }
 
@@ -57,12 +56,11 @@ action updatestatus (fi : string, arrival : date) {
     called by creator
 
     effect {
-      let f = flight.get(fi) in
-      for i in f.insurances do
-        match i.stat with
+      for i in flight[fi].insurances do
+        match insurance[i].stat with
         | Created ->
-           if arrival > i.limit
-           then i.stat := After
+           if arrival > insurance[i].limit
+           then insurance[i].stat := After
         | _ -> ()
         end
       done
@@ -74,10 +72,9 @@ action manual (fi : string, pr : string, newst : status) {
     called by creator
 
     effect {
-      let f = flight.get(fi) in
-      for i in f.insurances.select(product = pr) do
-        match i.stat with
-         | Created -> i.stat := newst
+      for i in flight[fi].insurances.select(product = pr) do
+        match insurance[i].stat with
+         | Created -> insurance[i].stat := newst
          | _ -> ()
         end
       done
@@ -86,9 +83,9 @@ action manual (fi : string, pr : string, newst : status) {
 
 specification {
   (* this contract does not transfer any tez *)
-  contract invariant s2 {
+  (* contract invariant s2 {
     transfers_by_tx(anytx) = 0
-  }
+  } *)
 }
 
 security {
@@ -97,7 +94,7 @@ security {
 
   (* transaction "updatestatus" is not the only one to potentially
     perform an update of insurance status *)
-  s3 : only_in_action (update (insurance.stat), [updatestatus or manual]);
+  (* s3 : only_in_action (update (insurance.stat), [updatestatus or manual]); *)
 }
 
 ```
