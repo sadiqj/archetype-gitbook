@@ -272,7 +272,7 @@ if i > 0 then (
 );
 ```
 
-* `match ... with ... end` FIXME
+* `match ... with ... end` 
 
 ```javascript
 archetype effect_control_matchwith
@@ -439,6 +439,8 @@ constant op2 : int option = some(0)
 constant bl : bytes = 0x12f12354356a 
 ```
 
+
+
 ### Operators
 
 #### Logical
@@ -463,7 +465,7 @@ var bool_bool_not : bool = not true;
 
 ### Operator
 
-* `=` FIXME
+* `=` 
 
 ```javascript
 var int_int_eq   : bool = 1 = 2;
@@ -478,7 +480,7 @@ var addr_addr_eq : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg = @tz1bfVgcJC4uk
 var str_str_eq   : bool = "a" = "b";
 ```
 
-* `<>` FIXME
+* `<>` 
 
 ```javascript
 var int_int_ne   : bool = 1 <> 2;
@@ -493,7 +495,7 @@ var addr_addr_ne : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4u
 var str_str_ne   : bool = "a" <> "b";
 ```
 
-* `<` FIXME
+* `<` 
 
 ```javascript
 var int_int_lt   : bool = 1 < 2;
@@ -505,7 +507,7 @@ var dur_dur_lt   : bool = 1h < 2h;
 var date_date_lt : bool = 2020-01-01 < 2020-12-31;
 ```
 
-* `<=` FIXME
+* `<=` 
 
 ```javascript
 var int_int_le   : bool = 1 <= 2;
@@ -517,7 +519,7 @@ var dur_dur_le   : bool = 1h <= 2h;
 var date_date_le : bool = 2020-01-01 <= 2020-12-31;
 ```
 
-* `>` FIXME
+* `>` 
 
 ```javascript
 var int_int_gt   : bool = 1 > 2;
@@ -529,7 +531,7 @@ var dur_dur_gt   : bool = 1h > 2h;
 var date_date_gt : bool = 2020-01-01 > 2020-12-31;
 ```
 
-* `>=` FIXME
+* `>=` 
 
 ```javascript
 var int_int_ge   : bool = 1 >= 2;
@@ -543,7 +545,7 @@ var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
 
 ### Arithmetic
 
-* `+` FIXME
+* `+` 
 
 ```javascript
 var int_int_plus   : int      = 1 + 2;
@@ -557,7 +559,7 @@ var str_str_plus   : string   = "str1" + "str2"; (* concat *)
 var tez_tez_plus   : tez      = 2tz + 1tz;
 ```
 
-* `-` FIXME
+* `-` 
 
 ```javascript
 var int_int_minus   : int       = 1 - 2;
@@ -570,7 +572,7 @@ var date_dur_minus  : date      = 2020-01-01 - 1d;
 var tez_tez_minus   : tez       = 2tz - 1tz;
 ```
 
-* `*` FIXME
+* `*` 
 
 ```javascript
 var int_int_mult   : int      = 1 * 2;
@@ -582,7 +584,7 @@ var int_tez_mult   : tez      = 1 * 1tz;
 var rat_tez_mult   : tez      = 1.1 * 1tz;
 ```
 
-* `/` FIXME
+* `/` 
 
 ```javascript
 var int_int_div    : int = 1 / 2;
@@ -592,7 +594,7 @@ var rat_int_div    : rational = 1.1 / 2;
 var dur_int_div    : duration = 1h / 2;
 ```
 
-* `%` FIXME
+* `%` 
 
 ```javascript
 var int_int_modulo : int = 1 % 2;
@@ -600,37 +602,37 @@ var int_int_modulo : int = 1 % 2;
 
 ### Constant
 
-* `caller` FIXME
+* `caller` 
 
 ```javascript
 var v : address = caller; (* SENDER *)
 ```
 
-* `source` FIXME
+* `source` 
 
 ```javascript
 var v : address = source; (* SOURCE *)
 ```
 
-* `balance` FIXME
+* `balance` 
 
 ```javascript
 var v : tez = balance; (* BALANCE *)
 ```
 
-* `transferred` FIXME
+* `transferred` 
 
 ```javascript
 var v : tez = transferred; (* AMOUNT *)
 ```
 
-* `now` FIXME
+* `now` 
 
 ```javascript
 var v : date = now; (* NOW *)
 ```
 
-* `state` FIXME
+* `state` 
 
 ```javascript
 archetype sample_state
@@ -652,7 +654,7 @@ transition mytr () {
 
 ### Builtin functions
 
-* `min` FIXME
+* `min` 
 
 ```javascript
 var int_int_min   : int  = min(1, 2);
@@ -664,7 +666,7 @@ var dur_dur_min   : dur  = min(1h, 1s);
 var tez_tez_min   : tez  = min(1tz, 2tz);
 ```
 
-* `max` FIXME
+* `max` 
 
 ```javascript
 var int_int_max   : int  = max(1, 2);
@@ -676,16 +678,25 @@ var dur_dur_max   : dur  = max(1h, 1s);
 var tez_tez_max   : tez  = max(1tz, 2tz);
 ```
 
-* `abs` FIXME
+* `abs` 
 
 ```javascript
 var int_abs : int = abs(-1);
 var rat_abs : rat = abs(-1 div 2);
 ```
 
+* `concat`
+* `slice`
+* `length`
+* `issome`
+* `isnone`
+* `getopt`
+* `floor`
+* `ceil`
+
 ### List
 
-* `contains` FIXME
+* `contains`
 
 ```javascript
 archetype expr_list_contains
@@ -704,7 +715,7 @@ action exec () {
 
 ```
 
-* `count` FIXME
+* `count` 
 
 ```javascript
 archetype expr_list_count
@@ -723,7 +734,7 @@ action exec () {
 
 ```
 
-* `nth` FIXME
+* `nth` 
 
 ```javascript
 archetype expr_list_nth
@@ -762,7 +773,7 @@ action exec () {
 
 ### Asset Collection
 
-* `contains` FIXME
+* `contains` 
 
 ```javascript
 archetype expr_method_asset_contains
@@ -788,7 +799,7 @@ action exec () {
 }
 ```
 
-* `count` FIXME
+* `count` 
 
 ```javascript
 archetype expr_method_asset_count
@@ -814,7 +825,7 @@ action exec () {
 }
 ```
 
-* `get` FIXME
+* `get` 
 
 ```javascript
 archetype expr_method_asset_get
@@ -841,7 +852,7 @@ action exec () {
 }
 ```
 
-* `nth` FIXME
+* `nth` 
 
 ```javascript
 archetype expr_method_asset_nth
@@ -868,7 +879,7 @@ action exec () {
 }
 ```
 
-* `head` FIXME
+* `head` 
 
 ```javascript
 archetype expr_method_asset_head
@@ -896,7 +907,7 @@ action exec () {
 }
 ```
 
-* `tail` FIXME
+* `tail` 
 
 ```javascript
 archetype expr_method_asset_tail
@@ -924,7 +935,7 @@ action exec () {
 }
 ```
 
-* `select` FIXME
+* `select` 
 
 ```javascript
 archetype expr_method_asset_select
@@ -952,7 +963,7 @@ action exec () {
 }
 ```
 
-* `sort` FIXME
+* `sort` 
 
 ```javascript
 archetype expr_method_asset_sort
@@ -1006,7 +1017,7 @@ action exec () {
 }
 ```
 
-* `sum` FIXME
+* `sum` 
 
 ```javascript
 archetype expr_method_asset_sum
@@ -1100,7 +1111,7 @@ action exec () {
 
 ```
 
-* `definition` FIXME
+* `definition`
 
 ```javascript
 definition mydef {
@@ -1108,7 +1119,7 @@ definition mydef {
 }
 ```
 
-* `predicate` FIXME
+* `predicate` 
 
 ```javascript
 predicate mypredicate (a : int) {
@@ -1116,13 +1127,13 @@ predicate mypredicate (a : int) {
 }
 ```
 
-* `variable` FIXME
+* `variable` 
 
 ```javascript
 variable myvar : int = 0
 ```
 
-* `shadow effect` FIXME
+* `shadow effect` 
 
 ```javascript
 shadow effect {
@@ -1130,7 +1141,7 @@ shadow effect {
 }
 ```
 
-* `assert` FIXME
+* `assert` 
 
 ```javascript
 assert a1 {
@@ -1142,7 +1153,7 @@ assert a1 {
 }
 ```
 
-* `invariant` FIXME
+* `invariant` 
 
 ```javascript
 invariant for myloop {
@@ -1151,7 +1162,7 @@ invariant for myloop {
 }
 ```
 
-* `postcondition` FIXME
+* `postcondition` 
 
 ```javascript
 postcondition s1 {
@@ -1165,7 +1176,7 @@ postcondition s1 {
 
 One specification section is available at the top of the contract. But there is neither `shadow effect` nor `postcondition`, which is replaced by `contract invariant` for the last one.
 
-* `contract invariant` FIXME
+* `contract invariant` 
 
 ```javascript
 contract invariant c1 {
@@ -1205,7 +1216,7 @@ o2: true <-> true;
 
 ### Asset expression
 
-* `subsetof` FIXME
+* `subsetof` 
 
 ```javascript
 archetype expr_formula_asset_method_subset
@@ -1232,7 +1243,7 @@ action exec () {
 
 ```
 
-* `isempty` FIXME
+* `isempty` 
 
 ```javascript
 archetype expr_formula_asset_method_isempty
@@ -1260,37 +1271,37 @@ action exec () {
 
 ### Extra asset collection
 
-* `before` FIXME
+* `before` 
 
 ```javascript
 s1: before.my_asset.isempty();
 ```
 
-* `at` FIXME
+* `at` 
 
 ```javascript
 s2: at(lbl).my_asset.isempty();
 ```
 
-* `unmoved` FIXME
+* `unmoved` 
 
 ```javascript
 s3: my_asset.unmoved.isempty();
 ```
 
-* `added` FIXME
+* `added` 
 
 ```javascript
 s4: my_asset.added.isempty();
 ```
 
-* `removed` FIXME
+* `removed` 
 
 ```javascript
 s5: my_asset.removed.isempty();
 ```
 
-* `iterated` FIXME
+* `iterated` 
 
 ```javascript
 action exec2 () {
@@ -1312,7 +1323,7 @@ action exec2 () {
 }
 ```
 
-* `toiterate` FIXME
+* `toiterate` 
 
 ```javascript
 action exec3 () {
@@ -1368,55 +1379,55 @@ security {
 
 ```
 
-* `only_by_role` FIXME
+* `only_by_role` 
 
 ```javascript
 s00 : only_by_role (anyaction, admin);
 ```
 
-* `only_in_action` FIXME
+* `only_in_action` 
 
 ```javascript
 s01 : only_in_action (anyaction, exec);
 ```
 
-* `only_by_role_in_action` FIXME
+* `only_by_role_in_action` 
 
 ```javascript
 s02 : only_by_role_in_action (anyaction, admin, exec);
 ```
 
-* `not_by_role` FIXME
+* `not_by_role` 
 
 ```javascript
 s03 : not_by_role (anyaction, admin);
 ```
 
-* `not_in_action` FIXME
+* `not_in_action` 
 
 ```javascript
 s04 : not_in_action (anyaction, exec);
 ```
 
-* `not_by_role_in_action` FIXME
+* `not_by_role_in_action` 
 
 ```javascript
 s05 : not_by_role_in_action (anyaction, admin, exec);
 ```
 
-* `transferred_by` FIXME
+* `transferred_by` 
 
 ```javascript
 s06 : transferred_by (anyaction);
 ```
 
-* `transferred_to` FIXME
+* `transferred_to` 
 
 ```javascript
 s07 : transferred_to (anyaction);
 ```
 
-* `no_storage_fail` FIXME
+* `no_storage_fail` 
 
 ```javascript
 s08 : no_storage_fail (anyaction);
