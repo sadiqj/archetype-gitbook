@@ -18,11 +18,11 @@ action withdraw () {
   }
   require {
     r0 : shares.contains(caller);
-    r1 : shares.get(caller).value > 0tz;
-    r2 : balance >= shares.get(caller).value;
+    r1 : shares[caller].value > 0tz;
+    r2 : balance >= shares[caller].value;
   }
   effect {
-    let v = shares.get(caller).value in
+    var v = shares[caller].value;
     transfer v to caller;
     shares.update (caller, { value = 0tz })
   }

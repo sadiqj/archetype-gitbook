@@ -37,7 +37,7 @@ action consume (ow : role, value : int) {
   called by validator
 
   require {
-    c1 : account.get(ow).amount >= value;
+    c1 : account[ow].amount >= value;
   }
 
   effect {

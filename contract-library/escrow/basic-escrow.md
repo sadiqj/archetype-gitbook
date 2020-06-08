@@ -12,11 +12,11 @@ Note that role values must be provided at declaration for security reason.
 ```ocaml
 archetype escrow_basic
 
-variable buyer : role  = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
+variable buyer : role  = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
 
-variable seller : role = @tz1XJYAURaznhvN1khR6P52hw6xs5P691Kmu
+variable seller : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-variable oracle : role = @tz15P69BXJYAURaznhvN1k1KmuhR6P52hw6x
+variable oracle : role = @tz1iawHeddgggn6P5r5jtq2wDRqcJVksGVSa
 
 variable price : tez = 10tz
 
@@ -61,10 +61,6 @@ transition[%onlyonce%] cancel () {
   with effect {
     transfer price to buyer
   }
-}
-
-security {
-  s1 : only_by_role (transfers, oracle)
 }
 
 ```

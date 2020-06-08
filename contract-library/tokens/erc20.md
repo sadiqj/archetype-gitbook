@@ -21,6 +21,7 @@ with {
 }
 
 asset allowance {
+    a_id    : int;
     allowed : address;
     amount  : int;
 } with {
@@ -34,9 +35,9 @@ asset tokenHolder identified by holder {
 } with {
     i1: tokens >= 0;
     i3: allowances.sum(the.amount) <= tokens;
-} initialized by [
+} initialized by {
   { holder = caller; tokens = total; allowances = [] }
-]
+}
 
 action dotransfer (dest : pkey of tokenHolder, value : int) {
 
@@ -63,11 +64,11 @@ action dotransfer (dest : pkey of tokenHolder, value : int) {
 
   failif {
     f0 : value < 0;
-    f1 : tokenHolder.get(caller).tokens < value
+    f1 : tokenHolder[caller].tokens < value
   }
 
   effect {
-    tokenHolder.update( tokenHolder.get(dest).holder, { tokens += value });
+    tokenHolder.update( tokenHolder[dest].holder, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
   }
 }
