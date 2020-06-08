@@ -21,7 +21,6 @@ $ archetype --list-target
   ligo
   scaml
   whyml
-  markdown
 ```
 
 To list available commands:

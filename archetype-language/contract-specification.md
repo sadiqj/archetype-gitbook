@@ -132,9 +132,9 @@ A loop invariant is a property which is true during iteration. More precisely, t
 * at each step of the iteration \(_conservation_\)
 * at the end of the iteration \(_terminaison_\)
 
-  A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections:
+  A loop invariant usually depends on the already iterated assets, or on the assets still to iterate. Specific keywords are dedicated to these asset collections:
 
-* `toiterate` refers to the assets stil to iterate on
+* `toiterate` refers to the assets still to iterate on
 * `iterated` refers to the assets already iterated 
 
 For example say you want to prove that the `stock` value is equal to 0 after iterating over the collection of `goods`. The loop invariant states that `stock` is upper-bounded by the sum of the `quantity` value over the `goods` assets _stil to iterate_. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
