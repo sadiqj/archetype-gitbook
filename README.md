@@ -111,7 +111,9 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">High level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
     </tr>
   </tbody>
-</table>{% hint style="warning" %}
+</table>
+
+{% hint style="warning" %}
 'Test' and 'Simulate' services will be available in 2020.
 {% endhint %}
 
