@@ -686,13 +686,58 @@ var rat_abs : rat = abs(-1 div 2);
 ```
 
 * `concat`
+
+```javascript
+var str_concat : string = concat("abc", "def");
+var byt_concat : bytes  = concat(0x12, 0xef);
+```
+
 * `slice`
+
+```javascript
+var str_slice : string = slice("abcdef", 1, 2);
+var byt_slice : bytes  = slice(0xabcdef01, 1, 2);
+```
+
 * `length`
-* `issome`
+
+```javascript
+var str_length : int = length("abcdef");
+```
+
 * `isnone`
+
+```javascript
+var b_issome : bool = isnone(none);
+```
+
+* `issome`
+
+```javascript
+var b_issome : bool = issome(some(1));
+```
+
 * `getopt`
+
+```javascript
+var res : int = getopt(some(1));
+```
+
 * `floor`
+
+```javascript
+var pos_floor : int = floor(5 div 3);  // 1
+var neg_floor : int = floor(-5 div 3); // -2
+```
+
 * `ceil`
+
+```javascript
+var pos_ceil : int = ceil(5 div 3);  // 2
+var neg_ceil : int = ceil(-5 div 3); // -1
+```
+
+### 
 
 ### List
 
