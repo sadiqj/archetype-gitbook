@@ -71,7 +71,9 @@ An Action is made of sections listed below:
       <td style="text-align:left">no</td>
     </tr>
   </tbody>
-</table>For example, the `complete` action example may be enhanced as follows:
+</table>
+
+For example, the `complete` action example may be enhanced as follows:
 
 ```ocaml
 constant owner : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
@@ -162,7 +164,9 @@ The following is the list of expressions that require a label:
       </td>
     </tr>
   </tbody>
-</table>## Effect
+</table>
+
+## Effect
 
 ### Local variable 
 

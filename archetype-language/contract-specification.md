@@ -237,7 +237,9 @@ Archetype provides the following predicates:
     </tr>
   </thead>
   <tbody></tbody>
-</table>| `only_by_role (CHANGE, ROLE)` | specifies that **only** `ROLE` can perform `CHANGE` |
+</table>
+
+| `only_by_role (CHANGE, ROLE)` | specifies that **only** `ROLE` can perform `CHANGE` |
 | :--- | :--- |
 
 
