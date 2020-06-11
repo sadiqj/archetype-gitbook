@@ -11,7 +11,7 @@
   * [Dates, Durations](archetype-language/dates-durations.md)
   * [Options](archetype-language/options.md)
   * [Assets](archetype-language/data-model.md)
-  * [Entry](archetype-language/action.md)
+  * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
   * [Contract specification](archetype-language/contract-specification.md)
 

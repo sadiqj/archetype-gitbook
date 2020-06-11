@@ -1,10 +1,10 @@
 ---
-description: 'Read, compute and write data.'
+description: Contract data is written with entry points.
 ---
 
-# Entry
+# Entries
 
-Contract data is read and written with actions. They are the entry points of the contract.
+
 
 ## Arguments
 
