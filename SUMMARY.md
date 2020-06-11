@@ -13,6 +13,7 @@
   * [Assets](archetype-language/data-model.md)
   * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
+  * [Crypto](archetype-language/crypto.md)
   * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
