@@ -2,7 +2,7 @@
 description: 'Read, compute and write data.'
 ---
 
-# Action
+# Entry
 
 Contract data is read and written with actions. They are the entry points of the contract.
 
