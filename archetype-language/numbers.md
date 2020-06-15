@@ -6,7 +6,33 @@ description: 'Two types of numbers are available in Archetype: integers and rati
 
 ## Integers
 
+Integers are defined as follows:
 
+```text
+effect {
+  var n1 := 345;
+  var n2 := -5;
+  var n3 := 99999999999999999999999999999999999999999999999999999999999999999;
+}
+```
+
+ Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
+
+Here is an example of a big integer! 
+
+{% embed url="https://you.better-call.dev/carthagenet/KT1AzdJpdT4RPiGknJaVnNzdst9nEAz9W4E9/storage" %}
+
+The 4 arithmetics operations `+ * - /` and the 6 comparison operators `= <> < > <= >=` are available.
+
+Note that there is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
+
+```text
+variable amount : int := 5 with {
+  s1 : amount >= 0;
+}
+```
+
+This property may be transcoded to whyml for verification. Note at last that any property may be specified range 
 
 ## Rationals
 
