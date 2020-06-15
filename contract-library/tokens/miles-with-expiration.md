@@ -44,22 +44,22 @@ asset owner identified by addr {
   miles : mile partition (* injective (owner x mile) *)
 }
 
-action add (ow : address, newmile_id : string, newmile_amount : int, newmile_expiration : date) {
+action add (ow : address, newmile : mile) {
    called by admin
 
    require {
-     c1 : newmile_amount > 0;
+     c1 : newmile.amount > 0;
    }
 
    failif {
-     c2 : mile.contains(newmile_id);
+     c2 : mile.contains(newmile.id);
    }
 
    effect {
      if owner.contains(ow) then
-      owner[ow].miles.add ({newmile_id; newmile_amount; newmile_expiration})
+      owner.get(ow).miles.add (newmile)
      else
-      owner.add ({ addr = ow; miles = [{newmile_id; newmile_amount; newmile_expiration}] })
+      owner.add ({ addr = ow; miles = [newmile] })
    }
 }
 
@@ -80,16 +80,16 @@ action consume (a : address, quantity : int) {
     }
 
     postcondition p3 {
-      forall m in removed.mile, m.expiration >= now
+      forall m in mile.removed(), m.expiration >= now
       invariant for loop {
-        removed.mile.subsetof(by_expiration)
+        mile.removed().subsetof(by_expiration)
       }
     }
 
     postcondition p4 {
-      added.mile.isempty()
+      mile.added().isempty()
       invariant for loop {
-        added.mile.isempty()
+        mile.added().isempty()
       }
     }
   }
@@ -101,24 +101,25 @@ action consume (a : address, quantity : int) {
   }
 
   effect {
-    let by_expiration = owner[a].miles.select(the.expiration > now) in
+    let ow = owner.get(a) in
+    let by_expiration = ow.miles.select(the.expiration > now) in
     require (by_expiration.sum(the.amount) >= quantity);
     let remainder = quantity in
     for : loop m in by_expiration do
       if remainder > 0
       then (
-        if mile[m].amount > remainder
+        if m.amount > remainder
         then (
-          mile.update(m, { amount -= remainder });
+          mile.update(m.id, { amount  -= remainder });
           remainder := 0
         )
-        else if mile[m].amount = remainder
+        else if m.amount = remainder
         then (
           remainder := 0;
-          owner[a].miles.remove(m)
+          ow.miles.remove(m.id)
         ) else (
-          remainder -= mile[m].amount;
-          owner[a].miles.remove(m)
+          remainder -= m.amount;
+          ow.miles.remove(m.id)
         )
       )
     done;
@@ -129,9 +130,9 @@ action consume (a : address, quantity : int) {
 action clear_expired () {
   specification {
     postcondition s3 {
-      forall m in removed.mile, m.expiration < now
+      forall m in mile.removed(), m.expiration < now
       invariant for loop2 {
-        forall m in removed.mile, m.expiration < now
+        forall m in mile.removed(), m.expiration < now
       }
     }
   }
@@ -140,7 +141,7 @@ action clear_expired () {
 
   effect {
     for : loop2 o in owner do
-      owner[o].miles.removeif (the.expiration < now)
+      o.miles.removeif (the.expiration < now)
     done
   }
 }

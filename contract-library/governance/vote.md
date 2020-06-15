@@ -59,7 +59,7 @@ action vote (val : pkey of ballot) {
    require {
      c2 : voter.contains(caller);
      c3 : state = Voting;
-     c4 : voter[caller].hasVoted = false;
+     c4 : voter.get(caller).hasVoted = false;
    }
 
    effect {
@@ -78,13 +78,10 @@ transition bury () {
   from Voting
   to Buried
   with effect {
-    var nbvotesMax = 0;
+    let nbvotesMax = ballot.max(the.nbvotes) in
     for b in ballot do
-      nbvotesMax := max(nbvotesMax, ballot[b].nbvotes)
-    done;
-    for b in ballot do
-      if (ballot[b].nbvotes = nbvotesMax)
-      then winner.add({ winvalue = ballot[b].value })
+      if (b.nbvotes = nbvotesMax)
+      then winner.add({ winvalue = b.value })
     done
   }
 }

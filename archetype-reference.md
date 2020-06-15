@@ -99,6 +99,8 @@ transition fail {
 * `string` : string of characters
 * `tez` : Tezos currency
 * `bytes` : bytes sequence
+* `key` : 
+* `signature` : 
 
 ## Composite types
 
@@ -735,6 +737,18 @@ var neg_floor : int = floor(-5 div 3); // -2
 ```javascript
 var pos_ceil : int = ceil(5 div 3);  // 2
 var neg_ceil : int = ceil(-5 div 3); // -1
+```
+
+* `pack`
+
+```javascript
+var v : bytes = pack("archetype")
+```
+
+* `unpack`
+
+```javascript
+var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
 ```
 
 ### 

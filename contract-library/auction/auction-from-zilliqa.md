@@ -13,9 +13,9 @@ Retranscription of zilliqa’s auction contract:
 archetype auction_zilliqa
 
 variable highest_bid : tez = 0tz
-variable highest_bidder : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
+variable highest_bidder : address = @0
 
-variable beneficiary : address = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
+variable beneficiary : address = @tz1KmuhR6P52hw6xs5P69BXJYAURaznhvN1k
 
 asset pending_return identified by incumbent {
   incumbent   : address;
@@ -30,10 +30,10 @@ variable auction_start : date = 2019-01-01T00:00:00
 variable auction_end   : date = 2019-02-01T00:00:00
 
 specification {
-  contract invariant highest_is_not_pending {
+  postcondition highest_is_not_pending {
     not (pending_return.contains(highest_bidder))
   }
-  contract invariant highest_is_highest {
+  postcondition highest_is_highest {
     forall pr in pending_return,
       pr.val <= highest_bid and pr.incumbent <> highest_bidder
   }
@@ -47,9 +47,9 @@ action place_bid () {
 
   effect {
     if pending_return.contains(caller)
-    then (
-      var bid = pending_return[caller].val;
-      var new_bid = bid + transferred;
+    then
+      let bid = pending_return.get(caller).val in
+      let new_bid = bid + transferred in
       if new_bid > highest_bid
       then (
         (* update pending_return *)
@@ -61,7 +61,6 @@ action place_bid () {
         highest_bidder := caller)
       else
         pending_return.update (caller, { val = new_bid })
-    )
     else
       if caller = highest_bidder
       then
@@ -86,7 +85,7 @@ action[%onlyonce%] withdraw () {
     c2 : pending_return.contains(caller);
   }
   effect {
-    transfer pending_return[caller].val to caller;
+    transfer pending_return.get(caller).val to caller;
     pending_return.remove(caller)
   }
 }
