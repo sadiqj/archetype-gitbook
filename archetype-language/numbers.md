@@ -18,10 +18,6 @@ effect {
 
  Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
 
-Here is an example of a big integer! 
-
-{% embed url="https://you.better-call.dev/carthagenet/KT1AzdJpdT4RPiGknJaVnNzdst9nEAz9W4E9/storage" %}
-
 The 4 arithmetics operations `+ * - /` and the 6 comparison operators `= <> < > <= >=` are available.
 
 Note that there is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
@@ -32,7 +28,7 @@ variable amount : int := 5 with {
 }
 ```
 
-This property may be transcoded to whyml for verification. Note at last that any property may be specified range 
+This property may be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
 
 ## Rationals
 
