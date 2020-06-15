@@ -6,7 +6,7 @@
 * [Usage](usage.md)
 * [Archetype language](archetype-language/README.md)
   * [Constants, Variables](archetype-language/constants-variables.md)
-  * [Numbers](archetype-language/numbers.md)
+  * [Numbers, Tezis](archetype-language/numbers.md)
   * [Strings](archetype-language/strings.md)
   * [Dates, Durations](archetype-language/dates-durations.md)
   * [Options](archetype-language/options.md)
