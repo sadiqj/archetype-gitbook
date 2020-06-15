@@ -30,6 +30,20 @@ variable amount : int := 5 with {
 
 This property may be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
 
+## Tezis
+
+_Tez_ is the type to specify an amount in Tezos cryptocurrency. 
+
+```text
+effect {
+  var t1 := 1tz;   // one tezis
+  var t2 := 1mtz:  // one 0.001 tezis
+  var t3 := 1utz;  // one mutez
+}
+```
+
+It is more constrained than integers since you can only add and subtract. All comparison operators are available though.
+
 ## Rationals
 
 A rational is the quotient or fraction of two integers. You can define a rational with :
@@ -77,7 +91,7 @@ effect {
 }
 ```
 
-It is also possible to mix rationals and tez values, in that order. However the result is a value in _tez_. 
+It is also possible to mix rationals and _tezis_ values, in that order. However the result is a value in _tezis_. 
 
 ```text
 effect {
