@@ -6,6 +6,8 @@ description: 'Two types of numbers are available in Archetype: integers and rati
 
 ## Integers
 
+
+
 ## Rationals
 
 A rational is the quotient or fraction of two integers. You can define a rational with :
@@ -18,13 +20,15 @@ The following presents an example for each:
 
 ```text
 effect {
- var r1 := 1.5;   
- var r2 := (6,4);
+ var r1 := 6/4;   
+ var r2 := 1.5;
  var r3 := 150%;
 } 
 ```
 
-`r1` `r2` and `r3` represent the same rational $$3/2 $$ . These values are  transcoded to a pair of integers `(3,2)`.
+`r1` `r2` and `r3` represent the same rational, $$3/2 $$ . These values are  transcoded to the pair of integers `(3,2)`. A fractions is simplified during transcoding process. 
+
+### Operations
 
 Archetype provides the 4 arithmetic operations `+ - * /` and the minus sign on rationals. They all return a rational. For example:
 
@@ -40,7 +44,64 @@ effect {
 }
 ```
 
-It is possible 
+It is also possible to mix integers and rationals:
+
+```text
+effect {
+  var r := 5/3;
+  var n := 4;
+  var rtn := r*n; // will execute to (20/3)
+  var rpn := r+n; // will execute to (17/3)
+}
+```
+
+It is also possible to mix rationals and tez values, in that order. However the result is a value in _tez_. 
+
+```text
+effect {
+  var r := 80%;
+  var a := 56tez;
+  var res := r*a;
+}
+```
+
+In the example above, the `res` value is `44800000utz` . The process is the following:
+
+1. convert a to _utez_ \(smallest unit\)
+2. compute the rational \(here 3\*56000000/4 = 168000000/4\)
+3. execute the euclidean division \(44800000\)
+
+Note that the term `a*r`  is not accepted as `res` value \(line 4 above\): rationals come first.
+
+### Comparison
+
+Rationals are comparable with `= <> < <= > >=` operators.
+
+```text
+effect {
+   var r1 := 3 / 12;
+   var r2 := 0.25;
+   var r3 := 0.5;
+   if r1 <> r2 or r3 < r2 then fail "Huston, we've got a problem";
+}
+```
+
+It is possible to compare rationals and integers. It is not possible to compare rationals and _tez_ values.
+
+### Conversion to integers
+
+Rational are converted to integers with the `floor` and `ceil` operators with the expected behaviour.
+
+### Conversion to tez
+
+There is no explicit cast \(conversion operator\) from a rational to a tez value. You may just multiply by 1tez for example.
+
+```text
+effect {
+  var a := 2.5;
+  transfer (a*1tez) from source to dest;
+}
+```
 
 
 
