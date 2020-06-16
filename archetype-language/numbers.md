@@ -74,11 +74,11 @@ Archetype provides the 4 arithmetic operations `+ - * /` and the minus sign on r
 effect {
   var r1 := (8,6);  // transcoded to (4,3)
   var r2 := 1.8;    // transcoded to (9,5)
-  var rpl := r1+r2; // will execute to (43,35)
-  var rmi := r1-r2; // will execute to (13,35)
-  var rmu := r1*r2; // will execute to (36,15)
-  var rdi := r1/r2: // will execute to ()
-  var rms := -r1    // will execute to () 
+  var rpl := r1+r2; // will execute to (6,15)
+  var rmi := r1-r2; // will execute to (-7,15)
+  var rmu := r1*r2; // will execute to (4,5)
+  var rdi := r1/r2: // will execute to (20,27)
+  var rms := -r1    // will execute to (-4,3) 
 }
 ```
 
