@@ -18,9 +18,11 @@ effect {
 
  Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
 
-The 4 arithmetics operations `+ * - /` and the 6 comparison operators `= <> < > <= >=` are available.
+The 4 arithmetics operations `+ * - div` and the 6 comparison operators `= <> < > <= >=` are available.
 
-Note that there is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
+Note that de `div` operator is the _euclidean_ division and returns an integer value.
+
+There is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
 
 ```text
 variable amount : int := 5 with {
@@ -28,7 +30,7 @@ variable amount : int := 5 with {
 }
 ```
 
-This property may be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
+This property will be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
 
 ## Tezis
 
@@ -42,7 +44,7 @@ effect {
 }
 ```
 
-It is more constrained than integers since you can only add and subtract. All comparison operators are available though.
+It is more constrained than integers since you can only add and subtract _tez_ values. All comparison operators are available.
 
 ## Rationals
 
