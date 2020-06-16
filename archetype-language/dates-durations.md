@@ -14,7 +14,7 @@ A duration value may be defined with a combination of several duration units:
 * day with `d`
 * week with `w`
 
-```text
+```javascript
 effect {
   var d1 = 4d;  // 4 days
   var d2 = 1w;  // 1 week
@@ -26,14 +26,18 @@ Durations values may be compared with the 6 comparison operators `= < > <= >= <>
 
 Two duration values may be added or subtracted. It is also possible to multiply a duration by an integer value.
 
-```text
+```javascript
 effect {
   var d1 = 55w; // 55 weeks
-  var d2 = 10*d1 // 550 weeks
+  var d2 = 3d;  // 3 days
+  var d3 = d1 + d2 // equal to '55w3d'
+  var d2 = 10*d3 // 555 weeks
 }
 ```
 
 ## Dates
+
+
 
 
 

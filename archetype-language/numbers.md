@@ -8,7 +8,7 @@ description: 'Two types of numbers are available in Archetype: integers and rati
 
 Integers are defined as follows:
 
-```text
+```javascript
 effect {
   var n1 := 345;
   var n2 := -5;
@@ -24,7 +24,7 @@ Note that de `div` operator is the _euclidean_ division and returns an integer v
 
 There is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
 
-```text
+```javascript
 variable amount : int := 5 with {
   s1 : amount >= 0;
 }
@@ -36,7 +36,7 @@ This property will be transcoded to _whyml_ for verification. Note as a conseque
 
 _Tez_ is the type to specify an amount in Tezos cryptocurrency. 
 
-```text
+```javascript
 effect {
   var t1 := 1tz;   // one tezis
   var t2 := 1mtz:  // one 0.001 tezis
@@ -56,7 +56,7 @@ A rational is the quotient or fraction of two integers. You can define a rationa
 
 The following presents an example for each:
 
-```text
+```javascript
 effect {
  var r1 := 6/4;   
  var r2 := 1.5;
@@ -70,7 +70,7 @@ effect {
 
 Archetype provides the 4 arithmetic operations `+ - * /` and the minus sign on rationals. They all return a rational. For example:
 
-```text
+```javascript
 effect {
   var r1 := (8,6);  // transcoded to (4,3)
   var r2 := 1.8;    // transcoded to (9,5)
@@ -84,7 +84,7 @@ effect {
 
 It is also possible to mix integers and rationals:
 
-```text
+```javascript
 effect {
   var r := 5/3;
   var n := 4;
@@ -95,7 +95,7 @@ effect {
 
 It is also possible to mix rationals and _tezis_ values, in that order. However the result is a value in _tezis_. 
 
-```text
+```javascript
 effect {
   var r := 80%;
   var a := 56tez;
@@ -115,7 +115,7 @@ Note that the term `a*r`  is not accepted as `res` value \(line 4 above\): ratio
 
 Rationals are comparable with `= <> < <= > >=` operators.
 
-```text
+```javascript
 effect {
    var r1 := 3 / 12;
    var r2 := 0.25;
@@ -134,7 +134,7 @@ Rational are converted to integers with the `floor` and `ceil` operators with th
 
 There is no explicit cast \(conversion operator\) from a rational to a tez value. You may just multiply by 1tez for example.
 
-```text
+```javascript
 effect {
   var a := 2.5;
   transfer (a*1tez) from source to dest;
