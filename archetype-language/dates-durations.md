@@ -66,7 +66,7 @@ effect {
 }
 ```
 
-## Now
+### Now
 
 `now` is the keyword to refer to date at execution.
 
