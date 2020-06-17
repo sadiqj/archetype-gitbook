@@ -53,7 +53,7 @@ The subtraction of two dates returns a duration; since the duration is a positiv
 effect {
   var d1 := 2020-06-28;
   var d2 := 2020-05-28;
-  if (d1 - d2 <= 4w) fail "really ? ...";
+  if (d1 - d2 <= 4w) fail "really? ...";
 }
 ```
 
