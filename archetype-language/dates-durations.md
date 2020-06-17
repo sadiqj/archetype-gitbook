@@ -62,8 +62,25 @@ It is possible to add or subtract a duration to a date value to get a new date.
 ```javascript
 effect {
   var d1 := 2020-06-17;
-  if (d1 + 5d < 2020-06) then fail "oops I did it again";
+  if (d1 + 5d < 2020-06-22) then fail "oops I did it again";
 }
+```
+
+## Now
+
+`now` is the keyword to refer to date at execution.
+
+```javascript
+variable deadline : date = 2020-09-01
+
+action submit() {
+  require {
+    r1 : deadline - 8w <= now <= dealine + 1d
+  }
+  effect {
+    ...
+  }
+ }
 ```
 
 
