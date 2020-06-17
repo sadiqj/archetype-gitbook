@@ -37,7 +37,34 @@ effect {
 
 ## Dates
 
+Date format is [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). 
 
+```javascript
+constant date0 : date = 2019-01-01                
+constant date1 : date = 2019-01-01T01:02:03       
+constant date2 : date = 2019-01-01T01:02:03Z      
+constant date3 : date = 2019-01-01T00:00:00+01:00 
+constant date4 : date = 2019-01-01T00:00:00-05:30 
+```
+
+The subtraction of two dates returns a duration; since the duration is a positive number, if `d1` and `d2` are two dates, then `d1 - d2 = d2 - d2 >= 0` holds.
+
+```javascript
+effect {
+  var d1 := 2020-06-28;
+  var d2 := 2020-05-28;
+  if (d1 - d2 <= 4w) fail "really ? ...";
+}
+```
+
+It is possible to add or subtract a duration to a date value to get a new date.
+
+```javascript
+effect {
+  var d1 := 2020-06-17;
+  if (d1 + 5d < 2020-06) then fail "oops I did it again";
+}
+```
 
 
 
