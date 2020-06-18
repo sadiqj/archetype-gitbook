@@ -4,7 +4,7 @@ description: Variable and asset collection
 
 # Assets
 
-An archetype contract can store asset data. An asset is described with a set of fields, one of which is the asset identification field. Each asset has a unique identification value.
+An archetype contract can store asset data. An asset is defined by a set of fields, one of which is the asset identification field. Each asset has a unique identification value.
 
 For example, the following defines a car asset:
 
@@ -18,15 +18,7 @@ asset car identified by vin {
 
 By default, assets are sorted on the identifier value. It is possible to specify another default sort. For example to sort car assets on the `year` field value:
 
-```text
-asset car identified by vin sorted by year {
-  vin : string;
-  model : string;
-  year : int;
-}
-```
-
-The type of a field may be a basic type, or one of `collection` or `partition`. 
+The type of a field may be a basic type, or one of `subset` or `partition`. 
 
 A collection is the generic name for an asset container. For example, if `part` is the asset for vehicle part, it is possible to describe which parts a car is made of:
 
@@ -39,11 +31,11 @@ asset car identified by vin {
   vin : string;
   model : string;
   year : int;
-  parts : part collection;
+  parts : part subset;
 }
 ```
 
-Say now that the contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields has a collection of animals. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
+Say that a contract deals with animals and country fields. An animal is in one, and only one field \(obviously\). A fields has a collection of animals. But rather than `collection`, the `partition` keyword specifies that _every_ animal is in _one_ field:
 
 ```ocaml
 asset animal identified by aid {
