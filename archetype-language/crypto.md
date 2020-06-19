@@ -65,5 +65,3 @@ entry setoutcome (packed_outcome : bytes, signed_outcome : signature) {
 
 
 
-## Hash
-
