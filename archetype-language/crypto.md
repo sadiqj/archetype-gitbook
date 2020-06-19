@@ -1,3 +1,7 @@
+---
+description: Cryptographic utilities.
+---
+
 # Crypto
 
 ## Addresses
