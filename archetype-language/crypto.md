@@ -41,7 +41,7 @@ It is possible to check whether a bytes value has been signed by a given key wit
 2. a signed data \(`signature` type\)
 3. the bytes data \(`bytes` type\)
 
-It returns true if the public key of the _encryption_ of the bytes data is equal to the signed data.
+It returns true if the _encryption_ by the public key of the bytes data is equal to the signed data.
 
 It is used in smart contract to assert the origin of a data. For example, the following enables an oracle to write a value `outcome` typed `int` in the contract:
 
