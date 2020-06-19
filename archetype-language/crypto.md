@@ -29,7 +29,7 @@ The `unpack` operator is parameterized with the expected output type using `<T>`
 effect {
    var bstr := pack("archetype"); // bstr is a bytes value
    if getopt(unpack<string>(bstr)) <> "archetype"
-   then fail "is pack/unpack a joke?";
+   then fail("is pack/unpack a joke?");
 }
 ```
 
