@@ -18,7 +18,7 @@ variable message : string option = some("there is a message")
 
 `issome` and `isnone` are the 2 operators to test whether an option value is none or is some.
 
-```javascript
+```ocaml
 entry testopt (a : int option) {
   requires {
      r1 : issome(a);
@@ -40,7 +40,7 @@ entry testopt (a : int option) {
 effect {
   var a := some("a string");
   if issome(a) then (
-    if a.getopt() <> "a string" then fail "getting weird ...";
+    if a.getopt() <> "a string" then fail("getting weird ...");
   );
 }
 ```
