@@ -14,11 +14,14 @@ A duration value may be defined with a combination of several duration units:
 * day with `d`
 * week with `w`
 
+Duration values are integers, positive, or negative.
+
 ```javascript
 effect {
-  var d1 = 4d;  // 4 days
-  var d2 = 1w;  // 1 week
-  var d3 = 2d10h // 2 days and 10 hours
+  var d1 = 4d;    // 4 days
+  var d2 = 1w;    // 1 week
+  var d3 = 2d10h; // 2 days and 10 hours
+  var d4 = -5d;   // minus 5 days
 } 
 ```
 
