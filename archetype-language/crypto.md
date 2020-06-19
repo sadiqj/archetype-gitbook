@@ -67,7 +67,7 @@ entry setoutcome (packed_outcome : bytes, signed_outcome : signature) {
 
 Note that anyone can call the `setoutcome` entry. It is ok as long as they possess the data and the data signed by the oracle.
 
-Below is an instance of the above contract:
+Below is an instance of the above contract with the outcome value set to `42`.
 
 {% embed url="https://you.better-call.dev/carthagenet/KT1AiNKbVi6c74pyxMZJnK4yj2P9GxP2K2d2/operations" %}
 
