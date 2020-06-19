@@ -71,7 +71,7 @@ effect {
 
 ### Now
 
-`now` is the keyword to refer to date at execution.
+`now` is the keyword to refer to the date at execution.
 
 ```javascript
 variable deadline : date = 2020-09-01
