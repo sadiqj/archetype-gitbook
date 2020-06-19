@@ -43,7 +43,7 @@ It is possible to check whether a bytes value has been signed by a given key wit
 
 It returns true if the public key of the _encryption_ of the bytes data is equal to the signed data.
 
-It is used in smart contract to assert the origin of a data. For example, the following enables an oracle has to write a value `outcome` typed `int` in the contract:
+It is used in smart contract to assert the origin of a data. For example, the following enables an oracle to write a value `outcome` typed `int` in the contract:
 
 ```javascript
 archetype oraclesetvalue
