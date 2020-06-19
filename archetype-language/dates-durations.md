@@ -56,7 +56,7 @@ The subtraction of two dates returns a duration; since the duration is a positiv
 effect {
   var d1 := 2020-06-28;
   var d2 := 2020-05-28;
-  if (d1 - d2 <= 4w) then fail "really? ...";
+  if (d1 - d2 <= 4w) then fail("really? ...");
 }
 ```
 
@@ -65,7 +65,7 @@ It is possible to add or subtract a duration to a date value to get a new date.
 ```javascript
 effect {
   var d1 := 2020-06-17;
-  if (d1 + 5d < 2020-06-22) then fail "oops I did it again";
+  if (d1 + 5d < 2020-06-22) then fail("oops I did it again");
 }
 ```
 

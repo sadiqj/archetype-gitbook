@@ -16,9 +16,9 @@ The `string` type comes with 3 operators:
 effect {
   var s1 := "this is ";
   var s2 := "a string";
-  if slice(s2,2,6) <> "string" then fail "weird ...";
-  if concat(s1,s2) <> "this is a string" then fail "even weirder ..."
-  if length(s1) <> 8 then fail "ok I give up!";
+  if slice(s2,2,6) <> "string" then fail("weird ...");
+  if concat(s1,s2) <> "this is a string" then fail("even weirder ...");
+  if length(s1) <> 8 then fail("ok I give up!");
 }
 ```
 

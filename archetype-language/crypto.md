@@ -35,6 +35,8 @@ effect {
 
 ## Keys and Signatures
 
+In smart contracts, it may be necessary to assert the origin of an input data; typically an oracle may need to write data based on which decisions are made; it is then necessary to make sure that the data written in the contract is delivered by the oracle. The solution is to pass the signed version of the data along with the data.
+
 It is possible to check whether a bytes value has been signed by a given key with the `check_signature` operator. It takes 3 arguments:
 
 1. the public key of the one who supposedly signed the data \(`key` type\)
@@ -43,7 +45,7 @@ It is possible to check whether a bytes value has been signed by a given key wit
 
 It returns true if the _encryption_ by the public key of the bytes data is equal to the signed data.
 
-It is used in smart contract to assert the origin of a data. For example, the following enables an oracle to write a value `outcome` typed `int` in the contract:
+For example, the following enables an oracle to write a value `outcome` typed `int` in the contract:
 
 ```javascript
 archetype oraclesetvalue
