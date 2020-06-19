@@ -5,8 +5,8 @@
 Address literals are prefixed by `@`.
 
 ```javascript
-variable admin : address = @tz1ZXf37ZNfVupt5GVyrPJ76q8kbjFuD2z7J;
-variable acontract : address = @KT19NxoYm9rjDQxz2gJiFSY8Z5Mjofq7rebs;
+variable admin : address = @tz1ZXf37ZNfVupt5GVyrPJ76q8kbjFuD2z7J
+variable acontract : address = @KT19NxoYm9rjDQxz2gJiFSY8Z5Mjofq7rebs
 ```
 
 Addresses may be compared with the 6 comparison operators `= <> < > <= >=`.
@@ -16,7 +16,7 @@ Addresses may be compared with the 6 comparison operators `= <> < > <= >=`.
 Bytes literals are prefixed by `0x`.
 
 ```javascript
-variable bvalue : bytes = 0x050100000009617263686574797065; // "archetype" in bytes
+variable bvalue : bytes = 0x050100000009617263686574797065 // "archetype" in bytes
 ```
 
 Hashing functions are available: `blake2b` `sha256` and `sha512`. They convert a byte value to the hashed byte value.
@@ -48,15 +48,15 @@ It is used in smart contract to assert the origin of a data. For example, the fo
 ```javascript
 archetype oraclesetvalue
 
-variable outcome : int option := none;
+variable outcome : int option = none
 
 // oracle's public key
-constant oracle : key = "edpkurLzuFFL1XyP3fed4u7MsgeywQoQmHM45Bz91PBzDvUjQ9bvdn";
+constant oracle : key = "edpkurLzuFFL1XyP3fed4u7MsgeywQoQmHM45Bz91PBzDvUjQ9bvdn"
 
 
 entry setoutcome (packed_outcome : bytes, signed_outcome : signature) {
   effect {
-    if check_signature(oracle,signed_outcome,packed_outcome) then (
+    if check_signature(oracle, signed_outcome, packed_outcome) then (
       outcome := unpack<int>(packed_outcome);
     ) else fail "not signed by oracle";
   }
