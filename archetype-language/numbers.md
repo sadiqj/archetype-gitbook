@@ -72,7 +72,7 @@ Archetype provides the 4 arithmetic operations `+ - * /` and the minus sign on r
 
 ```javascript
 effect {
-  var r1 := (8,6);  // transcoded to (4,3)
+  var r1 := 8/6;  // transcoded to (4,3)
   var r2 := 1.8;    // transcoded to (9,5)
   var rpl := r1+r2; // will execute to (6,15)
   var rmi := r1-r2; // will execute to (-7,15)

@@ -9,11 +9,13 @@
   * [Numbers, Tezis](archetype-language/numbers.md)
   * [Strings](archetype-language/strings.md)
   * [Dates, Durations](archetype-language/dates-durations.md)
-  * [Options](archetype-language/options.md)
+  * [Crypto](archetype-language/crypto.md)
+  * [Composite types](archetype-language/options.md)
+  * [Basic containers](archetype-language/basic-containers.md)
   * [Assets](archetype-language/data-model.md)
   * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
-  * [Crypto](archetype-language/crypto.md)
+  * [Transfers](archetype-language/transfers.md)
   * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
