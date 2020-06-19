@@ -58,7 +58,7 @@ entry setoutcome (packed_outcome : bytes, signed_outcome : signature) {
   effect {
     if check_signature(oracle, signed_outcome, packed_outcome) then (
       outcome := unpack<int>(packed_outcome);
-    ) else fail "not signed by oracle";
+    ) else fail("not signed by oracle");
   }
 }
 ```
