@@ -2,7 +2,7 @@
 description: 'Two types of numbers are available in Archetype: integers and rationals'
 ---
 
-# Numbers, Tezis
+# Numbers, Casts
 
 ## Integers
 
@@ -140,6 +140,32 @@ effect {
   transfer (a*1tez) from source to dest;
 }
 ```
+
+## Casts
+
+It is often necessary to cast \(convert\) a value from one type to another: for example, say you want to mulitply the `transferred` amount by a duration value to get a new duration value. It is then necessary to convert the tez amount and the duration value into integer values in order to multiply then.
+
+The general rule is that conversions to integer are implicit, and conversions back to specific types \(tez, duration\) are not. For example the following converts the transferred amount to an integer value:
+
+```javascript
+var t : int = transferred;
+```
+
+Note that it is necessary to _explicitely_ type the `t` variable in order to trigger the _implicit_ conversion of `transferred` to integer. 
+
+The resulting integer value is the number of the smallest value of the source type: namely second for `duration`, and utez for `tez`.
+
+The following example illustrates this mecanism: 
+
+```javascript
+effect {
+  var t : int = transferred; // t is the number of utez 
+  var d : int = 1h15m;       // d is the number of seconds (4500)
+  var res = t * d * 1s;      // res is a duration
+}
+```
+
+Note that the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`. 
 
 
 
