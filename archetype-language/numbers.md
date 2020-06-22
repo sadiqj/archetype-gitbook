@@ -151,7 +151,11 @@ The general rule is that conversions to integer are implicit, and conversions ba
 var t : int = transferred;
 ```
 
-Note that it is necessary to _explicitely_ type the `t` variable in order to trigger the _implicit_ conversion of `transferred` to integer. 
+Note that it is necessary to _explicitely_ type the `t` variable in order to trigger the _implicit_ conversion of `transferred` to integer. The following types may be implicitly converted to integer:
+
+* `duration`
+* `date`
+* `tez` 
 
 The resulting integer value is the number of the smallest value of the source type: namely second for `duration`, and utez for `tez`.
 
@@ -166,6 +170,8 @@ effect {
 ```
 
 Note that the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`. 
+
+Note that conversion from rational to integer is done explicitly with operator `ceil` and `floor`.
 
 
 
