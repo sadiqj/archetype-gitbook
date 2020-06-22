@@ -130,9 +130,9 @@ It is possible to compare rationals and integers. It is not possible to compare 
 
 Rational are converted to integers with the `floor` and `ceil` operators with the expected behaviour.
 
-### Conversion to tez
+### Conversion to other types
 
-There is no explicit cast \(conversion operator\) from a rational to a tez value. You may just multiply by 1tez for example.
+There is no explicit cast \(conversion operator\) from a rational to a tez value, a duration or a date. You may just multiply by 1tez for example.
 
 ```javascript
 effect {
@@ -171,7 +171,7 @@ effect {
 
 Note that the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`. 
 
-Note that conversion from rational to integer is done explicitly with operator `ceil` and `floor`.
+Note that conversion from rational to integer is done explicitly with operators `ceil` and `floor`.
 
 
 
