@@ -63,7 +63,7 @@ type car = {
 module CarCollection = Map.make(String)
 ```
 
-Storage of asset is abstract in Archetype in order for the transcoder to apply optimisation strategy when generating execution code. For example, if the car collection is only accessed via get and set methods, then it will be generated as a _set_ container.
+Storage of asset is abstract in Archetype in order for the transcoder to apply optimization strategy when generating execution code. For example, if the car collection is only accessed via get and set methods, then it will be generated as a _set_ container.
 
 
 
