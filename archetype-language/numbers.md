@@ -120,7 +120,7 @@ effect {
    var r1 := 3 / 12;
    var r2 := 0.25;
    var r3 := 0.5;
-   if r1 <> r2 or r3 < r2 then fail "Huston, we've got a problem";
+   if r1 = r2 and r3 > r2 then transfer 1tz to coder;
 }
 ```
 

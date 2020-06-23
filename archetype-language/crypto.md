@@ -32,8 +32,8 @@ The `unpack` operator is parameterized with the expected output type using `<T>`
 ```javascript
 effect {
    var bstr := pack("archetype"); // bstr is a bytes value
-   if getopt(unpack<string>(bstr)) <> "archetype"
-   then fail("is pack/unpack a joke?");
+   if getopt(unpack<string>(bstr)) = "archetype"
+   then transfer 1tz to coder;
 }
 ```
 
