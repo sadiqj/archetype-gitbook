@@ -52,7 +52,7 @@ It is possible to create a list by prepending an element \(as the first element\
 ```javascript
 effect {
    var l = prepend(["second"], "first"); // l is ["first"; "second"]
-   if nth(l,0) = "first" then transfer 1tz to coder;
+   if nth(l, 0) = "first" then transfer 1tz to coder;
 }
 ```
 

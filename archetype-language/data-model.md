@@ -4,19 +4,61 @@ description: Variable and asset collection
 
 # Assets
 
-An archetype contract can store asset data. An asset is defined by a set of fields, one of which is the asset identification field. Each asset has a unique identification value.
+## Declaration
+
+An asset is defined by a set of fields, one of which is the identification field. Each asset has a unique identification value over the collection of assets.
 
 For example, the following defines a car asset:
 
-```ocaml
+```javascript
 asset car identified by vin {
-  vin : string;
-  model : string;
-  year : int;
+  vin     : string;
+  model   : string;
+  year    : int;
+  nbdoors : int;
 }
 ```
 
-By default, assets are sorted on the identifier value. It is possible to specify another default sort. For example to sort car assets on the `year` field value:
+## Collection
+
+Declaring an asset automatically creates a collection of these assets. This collection is named after the asset. In the example above,  `car` refers to the collections of car assets. In a collection, each asset has a unique identifier.
+
+The following presents the services offered by an asset collection:
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">Operator</th>
+      <th style="text-align:left">Description</th>
+      <th style="text-align:left">May fail ?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">[ ]</td>
+      <td style="text-align:left">
+        <p>access asset by its key:</p>
+        <p><code>car[&quot;YS3ED48E5Y3070016&quot;].model</code> is the model field
+          of the car asset with id &quot;YS3ED48E5Y3070016&quot;.</p>
+      </td>
+      <td style="text-align:left">fails when key not in collection</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">count</td>
+      <td style="text-align:left">returns the number of assets: <code>car.count()</code>
+      </td>
+      <td style="text-align:left">no</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">nth</td>
+      <td style="text-align:left">returns the nth asset&apos;s key. <code>car.nth(0)</code> is the car asset
+        with the first identification in alphabetical order.</td>
+      <td style="text-align:left">fails when index out of bound.</td>
+    </tr>
+  </tbody>
+</table>
+
+By default, assets are sorted on the identifier value.
 
 The type of a field may be a basic type, or one of `subset` or `partition`. 
 
