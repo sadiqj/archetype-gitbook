@@ -40,7 +40,7 @@ entry testopt (a : int option) {
 effect {
   var a := some("a string");
   if issome(a) then (
-    if a.getopt() <> "a string" then fail("getting weird ...");
+    if a.getopt() = "a string" then transfer 1tz to coder;
   );
 }
 ```
