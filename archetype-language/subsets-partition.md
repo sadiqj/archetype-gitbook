@@ -177,7 +177,7 @@ There is no guarantee of the existence of a reference in an aggregate. Hence you
 
 ## Synthesis
 
-Tables below present a synthetic view of instruction and operator availability for collection, partition and aggregates.
+The tables below present a synthetic view of instructions and operators availability for collection, partition and aggregates.
 
 | Instructions | Collection | Partition | Aggregate |
 | :--- | :--- | :--- | :--- |
