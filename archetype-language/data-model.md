@@ -149,6 +149,27 @@ As in `removeif` above, the `the` keyword refers to the asset being evaluated.
 
 `sort` provides access to assets in a different order than the default one based on the identification order. 
 
+```ocaml
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   var v = car.sort(nbdoors);
+   if v.nth(0) = "YS3ED48E5Y3070016" then transfer 1tz to coder;
+   if v.nth(1) = "1FTDF15Y2SNB02216" then transfer 1tz to coder;
+   if v.nth(2) = "3VWCK21Y33M306146" then transfer 1tz to coder;
+}
+```
+
+Note in the example below that the sort operator preserves the initial order for assets with the same criterion. In this example, `1FTDF15Y2SNB02216` comes before `3VWCK21Y33M306146`.
+
+It is possible to specify the descending order with the `desc` operator:
+
+```ocaml
+var v = car.sort(desc(nbdoors));
+```
+
 ### Test membership
 
 `contains` returns true if the view or collection contains a key. 
@@ -198,12 +219,4 @@ effect {
    if car.sum(nbdoors) = 10 then transfer 1tz to coder;
 }
 ```
-
-
-
-
-
-
-
-
 
