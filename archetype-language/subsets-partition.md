@@ -54,8 +54,6 @@ The proper way to modify the car collection is through a fleet asset and the `ca
 
 * `add`
 * `remove`
-* `udpate`
-* `addupdate`
 * `clear`
 
 ```bash
@@ -84,14 +82,84 @@ asset driver {
 }
 ```
 
-The literal for subset is `[]`. Subset are built with the _keys_ of assets to reference. 
+The literal for `subset` is `[]`. Subsets are built with the _keys_ of assets to reference. 
 
 ```javascript
 effect {
    driver.add({ "d01"; [] }); // empty subset
-   driver.add({ "d02"; [ "YS3ED48E5Y3070016"; ""; "" ] });
+   driver.add({ "d02"; [ "YS3ED48E5Y3070016"; "3VWCK21Y33M306146" ] });
 }
 ```
+
+The above fails if a key is not present in the car collection. It means that you can only add an existing asset reference in a subset.
+
+### Instructions
+
+#### add
+
+The `add` instruction adds a key to a subset. It _fails_ if the base collection does not contain that key:
+
+```javascript
+effect {
+   driver["f01"].drives.add("YS3ED48E5Y3070016"); // fails if car collection 
+                                                  // does not contain YS3ED48E5Y3070016
+}
+```
+
+#### remove
+
+The `remove` instruction removes a reference from a subset. It _fails_ if the key is not in the subset.
+
+```javascript
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   driver["f01"].drives.add("YS3ED48E5Y3070016");
+   // now remove it
+   driver["f01"].drivers.remove("YS3ED48E5Y3070016");
+   // this does not remove it from the car collection
+   if car.contains("YS3ED48E5Y3070016") then transfer 1tz to coder;
+}
+```
+
+#### removeall
+
+The `removeall` instruction removes all references in the subset, which is empty as a result.
+
+```javascript
+effect {
+   driver["f01"].drivers.removeall();
+}
+```
+
+### Synchronization
+
+Note that it is still possible to write the car collection straightforwardly with collection instructions `add` `remove` `update` `addupdate` `clear`. 
+
+Subsets are _not synchronized_ though, which means that it is possible to refer to an asset that does not exist anymore, as illustrated below:
+
+```javascript
+effect {
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   driver["f01"].drives.add("YS3ED48E5Y3070016");
+   car.remove("YS3ED48E5Y3070016"); // at this point, driver f01's drives subset
+                                    // refers to a non existant asset 
+}
+```
+
+{% hint style="info" %}
+In this version of archetype, there is no guarantee of the existence of a reference in a subset. 
+{% endhint %}
+
+## Synthesis
+
+The table below presents synthetic view 
+
+
+
+
+
+ 
 
 
 
