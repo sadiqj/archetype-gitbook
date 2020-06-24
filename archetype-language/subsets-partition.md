@@ -183,14 +183,14 @@ Tables below present a synthetic view of instruction and operator availability f
 
 | Instructions | Collection | Partition | Subset |
 | :--- | :--- | :--- | :--- |
-| `add` | ok | ok | ok |
+| `add` | ok | ok | ok\* |
 | `update` | ok | **na** | **na** |
 | `addupdate` | ok | ok | **na** |
 | `remove` | ok | ok | ok |
 | `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
 
- 
+ \* the `add` for subset does not have the same signature though.
 
 | View operations | Collection | Partition | Subset |
 | :--- | :--- | :--- | :--- |
