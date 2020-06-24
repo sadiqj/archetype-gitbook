@@ -52,9 +52,10 @@ Cannot access asset collection: asset car is partitionned by field(s) (cars).
 
 ### Instructions
 
-The proper way to modify the car collection is through a fleet asset and the `cars` partition which provides the following instructions:
+The proper way to modify the car collection is through the `cars` partition of a fleet asset which provides the following instructions:
 
 * `add`
+* `addupdate`
 * `remove`
 * `clear`
 
@@ -68,7 +69,7 @@ The above instruction fails if the `fleet` collection does not contain `f01` or 
 
 ### Update operators
 
-When updating an asset with a partition field it possible to specify whether to add or remove assets with the `+=` and `-=` operators: 
+When updating an asset with a partition field it is possible to add or remove assets with the `+=` and `-=` operators: 
 
 ```javascript
 effect {
@@ -172,7 +173,7 @@ effect {
 ```
 
 {% hint style="info" %}
-There is no guarantee of the existence of a reference in an aggregate. Hence you have to test it before removing a reference for example.
+There is no guarantee that a referenced asset in the aggregate exists in the base collection.
 {% endhint %}
 
 ## Synthesis
@@ -188,7 +189,7 @@ The tables below present a synthetic view of instructions and operators availabi
 | `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
 
- \*  `add` for aggregates does not have the same signature though.
+ \*  `add` for aggregate does not have the same signature though.
 
 | View operations | Collection | Partition | Aggregate |
 | :--- | :--- | :--- | :--- |

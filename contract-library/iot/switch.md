@@ -100,7 +100,7 @@ entry setunits (dunit : duration, tunit : tez) {
 
 The contract is available on the carthage net to play with:
 
-{% page-ref page="switch.md" %}
+{% embed url="https://you.better-call.dev/carthagenet/KT1NzLPSERC8Uwsrr8sHRgXmNQ6m724Jdw9Q/storage" %}
 
 
 
