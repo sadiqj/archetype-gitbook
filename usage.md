@@ -96,10 +96,6 @@ Available options:
 
 ```
 
-{% hint style="warning" %}
- Some features are still under development
-{% endhint %}
-
 ## VS code extension
 
 The archetype extension provides:
