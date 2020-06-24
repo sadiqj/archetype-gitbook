@@ -13,7 +13,7 @@
   * [Composite types](archetype-language/options.md)
   * [Basic containers](archetype-language/basic-containers.md)
   * [Assets](archetype-language/data-model.md)
-  * [Partitions, Subsets](archetype-language/subsets-partition.md)
+  * [Partitions, Aggregates](archetype-language/subsets-partition.md)
   * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
   * [Transfers, contract calls](archetype-language/transfers.md)

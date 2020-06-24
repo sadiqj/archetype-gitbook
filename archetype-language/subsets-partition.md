@@ -2,12 +2,12 @@
 description: When asset fields are asset containers.
 ---
 
-# Partitions, Subsets
+# Partitions, Aggregates
 
 An asset field may be a container of another asset. There are two kinds of such container:
 
-* subset
 * partition
+* aggregate
 
 ## Partition
 
@@ -77,9 +77,9 @@ effect {
 }
 ```
 
-## Subset
+## Aggregate
 
-A subset is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through a `subset`:
+An aggregate is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through a `aggregate`:
 
 ```coffeescript
 asset car {
@@ -91,11 +91,11 @@ asset car {
 
 asset driver {
    id     : string;
-   drives : car subset;  
+   drives : car aggregate;  
 }
 ```
 
-The literal for `subset` is `[]`. Subsets are built with the _keys_ of assets to reference. 
+The literal for `aggregate` is `[]`. Subsets are built with the _keys_ of assets to reference. 
 
 ```javascript
 effect {
@@ -104,7 +104,7 @@ effect {
 }
 ```
 
-The above fails if a key is not present in the car collection. It means that you can only add an existing asset reference in a subset.
+The above fails if a key is not present in the car collection. It means that you can only add an existing asset reference in an aggregate.
 
 ### Instructions
 
@@ -137,7 +137,7 @@ effect {
 
 #### removeall
 
-The `removeall` instruction removes all references in the subset, which is empty as a result.
+The `removeall` instruction removes all references in the aggregate, which is empty as a result.
 
 ```javascript
 effect {
@@ -156,13 +156,11 @@ effect {
 }
 ```
 
-
-
 ### Synchronization
 
 Note that it is still possible to write the car collection straightforwardly with collection instructions `add` `remove` `update` `addupdate` `clear`. 
 
-Subsets are _not synchronized_ though, which means that it is possible to refer to an asset that does not exist anymore, as illustrated below:
+Aggregates are _not synchronized_ though, which means that it is possible to refer to an asset that does not exist anymore, as illustrated below:
 
 ```javascript
 effect {
@@ -174,14 +172,14 @@ effect {
 ```
 
 {% hint style="info" %}
-In this version of archetype, there is no guarantee of the existence of a reference in a subset. Hence you have to test it before removing a reference for example.
+In this version of archetype, there is no guarantee of the existence of a reference in an aggregate. Hence you have to test it before removing a reference for example.
 {% endhint %}
 
 ## Synthesis
 
 Tables below present a synthetic view of instruction and operator availability for collection, partition and subset.
 
-| Instructions | Collection | Partition | Subset |
+| Instructions | Collection | Partition | Aggregate |
 | :--- | :--- | :--- | :--- |
 | `add` | ok | ok | ok\* |
 | `update` | ok | **na** | **na** |
@@ -190,9 +188,9 @@ Tables below present a synthetic view of instruction and operator availability f
 | `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
 
- \* the `add` for subset does not have the same signature though.
+ \*  `add` for aggregates does not have the same signature though.
 
-| View operations | Collection | Partition | Subset |
+| View operations | Collection | Partition | Aggregate |
 | :--- | :--- | :--- | :--- |
 | `count` | ok | ok | ok |
 | `sum` | ok | ok | ok |
@@ -205,5 +203,5 @@ Tables below present a synthetic view of instruction and operator availability f
 | `for` | ok | ok | ok |
 | `clear` | ok | ok | ok |
 
-The above table illustrates that all view operations are available for collections, partitions and subsets.
+The above table illustrates that all view operations are available for collections, partitions and aggregates.
 
