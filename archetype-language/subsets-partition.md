@@ -50,6 +50,8 @@ Indeed, if the above was possible, the car asset `YS3ED48E5Y3070016` would not b
 Cannot access asset collection: asset car is partitionned by field(s) (cars).
 ```
 
+### Instructions
+
 The proper way to modify the car collection is through a fleet asset and the `cars` partition which provides the following instructions:
 
 * `add`
@@ -63,6 +65,10 @@ effect {
 ```
 
 The above instruction fails if the `fleet` collection does not contain `f01` or if the `car` collection already contains `YS3ED48E5Y3070016`.
+
+### Update operator
+
+
 
 ## Subset
 
@@ -132,6 +138,10 @@ effect {
 }
 ```
 
+### Update operator
+
+
+
 ### Synchronization
 
 Note that it is still possible to write the car collection straightforwardly with collection instructions `add` `remove` `update` `addupdate` `clear`. 
@@ -148,20 +158,34 @@ effect {
 ```
 
 {% hint style="info" %}
-In this version of archetype, there is no guarantee of the existence of a reference in a subset. 
+In this version of archetype, there is no guarantee of the existence of a reference in a subset. Hence you have to test it before removing a reference for example.
 {% endhint %}
 
 ## Synthesis
 
-The table below presents synthetic view 
+Tables below present a synthetic view of instruction and operator availability for collection, partition and subset.
 
+| Instructions | Collection | Partition | Subset |
+| :--- | :--- | :--- | :--- |
+| `add` | ok | ok | ok |
+| `update` | ok | **na** | **na** |
+| `addupdate` | ok | **na** | **na** |
+| `remove` | ok | ok | **na** |
+| `removeall` | **na** | ok | ok |
+| `clear` | ok | ok | **na** |
 
+Note that `removeall` and `clear` are the same for partitions. 
 
+| Operators | Collection | Partition | Subset |
+| :--- | :--- | :--- | :--- |
+| `count` | ok | ok | ok |
+| `sum` | ok | ok | ok |
+| `contains` | ok | ok | ok |
+| `nth` | ok | ok | ok |
+| `select` | ok | ok | ok |
+| `head` | ok | ok | ok |
+| `tail` | ok | ok | ok |
+| `sort` | ok | ok | ok |
 
-
- 
-
-
-
-
+The above table illustrates that all view operators are available for collections, partitions and subsets.
 
