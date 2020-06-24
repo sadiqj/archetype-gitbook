@@ -110,7 +110,7 @@ The above fails if a key is not present in the car collection. It means that you
 
 #### add
 
-The `add` instruction adds a key to a aggregate. It _fails_ if the base collection does not contain that key:
+The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key:
 
 ```javascript
 effect {
