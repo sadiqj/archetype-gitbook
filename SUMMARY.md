@@ -15,7 +15,7 @@
   * [Basic containers](archetype-language/basic-containers.md)
   * [Assets](archetype-language/data-model.md)
   * [Partitions, Aggregates](archetype-language/subsets-partition.md)
-  * [Entries](archetype-language/action.md)
+  * [Entries, Functions](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
   * [Contract specification](archetype-language/contract-specification.md)
 

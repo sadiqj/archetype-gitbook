@@ -2,7 +2,9 @@
 description: A contract is operated through entry points.
 ---
 
-# Entries
+# Entries, Functions
+
+## Entry point
 
 The keyword entry is used to declare an entry point followed by its name.
 
@@ -12,7 +14,7 @@ entry main() {
 }
 ```
 
-## Arguments
+### Arguments
 
 An entry may take arguments. For example, the entry below named "complete" takes two arguments `value` and `amount` , respectively of type `string` and `int`:
 
@@ -24,7 +26,7 @@ entry complete (value : string, amount : int) {
 }
 ```
 
-## Sections
+### Sections
 
 An entry is made of sections listed below:
 
@@ -103,7 +105,7 @@ action complete (value : string, amount : int) {
 
 In the expression line 9 above, `r` is a _label_ for the `require` expression \(see [Label](action.md#label) section below\).
 
-## Label
+### Label
 
 In Archetype, some expressions are named. The following syntax is used to name an expression:
 
@@ -174,9 +176,9 @@ The following is the list of expressions that require a label:
   </tbody>
 </table>
 
-## Effect
+### Effect
 
-### Local variable 
+#### Local variable 
 
 A local variable is declared as exampled below:
 
@@ -184,7 +186,7 @@ A local variable is declared as exampled below:
 var p = amount + 10tz;
 ```
 
-### Data assignment
+#### Data assignment
 
 A variable \(global or local\) is assigned a new value as exampled below:
 
@@ -194,7 +196,7 @@ p := amount;
 
 Note that is it _not possible_ to assign a value to an input value.
 
-### Currency transfer
+#### Currency transfer
 
 The instruction to transfer currency is exampled below:
 
@@ -202,7 +204,7 @@ The instruction to transfer currency is exampled below:
 transfer 10tz to owner
 ```
 
-### Conditional
+#### Conditional
 
 The basic conditional expression is exampled below :
 
@@ -226,7 +228,7 @@ The `failif` expression fails if the condition is met:
 failif (transferred <= threshold)
 ```
 
-## Functions
+## Function
 
 It is possible to declare functions with the `function` keyword. The main differences between entries and functions are:
 
