@@ -62,7 +62,7 @@ effect {
 
 #### addupdate
 
-Use the `addupdate` instruction to add or update an update. The argument asset is either added if not already present or updated if present. It does _not_ fail.
+Use the `addupdate` instruction to add or update an update. The argument asset is added if not already present or updated if present. It does _not_ fail.
 
 ```javascript
 effect {
@@ -95,7 +95,7 @@ The `the` keyword refers to the asset being evaluated.
 
 ### Read an asset
 
-The `[ ]` and `.` syntax is used to retrieve an asset data and access to a field:
+The `[ ]` and `.` syntax is used to retrieve an asset and read a field value: 
 
 ```ocaml
 effect {
