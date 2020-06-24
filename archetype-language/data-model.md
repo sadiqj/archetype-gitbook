@@ -67,7 +67,9 @@ Use the `addupdate` instruction to add or update an update. The argument asset i
 ```javascript
 effect {
    // all fiels are necessary, no field name required
-   car.addupdate("YS3ED48E5Y3070016", {  "mustang"; 1968; 2 });
+   car.addupdate("YS3ED48E5Y3070016", {  model = "mustang"; 
+                                         year = 1968; 
+                                         nbdoors = 2 });
 }
 ```
 
