@@ -258,13 +258,13 @@ The example above increments `nbdoors` of cars with `year` above 2010.
 
 Note that the iteration is done over asset keys.
 
-### clear
+### Clear
 
-Use the `clear`  instruction to remove all asset in a collection:
+Use the `clear`  instruction to remove all asset referenced in the view:
 
 ```javascript
 effect {
-   car.clear();
+   car.select(the.year = 2000).clear();
 }
 ```
 
