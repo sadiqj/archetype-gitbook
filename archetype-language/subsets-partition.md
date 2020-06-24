@@ -2,7 +2,7 @@
 description: When asset fields are asset containers.
 ---
 
-# Partition, Subset
+# Partitions, Subsets
 
 An asset field may be a container of another asset. There are two kinds of such container:
 

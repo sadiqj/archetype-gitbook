@@ -258,11 +258,13 @@ It is possible to iterate a view with the `for ... in ... do ... end` loop instr
 
 ```ocaml
 effect {
-   for k in car.select(the.nbdoors < 4) do
+   for k in car.select(the.year >= 2010) do
      car.update(k, { nbdoors += 1 } );
    end;
 }
 ```
+
+The example above increments `nbdoors` of cars with `year` above 2010.
 
 Note that the iteration is done over asset keys.
 

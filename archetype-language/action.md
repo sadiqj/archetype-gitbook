@@ -1,26 +1,32 @@
 ---
-description: Contract data is written with entry points.
+description: A contract is operated through entry points.
 ---
 
 # Entries
 
+The keyword entry is used to declare an entry point followed by its name.
 
+```javascript
+entry main() {
+  ...
+}
+```
 
 ## Arguments
 
-An action may take input arguments. For example the snippet below declare an action named `complete` which takes two arguments `value` and `amount` , respectively of type `string` and `int`:
+An entry may take arguments. For example, the entry below named "complete" takes two arguments `value` and `amount` , respectively of type `string` and `int`:
 
-```ocaml
-action complete (value : string, amount : int) {
+```coffeescript
+entry complete (value : string, amount : int) {
 
-  ...  (* action body *)
+  ...  
 
 }
 ```
 
 ## Sections
 
-An Action is made of sections listed below:
+An entry is made of sections listed below:
 
 <table>
   <thead>
@@ -55,7 +61,7 @@ An Action is made of sections listed below:
       <td style="text-align:left"><code>specification</code>
       </td>
       <td style="text-align:left">specifies formal properties the action effect has
-        <br />(see next section)</td>
+        <br />(see &quot;specification&quot; section)</td>
       <td style="text-align:left">yes</td>
     </tr>
     <tr>
@@ -73,12 +79,12 @@ An Action is made of sections listed below:
   </tbody>
 </table>
 
-For example, the `complete` action example may be enhanced as follows:
+For example, the `complete` entry example may be enhanced as follows:
 
-```ocaml
+```coffeescript
 constant owner : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
-variable threshold : tez = 100tz
+variable threshold : tez = 10tz
 
 action complete (value : string, amount : int) {
   called by owner
@@ -88,12 +94,14 @@ action complete (value : string, amount : int) {
   }
   
   effect {
-    ... (* effect code *)
+    ... 
   }
 }
 ```
 
-In the expression `r : ...` line 8 above, `r` is a _label_ for the _require_ expression \(see [Label](action.md#label) section below\).
+`transferred` is the amount of tez transferred to the entry.
+
+In the expression line 9 above, `r` is a _label_ for the `require` expression \(see [Label](action.md#label) section below\).
 
 ## Label
 
@@ -172,7 +180,7 @@ The following is the list of expressions that require a label:
 
 A local variable is declared as exampled below:
 
-```ocaml
+```javascript
 var p = amount + 10tz;
 ...
 ```
@@ -185,7 +193,7 @@ A variable \(global or local\) is assigned a new value as exampled below:
 p := amount;
 ```
 
-After this instruction, the value of `p` is the value of `amount`.
+Note that is it _not possible_ to assign a value to an input value.
 
 ### Currency transfer
 
@@ -203,7 +211,7 @@ The basic conditional expression is exampled below :
 if transferred > threshold then
   transfer price to owner
 else
-  fail ("not enough")
+  fail("not enough");
 ```
 
 The `require` expression fails if the condition is not met:
@@ -217,8 +225,4 @@ The `failif` expression fails if the condition is met:
 ```text
 failif (transferred <= threshold)
 ```
-
-### 
-
-
 
