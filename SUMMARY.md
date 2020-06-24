@@ -10,13 +10,13 @@
   * [Dates, Durations](archetype-language/dates-durations.md)
   * [Numbers, Casts](archetype-language/numbers.md)
   * [Crypto](archetype-language/crypto.md)
+  * [Transfers, contract calls](archetype-language/transfers.md)
   * [Composite types](archetype-language/options.md)
   * [Basic containers](archetype-language/basic-containers.md)
   * [Assets](archetype-language/data-model.md)
   * [Partitions, Aggregates](archetype-language/subsets-partition.md)
   * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
-  * [Transfers, contract calls](archetype-language/transfers.md)
   * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
