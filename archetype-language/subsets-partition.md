@@ -79,7 +79,7 @@ effect {
 
 ## Aggregate
 
-An aggregate is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through a `aggregate`:
+`aggregate` is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through an `aggregate`:
 
 ```coffeescript
 asset car {
@@ -95,11 +95,11 @@ asset driver {
 }
 ```
 
-The literal for `aggregate` is `[]`. Subsets are built with the _keys_ of assets to reference. 
+The literal for `aggregate` is `[]`. Aggregates are built with the _keys_ of assets to reference. 
 
 ```javascript
 effect {
-   driver.add({ "d01"; [] }); // empty subset
+   driver.add({ "d01"; [] }); // empty aggregate
    driver.add({ "d02"; [ "YS3ED48E5Y3070016"; "3VWCK21Y33M306146" ] });
 }
 ```
@@ -110,7 +110,7 @@ The above fails if a key is not present in the car collection. It means that you
 
 #### add
 
-The `add` instruction adds a key to a subset. It _fails_ if the base collection does not contain that key:
+The `add` instruction adds a key to a aggregate. It _fails_ if the base collection does not contain that key:
 
 ```javascript
 effect {
@@ -121,7 +121,7 @@ effect {
 
 #### remove
 
-The `remove` instruction removes a reference from a subset. It _fails_ if the key is not in the subset.
+The `remove` instruction removes a reference from an aggregate. It _fails_ if the key is not in the aggregate.
 
 ```javascript
 effect {
@@ -147,7 +147,7 @@ effect {
 
 ### Update operators
 
-When updating an asset with a subset field, it is possible to specify whether to add or remove asset references with the `+=` and `-=` operators: 
+When updating an asset with an aggregate field, it is possible to specify whether to add or remove asset references with the `+=` and `-=` operators: 
 
 ```javascript
 effect {
@@ -166,18 +166,18 @@ Aggregates are _not synchronized_ though, which means that it is possible to ref
 effect {
    car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    driver["f01"].drives.add("YS3ED48E5Y3070016");
-   car.remove("YS3ED48E5Y3070016"); // at this point, driver f01's drives subset
+   car.remove("YS3ED48E5Y3070016"); // at this point, driver f01's drives aggregate
                                     // refers to a non existant asset 
 }
 ```
 
 {% hint style="info" %}
-In this version of archetype, there is no guarantee of the existence of a reference in an aggregate. Hence you have to test it before removing a reference for example.
+There is no guarantee of the existence of a reference in an aggregate. Hence you have to test it before removing a reference for example.
 {% endhint %}
 
 ## Synthesis
 
-Tables below present a synthetic view of instruction and operator availability for collection, partition and subset.
+Tables below present a synthetic view of instruction and operator availability for collection, partition and aggregates.
 
 | Instructions | Collection | Partition | Aggregate |
 | :--- | :--- | :--- | :--- |
