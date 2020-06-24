@@ -27,6 +27,8 @@ Declaring an asset automatically creates a collection of these assets. This coll
 
 ### Write
 
+#### add
+
 Use the `add` instruction to add an asset to the collection. It _fails_ if an asset with the same id is already in the collection:
 
 ```ocaml
@@ -35,18 +37,22 @@ effect {
 }
 ```
 
+#### update
+
 Use the `update` instruction to update a field of an asset. It _fails_ if the collection does not have an asset with the id:
 
 ```javascript
 effect {
    /* update one field */
-   car.update("YS3ED48E5Y3070016", { year : 1967 });
+   car.update("YS3ED48E5Y3070016", { year = 1967 });
    /* update severa fields */ 
-   car.update("YS3ED48E5Y3070016", { year : 1967; nbdoors : 3 });
+   car.update("YS3ED48E5Y3070016", { year = 1967; nbdoors = 3 });
    /* update all fields, no need for field name */
    car.update("YS3ED48E5Y3070016", { "fiesta"; 2020; 4 });
 }
 ```
+
+#### addupdate
 
 Use the `addupdate` instruction to add or update an update. The argument asset is either added if not already present or updated if present. It does _not_ fail.
 
@@ -57,6 +63,8 @@ effect {
 }
 ```
 
+#### remove
+
 Use the `remove` instruction to remove an asset. It does _not_ fail if the collection does not have an asset with the id.
 
 ```ocaml
@@ -65,6 +73,8 @@ effect {
 }
 ```
 
+#### clear
+
 Use the `clear`  instruction to remove all asset in a collection:
 
 ```javascript
@@ -72,6 +82,8 @@ effect {
    car.clear();
 }
 ```
+
+#### removeif
 
 Use the `removeif` instruction to remove assets under given criteria. For example, in order to remove all cars with less than 4 doors:
 
@@ -102,6 +114,8 @@ You cannot build a view from scratch. It is derived from a collection with the o
 
 ### Create
 
+#### head
+
 `head` returns the first n elements of the collection or view. By default assets are ordered by the identification field. It _fails_ if n is greater than the number of elements in the collection or view \(or negative\).
 
 ```javascript
@@ -116,6 +130,8 @@ effect {
 }
 ```
 
+#### tail
+
 `tail` returns the _last_ n elements of the collection or view. By default assets are ordered by the identification field. It _fails_ if n is greater than the number of elements in the collection or view \(or negative\).
 
 ```javascript
@@ -129,6 +145,8 @@ effect {
    ...
 }
 ```
+
+#### select
 
 `select` returns a view with assets that satisfy a criterion:
 
@@ -146,6 +164,8 @@ effect {
 ```
 
 As in `removeif` above, the `the` keyword refers to the asset being evaluated. 
+
+#### sort
 
 `sort` provides access to assets in a different order than the default one based on the identification order. 
 
@@ -198,6 +218,8 @@ effect {
 
 ### Aggregate
 
+#### count
+
 `count` returns the number of elements in a collection:
 
 ```ocaml
@@ -207,6 +229,8 @@ effect {
    if car.count() = 1 then transfer 1tz to coder;
 }
 ```
+
+#### sum
 
 `sum` returns the sum of a field:
 
