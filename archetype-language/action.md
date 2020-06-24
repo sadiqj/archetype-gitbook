@@ -196,14 +196,6 @@ p := amount;
 
 Note that is it _not possible_ to assign a value to an input value.
 
-#### Currency transfer
-
-The instruction to transfer currency is exampled below:
-
-```ocaml
-transfer 10tz to owner
-```
-
 #### Conditional
 
 The basic conditional expression is exampled below :
@@ -238,7 +230,7 @@ It is possible to declare functions with the `function` keyword. The main differ
 Typically functions may help factorize computation codes.
 
 ```javascript
-function compute_rate (amount : tez) : rational {
+function get_rate (amount : tez) : rational {
    var a : int  = amount;
    return (a / 3600);
 }
