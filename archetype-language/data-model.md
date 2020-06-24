@@ -81,16 +81,6 @@ effect {
 }
 ```
 
-#### clear
-
-Use the `clear`  instruction to remove all asset in a collection:
-
-```javascript
-effect {
-   car.clear();
-}
-```
-
 #### removeif
 
 Use the `removeif` instruction to remove assets under given criteria. For example, in order to remove all cars with less than 4 doors:
@@ -267,4 +257,14 @@ effect {
 The example above increments `nbdoors` of cars with `year` above 2010.
 
 Note that the iteration is done over asset keys.
+
+### clear
+
+Use the `clear`  instruction to remove all asset in a collection:
+
+```javascript
+effect {
+   car.clear();
+}
+```
 
