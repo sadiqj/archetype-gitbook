@@ -48,6 +48,8 @@
 * [Insurance](contract-library/insurance/README.md)
   * [Fizzy](contract-library/insurance/fizzy.md)
   * [Health care](contract-library/insurance/health-care.md)
+* [IOT](contract-library/iot/README.md)
+  * [Switch](contract-library/iot/switch.md)
 * [Framework examples](contract-library/framework-examples/README.md)
   * [Hyper Ledger](contract-library/framework-examples/hyper-ledger/README.md)
     * [Animal tracking](contract-library/framework-examples/hyper-ledger/animal-tracking.md)
