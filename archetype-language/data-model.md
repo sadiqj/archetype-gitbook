@@ -10,7 +10,7 @@ An asset is defined by a set of fields, one of which is the identification field
 
 For example, the following defines a car asset:
 
-```javascript
+```coffeescript
 asset car identified by vin {
   vin     : string;
   model   : string;
