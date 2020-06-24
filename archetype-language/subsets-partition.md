@@ -205,5 +205,5 @@ Tables below present a synthetic view of instruction and operator availability f
 | `for` | ok | ok | ok |
 | `clear` | ok | ok | ok |
 
-The above table illustrates that all view operators are available for collections, partitions and subsets.
+The above table illustrates that all view operations are available for collections, partitions and subsets.
 
