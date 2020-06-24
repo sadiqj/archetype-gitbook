@@ -182,7 +182,6 @@ A local variable is declared as exampled below:
 
 ```javascript
 var p = amount + 10tz;
-...
 ```
 
 ### Data assignment
@@ -208,9 +207,10 @@ transfer 10tz to owner
 The basic conditional expression is exampled below :
 
 ```ocaml
-if transferred > threshold then
-  transfer price to owner
-else
+if transferred > threshold then (
+  transfer price to owner;
+  transfer 1tz to coder
+) else
   fail("not enough");
 ```
 
