@@ -59,7 +59,6 @@ variable outcome : int option = none
 // oracle's public key
 constant oracle : key = "edpkurLzuFFL1XyP3fed4u7MsgeywQoQmHM45Bz91PBzDvUjQ9bvdn"
 
-
 entry setoutcome (packed_outcome : bytes, signed_outcome : signature) {
   effect {
     if check_signature(oracle, signed_outcome, packed_outcome) then (
