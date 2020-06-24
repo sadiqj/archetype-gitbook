@@ -26,8 +26,8 @@ We see in this basic example, that a smart contract on a public blockchain with 
 ```ocaml
 archetype health_care
 
-constant insurer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
-constant patient : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk
+constant insurer : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+constant patient : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
 constant fee : tez = 100tz
 constant deductible : tez = 500tz
@@ -49,6 +49,7 @@ states =
 
 transition[%signedbyall ([patient; insurer])%] confirm () {
   from Created
+  (*signed by [insrurer; patient]*)
   to Running
   with effect {
     last_fee := now
@@ -62,6 +63,7 @@ transition cancel () {
 }
 
 action[%signedbyall ([patient; insurer])%] register_doctor (docid : address) {
+  (*signed by [insurer; patient]*)
   require {
      r1 : state = Running;
   }
@@ -93,7 +95,7 @@ action pay_doctor (docid : address) {
     r4 : state = Running;
   }
   effect {
-    var ldebt = doctor[docid].debt;
+    var ldebt = doctor.get(docid).debt;
     var decrease : tez = min (transferred, ldebt);
     transfer decrease to docid;
     transfer (transferred - decrease) to insurer;
@@ -113,9 +115,9 @@ action pay_fee () {
     r5 : state = Running;
   }
   effect {
-    var nb_periods : int = (now - last_fee) / period;  (* div is euclidean *)
-    var due = nb_periods * fee;
-    var decrease : tez = min (transferred, due);
+    let nb_periods : int = (now - last_fee) / period in  (* div is euclidean *)
+    let due = nb_periods * fee in
+    let decrease : tez = min (transferred, due) in
     transfer decrease to insurer;
     transfer (transferred - decrease) to patient;
     last_fee += period * nb_periods     (* last_fee <> now because div is euclidean *)
@@ -132,7 +134,7 @@ action pay_consulation () {
     r6 : state = Running;
   }
   effect {
-    var decrease : tez = min (transferred, consultation_debt);
+    let decrease : tez = min (transferred, consultation_debt) in
     transfer decrease to insurer;
     transfer (transferred - decrease) to patient;
     consultation_debt -= decrease

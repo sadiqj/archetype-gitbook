@@ -64,7 +64,7 @@ asset early identified by eobservation {
 } with {
   i1 : 0 <= trigger <= 1;
   i2 : 0 <= value   <= 1;
-} initialized by {
+} initialized by [
   { 2018-03-14T00:00:00; 2018-03-28T00:00:00; 0.95; 1 };
   { 2018-06-14T00:00:00; 2018-06-28T00:00:00; 0.95; 1 };
   { 2018-09-14T00:00:00; 2018-09-28T00:00:00; 0.95; 1 };
@@ -74,7 +74,7 @@ asset early identified by eobservation {
   { 2019-09-16T00:00:00; 2020-09-30T00:00:00; 0.70; 1 };
   { 2019-12-16T00:00:00; 2020-01-02T00:00:00; 0.70; 1 };
   { 2020-03-16T00:00:00; 2020-03-30T00:00:00; 0.70; 1 }
-}
+]
 
 asset interest identified by iobservation {
   iobservation : date;
@@ -83,7 +83,7 @@ asset interest identified by iobservation {
   rate        : rational;
 } with {
   i3 : 0 <= barrier <= 1;
-} initialized by {
+} initialized by [
   { 2017-06-14T00:00:00; 2017-06-28T00:00:00; 0.5; 2.025  };
   { 2017-09-14T00:00:00; 2017-09-28T00:00:00; 0.5; 4.05   };
   { 2017-12-14T00:00:00; 2018-01-02T00:00:00; 0.5; 6.075  };
@@ -96,7 +96,7 @@ asset interest identified by iobservation {
   { 2019-09-16T00:00:00; 2019-09-30T00:00:00; 0.5; 20.25  };
   { 2019-12-16T00:00:00; 2020-01-02T00:00:00; 0.5; 22.275 };
   { 2020-03-16T00:00:00; 2020-03-30T00:00:00; 0.5; 24.3   }
-}
+]
 
 (* underlyings values *)
 asset fixing identified by fobservation {
@@ -129,8 +129,7 @@ function compute_expected (d : date) : tez {
     definition ibarrier { i : interest |
       forall f in fixing,
         (* retrieving the first element of etrigger *)
-        let some key_efirst = etrigger.nth(0) in
-        let some efirst = etrigger.get(key_efirst) in
+        let some efirst = etrigger.nth(0) in
           if i.iobservation = f.fobservation and i.iobservation <= efirst.eobservation
           then (* barrier condition *)
                     f.bac >= bac_strike
@@ -138,9 +137,9 @@ function compute_expected (d : date) : tez {
                 and f.ubs >= ubs_strike
           else false
         otherwise false
-        otherwise false
     }
-    
+
+    (* TODO finish specs *)
     (** expected is the sum of redemption nominal and interests *)
     postcondition p_expected {
         let expected : tez =
@@ -184,42 +183,43 @@ function compute_expected (d : date) : tez {
     let redeem_date = final in
     (* early redemption *)
     for : redeemloop e in early do
-      if early[e].redemption <= d
+      if e.redemption <= d
       then (* is there early redemption ? *)
-        var ee = early[e].eobservation;
-        if     fixing[ee].bac >= early[e].trigger * bac_initial
-           and fixing[ee].sg  >= early[e].trigger * sg_initial
-           and fixing[ee].ubs >= early[e].trigger * ubs_initial
+        let v = fixing.get(e.eobservation) in
+        if     v.bac >= e.trigger * bac_initial
+           and v.sg  >= e.trigger * sg_initial
+           and v.ubs >= e.trigger * ubs_initial
         then (
-           expected += early[e].value * nominal;
-           redeem_date := early[e].eobservation;
+           expected += e.value * nominal;
+           redeem_date := e.eobservation;
            terminated := true
         )
     done;
     (* redemption *)
     if not terminated and gredemption <= d
     then
-      if     fixing[gredemption].bac >= bac_strike
-         and fixing[gredemption].sg  >= sg_strike
-         and fixing[gredemption].ubs >= ubs_strike
+      let f = fixing.get(gredemption) in
+      if     f.bac >= bac_strike
+         and f.sg  >= sg_strike
+         and f.ubs >= ubs_strike
       then
          expected += nominal
       else
-         let bac_trigger = fixing[gredemption].bac / bac_strike in
-         let sg_trigger  = fixing[gredemption].sg  / sg_strike  in
-         let ubs_trigger = fixing[gredemption].ubs / ubs_strike in
+         let bac_trigger = f.bac / bac_strike in
+         let sg_trigger  = f.sg  / sg_strike  in
+         let ubs_trigger = f.ubs / ubs_strike in
          let worst = min ((min (bac_trigger, sg_trigger)), ubs_trigger) in
          expected += worst * nominal;
     (* expected interests *)
     let exp_interests = 0.0 in
     for : interestloop i in interest do
-      if interest[i].iobservation <= redeem_date and interest[i].payment <= d
+      if i.iobservation <= redeem_date and i.payment <= d
       then
-        var ii = interest[i].iobservation;
-        if     fixing[ii].bac >= interest[i].barrier * bac_initial
-           and fixing[ii].sg  >= interest[i].barrier * sg_initial
-           and fixing[ii].ubs >= interest[i].barrier * ubs_initial
-        then exp_interests := interest[i].rate * nominal
+        let v = fixing.get(i.iobservation) in
+        if     v.bac >= i.barrier * bac_initial
+           and v.sg  >= i.barrier * sg_initial
+           and v.ubs >= i.barrier * ubs_initial
+        then exp_interests := i.rate * nominal
     done;
     expected += exp_interests;
     return expected
@@ -236,10 +236,9 @@ action pay_note () {
    }
 }
 
-(* action add_fixing (f[%signedby (oracle)%] : fixing) { *)
-action add_fixing (ffobservation : date, fbac : rational, fsg : rational, fubs : rational) {
+action add_fixing (f[%signedby (oracle)%] : fixing) {
   effect {
-    fixing.add({ffobservation; fbac; fsg; fubs})
+    fixing.add(f)
   }
 }
 
