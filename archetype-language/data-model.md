@@ -254,7 +254,7 @@ effect {
 
 ### Iterate
 
-It is possible to iterate a view with the `for ... do ... end` loop instruction.
+It is possible to iterate a view with the `for ... in ... do ... end` loop instruction.
 
 ```ocaml
 effect {

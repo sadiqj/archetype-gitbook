@@ -202,6 +202,7 @@ Note that `removeall` and `clear` are the same for partitions.
 | `head` | ok | ok | ok |
 | `tail` | ok | ok | ok |
 | `sort` | ok | ok | ok |
+| `for` | ok | ok | ok |
 
 The above table illustrates that all view operators are available for collections, partitions and subsets.
 
