@@ -192,7 +192,7 @@ Tables below present a synthetic view of instruction and operator availability f
 
 
 
-| Operators | Collection | Partition | Subset |
+| View operations | Collection | Partition | Subset |
 | :--- | :--- | :--- | :--- |
 | `count` | ok | ok | ok |
 | `sum` | ok | ok | ok |
