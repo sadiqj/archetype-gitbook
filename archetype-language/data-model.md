@@ -83,9 +83,7 @@ effect {
 
 The `the` keyword refers to the asset being evaluated. 
 
-### Read assets
-
-#### by key
+### Read an asset
 
 The `[ ]` and `.` syntax is used to retrieve an asset data and access to a field:
 
@@ -96,9 +94,76 @@ effect {
 }
 ```
 
-#### by position
+## Views
 
-`nth` returns the key at position n in the collection. Indeed assets are ordered according to the identification field. It fails if n is out of the bounds of the collection.
+Views are used to access assets in a different way than the base collection seen above. They enable access with a different order, position range, or specific criteria.
+
+You cannot build a view from scratch. It is derived from a collection with the operators presented below. Note at last that you cannot modify the collection through a view.
+
+### Create
+
+`head` returns the first n elements of the collection or view. By default assets are ordered by the identification field. It _fails_ if n is greater than the number of elements in the collection or view \(or negative\).
+
+```javascript
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   var v = car.head(2); // view creation :
+                        // v has 1FTDF15Y2SNB02216 and 3VWCK21Y33M306146 assets
+   ...
+}
+```
+
+`tail` returns the _last_ n elements of the collection or view. By default assets are ordered by the identification field. It _fails_ if n is greater than the number of elements in the collection or view \(or negative\).
+
+```javascript
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   var v = car.tail(1); // view creation :
+                        // v has only the YS3ED48E5Y3070016 asset
+   ...
+}
+```
+
+`select` returns a view with assets that satisfy a criterion:
+
+```javascript
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   var v = car.select(the.nbdoors = 4); // view creation
+                                        // v contains 3VWCK21Y33M306146 and 
+                                        // 3VWCK21Y33M306146 assets
+   ...
+}
+```
+
+As in `removeif` above, the `the` keyword refers to the asset being evaluated. 
+
+`sort` provides access to assets in a different order than the default one based on the identification order. 
+
+### Test membership
+
+`contains` returns true if the view or collection contains a key. 
+
+```ocaml
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   if car.contains("YS3ED48E5Y3070016") then transfer 1tz to coder;
+}
+```
+
+### Access by position
+
+`nth` returns the key at position n in the view. By default assets are ordered by the identification field. It _fails_ if n is out of the bounds of the collection.
 
 ```ocaml
 effect {
@@ -106,6 +171,7 @@ effect {
    car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
    car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
    if car.nth(0) = "3VWCK21Y33M306146" then transfer 1tz to coder; 
+   if car[car.nth(0)].model = "mustang" then transfer 1tz to coder;
 }
 ```
 
@@ -133,15 +199,9 @@ effect {
 }
 ```
 
-Views a collection
 
-head
 
-tail
 
-select
-
-sort
 
 
 
