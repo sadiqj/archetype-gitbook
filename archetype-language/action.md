@@ -230,7 +230,7 @@ It is possible to declare functions with the `function` keyword. The main differ
 Typically functions may help factorize computation codes.
 
 ```javascript
-function get_rate (amount : tez) : rational {
+function compute_rate (amount : tez) : rational {
    var a : int  = amount;
    return (a / 3600);
 }
