@@ -188,7 +188,6 @@ Tables below present a synthetic view of instruction and operator availability f
 | `addupdate` | ok | **na** | **na** |
 | `remove` | ok | ok | **na** |
 | `removeall` | **na** | ok\* | ok |
-| `clear` | ok | ok | **na** |
 | `removeif` | ok | ok | ok |
 
 
@@ -204,6 +203,7 @@ Tables below present a synthetic view of instruction and operator availability f
 | `tail` | ok | ok | ok |
 | `sort` | ok | ok | ok |
 | `for` | ok | ok | ok |
+| `clear` | ok | ok | ok |
 
 The above table illustrates that all view operators are available for collections, partitions and subsets.
 
