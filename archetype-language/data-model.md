@@ -52,6 +52,14 @@ effect {
 }
 ```
 
+It is possible to increment or decrement integer fields with the `+=` and `-=` operators:
+
+```ocaml
+effect {
+  car.update("YS3ED48E5Y3070016", { year += 2; nbdoors -= 1 });
+}
+```
+
 #### addupdate
 
 Use the `addupdate` instruction to add or update an update. The argument asset is either added if not already present or updated if present. It does _not_ fail.
