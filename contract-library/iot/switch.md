@@ -7,7 +7,7 @@ description: Switch on and off a connected object with a smart contract.
 How to control a connected object with a smart contract? 
 
 1. write the on/off state of the object in the smart contract
-2. make the connected object repeatedly read its state in the smart contract
+2. make the connected object repeatedly read its state from the smart contract
 
 Indeed the object must be able to actively read the contract storage on a regular basis because the blockchain is passive by nature.
 
@@ -97,4 +97,10 @@ entry setunits (dunit : duration, tunit : tez) {
     }
 }
 ```
+
+The contract is available on the carthage net to play with:
+
+{% page-ref page="switch.md" %}
+
+
 
