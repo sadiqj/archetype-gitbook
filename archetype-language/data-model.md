@@ -25,18 +25,7 @@ When `identified by` is omitted, the first field is the identifier.
 
 Declaring an asset automatically creates a collection of these assets. This collection is named after the asset. In the example above,  `car` refers to the collections of car assets. In a collection, each asset has a unique identifier.
 
-### Read asset fields
-
-The `[ ]` and `.` syntax is used to retrieve an asset data and access to a field:
-
-```ocaml
-effect {
-  var amodel = car["YS3ED48E5Y3070016"].model;
-  ...
-}
-```
-
-### Write a collection
+### Write
 
 Use the `add` instruction to add an asset to the collection. It _fails_ if an asset with the same id is already in the collection:
 
@@ -94,7 +83,65 @@ effect {
 
 The `the` keyword refers to the asset being evaluated. 
 
-### Read a collection
+### Read assets
+
+#### by key
+
+The `[ ]` and `.` syntax is used to retrieve an asset data and access to a field:
+
+```ocaml
+effect {
+  var amodel = car["YS3ED48E5Y3070016"].model;
+  ...
+}
+```
+
+#### by position
+
+`nth` returns the key at position n in the collection. Indeed assets are ordered according to the identification field. It fails if n is out of the bounds of the collection.
+
+```ocaml
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   if car.nth(0) = "3VWCK21Y33M306146" then transfer 1tz to coder; 
+}
+```
+
+### Aggregate
+
+`count` returns the number of elements in a collection:
+
+```ocaml
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   if car.count() = 1 then transfer 1tz to coder;
+}
+```
+
+`sum` returns the sum of a field:
+
+```ocaml
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   if car.sum(nbdoors) = 10 then transfer 1tz to coder;
+}
+```
+
+Views a collection
+
+head
+
+tail
+
+select
+
+sort
 
 
 
