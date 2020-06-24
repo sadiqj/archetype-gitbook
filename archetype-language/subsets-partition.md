@@ -185,12 +185,12 @@ Tables below present a synthetic view of instruction and operator availability f
 | :--- | :--- | :--- | :--- |
 | `add` | ok | ok | ok |
 | `update` | ok | **na** | **na** |
-| `addupdate` | ok | **na** | **na** |
-| `remove` | ok | ok | **na** |
-| `removeall` | **na** | ok\* | ok |
+| `addupdate` | ok | ok | **na** |
+| `remove` | ok | ok | ok |
+| `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
 
-
+ 
 
 | View operations | Collection | Partition | Subset |
 | :--- | :--- | :--- | :--- |
