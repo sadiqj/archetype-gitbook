@@ -31,7 +31,7 @@ Use the `add` instruction to add an asset to the collection. It _fails_ if an as
 
 ```ocaml
 effect {
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
 }
 ```
 
@@ -42,9 +42,9 @@ effect {
    /* update one field */
    car.update("YS3ED48E5Y3070016", { year : 1967 });
    /* update severa fields */ 
-   car.update("YS3ED48E5Y3070016", { year : 1967, nbdoors : 3 });
+   car.update("YS3ED48E5Y3070016", { year : 1967; nbdoors : 3 });
    /* update all fields, no need for field name */
-   car.update("YS3ED48E5Y3070016", { "fiesta", 2020, 4 });
+   car.update("YS3ED48E5Y3070016", { "fiesta"; 2020; 4 });
 }
 ```
 
@@ -53,7 +53,7 @@ Use the `addupdate` instruction to add or update an update. The argument asset i
 ```javascript
 effect {
    // all fiels are necessary, no field name required
-   car.addupdate("YS3ED48E5Y3070016", {  "mustang", 1968, 2 });
+   car.addupdate("YS3ED48E5Y3070016", {  "mustang"; 1968; 2 });
 }
 ```
 
@@ -107,9 +107,9 @@ You cannot build a view from scratch. It is derived from a collection with the o
 ```javascript
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
-   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
    var v = car.head(2); // view creation :
                         // v has 1FTDF15Y2SNB02216 and 3VWCK21Y33M306146 assets
    ...
@@ -121,9 +121,9 @@ effect {
 ```javascript
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
-   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
    var v = car.tail(1); // view creation :
                         // v has only the YS3ED48E5Y3070016 asset
    ...
@@ -135,9 +135,9 @@ effect {
 ```javascript
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
-   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
    var v = car.select(the.nbdoors = 4); // view creation
                                         // v contains 3VWCK21Y33M306146 and 
                                         // 3VWCK21Y33M306146 assets
@@ -152,9 +152,9 @@ As in `removeif` above, the `the` keyword refers to the asset being evaluated.
 ```ocaml
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
-   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
    var v = car.sort(nbdoors);
    if v.nth(0) = "YS3ED48E5Y3070016" then transfer 1tz to coder;
    if v.nth(1) = "1FTDF15Y2SNB02216" then transfer 1tz to coder;
@@ -177,7 +177,7 @@ var v = car.sort(desc(nbdoors));
 ```ocaml
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    if car.contains("YS3ED48E5Y3070016") then transfer 1tz to coder;
 }
 ```
@@ -189,8 +189,8 @@ effect {
 ```ocaml
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
    if car.nth(0) = "3VWCK21Y33M306146" then transfer 1tz to coder; 
    if car[car.nth(0)].model = "mustang" then transfer 1tz to coder;
 }
@@ -203,7 +203,7 @@ effect {
 ```ocaml
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    if car.count() = 1 then transfer 1tz to coder;
 }
 ```
@@ -213,9 +213,9 @@ effect {
 ```ocaml
 effect {
    car.clear();
-   car.add({ "YS3ED48E5Y3070016", "mustang", 1968, 2});
-   car.add({ "3VWCK21Y33M306146", "fiesta", 2010, 4});
-   car.add({ "1FTDF15Y2SNB02216", "focus", 2008, 4});
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
    if car.sum(nbdoors) = 10 then transfer 1tz to coder;
 }
 ```
