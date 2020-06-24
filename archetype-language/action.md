@@ -218,44 +218,7 @@ The `failif` expression fails if the condition is met:
 failif (transferred <= threshold)
 ```
 
-### Asset collection
-
-Consider the following car asset identified by its vin id:
-
-```text
-asset car identified by vin {
-  vin : string;
-  model : string;
-  year : int;
-}
-```
-
-The following table gives the basic instructions to get, add, remove, update an asset. 
-
-| operation | expression |
-| :--- | :--- |
-| get an asset | `car.get (vid)` |
-| add an asset | `car.add ({ vin = "1GNEK13ZX3R298984"; model = "Bugatti Chiron"; year = 2018 })` |
-| remove an asset | `car.remove (vid)` |
-| update an asset | `car.update ("1GNEK13ZX3R298984", {year = 2019})` |
-| retrieve asset nb. i | `car.nth (i)` \(an asset collection is sorted\) |
-
-Advanced operations over a collection are listed in the table below:
-
-| operation | expression |
-| :--- | :--- |
-| count | `car.count ()`  |
-| sum of a field | `car.sum (year)` |
-| select a subset collection | `car.select (year >= 2019)` |
-| sort a collection | `car.sort (year)` |
-
-_Iteration_ over a collection is as follows:
-
-```ocaml
-for c in car do
-  ...
-done
-```
+### 
 
 
 

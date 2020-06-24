@@ -252,3 +252,15 @@ effect {
 }
 ```
 
+### Iterate
+
+It is possible to iterate a view with the `for do end` loop instruction.
+
+```ocaml
+effect {
+   for k in car.select(the.nbdoors < 4) do
+     car.update(k, { nbdoors += 1 } );
+   end;
+}
+```
+
