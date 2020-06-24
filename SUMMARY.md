@@ -16,7 +16,7 @@
   * [Partitions, Subsets](archetype-language/subsets-partition.md)
   * [Entries](archetype-language/action.md)
   * [State machine](archetype-language/state-machine.md)
-  * [Transfers](archetype-language/transfers.md)
+  * [Transfers, contract calls](archetype-language/transfers.md)
   * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
