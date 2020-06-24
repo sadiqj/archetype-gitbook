@@ -66,9 +66,16 @@ effect {
 
 The above instruction fails if the `fleet` collection does not contain `f01` or if the `car` collection already contains `YS3ED48E5Y3070016`.
 
-### Update operator
+### Update operators
 
+When updating an asset with a partition field it possible to specify whether to add or remove assets with the `+=` and `-=` operators: 
 
+```javascript
+effect {
+   fleet.update("f01", { cars += [{ "2HGFG11879H508413", "explorer", 2000, 4 }] });
+   fleet.update("f02", { cars -= [ "YS3ED48E5Y3070016" ] });
+}
+```
 
 ## Subset
 
@@ -138,7 +145,16 @@ effect {
 }
 ```
 
-### Update operator
+### Update operators
+
+When updating an asset with a subset field, it is possible to specify whether to add or remove asset references with the `+=` and `-=` operators: 
+
+```javascript
+effect {
+   driver.update("d01", { drives += [ "2HGFG11879H508413" ]);
+   driver.update("d02", { drives -= [ "YS3ED48E5Y3070016" ]);
+}
+```
 
 
 
