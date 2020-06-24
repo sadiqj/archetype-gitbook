@@ -187,10 +187,11 @@ Tables below present a synthetic view of instruction and operator availability f
 | `update` | ok | **na** | **na** |
 | `addupdate` | ok | **na** | **na** |
 | `remove` | ok | ok | **na** |
-| `removeall` | **na** | ok | ok |
+| `removeall` | **na** | ok\* | ok |
 | `clear` | ok | ok | **na** |
+| `removeif` | ok | ok | ok |
 
-Note that `removeall` and `clear` are the same for partitions. 
+
 
 | Operators | Collection | Partition | Subset |
 | :--- | :--- | :--- | :--- |
