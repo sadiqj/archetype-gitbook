@@ -36,7 +36,7 @@ effect {
 }
 ```
 
-With partitions, it is not possible to modify a partitioned collection straightforwardly with the standard instructions `add` `remove` `addupdate` `clear`. The following is not authorized:
+With partitions, it is not possible to modify a partitioned collection straightforwardly with the standard instructions `add` `remove` `addupdate`. Thus the following is not authorized:
 
 ```coffeescript
 effect {
