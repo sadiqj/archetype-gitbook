@@ -108,7 +108,7 @@ In the expression line 9 above, `r` is a _label_ for the `require` expression \(
 In Archetype, some expressions are named. The following syntax is used to name an expression:
 
 ```cpp
-l : ... expression ... /* l is a label */
+lbl : ... expression ... /* lbl is a label */
 ```
 
 The following is the list of expressions that require a label:
