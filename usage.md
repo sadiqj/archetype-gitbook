@@ -104,7 +104,7 @@ The archetype extension provides:
 * [LSP](https://microsoft.github.io/language-server-protocol/) support
 * transcoding commands
 
-![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
+![](.gitbook/assets/screenshot-2020-06-25-at-14.10.42.png)
 
 The archetype extension provides commands to compile to Michelson via Ligo, and to launch the why3 IDE for verification:
 
