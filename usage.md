@@ -1,6 +1,6 @@
 # Usage
 
-## Command line
+## Command-line
 
 To transcode say an archetype file escrow.arl to `ligo`:
 
