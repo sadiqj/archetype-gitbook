@@ -2,8 +2,8 @@
 
 * [What is Archetype](README.md)
 * [Getting started](getting-started-1.md)
-* [Reference](archetype-reference.md)
 * [Usage](usage.md)
+* [Reference](archetype-reference.md)
 * [Archetype language](archetype-language/README.md)
   * [Constants, Variables](archetype-language/constants-variables.md)
   * [Strings](archetype-language/strings.md)
