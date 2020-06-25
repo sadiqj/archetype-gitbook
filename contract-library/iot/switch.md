@@ -11,7 +11,7 @@ How to control a connected object with a smart contract?
 
 Indeed the object must be able to actively read the contract storage on a regular basis because the blockchain is passive by nature.
 
-Werenode is a french startup that leverages the power of the Tezos blockchain in order to simplify and reduce the cost of the electric vehicle charging process. They are currently developing a Tezos-based solution to switch on the electric vehicle supply equipment \(EVSE\) based on smart contracts. 
+Werenode is a french startup that leverages the power of the Tezos blockchain in order to simplify and reduce the cost of the electric vehicle charging process. Werenode is currently developing a Tezos-based solution to switch on the electric vehicle supply equipment \(EVSE\). 
 
 {% embed url="https://github.com/Werenode" %}
 
