@@ -654,7 +654,7 @@ transition mytr () {
 }
 ```
 
-### Builtin functions
+### Built-in functions
 
 * `min` 
 
