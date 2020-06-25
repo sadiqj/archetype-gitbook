@@ -110,7 +110,7 @@ The archetype extension provides commands to compile to Michelson via Ligo, and 
 
 ![Archetype extension&apos;s commands](.gitbook/assets/screenshot-2020-06-25-at-13.40.11.png)
 
-These commands assume Ligo, why3, and why3 IDE are already installed.
+These commands assume that Ligo, why3, and why3 IDE are already installed.
 
 {% embed url="http://why3.lri.fr/" %}
 
