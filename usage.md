@@ -88,5 +88,3 @@ These commands assume that Ligo, why3, and why3 IDE are already installed.
 
 
 
-
-
