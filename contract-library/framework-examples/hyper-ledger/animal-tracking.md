@@ -14,7 +14,6 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/animaltracking-network" %}
 
-{% code title="animal-tracking.arl" %}
 ```ocaml
 archetype animal_tracking
 
@@ -62,5 +61,4 @@ transition arrival (toField : pkey of field_a) on (ak : pkey of animal_a) {
 }
 
 ```
-{% endcode %}
 
