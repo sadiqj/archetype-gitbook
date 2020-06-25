@@ -36,7 +36,7 @@ states =
   * `effect` is the code to execute by the action
 
 ```css
-entry an_action_1 (arg1 : string, arg2 : int) {
+entry an_entry_1 (arg1 : string, arg2 : int) {
   specification {
     // see 'specification' section below
   }
@@ -80,7 +80,7 @@ transition confirm () {
 It is possible to specify several `to ... when .... with effect ...` sections in a transition. It is possible to specify a list of original states for the transition to start from:
 
 ```c
-transition fail {
+transition to_fail () {
   from Created or Confirmed
   to Fail
   when { ... }
@@ -101,6 +101,7 @@ transition fail {
 * `bytes` : bytes sequence
 * `key` : 
 * `signature` : 
+* `key_hash` :
 
 ## Composite types
 
@@ -153,8 +154,8 @@ variable c : color = Green
 
 ```c
 contract called_contract_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
+   entry set_value (n : int)
+   entry add_value (a : int, b : int)
 }
 ```
 
@@ -164,17 +165,17 @@ It is then possible to declare a contract value of type _called\_contract\_sig_ 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 ```
 
-* `collection` declares an asset field as a collection of another asset.
+* `aggregate` declares an asset field as a aggregate of another asset.
 
 ```yaml
 asset an_asset identified by id {
   id : string;
   a_val : int;
-  asset_col : another_asset collection
+  asset_col : another_asset aggregate;
 }
 ```
 
-* `partition` declares an asset field as a collection of another asset. The difference with `collection` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
+* `partition` declares an asset field as a collection of another asset. The difference with `aggregate` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
 
 ```yaml
 asset partitioning_asset identified by id {
