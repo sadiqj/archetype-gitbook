@@ -204,9 +204,19 @@ The variable invariant may only refer to the variable itself. When dealing with 
 
 #### Contract invariant
 
+More complex contract invariants may be placed in the specification section at root level.
 
+```javascript
+archetype acontract
 
+entry main () {
+  /* ... */
+}
 
+specification {
+  p : /* forall ... */
+}
+```
 
 ## Assert
 
@@ -217,20 +227,34 @@ Contrary to postconditions, asserts _do_ have access to local variables in the s
 ```javascript
 entry anentry(i : int) {
   specification {
-     assert a1 {
+     assert a {
         x > i
      }
   }
   effect {
-    var x := i + 1;
-    assert a1;
+    var x = i + 1;
+    assert a;
   }
 }
 ```
 
-It is possible to refer to a variable at a specific step of execution by declaring a code label at in the code.
+It is possible to refer to a variable at a specific step of execution by declaring a code label in the code.
 
- 
+```javascript
+entry anentry(i : int) {
+  specification {
+     assert a {
+        at(s).x > x /* at(s).x is the value of x at label declaration (here i) */
+     }
+  }
+  effect {
+     var x = i;
+     label s;
+     x += 1;
+     assert a; 
+  }
+}
+```
 
 ## Security predicates
 
