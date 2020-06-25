@@ -289,7 +289,7 @@ enum t =
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -333,13 +333,13 @@ With the `contract` keyword presented above, it is possible to transfer to a con
 
 ```c
 contract contract_called_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
+   entry set_value (n : int)
+   entry add_value (a : int, b : int)
 }
 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 
-action update_value(n : int) {
+entry update_value(n : int) {
   effect {
     transfer 2tz to c call set_value(n);
   }
@@ -472,9 +472,9 @@ var bool_bool_not : bool = not true;
 
 ```javascript
 var int_int_eq   : bool = 1 = 2;
-var rat_int_eq   : bool = (1 div 2) = 2;
-var int_rat_eq   : bool = 1 = (2 div 3);
-var rat_rat_eq   : bool = (1 div 3) = (2 div 3);
+var rat_int_eq   : bool = (1 / 2) = 2;
+var int_rat_eq   : bool = 1 = (2 / 3);
+var rat_rat_eq   : bool = (1 / 3) = (2 / 3);
 var tez_tez_eq   : bool = 1tz = 2tz;
 var dur_dur_eq   : bool = 1h = 2h;
 var date_date_eq : bool = 2020-01-01 = 2020-12-31;
@@ -487,9 +487,9 @@ var str_str_eq   : bool = "a" = "b";
 
 ```javascript
 var int_int_ne   : bool = 1 <> 2;
-var rat_int_ne   : bool = (1 div 2) <> 2;
-var int_rat_ne   : bool = 1 <> (2 div 3);
-var rat_rat_ne   : bool = (1 div 2) <> (2 div 3);
+var rat_int_ne   : bool = (1 / 2) <> 2;
+var int_rat_ne   : bool = 1 <> (2 / 3);
+var rat_rat_ne   : bool = (1 / 2) <> (2 / 3);
 var tez_tez_ne   : bool = 1tz <> 2tz;
 var dur_dur_ne   : bool = 1h <> 2h;
 var date_date_ne : bool = 2020-01-01 <> 2020-12-31;
@@ -502,9 +502,9 @@ var str_str_ne   : bool = "a" <> "b";
 
 ```javascript
 var int_int_lt   : bool = 1 < 2;
-var rat_int_lt   : bool = (1 div 2) < 2;
-var int_rat_lt   : bool = 1 < (2 div 3);
-var rat_rat_lt   : bool = (1 div 2) < (2 div 3);
+var rat_int_lt   : bool = (1 / 2) < 2;
+var int_rat_lt   : bool = 1 < (2 / 3);
+var rat_rat_lt   : bool = (1 / 2) < (2 / 3);
 var tez_tez_lt   : bool = 1tz < 2tz;
 var dur_dur_lt   : bool = 1h < 2h;
 var date_date_lt : bool = 2020-01-01 < 2020-12-31;
@@ -514,9 +514,9 @@ var date_date_lt : bool = 2020-01-01 < 2020-12-31;
 
 ```javascript
 var int_int_le   : bool = 1 <= 2;
-var rat_int_le   : bool = (1 div 2) <= 2;
-var int_rat_le   : bool = 1 <= (2 div 3);
-var rat_rat_le   : bool = (1 div 2) <= (2 div 3);
+var rat_int_le   : bool = (1 / 2) <= 2;
+var int_rat_le   : bool = 1 <= (2 / 3);
+var rat_rat_le   : bool = (1 / 2) <= (2 / 3);
 var tez_tez_le   : bool = 1tz <= 2tz;
 var dur_dur_le   : bool = 1h <= 2h;
 var date_date_le : bool = 2020-01-01 <= 2020-12-31;
@@ -526,9 +526,9 @@ var date_date_le : bool = 2020-01-01 <= 2020-12-31;
 
 ```javascript
 var int_int_gt   : bool = 1 > 2;
-var rat_int_gt   : bool = (1 div 2) > 2;
-var int_rat_gt   : bool = 1 > (2 div 3);
-var rat_rat_gt   : bool = (1 div 2) > (2 div 3);
+var rat_int_gt   : bool = (1 / 2) > 2;
+var int_rat_gt   : bool = 1 > (2 / 3);
+var rat_rat_gt   : bool = (1 / 2) > (2 / 3);
 var tez_tez_gt   : bool = 1tz > 2tz;
 var dur_dur_gt   : bool = 1h > 2h;
 var date_date_gt : bool = 2020-01-01 > 2020-12-31;
@@ -538,9 +538,9 @@ var date_date_gt : bool = 2020-01-01 > 2020-12-31;
 
 ```javascript
 var int_int_ge   : bool = 1 >= 2;
-var rat_int_ge   : bool = (1 div 2) >= 2;
-var int_rat_ge   : bool = 1 >= (2 div 3);
-var rat_rat_ge   : bool = (1 div 2) >= (2 div 3);
+var rat_int_ge   : bool = (1 / 2) >= 2;
+var int_rat_ge   : bool = 1 >= (2 / 3);
+var rat_rat_ge   : bool = (1 / 2) >= (2 / 3);
 var tez_tez_ge   : bool = 1tz >= 2tz;
 var dur_dir_ge   : bool = 1h >= 2h;
 var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
@@ -590,11 +590,10 @@ var rat_tez_mult   : tez      = 1.1 * 1tz;
 * `/` 
 
 ```javascript
-var int_int_div    : int = 1 / 2;
+var int_int_div    : rational = 1 / 2;
 var rat_rat_div    : rational = 1.1 / 1.2;
 var int_rat_div    : rational = 1 / 1.2;
 var rat_int_div    : rational = 1.1 / 2;
-var dur_int_div    : duration = 1h / 2;
 ```
 
 * `%` 
@@ -661,9 +660,9 @@ transition mytr () {
 
 ```javascript
 var int_int_min   : int  = min(1, 2);
-var rat_int_min   : rat  = min(1 div 2, 1);
-var int_rat_min   : rat  = min(2, 1 div 3);
-var rat_rat_min   : rat  = min(1 div 2, 1 div 3);
+var rat_int_min   : rat  = min(1 / 2, 1);
+var int_rat_min   : rat  = min(2, 1 / 3);
+var rat_rat_min   : rat  = min(1 / 2, 1 / 3);
 var date_date_min : date = min(2020-01-01, 2020-12-31);
 var dur_dur_min   : dur  = min(1h, 1s);
 var tez_tez_min   : tez  = min(1tz, 2tz);
@@ -673,9 +672,9 @@ var tez_tez_min   : tez  = min(1tz, 2tz);
 
 ```javascript
 var int_int_max   : int  = max(1, 2);
-var rat_int_max   : rat  = max(1 div 2, 1);
-var int_rat_max   : rat  = max(2, 1 div 3);
-var rat_rat_max   : rat  = max(1 div 2, 1 div 3);
+var rat_int_max   : rat  = max(1 / 2, 1);
+var int_rat_max   : rat  = max(2, 1 / 3);
+var rat_rat_max   : rat  = max(1 / 2, 1 / 3);
 var date_date_max : date = max(2020-01-01, 2020-12-31);
 var dur_dur_max   : dur  = max(1h, 1s);
 var tez_tez_max   : tez  = max(1tz, 2tz);
@@ -685,7 +684,7 @@ var tez_tez_max   : tez  = max(1tz, 2tz);
 
 ```javascript
 var int_abs : int = abs(-1);
-var rat_abs : rat = abs(-1 div 2);
+var rat_abs : rat = abs(-1 / 2);
 ```
 
 * `concat`
@@ -729,15 +728,15 @@ var res : int = getopt(some(1));
 * `floor`
 
 ```javascript
-var pos_floor : int = floor(5 div 3);  // 1
-var neg_floor : int = floor(-5 div 3); // -2
+var pos_floor : int = floor(5 / 3);  // 1
+var neg_floor : int = floor(-5 / 3); // -2
 ```
 
 * `ceil`
 
 ```javascript
-var pos_ceil : int = ceil(5 div 3);  // 2
-var neg_ceil : int = ceil(-5 div 3); // -1
+var pos_ceil : int = ceil(5 / 3);  // 2
+var neg_ceil : int = ceil(-5 / 3); // -1
 ```
 
 * `pack`
@@ -763,7 +762,7 @@ archetype expr_list_contains
 
 variable res : bool = false
 
-action exec () {
+entry exec () {
   specification {
     s0: res = true;
   }
@@ -782,7 +781,7 @@ archetype expr_list_count
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -801,7 +800,7 @@ archetype expr_list_nth
 
 variable res : string = ""
 
-action exec () {
+entry exec () {
   specification {
     s0: res = "2";
   }
@@ -820,7 +819,7 @@ archetype expr_list_prepend
 
 variable res : string list = []
 
-action exec () {
+entry exec () {
   specification {
     s0: res = ["0"; "1"; "2"; "3"];
   }
@@ -849,7 +848,7 @@ asset my_asset identified by id {
 
 variable res : bool = false
 
-action exec () {
+entry exec () {
   specification {
     s0: res = true;
   }
@@ -875,39 +874,12 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
   effect {
     res := my_asset.count()
-  }
-}
-```
-
-* `get` 
-
-```javascript
-archetype expr_method_asset_get
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var a = my_asset.get("id1");
-    res := a.value
   }
 }
 ```
@@ -928,7 +900,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -955,7 +927,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -983,7 +955,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -1011,7 +983,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 2;
   }
@@ -1039,7 +1011,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -1068,7 +1040,7 @@ asset my_asset identified by id {
   {"id3"; 1; 2; 6}
 }
 
-action exec () {
+entry exec () {
 
   effect {
     var res = my_asset.sort(v1, asc(v2), desc (v3))
@@ -1093,7 +1065,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -1125,7 +1097,7 @@ asset col2 {
   id2 : string;
 }
 
-action exec () {
+entry exec () {
  specification {
 
     definition mydef {
@@ -1290,7 +1262,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.subsetof(my_asset);
@@ -1317,7 +1289,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.isempty();
@@ -1346,25 +1318,25 @@ s2: at(lbl).my_asset.isempty();
 * `unmoved` 
 
 ```javascript
-s3: my_asset.unmoved.isempty();
+s3: unmoved.my_asset.isempty();
 ```
 
 * `added` 
 
 ```javascript
-s4: my_asset.added.isempty();
+s4: added.my_asset.isempty();
 ```
 
 * `removed` 
 
 ```javascript
-s5: my_asset.removed.isempty();
+s5: removed.my_asset.isempty();
 ```
 
 * `iterated` 
 
 ```javascript
-action exec2 () {
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1386,7 +1358,7 @@ action exec2 () {
 * `toiterate` 
 
 ```javascript
-action exec3 () {
+action exec () {
   specification {
     postcondition p1 {
       true
@@ -1419,22 +1391,22 @@ asset my_asset identified by id {
   value : int;
 }
 
-action exec () {
+entry exec () {
   effect {
-    require true
+    ()
   }
 }
 
 security {
-  s00 : only_by_role (anyaction, admin);
-  s01 : only_in_action (anyaction, exec);
-  s02 : only_by_role_in_action (anyaction, admin, exec);
-  s03 : not_by_role (anyaction, admin);
-  s04 : not_in_action (anyaction, exec);
-  s05 : not_by_role_in_action (anyaction, admin, exec);
-  s06 : transferred_by (anyaction);
-  s07 : transferred_to (anyaction);
-  s08 : no_storage_fail (anyaction);
+  s00 : only_by_role (anyentry, admin);
+  s01 : only_in_entry (anyentry, exec);
+  s02 : only_by_role_in_entry (anyentry, admin, exec);
+  s03 : not_by_role (anyentry, admin);
+  s04 : not_in_entry (anyentry, exec);
+  s05 : not_by_role_in_entry (anyentry, admin, exec);
+  s06 : transferred_by (anyentry);
+  s07 : transferred_to (anyentry);
+  s08 : no_storage_fail (anyentry);
 }
 
 ```
@@ -1442,55 +1414,55 @@ security {
 * `only_by_role` 
 
 ```javascript
-s00 : only_by_role (anyaction, admin);
+s00 : only_by_role (anyentry, admin);
 ```
 
 * `only_in_action` 
 
 ```javascript
-s01 : only_in_action (anyaction, exec);
+s01 : only_in_entry (anyentry, exec);
 ```
 
 * `only_by_role_in_action` 
 
 ```javascript
-s02 : only_by_role_in_action (anyaction, admin, exec);
+s02 : only_by_role_in_entry (anyentry, admin, exec);
 ```
 
 * `not_by_role` 
 
 ```javascript
-s03 : not_by_role (anyaction, admin);
+s03 : not_by_role (anyentry, admin);
 ```
 
 * `not_in_action` 
 
 ```javascript
-s04 : not_in_action (anyaction, exec);
+s04 : not_in_entry (anyentry, exec);
 ```
 
 * `not_by_role_in_action` 
 
 ```javascript
-s05 : not_by_role_in_action (anyaction, admin, exec);
+s05 : not_by_role_in_entry (anyentry, admin, exec);
 ```
 
 * `transferred_by` 
 
 ```javascript
-s06 : transferred_by (anyaction);
+s06 : transferred_by (anyentry);
 ```
 
 * `transferred_to` 
 
 ```javascript
-s07 : transferred_to (anyaction);
+s07 : transferred_to (anyentry);
 ```
 
 * `no_storage_fail` 
 
 ```javascript
-s08 : no_storage_fail (anyaction);
+s08 : no_storage_fail (anyentry);
 ```
 
 
