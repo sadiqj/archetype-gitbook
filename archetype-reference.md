@@ -36,7 +36,7 @@ states =
   * `effect` is the code to execute by the action
 
 ```css
-action an_action_1 (arg1 : string, arg2 : int) {
+entry an_action_1 (arg1 : string, arg2 : int) {
   specification {
     // see 'specification' section below
   }
@@ -60,19 +60,19 @@ action an_action_1 (arg1 : string, arg2 : int) {
   * `with effect` to specify the effect of the transition
 
 ```c
-states 
+states =
 | Created initial
 | Confirmed
 | Canceled
 | Success
 | Fail
 
-transition confirm {
+transition confirm () {
   from Created
   to Confirmed
-  when { transferred > 10 tz }
+  when { transferred > 10tz }
   with effect {
-    transfer 1tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+    transfer 1tz to @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
   }
 }
 ```
