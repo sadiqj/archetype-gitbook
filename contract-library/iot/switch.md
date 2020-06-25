@@ -11,7 +11,7 @@ How to control a connected object with a smart contract?
 
 Indeed the object must be able to actively read the contract storage on a regular basis because the blockchain is passive by nature.
 
-Werenode is a french startup that wishes to leverage the power of the Tezos blockchain in order to simplify and reduce the cost of the electric vehicle charging process. They are currently developing a Tezos-based solution to pay and switch on the electric vehicle supply equipment \(EVSE\). 
+Werenode is a french startup that leverages the power of the Tezos blockchain in order to simplify and reduce the cost of the electric vehicle charging process. They are currently developing a Tezos-based solution to switch on the electric vehicle supply equipment \(EVSE\) based on smart contracts. 
 
 {% embed url="https://github.com/Werenode" %}
 
@@ -102,7 +102,7 @@ entry setunits (dunit : duration, tunit : tez) {
 }
 ```
 
-The contract is available on the carthage net to play with:
+The contract is available on the Carthage net to play with:
 
 {% embed url="https://you.better-call.dev/carthagenet/KT1NzLPSERC8Uwsrr8sHRgXmNQ6m724Jdw9Q/storage" %}
 
