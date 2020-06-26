@@ -150,25 +150,6 @@ effect {
 }
 ```
 
-#### select
-
-`select` returns a view with assets that satisfy a criterion:
-
-```javascript
-effect {
-   car.clear();
-   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
-   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
-   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
-   var v = car.select(the.nbdoors = 4); // view creation
-                                        // v contains 3VWCK21Y33M306146 and 
-                                        // 3VWCK21Y33M306146 assets
-   ...
-}
-```
-
-As in `removeif` above, the `the` keyword refers to the asset being evaluated. 
-
 #### sort
 
 `sort` provides access to assets in a different order than the default one based on the identification order. 
@@ -193,6 +174,43 @@ It is possible to specify the descending order with the `desc` operator:
 ```ocaml
 var v = car.sort(desc(nbdoors));
 ```
+
+`sort` is _**not**_ stable; it means that two assets with equal sort values do not appear in the same order in sorted output as they appear in the input view.
+
+As a consequence, if you want to sort a collection according to two fields `f1`and `f2`, the following will not provide what you want:
+
+```javascript
+myasset.sort(f1).sort(f2);
+```
+
+The solution is to pass the fields as arguments to the `sort` operator:
+
+```javascript
+myasset.sort(f1,f2);
+```
+
+{% hint style="info" %}
+Do _not_ _chain_ `sort` operations; rather call `sort` with the fields as arguments.
+{% endhint %}
+
+#### select
+
+`select` returns a view with assets that satisfy a criterion:
+
+```javascript
+effect {
+   car.clear();
+   car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
+   car.add({ "3VWCK21Y33M306146"; "fiesta"; 2010; 4});
+   car.add({ "1FTDF15Y2SNB02216"; "focus"; 2008; 4});
+   var v = car.select(the.nbdoors = 4); // view creation
+                                        // v contains 3VWCK21Y33M306146 and 
+                                        // 3VWCK21Y33M306146 assets
+   ...
+}
+```
+
+As in `removeif` above, the `the` keyword refers to the asset being evaluated. 
 
 ### Test membership
 
