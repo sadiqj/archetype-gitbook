@@ -190,7 +190,7 @@ myasset.sort(f1,f2);
 ```
 
 {% hint style="info" %}
-Do _not_ _chain_ `sort` operations; rather call `sort` with the fields as arguments.
+Do _not_ chain `sort` operations; rather call one `sort` operation with the fields as arguments.
 {% endhint %}
 
 #### select
