@@ -75,13 +75,17 @@ effect {
 
 #### remove
 
-Use the `remove` instruction to remove an asset. It does _not_ fail if the collection does not have an asset with the id.
+Use the `remove` instruction to remove an asset. 
 
 ```ocaml
 effect {
    car.remove("YS3ED48E5Y3070016");
 }
 ```
+
+{% hint style="info" %}
+`remove`does _**not**_ fail if the collection does not have an asset with the id.
+{% endhint %}
 
 #### removeif
 
