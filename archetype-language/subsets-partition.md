@@ -83,9 +83,9 @@ effect {
 }
 ```
 
-The `+=` has the same effect as adding the assets with the `add` instruction. Hence it fails if the collection already contains the asset.  
+The `+=` has the same effect as adding the assets with the `add` instruction. Hence it _fails_ if the collection already contains the asset.  
 
-Same for `-=`, it is equivalent to a `remove` instruction. Hence it does not fail if the collection does not contain the id.
+Same for `-=`, it is equivalent to a `remove` instruction. Hence it does _**not**_ fail if the collection does not contain the id.
 
 ## Aggregate
 
