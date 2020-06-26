@@ -66,7 +66,7 @@ effect {
                                                       year = 2015;
                                                       nbdoors = 4  });
    fleet["f02"].cars.remove("2HGFG11879H508413");
-   fleet["f02"].clear();
+   fleet["f02"].cars.clear();
 }
 ```
 
