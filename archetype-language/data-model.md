@@ -118,6 +118,8 @@ You cannot build a view from scratch. It is derived from a collection with the o
 
 As for collections, views guarantee the order of the assets. By default, assets are ordered by identification field values, unless an explicit `sort` is invoked.
 
+Note that collections are automatically transformed to view when necessary. As a consequence, you may use the view API presented below straightforwardly on collections; for example `car.count()` returns the number of car asset in the car collection.
+
 ### Create
 
 #### head
