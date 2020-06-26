@@ -63,6 +63,7 @@ The proper way to modify the car collection is through the `cars` partition of a
 effect {
    fleet["f01"].cars.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    fleet["f01"].cars.remove("2HGFG11879H508413");
+   fleet["f02"].clear();
 }
 ```
 
