@@ -286,7 +286,7 @@ Note that the iteration is done over asset keys.
 
 ### Clear
 
-Use the `clear`  instruction to remove all asset referenced in the view:
+Use the `clear`  instruction to remove all asset referenced in a view:
 
 ```javascript
 effect {
