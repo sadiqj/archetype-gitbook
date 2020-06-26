@@ -83,6 +83,10 @@ effect {
 }
 ```
 
+The `+=` has the same effect as adding the assets with the `add` instruction. Hence it fails if the collection already contains the asset.  
+
+Same for `-=`, it is equivalent to a `remove` instruction. Hence it does not fail if the collection does not contain the id.
+
 ## Aggregate
 
 `aggregate` is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through an `aggregate`:
