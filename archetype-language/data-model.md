@@ -116,6 +116,8 @@ Views are used to access assets in a different way than the base collection seen
 
 You cannot build a view from scratch. It is derived from a collection with the operators presented below. Note at last that you cannot modify the collection through a view.
 
+As for collections, views guarantee the order of the assets. By default, assets are ordered by identification field values, unless an explicit `sort` is invoked.
+
 ### Create
 
 #### head
