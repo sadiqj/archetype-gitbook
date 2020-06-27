@@ -11,7 +11,7 @@ $ opam install archetype
 ```
 
 {% hint style="info" %}
- archetype version: 1.0 \(unreleased\)
+ archetype version: 1.0.0
 {% endhint %}
 
 ## VS code extension installation
