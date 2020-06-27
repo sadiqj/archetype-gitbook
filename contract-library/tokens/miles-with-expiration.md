@@ -41,7 +41,7 @@ asset mile identified by id sorted by expiration {
 (* a partition ensures there is no direct access to mile collection *)
 asset owner identified by addr {
   addr  : role;
-  miles : mile partition (* injective (owner x mile) *)
+  miles : mile partition = [] (* injective (owner x mile) *)
 }
 
 action add (ow : address, newmile : mile) {
@@ -56,10 +56,7 @@ action add (ow : address, newmile : mile) {
    }
 
    effect {
-     if owner.contains(ow) then
-      owner.get(ow).miles.add (newmile)
-     else
-      owner.add ({ addr = ow; miles = [newmile] })
+     owner.addupdate (ow, { miles += [{id = newmile_id; amount = newmile_amount; expiration = newmile_expiration} ] })
    }
 }
 
