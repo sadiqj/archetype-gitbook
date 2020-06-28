@@ -49,9 +49,7 @@ entry vote(n : int, weight : int) {
         r2 : now <= expiration;
     }
     effect {
-       if not voter[caller].ideas.contains(n) and
-           voter[caller].remaining >= weight 
-       then (
+       if voter[caller].remaining >= weight then (
             voter[caller].remaining -= weight;
             idea[n].nbvotes += weight
         )
