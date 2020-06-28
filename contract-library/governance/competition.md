@@ -8,7 +8,6 @@ The competition archetype defines a process that enables a competitor to submit 
 
 The decision process specified in the decide transaction allocates the prize to the top 3 scores. Allocation policy manages the situations where less than 3 competitors have submitted a score.
 
-{% code title="competition.arl" %}
 ```ocaml
 archetype competition
 
@@ -92,5 +91,4 @@ transition decide () {
 }
 
 ```
-{% endcode %}
 

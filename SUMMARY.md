@@ -30,6 +30,7 @@
   * [Basic](contract-library/auction/basic-auction.md)
   * [Auction \(from Zilliqa\)](contract-library/auction/auction-from-zilliqa.md)
 * [Governance](contract-library/governance/README.md)
+  * [Ideas box](contract-library/governance/ideas-box.md)
   * [Voting process](contract-library/governance/vote.md)
   * [Competition](contract-library/governance/competition.md)
   * [Mini DAO](contract-library/governance/dao.md)

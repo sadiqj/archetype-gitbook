@@ -8,7 +8,6 @@ This archetype defines a basic voting process. The chairman is responsible for r
 
 The result of the vote is computed with the `bury` action: winners are ballots with the highest number of votes.
 
-{% code title="voting\_process.arl" %}
 ```ocaml
 archetype voting_process
 
@@ -142,5 +141,4 @@ entry set_deadline (newdeadline : date) {
 }
 
 ```
-{% endcode %}
 

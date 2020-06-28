@@ -38,7 +38,7 @@ NIL operation ;
 
 For those who are not fluent in stack machine, here is the transcription to Archetype:
 
-```text
+```javascript
 archetype c3n
 
 /* michelson source : https://better-call.dev/main/KT1Gbu1Gm2U47Pmq9VP7ZMy3ZLKecodquAh4/script */
@@ -68,7 +68,7 @@ entry register (newadmins : ((pkey of admins) list) option, oldhash : string, ne
         var test = false;
         for admin in admins do
             if admins[admin].addr = caller then
-            test := true
+            test := true;
         done;
         require (test = true);
         hash := newhash;
@@ -81,6 +81,4 @@ entry register (newadmins : ((pkey of admins) list) option, oldhash : string, ne
     }
 }
 ```
-
-Quite straightforward, isn’t it?
 
