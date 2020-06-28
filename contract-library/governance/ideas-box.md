@@ -34,7 +34,7 @@ asset winner {
 }
 
 entry register (a_voter : address) { effect { 
-    voter.add({addr = a_voter}) 
+    voter.add({addr = a_voter}); 
 }}
 
 entry add_idea(description : string) {
