@@ -8,7 +8,7 @@ description: Ideas box voting process.
 
 An ideas box enables to vote for ideas in order to select the ideas that appeal to the maximum numbers of voters.
 
-In the process presented here, voters are each granted with a voting weight of 5 that they can attribute to the ideas of their choice: a voter can either vote for 5 ideas each with a weight of 1, or vote for 1 idea with a weight of 5. 
+In the process presented here, voters are each granted with 5 voting tokens that they can attribute to the ideas of their choice: a voter can either vote for 5 ideas each with 1 token, or vote for 1 idea with 5 tokens. 
 
 When the voting process is over, the box administrator may declare the selected ideas: the top 3 ideas are selected with the constraint that a selected idea must reach at least 6 votes.
 
