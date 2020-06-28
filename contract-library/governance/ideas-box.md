@@ -13,9 +13,9 @@ In the process presented here, voters are each granted with a voting weight of 5
 When the voting process is over, the box administrator may declare the selected ideas: the top 3 ideas are selected with the constraint that a selected idea must reach at least 6 votes.
 
 ```javascript
-archetype idea_box
+archetype ideasbox
 
-constant admin : address = @tz1
+constant admin : address = @tz1ZAQXACaEqryobpBoLbJUc2DjG5ZzrhARu
 constant expiration : date = 2020-07-22
 
 asset idea {
