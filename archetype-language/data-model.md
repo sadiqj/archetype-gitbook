@@ -242,7 +242,7 @@ effect {
 }
 ```
 
-### Aggregate
+### Summerize
 
 #### count
 
