@@ -50,7 +50,7 @@ entry vote(n : int, weight : int) {
     effect {
        if voter[caller].remaining >= weight then (
             voter[caller].remaining -= weight;
-            idea[n].nbvotes += weight
+            idea[n].nbvotes += weight;
         )
     }
 }
