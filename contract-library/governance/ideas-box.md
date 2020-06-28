@@ -65,5 +65,9 @@ entry finalize() {
         done
     }
 }
+
+specification {
+    s1 : idea.sum(nbvotes) = voter.count() * 5 - voter.sum(remaining)
+}
 ```
 
