@@ -12,7 +12,7 @@ In the process presented here, voters are each granted with a voting weight of 5
 
 When the voting process is over, the box administrator may declare the winner ideas with the maximum weights: each selected idea must at least reach a weight of 5 votes and a maximum number of 3 ideas are selected.
 
-```text
+```javascript
 archetype idea_box
 
 constant admin : address = @tz1
