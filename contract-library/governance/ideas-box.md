@@ -10,7 +10,7 @@ An ideas box enables to vote for ideas in order to select ideas that appeal to t
 
 In the process presented here, voters are each granted with a voting weight of 5 that they can attribute to the ideas of their choice: a voter can either vote for 5 ideas each with a weight of 1, or vote for 1 idea with a weight of 5. 
 
-When the voting process is over, the box administrator may declare the winner ideas with the maximum weights: each selected idea must at least reach a weight of 5 votes and a maximum number of 3 ideas are selected.
+When the voting process is over, the box administrator may declare the winner ideas with the maximum weights: each selected idea must at least reach a weight of 6 votes and a maximum number of 3 ideas are selected.
 
 ```javascript
 archetype idea_box
