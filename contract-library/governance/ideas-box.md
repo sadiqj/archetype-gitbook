@@ -15,7 +15,7 @@ When the voting process is over, the box administrator may declare the selected 
 ```javascript
 archetype ideasbox
 
-constant admin : address = @tz1ZAQXACaEqryobpBoLbJUc2DjG5ZzrhARu
+constant chairman : address = @tz1ZAQXACaEqryobpBoLbJUc2DjG5ZzrhARu
 constant expiration : date = 2020-07-22
 
 asset idea {
@@ -29,44 +29,59 @@ asset voter {
     remaining : int = 5;
 }
 
-asset winner {
+asset selected {
     wid : int;
 }
 
-entry register (a_voter : address) { effect { 
-    voter.add({addr = a_voter}); 
-}}
+entry register (a_voter : address) {
+    called by chairman
+    effect { voter.add({addr = a_voter}) }
+}
 
 entry add_idea(description : string) {
-    called by admin
-    effect { idea.add({ id = idea.count(); desc = description}) }
+    require {
+        r0 : now <= expiration - 2d;
+    }
+    effect {
+        idea.add({ id = idea.count(); desc = description})
+    }
 }
 
 entry vote(n : int, weight : int) {
+    specification {
+        p1 : let some v = voter[caller] in
+             let some bv = before.voter[caller] in
+                v.remaining = bv.remaining - weight
+             otherwise true otherwise true
+    }
     require {
         r1 : voter.contains(caller);
-        r2 : now <= expiration;
+        r2 : expiration - 2d < now <= expiration;
     }
     effect {
        if voter[caller].remaining >= weight then (
             voter[caller].remaining -= weight;
-            idea[n].nbvotes += weight;
+            idea[n].nbvotes += weight
         )
     }
 }
 
 entry finalize() {
-    called by admin
-    require { r3 : now > expiration }
+    called by chairman
+    require {
+        r3 : now > expiration;
+        r4 : selected.count() = 0; /* cannot finalize twice */
+    }
     effect {
-        for i in idea.select(the.nbvotes > 5).sort(desc(nbvotes)).head(3) do
-            winner.add({wid = i})
+        for i in idea.select(the.nbvotes >= 5).sort(desc(nbvotes)).head(3) do
+            selected.add({i})
         done
     }
 }
 
 specification {
-    s1 : idea.sum(nbvotes) = voter.count() * 5 - voter.sum(remaining)
+    i1 : 5 * voter.count() = idea.sum(nbvotes) + voter.sum(remaining)
 }
+
 ```
 
