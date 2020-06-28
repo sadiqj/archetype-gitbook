@@ -6,7 +6,7 @@ description: Ideas box voting process.
 
 ![](../../.gitbook/assets/19421048_s.jpg)  
 
-An ideas box enables to vote for ideas in order to select ideas that appeal to the maximum numbers of voters.
+An ideas box enables to vote for ideas in order to select the ideas that appeal to the maximum numbers of voters.
 
 In the process presented here, voters are each granted with a voting weight of 5 that they can attribute to the ideas of their choice: a voter can either vote for 5 ideas each with a weight of 1, or vote for 1 idea with a weight of 5. 
 
