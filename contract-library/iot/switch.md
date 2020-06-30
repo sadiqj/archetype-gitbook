@@ -106,5 +106,5 @@ The contract is available on the Carthage net to play with:
 
 {% embed url="https://you.better-call.dev/carthagenet/KT1NzLPSERC8Uwsrr8sHRgXmNQ6m724Jdw9Q/storage" %}
 
-
+This [connected online bulb](http://34.253.184.235/ui) listens to this contract ... Feel free to switch it on and off.
 
