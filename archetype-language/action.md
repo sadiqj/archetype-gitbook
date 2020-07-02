@@ -225,7 +225,7 @@ failif (transferred <= threshold)
 It is possible to declare functions with the `function` keyword. The main differences between entries and functions are:
 
 * functions return a value with the `return` keyword
-* functions _cannot_ modify the contract's storage \(they are "pure"\)
+* functions _**cannot**_ modify the contract's storage \(they are "pure"\)
 
 Typically functions may help factorize computation codes.
 
