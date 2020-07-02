@@ -227,7 +227,7 @@ It is possible to declare functions with the `function` keyword. The main differ
 * functions return a value with the `return` keyword
 * functions _**cannot**_ modify the contract's storage \(they are "pure"\)
 
-Typically functions may help factorize computation codes.
+Typically functions help factorize computation codes.
 
 ```javascript
 function get_rate (amount : tez) : rational {
