@@ -13,7 +13,7 @@ An asset field may be a container of another asset. There are two kinds of such 
 
 A partition is used when an asset _belongs_ to one and exactly one other asset. For example, say that the collection of cars is organized in different fleets so that one car asset belongs to only one fleet asset:
 
-```coffeescript
+```css
 asset car {
    vin     : string;
    model   : string;
@@ -23,22 +23,22 @@ asset car {
 
 asset fleet {
    id   : string;
-   cars : car partition;  # a car asset belongs to one fleet asset
+   cars : partition<car>; /* a car asset belongs to one fleet asset */
 }
 ```
 
 The literal for partition is `[]`.
 
-```javascript
+```css
 effect {
-   fleet.add({ "f01"; []}); // empty partition
+   fleet.add({ "f01"; []}); /* empty partition */
    fleet.add({ "f02"; [{ "YS3ED48E5Y3070016"; "mustang"; 1968; 2}]);
 }
 ```
 
 With partitions, it is not possible to modify a partitioned collection straightforwardly with the standard instructions `add` `remove` `addupdate`. Thus the following is not authorized:
 
-```coffeescript
+```css
 effect {
    car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
 }
@@ -59,7 +59,7 @@ The proper way to modify the car collection is through the `cars` partition of a
 * `remove`
 * `clear`
 
-```bash
+```css
 effect {
    fleet["f01"].cars.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    fleet["f01"].cars.addupdate("3VWCK21Y33M306146", { model = "escort"; 
@@ -76,7 +76,7 @@ The above instruction fails if the `fleet` collection does not contain `f01` or 
 
 When updating an asset with a partition field it is possible to add or remove assets with the `+=` and `-=` operators: 
 
-```javascript
+```css
 effect {
    fleet.update("f01", { cars += [{ "2HGFG11879H508413", "explorer", 2000, 4 }] });
    fleet.update("f02", { cars -= [ "YS3ED48E5Y3070016" ] });
@@ -91,7 +91,7 @@ Same for `-=`, it is equivalent to a `remove` instruction. Hence it does _**not*
 
 `aggregate` is used to _reference_ some assets. For example, say that a car may be driven by several drivers; the driver asset may refer to several cars through an `aggregate`:
 
-```coffeescript
+```css
 asset car {
    vin     : string;
    model   : string;
@@ -101,15 +101,15 @@ asset car {
 
 asset driver {
    id     : string;
-   drives : car aggregate;  
+   drives : aggregate<car>;  
 }
 ```
 
 The literal for `aggregate` is `[]`. Aggregates are built with the _keys_ of assets to reference. 
 
-```javascript
+```css
 effect {
-   driver.add({ "d01"; [] }); // empty aggregate
+   driver.add({ "d01"; [] }); /* empty aggregate */
    driver.add({ "d02"; [ "YS3ED48E5Y3070016"; "3VWCK21Y33M306146" ] });
 }
 ```
@@ -122,10 +122,10 @@ The above fails if a key is not present in the car collection. It means that you
 
 The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key:
 
-```javascript
+```css
 effect {
-   driver["f01"].drives.add("YS3ED48E5Y3070016"); // fails if car collection 
-                                                  // does not contain YS3ED48E5Y3070016
+   driver["f01"].drives.add("YS3ED48E5Y3070016"); /* fails if car collection 
+                                                     does not contain YS3ED48E5Y3070016 */
 }
 ```
 
@@ -133,14 +133,14 @@ effect {
 
 The `remove` instruction removes a reference from an aggregate. It _fails_ if the key is not in the aggregate.
 
-```javascript
+```css
 effect {
    car.clear();
    car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    driver["f01"].drives.add("YS3ED48E5Y3070016");
-   // now remove it
+   /* now remove it */
    driver["f01"].drivers.remove("YS3ED48E5Y3070016");
-   // this does not remove it from the car collection
+   /* this does not remove it from the car collection */
    if car.contains("YS3ED48E5Y3070016") then transfer 1tz to coder;
 }
 ```
@@ -149,7 +149,7 @@ effect {
 
 The `removeall` instruction removes all references in the aggregate, which is empty as a result.
 
-```javascript
+```css
 effect {
    driver["f01"].drivers.removeall();
 }
@@ -159,7 +159,7 @@ effect {
 
 When updating an asset with an aggregate field, it is possible to specify whether to add or remove asset references with the `+=` and `-=` operators: 
 
-```javascript
+```css
 effect {
    driver.update("d01", { drives += [ "2HGFG11879H508413" ]);
    driver.update("d02", { drives -= [ "YS3ED48E5Y3070016" ]);
@@ -172,12 +172,12 @@ Note that it is still possible to write the car collection straightforwardly wit
 
 Aggregates are _not synchronized_ though, which means that it is possible to refer to an asset that does not exist anymore, as illustrated below:
 
-```javascript
+```css
 effect {
    car.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    driver["f01"].drives.add("YS3ED48E5Y3070016");
-   car.remove("YS3ED48E5Y3070016"); // at this point, driver f01's drives aggregate
-                                    // refers to a non existant asset 
+   car.remove("YS3ED48E5Y3070016"); /* at this point, driver f01's drives aggregate
+                                       refers to a non existant asset */
 }
 ```
 
