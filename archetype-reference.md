@@ -101,6 +101,7 @@ transition to_fail () {
 
 * `bool` : boolean values
 * `int` : integer values 
+* `nat` : positive integers
 * `rational` : floating value that can be expressed as the quotient or fraction of two integers 
 * `address` : account address
 * `role` : an address that can be used in action's called by section
@@ -384,7 +385,7 @@ failif(val <= 0);
 
 * `boolean`
 
-```c
+```javascript
 constant x : bool = true
 constant y : bool = false
 ```
@@ -460,8 +461,6 @@ constant op2 : int option = some(0)
 ```c
 constant bl : bytes = 0x12f12354356a 
 ```
-
-
 
 ### Operators
 
@@ -770,82 +769,41 @@ var v : bytes = pack("archetype")
 var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
 ```
 
-### 
-
 ### List
 
 * `contains`
 
 ```javascript
-archetype expr_list_contains
-
-variable res : bool = false
-
-entry exec () {
-  specification {
-    s0: res = true;
-  }
-  effect {
+effect {
     var l : string list = ["1"; "2"; "3"];
-    res := contains(l, "2")
-  }
+    res := contains(l, "2");
 }
-
 ```
 
 * `count` 
 
 ```javascript
-archetype expr_list_count
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
+effect {
     var l : string list = ["1"; "2"; "3"];
-    res := count(l)
-  }
+    res := count(l);
 }
-
 ```
 
 * `nth` 
 
 ```javascript
-archetype expr_list_nth
-
-variable res : string = ""
-
-entry exec () {
-  specification {
-    s0: res = "2";
-  }
-  effect {
+effect {
     var l : string list = ["1"; "2"; "3"];
-    res := nth(l, 1)
-  }
+    res := nth(l, 1);
 }
-
 ```
 
 * `prepend` adds an element to a list at the first position. 
 
 ```javascript
-archetype expr_list_prepend
-
-variable res : string list = []
-
-entry exec () {
-  specification {
-    s0: res = ["0"; "1"; "2"; "3"];
-  }
-  effect {
+effect {
     var l : string list = ["1"; "2"; "3"];
     res := prepend(l, "0");
-  }
 }
 ```
 
