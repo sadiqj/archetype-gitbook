@@ -58,7 +58,9 @@ effect {
 
 ## Sets
 
-Sets are containers of unique objects. It is possible to add and remove an object, test if an object is in a set, and know the number of elements in a set. Sets may currently contain only builtin types: `int` `nat` `string` `bytes` `tez` `bool` `key_hash` `date` `duration` and `address`.
+Sets are containers of unique objects. It is possible to add and remove an object, test if an object is in a set, and know the number of elements in a set. 
+
+Sets may currently contain only builtin types: `int` `nat` `string` `bytes` `tez` `bool` `key_hash` `date` `duration` and `address`.
 
 Sets are built with `[ ; ]`:
 
@@ -103,4 +105,61 @@ effect {
 ```
 
 ## Maps
+
+Maps are collections of pairs \(key, value\). It is possible to retrieve efficiently the value associated to a key.
+
+Key values may currently be only builtin types : `int` `nat` `string` `bytes` `tez` `bool` `key_hash` `date` `duration` and `address`. Values may be any type, except assets.
+
+Maps are built with `[ ( , ) ;  ]`:
+
+```javascript
+variable m : map<int,string> = [ (0,"a string"); (1,"another string") ]
+```
+
+The `map_put` operator returns a map with a new pair \(key,value\) if the key is not associated in the argument map. It returns the same map otherwise.
+
+```javascript
+effect {
+  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m2 = map_put(m, 2, "and another ...");
+}
+```
+
+The `map_remove` operator returns a map that does not pair the argument key.
+
+```javascript
+effect {
+  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m2 = map_remove(m, 0); /* [ (1,"another string") ] */
+}
+```
+
+The `[ ]`operator returns an option of the value associated to the argument key.
+
+```javascript
+effect {
+  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var v = m[1]; /* some("another string") */
+  var v = m[42]; /* none */
+}
+```
+
+The `map_contains` operator returns true if the map associates a value to the argument key, false otherwise.
+
+```javascript
+effect {
+  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var t = map_contains(m, 0);  /* true */
+  var v = map_contains(m, 42); /* false */
+}
+```
+
+The `map_length` operator returns the number of pairs in the map.
+
+```javascript
+effect {
+  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var l = map_length(m); /* 2 */
+}
+```
 
