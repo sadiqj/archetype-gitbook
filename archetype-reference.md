@@ -117,13 +117,13 @@ transition to_fail () {
 
 ## Composite types
 
-* `*` declares a tuple made of other types.
+* `*` is the type of tuples.
 
 ```c
 constant pair : int * string = (1, "astr")
 ```
 
-* `option` declares an option of type.
+* `option` is the type of optional value.
 
 ```csharp
 constant value : option<int> = none
@@ -181,6 +181,12 @@ It is then possible to declare a variable of type _color_:
 
 ```css
 variable c : color = Green
+```
+
+* `entrysig` is the type of contract entry point signature.
+
+```css
+variable b : option<entrysig<nat>> = entrypoint(anaddress,"getbalce")
 ```
 
 * `contract` declares the signature of another existing contract to call in actions.
@@ -381,11 +387,11 @@ entry update_value(n : int) {
 fail("a message");
 ```
 
-* `require` and `failif` fail if the argument condition is respectively false and true. `require(t)` is  sugar for `if t then fail("")`.
+* `dorequire` and `dofailif` fail if the argument condition is respectively false and true. `dorequire(t)` is  sugar for `if t then fail("")`.
 
 ```c
-require(val > 0);
-failif(val <= 0);
+dorequire(val > 0);
+dofailif(val <= 0);
 ```
 
 ## Expressions
@@ -779,7 +785,7 @@ var s : string option = unpack<string>(0x050100000009617263686574797065) // some
 * `entrypoint`
 
 ```cpp
-variable e : option<entrysig<nat>> = entrypoint(@KT1,"getbalance")
+variable e : option<entrysig<nat>> = entrypoint(anaddress,"getbalance")
 ```
 
 ### Option
