@@ -254,41 +254,23 @@ d += 3w; // d := i + 3w, date d is now previous d plus 3 weeks
 
 ### Effects on asset collection
 
-* `add` enables to add an asset to an asset collection. It fails if the asset key is already present in the collection.
-
-```javascript
-an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' example
-```
-
-* `update` enables to update an existing asset; it takes as arguments the id of the asset to update and the list of effects on the asset. It fails if the id is not present in the asset collection.
-
-```javascript
-an_asset.update("RJRUEQDECSTG", { a_value += 3 });
-```
-
-* `addupdate` is similar to update except that it adds the asset if its identifier is not present in the collection.
-
-```javascript
-an_asset.addupdate("RJRUEQDECSTG", { a_value += 3 });
-```
-
-* `remove` removes a an asset from its collection. 
-
-```javascript
-an_asset.remove("RJRUEQDECSTG");
-```
-
-* `removeif` enables removing assets under a condition.
+* `add` : adds an asset to an asset collection \(fails if the asset key is already present in the collection\)
+* `update` : updates an asset \(fails if the id is not present in the asset collection\)
+* `addupdate` is similar to update except that it adds the asset only if its identifier is not present in the collection
+* `remove` removes an asset from its collection \(does not fail\).
+* `removeif` enables removing assets under a condition
+* `clear` clears an asset collection
 
 ```c
+an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' example
+an_asset.update("RJRUEQDECSTG", { a_value += 3 });
+an_asset.addupdate("RJRUEQDECSTG", { a_value += 3 });
+an_asset.remove("RJRUEQDECSTG");
 an_asset.removeif(a_val > 10); // "a_val" is an asset field
-```
-
-* `clear` clears an asset collection.
-
-```javascript
 an_asset.clear();
 ```
+
+See [Assets](archetype-language/data-model.md) section for details.
 
 ### Control
 
@@ -396,59 +378,171 @@ dofailif(val <= 0);
 
 ## Expressions
 
-### Literals
-
-* `boolean`
+### bool
 
 ```javascript
 constant x : bool = true
 constant y : bool = false
 ```
 
-* `integer`
+* `and` 
+* `or` 
+* `not` 
+* `=`
+* `<>`
+
+```javascript
+var b1 = (true and false);
+var b2 = (true or false);
+var b3 = not true;
+var b4 = true = false;
+var b5 = true <> false;
+```
+
+### nat
+
+```javascript
+constant i : nat = 1
+constant j : nat = 42
+```
+
+* `+` `-` `*` `div` `%` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var n1 = 1 + 2; 
+var i1 : int = 1 - 2; /* difference of nats return an integer value */
+var n2 = 3 * 4;
+var n3 = 45 div 2; /* 22 (euclidean division) */
+var n4 = 45 % 2; /* 1 (modulo) */ 
+var n5 = min(5, 6);
+```
+
+### int
 
 ```c
 constant i : int = 1
 constant j : int = -42
 ```
 
-* `rational`
+* `+` `-` `*` `div` `%` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max` `abs`
+
+```javascript
+var a : int = 1;
+var b : int = 2;
+var c : int = 3;
+var d : int = 4;
+var i1 = a + b; 
+var i2 = b - a;
+var i3 = c * d;
+var i4 = d div c; 
+var n1 = d % c; 
+var i5 = max(6, 8);
+var i6 = abs(-6);
+```
+
+### rational
 
 ```c
 constant f : rational = 1.1
 constant g : rational = -1.1
-constant r : rational = 2 div 6
-constant t : rational = -2 div 6
+constant r : rational = 2 / 6
+constant t : rational = -2 / 6
 ```
 
-* `string`
+* `+` `-` `*` `/`  
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max` `abs` `floor` `ceil`
+
+```javascript
+var b1 = (1 / 2) <> 2;
+var b2 =  1 <> (2 / 3);
+var b3 = (1 / 2) = (2 / 4);
+var b4 = (1 / 2) < (2 / 4);
+var r1 = (4 / 5) + (7 / 6);
+var r2 = 3 + (1 / 2);
+var r3 = (4 / 3) * (3 / 4);
+var r4 = (8 / 9) / (3 / 7);
+var i1 = floor(5 / 3);  // int 1
+var i2 = floor(-5 / 3); // int -2
+var i3 = ceil(5 / 3);   // int 2
+var i4 = ceil(-5 / 3);  // int -1
+```
+
+### string
 
 ```c
 constant s : string = "hello world"
 ```
 
-* `tez`
+* `concat` `+`
+* `slice`
+* `str_length`
+* `<` `>` `=` `<>` `<=` `>=`
 
-```c
+```javascript
+var s1 = "str1" + "str2"; /* concat */
+var s2 = slice("abcdef", 1, 2);
+var l = str_length("archetype");
+var b1 = "a" <> "b";
+var b2 = "a" < "b";
+```
+
+### tez
+
+```css
 constant ctz  : tez = 1tz
 constant cmtz : tez = 1mtz
 constant cutz : tez = 1utz
 ```
 
-* `address` / `role`
+* `+` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var b1 = 1tz <= 2tz;
+var b2 = 1tz < 2tz;
+var b3 = 1tz <> 2tz;
+var t1 = 1tz + 1tz;
+var t2 = 2 * 4tz;
+var t3 = 1/2 * 8tz;
+```
+
+### address
 
 ```c
 constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 ```
 
-* `duration`
+* `=` `<>` 
+
+```javascript
+var b1 = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+```
+
+### duration
 
 ```c
 // duration of 3 weeks 8 days 4 hours 34 minutes 18 seconds
 constant d : duration = 3w8d4h34m18s 
 ```
 
-* `date`
+* `+` `-` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var b1 = 1h > 2h;
+var b2 = 1h >= 2h;
+var d1 = 1h + 2s;
+var d2 = 1h - 2s; /* absolute value */
+```
+
+### date
 
 ```c
 constant date0 : date = 2019-01-01                
@@ -458,179 +552,156 @@ constant date3 : date = 2019-01-01T00:00:00+01:00
 constant date4 : date = 2019-01-01T00:00:00-05:30 
 ```
 
-* `list`
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
 
-```c
-constant mylist : int list = [1; 2; 3]
+```javascript
+var b1 = 2020-01-01 > 2020-12-31;
+var b2 = 2020-01-01 >= 2020-12-31;
+var d1 = 2020-01-01 + 1d;
+var d2 = 2020-01-01 - 1d;
 ```
 
-* `option`
+### bytes
+
+```c
+constant bl : bytes = 0x12f12354356a 
+```
+
+* `slice`
+* `concat`
+* `=` `<>`
+* `blake2b` `sha256` `sha512` 
+* `pack` `unpack`
+
+```javascript
+var b1  = concat(0x12, 0xef);
+var b2  = slice(0xabcdef01, 1, 2);
+var h1 = blake2b(0x050100000009617263686574797065);
+var h2 = sha256(0x050100000009617263686574797065);
+var h3 = sha512(0x050100000009617263686574797065);
+var b3 = pack("archetype");
+var s : string option = unpack<string>(0x050100000009617263686574797065);
+```
+
+### option
 
 ```c
 constant op1 : int option = none
 constant op2 : int option = some(0)
 ```
 
-* `bytes`
+* `issome`
+* `isnone`
+* `getopt`
 
-```c
-constant bl : bytes = 0x12f12354356a 
+```css
+effect {
+    var t1 : bool = isnone(none);
+    var t2 : bool = issome(some(1));
+    var i  : int = getopt(some(1)); /* i = 1 */
+}
 ```
 
-### Operators
+### list
 
-#### Logical
+* `contains`
+* `count`
+* `nth`
+* `prepend`
 
-* `and` operator of logical conjunction
-
-```javascript
-var bool_bool_and : bool = (true and false);
+```css
+effect {
+    var l : string list = ["1"; "2"; "3"];
+    var t1 = contains(l, "2");
+    var t2 = count(l);
+    var n  = nth(l);
+    var p  = prepend(l,"0");
+}
 ```
 
-* `or` operator of logical disjunction
+### set
 
-```javascript
-var bool_bool_or  : bool = (true or false);
+* `set_add`
+* `set_remove`
+* `set_contains`
+* `set_length`
+
+```css
+effect {
+    var my_set : set<int> = [0; 1 ; 2; 3];
+    var new_set2 : set<int> = set_add(my_set, 4);
+    var new_set3 : set<int> = set_remove(my_set, 0);
+    var set_c    : bool     = set_contains(my_set, 2);
+    var c        : int      = set_length(my_set);
+}
 ```
 
-* `not` operator of logical negation
+### map
 
-```javascript
-var bool_bool_not : bool = not true;
+* `map_put`
+* `map_remove`
+* `[]`
+* `map_getopt`
+* `map_contains`
+* `map_length`
+
+```css
+effect {
+    var my_map : map<string, int> = [ ("k0", 3) ;
+                                      ("k1", 2) ;
+                                      ("k2", 1) ;
+                                      ("k3", 0) ];
+    var new_map1 : map<string, int> = map_put(my_map, "k4", 4);
+    var new_map2 : map<string, int> = map_remove(my_map, "k0");
+    var new_map3 : option<int>      = my_map["k0"];
+    var new_map4 : int              = map_getopt(my_map, "k0");
+    var map_c    : bool             = map_contains(my_map, "k0");
+    var map_l    : int              = map_length(my_map);
+}
 ```
 
-* `=` 
+### asset 
 
-```javascript
-var int_int_eq   : bool = 1 = 2;
-var rat_int_eq   : bool = (1 / 2) = 2;
-var int_rat_eq   : bool = 1 = (2 / 3);
-var rat_rat_eq   : bool = (1 / 3) = (2 / 3);
-var tez_tez_eq   : bool = 1tz = 2tz;
-var dur_dur_eq   : bool = 1h = 2h;
-var date_date_eq : bool = 2020-01-01 = 2020-12-31;
-var bool_bool_eq : bool = true = false;
-var addr_addr_eq : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
-var str_str_eq   : bool = "a" = "b";
-```
+* `contains`
+* `count`
+* `nth`
+* `head`
+* `tail`
+* `select`
+* `sort`
+* `sum`
 
-* `<>` 
+```css
+archetype expr_method_asset_contains
 
-```javascript
-var int_int_ne   : bool = 1 <> 2;
-var rat_int_ne   : bool = (1 / 2) <> 2;
-var int_rat_ne   : bool = 1 <> (2 / 3);
-var rat_rat_ne   : bool = (1 / 2) <> (2 / 3);
-var tez_tez_ne   : bool = 1tz <> 2tz;
-var dur_dur_ne   : bool = 1h <> 2h;
-var date_date_ne : bool = 2020-01-01 <> 2020-12-31;
-var bool_bool_ne : bool = true <> false;
-var addr_addr_ne : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
-var str_str_ne   : bool = "a" <> "b";
-```
+asset my_asset identified by id {
+  id    : string;
+  value : int;
+} initialized by {
+  {"id0"; 0};
+  {"id1"; 1};
+  {"id2"; 2}
+}
 
-* `<` 
+variable res : bool = false
 
-```javascript
-var int_int_lt   : bool = 1 < 2;
-var rat_int_lt   : bool = (1 / 2) < 2;
-var int_rat_lt   : bool = 1 < (2 / 3);
-var rat_rat_lt   : bool = (1 / 2) < (2 / 3);
-var tez_tez_lt   : bool = 1tz < 2tz;
-var dur_dur_lt   : bool = 1h < 2h;
-var date_date_lt : bool = 2020-01-01 < 2020-12-31;
-```
-
-* `<=` 
-
-```javascript
-var int_int_le   : bool = 1 <= 2;
-var rat_int_le   : bool = (1 / 2) <= 2;
-var int_rat_le   : bool = 1 <= (2 / 3);
-var rat_rat_le   : bool = (1 / 2) <= (2 / 3);
-var tez_tez_le   : bool = 1tz <= 2tz;
-var dur_dur_le   : bool = 1h <= 2h;
-var date_date_le : bool = 2020-01-01 <= 2020-12-31;
-```
-
-* `>` 
-
-```javascript
-var int_int_gt   : bool = 1 > 2;
-var rat_int_gt   : bool = (1 / 2) > 2;
-var int_rat_gt   : bool = 1 > (2 / 3);
-var rat_rat_gt   : bool = (1 / 2) > (2 / 3);
-var tez_tez_gt   : bool = 1tz > 2tz;
-var dur_dur_gt   : bool = 1h > 2h;
-var date_date_gt : bool = 2020-01-01 > 2020-12-31;
-```
-
-* `>=` 
-
-```javascript
-var int_int_ge   : bool = 1 >= 2;
-var rat_int_ge   : bool = (1 / 2) >= 2;
-var int_rat_ge   : bool = 1 >= (2 / 3);
-var rat_rat_ge   : bool = (1 / 2) >= (2 / 3);
-var tez_tez_ge   : bool = 1tz >= 2tz;
-var dur_dir_ge   : bool = 1h >= 2h;
-var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
-```
-
-### Arithmetic
-
-* `+` 
-
-```javascript
-var int_int_plus   : int      = 1 + 2;
-var rat_rat_plus   : rational = 1.1 + 1.2;
-var int_rat_plus   : rational = 1 + 1.2;
-var rat_int_plus   : rational = 1.1 + 2;
-var dur_dur_plus   : duration = 1h + 2s;
-var date_dur_plus  : date     = 2020-01-01 + 1d;
-var dur_date_plus  : date     = 1d + 2020-01-01;
-var str_str_plus   : string   = "str1" + "str2"; (* concat *)
-var tez_tez_plus   : tez      = 2tz + 1tz;
-```
-
-* `-` 
-
-```javascript
-var int_int_minus   : int       = 1 - 2;
-var rat_rat_minus   : rational  = 1.1 - 1.2;
-var int_rat_minus   : rational  = 1 - 1.2;
-var rat_int_minus   : rational  = 1.1 - 2;
-var date_date_minus : duration  = 2020-01-01 - 2019-12-31; (* absolute value *)
-var dur_dur_minus   : duration  = 1h - 2s; (* absolute value *)
-var date_dur_minus  : date      = 2020-01-01 - 1d;
-var tez_tez_minus   : tez       = 2tz - 1tz;
-```
-
-* `*` 
-
-```javascript
-var int_int_mult   : int      = 1 * 2;
-var rat_rat_mult   : rational = 1.1 * 1.2;
-var int_rat_mult   : rational = 1 * 1.2;
-var rat_int_mult   : rational = 1.1 * 2;
-var int_dur_mult   : duration = 2 * 1h;
-var int_tez_mult   : tez      = 1 * 1tz;
-var rat_tez_mult   : tez      = 1.1 * 1tz;
-```
-
-* `/` 
-
-```javascript
-var int_int_div    : rational = 1 / 2;
-var rat_rat_div    : rational = 1.1 / 1.2;
-var int_rat_div    : rational = 1 / 1.2;
-var rat_int_div    : rational = 1.1 / 2;
-```
-
-* `%` 
-
-```javascript
-var int_int_modulo : nat = 1 % 2;
+entry exec () {
+  specification {
+    s0 : res = true;
+  }
+  effect {
+    var t = my_asset.contains("id0");
+    var c = my_asset.count();
+    var n = my_asset.nth(1);
+    var l1 = my_asset.head(3);
+    var l2 = my_asset.tail(2);
+    var l3 = my_asset.select(the.id < "id2");
+    var l4 = my_asset.sort(value);
+    var l5 = my_asset.sort(v1, asc(v2), desc (v3));
+    var s = my_asset.sum(value);
+  }
+}
 ```
 
 ### Constants
@@ -681,224 +752,6 @@ transition mytr () {
   to Second
   with effect {
     require (state = First)
-  }
-}
-```
-
-### Built-in functions
-
-* `min` 
-
-```javascript
-var int_int_min   : int  = min(1, 2);
-var rat_int_min   : rat  = min(1 / 2, 1);
-var int_rat_min   : rat  = min(2, 1 / 3);
-var rat_rat_min   : rat  = min(1 / 2, 1 / 3);
-var date_date_min : date = min(2020-01-01, 2020-12-31);
-var dur_dur_min   : dur  = min(1h, 1s);
-var tez_tez_min   : tez  = min(1tz, 2tz);
-```
-
-* `max` 
-
-```javascript
-var int_int_max   : int  = max(1, 2);
-var rat_int_max   : rat  = max(1 / 2, 1);
-var int_rat_max   : rat  = max(2, 1 / 3);
-var rat_rat_max   : rat  = max(1 / 2, 1 / 3);
-var date_date_max : date = max(2020-01-01, 2020-12-31);
-var dur_dur_max   : dur  = max(1h, 1s);
-var tez_tez_max   : tez  = max(1tz, 2tz);
-```
-
-* `abs` 
-
-```javascript
-var int_abs : int = abs(-1);
-var rat_abs : rat = abs(-1 / 2);
-```
-
-* `concat`
-
-```javascript
-var str_concat : string = concat("abc", "def");
-var byt_concat : bytes  = concat(0x12, 0xef);
-```
-
-* `slice`
-
-```javascript
-var str_slice : string = slice("abcdef", 1, 2);
-var byt_slice : bytes  = slice(0xabcdef01, 1, 2);
-```
-
-* `length`
-
-```javascript
-var str_length : int = length("abcdef");
-```
-
-* `floor`
-
-```javascript
-var pos_floor : int = floor(5 / 3);  // 1
-var neg_floor : int = floor(-5 / 3); // -2
-```
-
-* `ceil`
-
-```javascript
-var pos_ceil : int = ceil(5 / 3);  // 2
-var neg_ceil : int = ceil(-5 / 3); // -1
-```
-
-* `blake2b`
-
-```javascript
-var h : bytes = blake2b(0x050100000009617263686574797065);
-```
-
-* `sha256`
-
-```javascript
-var h : bytes = sha256(0x050100000009617263686574797065);
-```
-
-* `sha512`
-
-```javascript
-var h : bytes = sha512(0x050100000009617263686574797065);
-```
-
-* `pack`
-
-```javascript
-var v : bytes = pack("archetype")
-```
-
-* `unpack`
-
-```javascript
-var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
-```
-
-* `entrypoint`
-
-```cpp
-variable e : option<entrysig<nat>> = entrypoint(anaddress,"getbalance")
-```
-
-### Option
-
-* `issome`
-* `isnone`
-* `getopt`
-
-```css
-effect {
-    var t1 : bool = isnone(none);
-    var t2 : bool = issome(some(1));
-    var i  : int = getopt(some(1)); /* i = 1 */
-}
-```
-
-### List
-
-* `contains`
-* `count`
-* `nth`
-* `prepend`
-
-```css
-effect {
-    var l : string list = ["1"; "2"; "3"];
-    var t1 = contains(l, "2");
-    var t2 = count(l);
-    var n  = nth(l);
-    var p  = prepend(l,"0");
-}
-```
-
-### Set
-
-* `set_add`
-* `set_remove`
-* `set_contains`
-* `set_length`
-
-```css
-effect {
-    var my_set : set<int> = [0; 1 ; 2; 3];
-    var new_set2 : set<int> = set_add(my_set, 4);
-    var new_set3 : set<int> = set_remove(my_set, 0);
-    var set_c    : bool     = set_contains(my_set, 2);
-    var c        : int      = set_length(my_set);
-}
-```
-
-### Map
-
-* `map_put`
-* `map_remove`
-* `[]`
-* `map_getopt`
-* `map_contains`
-* `map_length`
-
-```css
-effect {
-    var my_map : map<string, int> = [ ("k0", 3) ;
-                                      ("k1", 2) ;
-                                      ("k2", 1) ;
-                                      ("k3", 0) ];
-    var new_map1 : map<string, int> = map_put(my_map, "k4", 4);
-    var new_map2 : map<string, int> = map_remove(my_map, "k0");
-    var new_map3 : option<int>      = my_map["k0"];
-    var new_map4 : int              = map_getopt(my_map, "k0");
-    var map_c    : bool             = map_contains(my_map, "k0");
-    var map_l    : int              = map_length(my_map);
-}
-```
-
-### Asset Collection
-
-* `contains`
-* `count`
-* `nth`
-* `head`
-* `tail`
-* `select`
-* `sort`
-* `sum`
-
-```css
-archetype expr_method_asset_contains
-
-asset my_asset identified by id {
-  id    : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : bool = false
-
-entry exec () {
-  specification {
-    s0 : res = true;
-  }
-  effect {
-    var t = my_asset.contains("id0");
-    var c = my_asset.count();
-    var n = my_asset.nth(1);
-    var l1 = my_asset.head(3);
-    var l2 = my_asset.tail(2);
-    var l3 = my_asset.select(the.id < "id2");
-    var l4 = my_asset.sort(value);
-    var l5 = my_asset.sort(v1, asc(v2), desc (v3));
-    var s = my_asset.sum(value);
   }
 }
 ```
