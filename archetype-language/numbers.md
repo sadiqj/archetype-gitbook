@@ -1,5 +1,7 @@
 ---
-description: 'Two types of numbers are available in Archetype: integers and rationals'
+description: >-
+  Three types of numbers are available in Archetype: integers, naturals and
+  rationals
 ---
 
 # Numbers, Casts
@@ -10,9 +12,9 @@ Integers are defined as follows:
 
 ```javascript
 effect {
-  var n1 := 345;
-  var n2 := -5;
-  var n3 := 99999999999999999999999999999999999999999999999999999999999999999;
+  var n1 = 345;
+  var n2 = -5;
+  var n3 = 99999999999999999999999999999999999999999999999999999999999999999;
 }
 ```
 
@@ -31,6 +33,23 @@ variable amount : int := 5 with {
 ```
 
 This property will be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
+
+## Naturals
+
+Naturals are positive integers. They are defined as follows:
+
+```javascript
+effect {
+  var n1 : nat = 345;
+  var n2 : nat = 99999999999999999999999999999999999999999999999999999999999999;
+}
+```
+
+Note that it is necessary to specify the `nat` type in the `var` declaration, otherwise you end up with an integer.
+
+
+
+
 
 ## Tezis
 
