@@ -8,19 +8,20 @@ This archetype defines a basic voting process. The chairman is responsible for r
 
 The result of the vote is computed with the `bury` action: winners are ballots with the highest number of votes.
 
-```ocaml
+```css
 archetype voting_process
 
 variable chairperson : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 variable chairperson_tmp : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-(* vote start *)
+/* vote start */
 variable startDate : date = 2019-11-12T00:00:00
 
-(* vote deadline *)
+/* vote deadline */
 variable deadline : date = 2020-11-12T00:00:00
 
+/* assets */
 asset voter identified by addr {
   addr : role;
   hasVoted : bool
@@ -35,7 +36,7 @@ asset winner {
   winvalue : string
 }
 
-(* state machine *)
+/* state machine */
 states =
  | Created initial with { s1 : winner.isempty(); }
  | Voting          with { s2 : winner.isempty(); }

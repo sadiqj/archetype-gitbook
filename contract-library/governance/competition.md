@@ -8,15 +8,15 @@ The competition archetype defines a process that enables a competitor to submit 
 
 The decision process specified in the decide transaction allocates the prize to the top 3 scores. Allocation policy manages the situations where less than 3 competitors have submitted a score.
 
-```ocaml
+```css
 archetype competition
 
 variable organizer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-(* start date *)
+/* start date */
 variable startdate : date = 2019-11-12T00:00:00
 
-(* deadline *)
+/* deadline */
 variable deadline : date = 2020-11-12T00:00:00
 
 variable prize : tez = 3500tz
@@ -29,7 +29,7 @@ asset submission {
   timestamp  : date;
 }
 
-(* state machine *)
+/* state machine */
 states =
  | Created     initial
  | InProgress
