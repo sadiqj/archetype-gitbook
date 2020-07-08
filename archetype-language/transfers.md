@@ -60,13 +60,15 @@ effect {
    var avopt : option<entrysig<int * int>> = entrypoint(c,"addvalue");
    if issome(ct) then (
       var av = getopt(ctopt);
-      transfer 0tz to entry av(3,2)
+      transfer 0tz to entry av(3, 2);
    )
    else fail("no contract found or no entrypoint 'createtoken' found")
 }
 ```
 
 Note that the type of `ctopt` \(line 2 above\) is _mandatory_, since the typer cannot infer its type from `entrypoint` operator. 
+
+Note at last the `to entry` syntax of the `transfer` instruction which is used in the case of an inlined entry point.
 
 ### Callbacks to _self_
 
@@ -107,6 +109,4 @@ entry getFoo(asender : address) {
 
 entry setFoo(v : int) { foo := v }
 ```
-
-
 
