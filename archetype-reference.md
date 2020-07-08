@@ -772,44 +772,30 @@ var s : string option = unpack<string>(0x050100000009617263686574797065) // some
 ### List
 
 * `contains`
+* `count`
+* `nth`
+* `prepend`
 
 ```css
 effect {
     var l : string list = ["1"; "2"; "3"];
-    res := contains(l, "2");
-}
-```
-
-* `count` 
-
-```css
-effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := count(l);
-}
-```
-
-* `nth` 
-
-```css
-effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := nth(l, 1);
-}
-```
-
-* `prepend` adds an element to a list at the first position. 
-
-```css
-effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := prepend(l, "0");
+    var t1 = contains(l, "2");
+    var t2 = count(l);
+    var n  = nth(l);
+    var p  = prepend(l,"0");
 }
 ```
 
 ### Asset Collection
 
-* `contains` 
+* `contains`
+* `count`
+* `nth`
+* `head`
+* `tail`
+* `select`
+* `sort`
+* `sum`
 
 ```css
 archetype expr_method_asset_contains
@@ -830,81 +816,16 @@ entry exec () {
     s0 : res = true;
   }
   effect {
-    res := my_asset.contains("id0")
+    var t = my_asset.contains("id0");
+    var c = my_asset.count();
+    var n = my_asset.nth(1);
+    var l1 = my_asset.head(3);
+    var l2 = my_asset.tail(2);
+    var l3 = my_asset.select(the.id < "id2");
+    var l4 = my_asset.sort(value);
+    var l5 = my_asset.sort(v1, asc(v2), desc (v3));
+    var s = my_asset.sum(value);
   }
-}
-```
-
-* `count` 
-
-```css
-effect {
-    res := my_asset.count()
-}
-```
-
-* `nth` 
-
-```css
-effect {
-    var a = my_asset.nth(1);
-    res := a.value
-}
-```
-
-* `head` 
-
-```css
-effect {
-    var l = my_asset.head(2);
-    var a = l.nth(1);
-    res := a.value
-}
-```
-
-* `tail` 
-
-```css
-effect {
-    var l = my_asset.tail(2);
-    var a = l.nth(0);
-    res := a.value
-}
-```
-
-* `select` 
-
-```css
-effect {
-    var l = my_asset.select(the.id = "id2");
-    var a = l.nth(0);
-    res := a.value
-}
-```
-
-* `sort` 
-
-```css
-effect {
-    var l = my_asset.sort(value);
-    var a = l.nth(0);
-    res := a.value
-}
-```
-
-you can also sort with several criteria
-
-```css
-effect {
-    var res = my_asset.sort(v1, asc(v2), desc (v3)) /* res = ["id0"; "id3", "id1", "id2"] */
-}
-```
-
-* `sum` 
-
-```css
-effect {
-    res := my_asset.sum(value) /* res = 3 */
 }
 ```
 
