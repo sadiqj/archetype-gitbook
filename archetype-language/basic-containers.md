@@ -71,15 +71,36 @@ The `set_contains` operator returns true if an element is an element of the set,
 ```javascript
 effect {
   var s : set<int> = [0; 1 ; 2; 3];
-  var t : bool     = set_contains(s, 2); /* t = true */
+  var t : bool     = set_contains(s, 2); /* true */
 }
 ```
 
-The `set_add` operator returns a set with an extra element if the element is not already in the argument set.
+The `set_add` operator returns a set with an extra element if the element is not already in the argument set. It returns the same set if the element is already in the set. 
 
-The `set_remove` operator returns a set with an element removed if the element was present in the argument set .
+```javascript
+effect {
+  var s : set<int> = [0; 1 ; 2; 3];
+  var s1 = set_add(s, 5); /* [0; 1 ; 2; 3; 5] */
+}
+```
+
+The `set_remove` operator returns a set with an element removed if the element was present in the argument set . It returns the same set if the element is not in the set.
+
+```javascript
+effect {
+  var s : set<int> = [0; 1 ; 2; 3];
+  var s1 = set_remove(s, 2); /* [0; 1 ; 3] */
+}
+```
 
 The `set_length` operator returns the number of elements in the set.
+
+```javascript
+effect {
+  var s : set<int> = [0; 1 ; 2; 3];
+  var l = set_length(s); /* 4 */
+}
+```
 
 ## Maps
 
