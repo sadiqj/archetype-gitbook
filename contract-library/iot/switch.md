@@ -29,7 +29,7 @@ Say for example the rate is 1.2, meaning the EVSE is switched on for 1h12m for e
 
 The following code implements this switch:
 
-```javascript
+```css
 archetype switch
 
 variable owner : address = @tz1XZ7s6uStC2hZVpPQhXgcdXPwxifByF3Ao
@@ -45,7 +45,7 @@ variable user : address option = none
 
 variable read_interval : duration = 5s
 
-// UTILS
+/* UTILS */
 function get_rate_in_s_by_utz () : rational {
     var d : int = time_unit;
     var t : int = tez_unit;
@@ -57,7 +57,7 @@ function get_return_tz () : tez {
     return (res * 1utz)
 }
 
-// ENTRIES
+/* ENTRIES */
 entry start () {
     require {
         r1: now > interruption;
