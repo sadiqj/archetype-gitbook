@@ -24,16 +24,6 @@ The 4 arithmetics operations `+ * - div` and the 6 comparison operators `= <> < 
 
 Note that de `div` operator is the _euclidean_ division and returns an integer value.
 
-There is no _nat_ \(only positive\) type in archetype. You may however specify the positivity property on an integer value.
-
-```javascript
-variable amount : int := 5 with {
-  s1 : amount >= 0;
-}
-```
-
-This property will be transcoded to _whyml_ for verification. Note as a consequence that any range property may be specified. 
-
 ## Naturals
 
 Naturals are positive integers. They are defined as follows:
@@ -47,9 +37,18 @@ effect {
 
 Note that it is necessary to specify the `nat` type in the `var` declaration, otherwise you end up with an integer.
 
+The 4 arithmetics operations `+ * - div` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value.
 
+```javascript
+effect {
+   var a : nat = 5;
+   var b : nat = 7;
+   var c = a - b; /* -2 typed as intger */
+   var d = b - a; /* 2 typed as integer */
+}
+```
 
-
+Note that de `div` operator is the _euclidean_ division and returns a nat value.
 
 ## Tezis
 
@@ -136,7 +135,7 @@ Rationals are comparable with `= <> < <= > >=` operators.
 
 ```javascript
 effect {
-   var r1 := 3 / 12;
+   var r1 := 3/12;
    var r2 := 0.25;
    var r3 := 0.5;
    if r1 = r2 and r3 > r2 then transfer 1tz to coder;
