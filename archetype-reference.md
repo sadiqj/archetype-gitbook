@@ -27,7 +27,7 @@ states =
 
  `initial`  is used to declare the initial state value of the contract. 
 
-* `action` declares an entry point of the contract. An action has the following sections:
+* `entry` declares an entry point of the contract. An action has the following sections:
   * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have
   * `accept transfer` \(optional\) to specify that transfer of tez is accepted 
   * `called by` \(optional\) to declare which role may call this action
@@ -36,7 +36,7 @@ states =
   * `effect` is the code to execute by the action
 
 ```css
-action an_action_1 (arg1 : string, arg2 : int) {
+entry an_entry_1 (arg1 : string, arg2 : int) {
   specification {
     // see 'specification' section below
   }
@@ -53,6 +53,16 @@ action an_action_1 (arg1 : string, arg2 : int) {
 }
 ```
 
+An entry with just an effect section may omit the effect section syntax:
+
+```css
+variable val : int = 0
+
+entry add(v : int) {
+  val += v;
+}
+```
+
 * `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an action \(except `effect`, see above\) plus:
   * `from` to specify the states the transition starts from
   * `to` to specify the states after the transition 
@@ -60,19 +70,19 @@ action an_action_1 (arg1 : string, arg2 : int) {
   * `with effect` to specify the effect of the transition
 
 ```c
-states 
+states =
 | Created initial
 | Confirmed
 | Canceled
 | Success
 | Fail
 
-transition confirm {
+transition confirm () {
   from Created
   to Confirmed
-  when { transferred > 10 tz }
+  when { transferred > 10tz }
   with effect {
-    transfer 1tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+    transfer 1tz to @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
   }
 }
 ```
@@ -80,7 +90,7 @@ transition confirm {
 It is possible to specify several `to ... when .... with effect ...` sections in a transition. It is possible to specify a list of original states for the transition to start from:
 
 ```c
-transition fail {
+transition to_fail () {
   from Created or Confirmed
   to Fail
   when { ... }
@@ -99,6 +109,10 @@ transition fail {
 * `string` : string of characters
 * `tez` : Tezos currency
 * `bytes` : bytes sequence
+* `key` : key value
+* `signature` : signature value
+* `key_hash` : key hash value
+* `chain_id` : chain id value
 
 ## Composite types
 
@@ -110,24 +124,36 @@ constant pair : int * string = (1, "astr")
 
 * `option` declares an option of type.
 
-```c
-constant value : int option = none
+```csharp
+constant value : option<int> = none
 ```
 
 * `list` declares a list of any type \(builtin or composed\)
 
-```javascript
-variable vals : string list = []
+```csharp
+variable vals : list<string> = []
 ```
 
-* `asset`  declares a collection of asset and the data an asset is composed of. For example the following declares a collection of real estates described by an address, a location and an owner:
+* `map` declares a map from a non-composite builtin type to any type.
 
-```yaml
+```csharp
+variable assoc : map<int, string> = []
+```
+
+* `set` declares a set of non-composite builtin type values.
+
+```csharp
+variable poll : set<address> = []
+```
+
+* `asset`  declares a collection of assets and the data an asset is composed of. For example, the following declares a collection of real estates described by an address, a location, and an owner:
+
+```css
 asset real_estate identified by addr {
-  addr : string;
+  addr      : string;
   xlocation : string;
   ylocation : string;
-  owner : address;
+  owner     : address;
 }
 ```
 
@@ -143,16 +169,16 @@ enum color =
 
 It is then possible to declare a variable of type _color_:
 
-```ocaml
+```css
 variable c : color = Green
 ```
 
 * `contract` declares the signature of another existing contract to call in actions.
 
-```c
+```css
 contract called_contract_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
+   entry set_value (n : int)
+   entry add_value (a : int, b : int)
 }
 ```
 
@@ -162,30 +188,26 @@ It is then possible to declare a contract value of type _called\_contract\_sig_ 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 ```
 
-* `collection` declares an asset field as a collection of another asset.
+* `aggregate` declares an asset field as an aggregate of another asset.
 
-```yaml
-asset an_asset identified by id {
-  id : string;
-  a_val : int;
-  asset_col : another_asset collection
+```css
+asset an_asset {
+  id     : string;
+  a_val  : int;
+  col    : aggregate<another_asset>;
 }
 ```
 
-* `partition` declares an asset field as a collection of another asset. The difference with `collection` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
+* `partition` declares an asset field as a collection of another asset. The difference with `aggregate` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
 
-```yaml
-asset partitioning_asset identified by id {
-  id : string;
-  asset_part : partitioned_asset partition;
+```css
+asset partitioning_asset {
+  id   : string;
+  part : partition<partionned_asset>;
 }
 ```
 
-As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see operation below\). This has to be done via a partition field:
-
-```yaml
-my_partitioning_asset.asset_part.add(a_new_partitioned_asset)
-```
+As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see [Partitions, Reference](archetype-language/subsets-partition.md) section\). 
 
 ## Effect
 
@@ -272,7 +294,7 @@ if i > 0 then (
 );
 ```
 
-* `match ... with ... end` FIXME
+* `match ... with ... end` 
 
 ```javascript
 archetype effect_control_matchwith
@@ -286,7 +308,7 @@ enum t =
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -330,13 +352,13 @@ With the `contract` keyword presented above, it is possible to transfer to a con
 
 ```c
 contract contract_called_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
+   entry set_value (n : int)
+   entry add_value (a : int, b : int)
 }
 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 
-action update_value(n : int) {
+entry update_value(n : int) {
   effect {
     transfer 2tz to c call set_value(n);
   }
@@ -439,6 +461,8 @@ constant op2 : int option = some(0)
 constant bl : bytes = 0x12f12354356a 
 ```
 
+
+
 ### Operators
 
 #### Logical
@@ -463,13 +487,13 @@ var bool_bool_not : bool = not true;
 
 ### Operator
 
-* `=` FIXME
+* `=` 
 
 ```javascript
 var int_int_eq   : bool = 1 = 2;
-var rat_int_eq   : bool = (1 div 2) = 2;
-var int_rat_eq   : bool = 1 = (2 div 3);
-var rat_rat_eq   : bool = (1 div 3) = (2 div 3);
+var rat_int_eq   : bool = (1 / 2) = 2;
+var int_rat_eq   : bool = 1 = (2 / 3);
+var rat_rat_eq   : bool = (1 / 3) = (2 / 3);
 var tez_tez_eq   : bool = 1tz = 2tz;
 var dur_dur_eq   : bool = 1h = 2h;
 var date_date_eq : bool = 2020-01-01 = 2020-12-31;
@@ -478,13 +502,13 @@ var addr_addr_eq : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg = @tz1bfVgcJC4uk
 var str_str_eq   : bool = "a" = "b";
 ```
 
-* `<>` FIXME
+* `<>` 
 
 ```javascript
 var int_int_ne   : bool = 1 <> 2;
-var rat_int_ne   : bool = (1 div 2) <> 2;
-var int_rat_ne   : bool = 1 <> (2 div 3);
-var rat_rat_ne   : bool = (1 div 2) <> (2 div 3);
+var rat_int_ne   : bool = (1 / 2) <> 2;
+var int_rat_ne   : bool = 1 <> (2 / 3);
+var rat_rat_ne   : bool = (1 / 2) <> (2 / 3);
 var tez_tez_ne   : bool = 1tz <> 2tz;
 var dur_dur_ne   : bool = 1h <> 2h;
 var date_date_ne : bool = 2020-01-01 <> 2020-12-31;
@@ -493,49 +517,49 @@ var addr_addr_ne : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4u
 var str_str_ne   : bool = "a" <> "b";
 ```
 
-* `<` FIXME
+* `<` 
 
 ```javascript
 var int_int_lt   : bool = 1 < 2;
-var rat_int_lt   : bool = (1 div 2) < 2;
-var int_rat_lt   : bool = 1 < (2 div 3);
-var rat_rat_lt   : bool = (1 div 2) < (2 div 3);
+var rat_int_lt   : bool = (1 / 2) < 2;
+var int_rat_lt   : bool = 1 < (2 / 3);
+var rat_rat_lt   : bool = (1 / 2) < (2 / 3);
 var tez_tez_lt   : bool = 1tz < 2tz;
 var dur_dur_lt   : bool = 1h < 2h;
 var date_date_lt : bool = 2020-01-01 < 2020-12-31;
 ```
 
-* `<=` FIXME
+* `<=` 
 
 ```javascript
 var int_int_le   : bool = 1 <= 2;
-var rat_int_le   : bool = (1 div 2) <= 2;
-var int_rat_le   : bool = 1 <= (2 div 3);
-var rat_rat_le   : bool = (1 div 2) <= (2 div 3);
+var rat_int_le   : bool = (1 / 2) <= 2;
+var int_rat_le   : bool = 1 <= (2 / 3);
+var rat_rat_le   : bool = (1 / 2) <= (2 / 3);
 var tez_tez_le   : bool = 1tz <= 2tz;
 var dur_dur_le   : bool = 1h <= 2h;
 var date_date_le : bool = 2020-01-01 <= 2020-12-31;
 ```
 
-* `>` FIXME
+* `>` 
 
 ```javascript
 var int_int_gt   : bool = 1 > 2;
-var rat_int_gt   : bool = (1 div 2) > 2;
-var int_rat_gt   : bool = 1 > (2 div 3);
-var rat_rat_gt   : bool = (1 div 2) > (2 div 3);
+var rat_int_gt   : bool = (1 / 2) > 2;
+var int_rat_gt   : bool = 1 > (2 / 3);
+var rat_rat_gt   : bool = (1 / 2) > (2 / 3);
 var tez_tez_gt   : bool = 1tz > 2tz;
 var dur_dur_gt   : bool = 1h > 2h;
 var date_date_gt : bool = 2020-01-01 > 2020-12-31;
 ```
 
-* `>=` FIXME
+* `>=` 
 
 ```javascript
 var int_int_ge   : bool = 1 >= 2;
-var rat_int_ge   : bool = (1 div 2) >= 2;
-var int_rat_ge   : bool = 1 >= (2 div 3);
-var rat_rat_ge   : bool = (1 div 2) >= (2 div 3);
+var rat_int_ge   : bool = (1 / 2) >= 2;
+var int_rat_ge   : bool = 1 >= (2 / 3);
+var rat_rat_ge   : bool = (1 / 2) >= (2 / 3);
 var tez_tez_ge   : bool = 1tz >= 2tz;
 var dur_dir_ge   : bool = 1h >= 2h;
 var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
@@ -543,7 +567,7 @@ var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
 
 ### Arithmetic
 
-* `+` FIXME
+* `+` 
 
 ```javascript
 var int_int_plus   : int      = 1 + 2;
@@ -557,7 +581,7 @@ var str_str_plus   : string   = "str1" + "str2"; (* concat *)
 var tez_tez_plus   : tez      = 2tz + 1tz;
 ```
 
-* `-` FIXME
+* `-` 
 
 ```javascript
 var int_int_minus   : int       = 1 - 2;
@@ -570,7 +594,7 @@ var date_dur_minus  : date      = 2020-01-01 - 1d;
 var tez_tez_minus   : tez       = 2tz - 1tz;
 ```
 
-* `*` FIXME
+* `*` 
 
 ```javascript
 var int_int_mult   : int      = 1 * 2;
@@ -582,17 +606,16 @@ var int_tez_mult   : tez      = 1 * 1tz;
 var rat_tez_mult   : tez      = 1.1 * 1tz;
 ```
 
-* `/` FIXME
+* `/` 
 
 ```javascript
-var int_int_div    : int = 1 / 2;
+var int_int_div    : rational = 1 / 2;
 var rat_rat_div    : rational = 1.1 / 1.2;
 var int_rat_div    : rational = 1 / 1.2;
 var rat_int_div    : rational = 1.1 / 2;
-var dur_int_div    : duration = 1h / 2;
 ```
 
-* `%` FIXME
+* `%` 
 
 ```javascript
 var int_int_modulo : int = 1 % 2;
@@ -600,37 +623,37 @@ var int_int_modulo : int = 1 % 2;
 
 ### Constant
 
-* `caller` FIXME
+* `caller` 
 
 ```javascript
 var v : address = caller; (* SENDER *)
 ```
 
-* `source` FIXME
+* `source` 
 
 ```javascript
 var v : address = source; (* SOURCE *)
 ```
 
-* `balance` FIXME
+* `balance` 
 
 ```javascript
 var v : tez = balance; (* BALANCE *)
 ```
 
-* `transferred` FIXME
+* `transferred` 
 
 ```javascript
 var v : tez = transferred; (* AMOUNT *)
 ```
 
-* `now` FIXME
+* `now` 
 
 ```javascript
 var v : date = now; (* NOW *)
 ```
 
-* `state` FIXME
+* `state` 
 
 ```javascript
 archetype sample_state
@@ -650,49 +673,115 @@ transition mytr () {
 }
 ```
 
-### Builtin functions
+### Built-in functions
 
-* `min` FIXME
+* `min` 
 
 ```javascript
 var int_int_min   : int  = min(1, 2);
-var rat_int_min   : rat  = min(1 div 2, 1);
-var int_rat_min   : rat  = min(2, 1 div 3);
-var rat_rat_min   : rat  = min(1 div 2, 1 div 3);
+var rat_int_min   : rat  = min(1 / 2, 1);
+var int_rat_min   : rat  = min(2, 1 / 3);
+var rat_rat_min   : rat  = min(1 / 2, 1 / 3);
 var date_date_min : date = min(2020-01-01, 2020-12-31);
 var dur_dur_min   : dur  = min(1h, 1s);
 var tez_tez_min   : tez  = min(1tz, 2tz);
 ```
 
-* `max` FIXME
+* `max` 
 
 ```javascript
 var int_int_max   : int  = max(1, 2);
-var rat_int_max   : rat  = max(1 div 2, 1);
-var int_rat_max   : rat  = max(2, 1 div 3);
-var rat_rat_max   : rat  = max(1 div 2, 1 div 3);
+var rat_int_max   : rat  = max(1 / 2, 1);
+var int_rat_max   : rat  = max(2, 1 / 3);
+var rat_rat_max   : rat  = max(1 / 2, 1 / 3);
 var date_date_max : date = max(2020-01-01, 2020-12-31);
 var dur_dur_max   : dur  = max(1h, 1s);
 var tez_tez_max   : tez  = max(1tz, 2tz);
 ```
 
-* `abs` FIXME
+* `abs` 
 
 ```javascript
 var int_abs : int = abs(-1);
-var rat_abs : rat = abs(-1 div 2);
+var rat_abs : rat = abs(-1 / 2);
 ```
+
+* `concat`
+
+```javascript
+var str_concat : string = concat("abc", "def");
+var byt_concat : bytes  = concat(0x12, 0xef);
+```
+
+* `slice`
+
+```javascript
+var str_slice : string = slice("abcdef", 1, 2);
+var byt_slice : bytes  = slice(0xabcdef01, 1, 2);
+```
+
+* `length`
+
+```javascript
+var str_length : int = length("abcdef");
+```
+
+* `isnone`
+
+```javascript
+var b_issome : bool = isnone(none);
+```
+
+* `issome`
+
+```javascript
+var b_issome : bool = issome(some(1));
+```
+
+* `getopt`
+
+```javascript
+var res : int = getopt(some(1));
+```
+
+* `floor`
+
+```javascript
+var pos_floor : int = floor(5 / 3);  // 1
+var neg_floor : int = floor(-5 / 3); // -2
+```
+
+* `ceil`
+
+```javascript
+var pos_ceil : int = ceil(5 / 3);  // 2
+var neg_ceil : int = ceil(-5 / 3); // -1
+```
+
+* `pack`
+
+```javascript
+var v : bytes = pack("archetype")
+```
+
+* `unpack`
+
+```javascript
+var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
+```
+
+### 
 
 ### List
 
-* `contains` FIXME
+* `contains`
 
 ```javascript
 archetype expr_list_contains
 
 variable res : bool = false
 
-action exec () {
+entry exec () {
   specification {
     s0: res = true;
   }
@@ -704,14 +793,14 @@ action exec () {
 
 ```
 
-* `count` FIXME
+* `count` 
 
 ```javascript
 archetype expr_list_count
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -723,14 +812,14 @@ action exec () {
 
 ```
 
-* `nth` FIXME
+* `nth` 
 
 ```javascript
 archetype expr_list_nth
 
 variable res : string = ""
 
-action exec () {
+entry exec () {
   specification {
     s0: res = "2";
   }
@@ -749,7 +838,7 @@ archetype expr_list_prepend
 
 variable res : string list = []
 
-action exec () {
+entry exec () {
   specification {
     s0: res = ["0"; "1"; "2"; "3"];
   }
@@ -762,7 +851,7 @@ action exec () {
 
 ### Asset Collection
 
-* `contains` FIXME
+* `contains` 
 
 ```javascript
 archetype expr_method_asset_contains
@@ -778,7 +867,7 @@ asset my_asset identified by id {
 
 variable res : bool = false
 
-action exec () {
+entry exec () {
   specification {
     s0: res = true;
   }
@@ -788,7 +877,7 @@ action exec () {
 }
 ```
 
-* `count` FIXME
+* `count` 
 
 ```javascript
 archetype expr_method_asset_count
@@ -804,7 +893,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -814,34 +903,7 @@ action exec () {
 }
 ```
 
-* `get` FIXME
-
-```javascript
-archetype expr_method_asset_get
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var a = my_asset.get("id1");
-    res := a.value
-  }
-}
-```
-
-* `nth` FIXME
+* `nth` 
 
 ```javascript
 archetype expr_method_asset_nth
@@ -857,7 +919,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -868,7 +930,7 @@ action exec () {
 }
 ```
 
-* `head` FIXME
+* `head` 
 
 ```javascript
 archetype expr_method_asset_head
@@ -884,7 +946,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -896,7 +958,7 @@ action exec () {
 }
 ```
 
-* `tail` FIXME
+* `tail` 
 
 ```javascript
 archetype expr_method_asset_tail
@@ -912,7 +974,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -924,7 +986,7 @@ action exec () {
 }
 ```
 
-* `select` FIXME
+* `select` 
 
 ```javascript
 archetype expr_method_asset_select
@@ -940,7 +1002,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 2;
   }
@@ -952,7 +1014,7 @@ action exec () {
 }
 ```
 
-* `sort` FIXME
+* `sort` 
 
 ```javascript
 archetype expr_method_asset_sort
@@ -968,7 +1030,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -997,7 +1059,7 @@ asset my_asset identified by id {
   {"id3"; 1; 2; 6}
 }
 
-action exec () {
+entry exec () {
 
   effect {
     var res = my_asset.sort(v1, asc(v2), desc (v3))
@@ -1006,7 +1068,7 @@ action exec () {
 }
 ```
 
-* `sum` FIXME
+* `sum` 
 
 ```javascript
 archetype expr_method_asset_sum
@@ -1022,7 +1084,7 @@ asset my_asset identified by id {
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 3;
   }
@@ -1054,7 +1116,7 @@ asset col2 {
   id2 : string;
 }
 
-action exec () {
+entry exec () {
  specification {
 
     definition mydef {
@@ -1100,7 +1162,7 @@ action exec () {
 
 ```
 
-* `definition` FIXME
+* `definition`
 
 ```javascript
 definition mydef {
@@ -1108,7 +1170,7 @@ definition mydef {
 }
 ```
 
-* `predicate` FIXME
+* `predicate` 
 
 ```javascript
 predicate mypredicate (a : int) {
@@ -1116,13 +1178,13 @@ predicate mypredicate (a : int) {
 }
 ```
 
-* `variable` FIXME
+* `variable` 
 
 ```javascript
 variable myvar : int = 0
 ```
 
-* `shadow effect` FIXME
+* `shadow effect` 
 
 ```javascript
 shadow effect {
@@ -1130,7 +1192,7 @@ shadow effect {
 }
 ```
 
-* `assert` FIXME
+* `assert` 
 
 ```javascript
 assert a1 {
@@ -1142,7 +1204,7 @@ assert a1 {
 }
 ```
 
-* `invariant` FIXME
+* `invariant` 
 
 ```javascript
 invariant for myloop {
@@ -1151,7 +1213,7 @@ invariant for myloop {
 }
 ```
 
-* `postcondition` FIXME
+* `postcondition` 
 
 ```javascript
 postcondition s1 {
@@ -1165,7 +1227,7 @@ postcondition s1 {
 
 One specification section is available at the top of the contract. But there is neither `shadow effect` nor `postcondition`, which is replaced by `contract invariant` for the last one.
 
-* `contract invariant` FIXME
+* `contract invariant` 
 
 ```javascript
 contract invariant c1 {
@@ -1205,7 +1267,7 @@ o2: true <-> true;
 
 ### Asset expression
 
-* `subsetof` FIXME
+* `subsetof` 
 
 ```javascript
 archetype expr_formula_asset_method_subset
@@ -1219,7 +1281,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.subsetof(my_asset);
@@ -1232,7 +1294,7 @@ action exec () {
 
 ```
 
-* `isempty` FIXME
+* `isempty` 
 
 ```javascript
 archetype expr_formula_asset_method_isempty
@@ -1246,7 +1308,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.isempty();
@@ -1260,40 +1322,40 @@ action exec () {
 
 ### Extra asset collection
 
-* `before` FIXME
+* `before` 
 
 ```javascript
 s1: before.my_asset.isempty();
 ```
 
-* `at` FIXME
+* `at` 
 
 ```javascript
 s2: at(lbl).my_asset.isempty();
 ```
 
-* `unmoved` FIXME
+* `unmoved` 
 
 ```javascript
-s3: my_asset.unmoved.isempty();
+s3: unmoved.my_asset.isempty();
 ```
 
-* `added` FIXME
+* `added` 
 
 ```javascript
-s4: my_asset.added.isempty();
+s4: added.my_asset.isempty();
 ```
 
-* `removed` FIXME
+* `removed` 
 
 ```javascript
-s5: my_asset.removed.isempty();
+s5: removed.my_asset.isempty();
 ```
 
-* `iterated` FIXME
+* `iterated` 
 
 ```javascript
-action exec2 () {
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1312,10 +1374,10 @@ action exec2 () {
 }
 ```
 
-* `toiterate` FIXME
+* `toiterate` 
 
 ```javascript
-action exec3 () {
+action exec () {
   specification {
     postcondition p1 {
       true
@@ -1348,78 +1410,78 @@ asset my_asset identified by id {
   value : int;
 }
 
-action exec () {
+entry exec () {
   effect {
-    require true
+    ()
   }
 }
 
 security {
-  s00 : only_by_role (anyaction, admin);
-  s01 : only_in_action (anyaction, exec);
-  s02 : only_by_role_in_action (anyaction, admin, exec);
-  s03 : not_by_role (anyaction, admin);
-  s04 : not_in_action (anyaction, exec);
-  s05 : not_by_role_in_action (anyaction, admin, exec);
-  s06 : transferred_by (anyaction);
-  s07 : transferred_to (anyaction);
-  s08 : no_storage_fail (anyaction);
+  s00 : only_by_role (anyentry, admin);
+  s01 : only_in_entry (anyentry, exec);
+  s02 : only_by_role_in_entry (anyentry, admin, exec);
+  s03 : not_by_role (anyentry, admin);
+  s04 : not_in_entry (anyentry, exec);
+  s05 : not_by_role_in_entry (anyentry, admin, exec);
+  s06 : transferred_by (anyentry);
+  s07 : transferred_to (anyentry);
+  s08 : no_storage_fail (anyentry);
 }
 
 ```
 
-* `only_by_role` FIXME
+* `only_by_role` 
 
 ```javascript
-s00 : only_by_role (anyaction, admin);
+s00 : only_by_role (anyentry, admin);
 ```
 
-* `only_in_action` FIXME
+* `only_in_action` 
 
 ```javascript
-s01 : only_in_action (anyaction, exec);
+s01 : only_in_entry (anyentry, exec);
 ```
 
-* `only_by_role_in_action` FIXME
+* `only_by_role_in_action` 
 
 ```javascript
-s02 : only_by_role_in_action (anyaction, admin, exec);
+s02 : only_by_role_in_entry (anyentry, admin, exec);
 ```
 
-* `not_by_role` FIXME
+* `not_by_role` 
 
 ```javascript
-s03 : not_by_role (anyaction, admin);
+s03 : not_by_role (anyentry, admin);
 ```
 
-* `not_in_action` FIXME
+* `not_in_action` 
 
 ```javascript
-s04 : not_in_action (anyaction, exec);
+s04 : not_in_entry (anyentry, exec);
 ```
 
-* `not_by_role_in_action` FIXME
+* `not_by_role_in_action` 
 
 ```javascript
-s05 : not_by_role_in_action (anyaction, admin, exec);
+s05 : not_by_role_in_entry (anyentry, admin, exec);
 ```
 
-* `transferred_by` FIXME
+* `transferred_by` 
 
 ```javascript
-s06 : transferred_by (anyaction);
+s06 : transferred_by (anyentry);
 ```
 
-* `transferred_to` FIXME
+* `transferred_to` 
 
 ```javascript
-s07 : transferred_to (anyaction);
+s07 : transferred_to (anyentry);
 ```
 
-* `no_storage_fail` FIXME
+* `no_storage_fail` 
 
 ```javascript
-s08 : no_storage_fail (anyaction);
+s08 : no_storage_fail (anyentry);
 ```
 
 
