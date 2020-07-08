@@ -2,7 +2,7 @@
 
 ## Lists
 
-Lists are build locally with `[ ; ]` syntax:
+Lists are built with `[ ; ]`:
 
 ```javascript
 effect {
@@ -56,7 +56,7 @@ effect {
 }
 ```
 
-{% hint style="info" %}
-Maps and sets coming in the next releases
-{% endhint %}
+## Sets
+
+## Maps
 
