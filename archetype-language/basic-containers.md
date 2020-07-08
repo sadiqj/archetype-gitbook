@@ -68,6 +68,13 @@ variable s : set<int> = [ 1; 3; 5; 12 ]
 
 The `set_contains` operator returns true if an element is an element of the set, false otherwise.
 
+```javascript
+effect {
+  var s : set<int> = [0; 1 ; 2; 3];
+  var t : bool     = set_contains(s, 2); /* t = true */
+}
+```
+
 The `set_add` operator returns a set with an extra element if the element is not already in the argument set.
 
 The `set_remove` operator returns a set with an element removed if the element was present in the argument set .
