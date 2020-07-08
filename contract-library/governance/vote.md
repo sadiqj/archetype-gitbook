@@ -8,17 +8,18 @@ This archetype defines a basic voting process. The chairman is responsible for r
 
 The result of the vote is computed with the `bury` action: winners are ballots with the highest number of votes.
 
-{% code title="voting\_process.arl" %}
 ```ocaml
 archetype voting_process
 
-variable[%transferable%] chairperson : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
+variable chairperson : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
+
+variable chairperson_tmp : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 (* vote start *)
-variable[%mutable (chairperson, (instate (Created)))%] startDate : date = 2019-11-12T00:00:00
+variable startDate : date = 2019-11-12T00:00:00
 
 (* vote deadline *)
-variable[%mutable (chairperson, (instate (Created)))%] deadline : date = 2020-11-12T00:00:00
+variable deadline : date = 2020-11-12T00:00:00
 
 asset voter identified by addr {
   addr : role;
@@ -40,7 +41,7 @@ states =
  | Voting          with { s2 : winner.isempty(); }
  | Buried
 
-action register (v : role) {
+entry register (v : role) {
   called by chairperson
   require {
     c1 : state = Created;
@@ -55,11 +56,11 @@ transition start () {
   to Voting when { now > startDate }
 }
 
-action vote (val : pkey of ballot) {
+entry vote (val : pkey of ballot) {
    require {
      c2 : voter.contains(caller);
      c3 : state = Voting;
-     c4 : voter.get(caller).hasVoted = false;
+     c4 : voter[caller].hasVoted = false;
    }
 
    effect {
@@ -78,10 +79,13 @@ transition bury () {
   from Voting
   to Buried
   with effect {
-    let nbvotesMax = ballot.max(the.nbvotes) in
+    var nbvotesMax = 0;
     for b in ballot do
-      if (b.nbvotes = nbvotesMax)
-      then winner.add({ winvalue = b.value })
+      nbvotesMax := max(nbvotesMax, ballot[b].nbvotes)
+    done;
+    for b in ballot do
+      if (ballot[b].nbvotes = nbvotesMax)
+      then winner.add({ winvalue = ballot[b].value })
     done
   }
 }
@@ -96,12 +100,45 @@ specification {
   contract invariant s5 {
     forall w in winner,
            forall b in ballot,
-             let some wb = ballot.get(w.winvalue) in
+             let some wb = ballot[w.winvalue] in
              b.nbvotes <= wb.nbvotes
              otherwise false
   }
 }
 
+entry assign_new_chairperson (newrole : role) {
+  called by chairperson
+  effect {
+    chairperson_tmp := newrole;
+  }
+}
+
+entry confirm_chairperson () {
+  called by chairperson_tmp
+  effect {
+    chairperson := chairperson_tmp;
+  }
+}
+
+entry set_startDate (newstartDate : date) {
+  called by chairperson
+  require {
+    set_startDate_c1 : state = Created;
+  }
+  effect {
+    startDate := newstartDate
+  }
+}
+
+entry set_deadline (newdeadline : date) {
+  called by chairperson
+  require {
+    set_deadline_c1 : state = Created;
+  }
+  effect {
+    deadline := newdeadline
+  }
+}
+
 ```
-{% endcode %}
 

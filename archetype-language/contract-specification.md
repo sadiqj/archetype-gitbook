@@ -4,12 +4,12 @@ description: Formalise contract properties
 
 # Contract specification
 
-## Formal property
+## Properties
 
-A formal property is a _logical formula_ about the relations between data values and/or asset collections properties. It is made of:
+A property is a _logical formula_ about the relations between data values and/or asset collections properties. It is made of:
 
 * logical connectors: `and`, `or`, `->` \(logical implication\), `not`, ...
-* quantifiers: the universal quantifier `forall` \_\_and the existential quantifier `exists`
+* quantifiers: the universal quantifier `forall` and the existential quantifier `exists`
 * atomic predicates, which are the relations between values and/or asset collection:
   * between values \(integers, tez, ...\): `=`, `<=`, `>=`, `<`, `>`, ...
   * between asset collections: `subset`, `diff`, ...
@@ -23,30 +23,135 @@ forall b in bid, b.value <= max_bid
 
 It reads that any stored bid value is less or equal than max\_bid.
 
-This property would typically serve as formal specification of the function `declare_winner` which computes `max_bid` as follows:
+{% hint style="info" %}
+To practice the formalisation of logical properties, you can solve online [edukera](https://app.edukera.com/?qt=4) formalisation exercises.
+{% endhint %}
+
+## Postconditions
+
+A contract entry may specify postconditions. A postcondition is typically a property about the relation between the contract's storage _before_ and _after_ the execution of the entry point.
+
+### Before and after
+
+Say for example the variable `amount` must increase due to the effect of the entry `add_amount`. The keyword _`before`_ is used to refer to the variable value before the effect of the action. Hence this property is formalized:
 
 ```ocaml
-variable max_bid : tez = 0tz
+before.amount < amount
+```
 
-action declare_winner () {
+This property is placed in the `specification` section of the entry:
+
+```javascript
+variable amount : int = 0
+
+action add_amount () {
   specification {
-     p : forall b in bid, b.value <= max_bid;
+    p : before.amount < amount
   }
   effect {
-     max_bid := ... (* code to compute max_bid *)
+    /* do something to increase amount */
   }
 }
 ```
 
-This generates a verification task which consists in proving that the effect of the `declare_winner` action on the `max_bid` is actually to set it to the maximum bid value.
+In why3, this will generate a verification task to verify that the value of `amount` value after executing `add_amount` is greater than the value of `amount` before.
+
+For asset collection, archetype provides dedicated keywords to refer to _`added`_ and _`removed`_ assets by entry effect.
+
+Say for example you want to express that _only_ obsolete `goods` assets may have been removed by the action effect, where obsolete means with an `expiration` date is before now. This property is formalized:
+
+```ocaml
+forall x in removed.goods, x.expiration < now
+```
+
+The schema below illustrates the three sets of assets resulting from the action effect:
+
+![action effect on asset collection](../.gitbook/assets/effect-asset.png)
+
+This property could typically serve as a postcondition of the function `remove_obsolete`:
+
+```javascript
+
+entry remove_obsolete () {
+  specification {
+     p : forall x in removed.goods, x.expiration < now
+  }
+  effect {
+    /* effect to remove obsolete ... */
+  }
+}
+```
+
+### Loop invariant
+
+With imperative languages like archetype, iterations are done with loops. For formal verification purpose it is necessary to provide _loop invariant_ properties.
+
+A loop invariant is a property that is true at any step of the iteration. More precisely, the invariant holds:
+
+* at the beginning of the loop, when no object has been iterated yet \(_initialization_\)
+* at each step of the iteration \(_conservation_\)
+* at the end of the iteration \(_terminaison_\)
+
+A loop invariant usually depends on the iterated assets, or on the assets still to iterate. Specific keywords are dedicated to these views of asset:
+
+* `toiterate` refers to the assets still to iterate on
+* `iterated` refers to the assets already iterated 
+
+For example say you want to prove that the `stock` value is equal to 0 after iterating over the collection of `goods`. The loop invariant states that `stock` is upper-bounded by the sum of the `quantity` value over the `goods` assets _stil to iterate_. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
+
+```javascript
+variable stock : int = 0
+
+asset goods {
+   id       : string;
+   quantity : int;
+} with {
+  inv : stock = goods.sum(quantity)
+}
+
+entry empty_stock () {
+  specification {
+    postcondition p {
+       /* the effect of empty_stock is to set 'stock' to zero */
+       stock = 0   
+       invariant for goods_loop {
+          0 <= stock <= toiterate.goods.sum(quantity)
+       }
+    }
+  }
+  effect {
+    /* ... */ 
+    for : goods_loop g in goods do
+       /* ... decrease stock somehow */
+    done;
+    /* ... */
+  }
+}
+```
+
+Note the `invariant` section for the loop labeled `goods_loop` at line 22.
+
+At the end of the iteration, the `toiterate` view is empty, and the loop invariant reduces to:
+
+```ocaml
+0 <= stock <= 0
+```
+
+which ensures the postcondition `p` \(line 12\). The loop invariant generates verification tasks on its own.
 
 {% hint style="info" %}
-To practice formalisation of logical properties, you can solve online [edukera](https://app.edukera.com/?qt=4) formalisation exercises.
+Loop invariants may refer to local variables declared in the effect section.
 {% endhint %}
 
-## Data invariant
+{% hint style="info" %}
+Archetype ensures iteration terminaison by design.
+{% endhint %}
 
-It is possible to specify the property a data is supposed to have throughout the life of the contract, regardless of the calls made to the contract and the changes of values of other data.
+## Invariants
+
+It is possible to specify the property a data is supposed to have throughout the life of the contract, regardless of the calls made to the contract and the changes of values of other data. Such a property is called an _invariant_.
+
+#### Asset invariant
 
 For example, say a `quantity` field of an asset `mile` should remain strictly positive. Use the `with` keyword to introduce the property, as illustrated below:
 
@@ -64,6 +169,8 @@ This generates as many verification tasks as the number of actions/transitions i
 ```text
 forall x in mile, x.quantity > 0
 ```
+
+#### State invariant
 
 It is also possible to declare a state invariant.
 
@@ -83,117 +190,71 @@ This generates the following pre and post condition for all actions and transiti
 if state = Terminated then balance = 0
 ```
 
-## Effect specification
+#### Variable invariant
 
-### Before and after
+Variables may also be equipped with invariants.
 
-When formalising action property, it is usually necessary to express that the value of a storage data _after_ the execution of the action has a certain relation towards the same value _before_ the execution.
-
-Say for example the variable `amount` must increase due to the effect of action `add_amount`. The keyword _`before`_ is used to refer to the variable value before the effect of the action. Hence this property is formalised:
-
-```ocaml
-before.amount < amount
+```javascript
+variable total : int = 0 with {
+   i1 : 0 <= variable < 10
+}
 ```
 
-This property is placed in the `specification` section of the action:
+The variable invariant may only refer to the variable itself. When dealing with multi-variables/assets properties, a contract invariant may be used.
 
-```ocaml
-variable amount : int = 0
+#### Contract invariant
 
-action add_amount () {
+More complex contract invariants may be placed in the specification section at root level.
+
+```javascript
+archetype acontract
+
+entry main () {
+  /* ... */
+}
+
+specification {
+  p : /* forall ... */
+}
+```
+
+## Assert
+
+It is possible to specify a property in the effect section of an entry \(or transition\) with the `assert` instruction. An assert property is transcoded to a verification task in why3. As such, it does not generate any execution code.
+
+Contrary to postconditions, asserts _do_ have access to local variables in the same way as a standard instructions.
+
+```javascript
+entry anentry(i : int) {
   specification {
-    p : before.amount < amount
+     assert a {
+        x > i
+     }
   }
   effect {
-    (* do something to increase amount *)
+    var x = i + 1;
+    assert a;
   }
 }
 ```
 
-For asset collection, archetype provides dedicated keywords to refer to _`added`_, _`removed`_ and _`unmoved`_ assets by action effect.
+It is possible to refer to a variable at a specific step of execution by declaring a code label in the code.
 
-Say for example you want to express the _only_ obsolete `goods` assets may have been removed by the action effect, that is asset with `expiration` date before now. This property is formalised:
-
-```ocaml
-forall x in goods.removed, x.expiration < now
-```
-
-The schema below illustrates the three sets of assets resulting from the action effect:
-
-![action effect on asset collection](../.gitbook/assets/effect-asset.png)
-
-### Loop invariant
-
-With imperative languages like archetype, iterations are done with loops. For formal verification purpose, it is necessary to provide _loop invariant_ properties.
-
-A loop invariant is a property which is true during iteration. More precisely, the invariant holds:
-
-* at the beginning of the loop, when no object has been iterated yet \(_initialisation_\)
-* at each step of the iteration \(_conservation_\)
-* at the end of the iteration \(_terminaison_\)
-
-  A loop invariant usually depends on the already iterated assets, or on the assets stil to iterate. Specific keywords are dedicated to these asset collections:
-
-* `toiterate` refers to the assets stil to iterate on
-* `iterated` refers to the assets already iterated 
-
-For example say you want to prove that the `stock` value is equal to 0 after iterating over the collection of `goods`. The loop invariant states that `stock` is upper-bounded by the sum of the `quantity` value over the `goods` assets _stil to iterate_. The following snippet illustrates how to declare this property as the loop invariant \(line 15\):
-
-```ocaml
-variable stock : int = 0
-
-asset goods identified by id {
-   id : string;
-   quantity : int;
-} with {
-  a : stock = goods.sum(quantity)
-}
-
-action empty_stock () {
+```javascript
+entry anentry(i : int) {
   specification {
-    postcondition p {
-       stock = 0   (* this specifies that the effect of empty_stock is to
-                      set 'stock' to zero *)
-       invariant for goods_loop {
-          0 <= stock <= toiterate goods.sum(quantity)
-       }
-    }
+     assert a {
+        at(s).x > x /* at(s).x is the value of x at label declaration (here i) */
+     }
   }
   effect {
-    ... 
-    for : goods_loop g in goods do
-       ... (* decrease stock somehow *)
-    done
-    ...
+     var x = i;
+     label s;
+     x += 1;
+     assert a; 
   }
 }
 ```
-
-Note the `invariant` section for the loop labeled `goods_loop` at line 13.
-
-At the end of the iteration, the `toiterate` collection is empty, and the loop invariant reduces to:
-
-```ocaml
-0 <= stock <= 0
-```
-
-which ensures post condition `p` \(line 12\). The loop invariant generates verification tasks on its own.
-
-{% hint style="info" %}
-Loop invariants may refer to local variables declared in the effect section.
-{% endhint %}
-
-{% hint style="info" %}
-Archetype ensures iteration terminaison by design.
-{% endhint %}
-
-### Assert
-
-As in many languages, it is possible to insert `assert` instructions in the effect of actions and transitions.
-
-The difference in archetype is that an assert instruction generates a verification task, which means that it is verified _before_ the contract is deployed.
-
-As such, an `assert` instruction does not generate any execution code.
 
 ## Security predicates
 

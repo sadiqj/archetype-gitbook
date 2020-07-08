@@ -1,26 +1,34 @@
 ---
-description: 'Read, compute and write data.'
+description: A contract is operated through entry points.
 ---
 
-# Action
+# Entries, Functions
 
-Contract data is read and written with actions. They are the entry points of the contract.
+## Entry point
 
-## Arguments
+The keyword entry is used to declare an entry point followed by its name.
 
-An action may take input arguments. For example the snippet below declare an action named `complete` which takes two arguments `value` and `amount` , respectively of type `string` and `int`:
+```javascript
+entry main() {
+  ...
+}
+```
 
-```ocaml
-action complete (value : string, amount : int) {
+### Arguments
 
-  ...  (* action body *)
+An entry may take arguments. For example, the entry below named "complete" takes two arguments `value` and `amount` , respectively of type `string` and `int`:
+
+```coffeescript
+entry complete (value : string, amount : int) {
+
+  ...  
 
 }
 ```
 
-## Sections
+### Sections
 
-An Action is made of sections listed below:
+An entry is made of sections listed below:
 
 <table>
   <thead>
@@ -55,7 +63,7 @@ An Action is made of sections listed below:
       <td style="text-align:left"><code>specification</code>
       </td>
       <td style="text-align:left">specifies formal properties the action effect has
-        <br />(see next section)</td>
+        <br />(see &quot;specification&quot; section)</td>
       <td style="text-align:left">yes</td>
     </tr>
     <tr>
@@ -73,12 +81,12 @@ An Action is made of sections listed below:
   </tbody>
 </table>
 
-For example, the `complete` action example may be enhanced as follows:
+For example, the `complete` entry example may be enhanced as follows:
 
-```ocaml
+```coffeescript
 constant owner : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
 
-variable threshold : tez = 100tz
+variable threshold : tez = 10tz
 
 action complete (value : string, amount : int) {
   called by owner
@@ -88,19 +96,21 @@ action complete (value : string, amount : int) {
   }
   
   effect {
-    ... (* effect code *)
+    ... 
   }
 }
 ```
 
-In the expression `r : ...` line 8 above, `r` is a _label_ for the _require_ expression \(see [Label](action.md#label) section below\).
+`transferred` is the amount of tez transferred to the entry.
 
-## Label
+In the expression line 9 above, `r` is a _label_ for the `require` expression \(see [Label](action.md#label) section below\).
+
+### Label
 
 In Archetype, some expressions are named. The following syntax is used to name an expression:
 
 ```cpp
-l : ... expression ... /* l is a label */
+lbl : ... expression ... /* lbl is a label */
 ```
 
 The following is the list of expressions that require a label:
@@ -166,18 +176,17 @@ The following is the list of expressions that require a label:
   </tbody>
 </table>
 
-## Effect
+### Effect
 
-### Local variable 
+#### Local variable 
 
 A local variable is declared as exampled below:
 
-```ocaml
+```javascript
 var p = amount + 10tz;
-...
 ```
 
-### Data assignment
+#### Data assignment
 
 A variable \(global or local\) is assigned a new value as exampled below:
 
@@ -185,25 +194,18 @@ A variable \(global or local\) is assigned a new value as exampled below:
 p := amount;
 ```
 
-After this instruction, the value of `p` is the value of `amount`.
+Note that is it _not possible_ to assign a value to an input value.
 
-### Currency transfer
-
-The instruction to transfer currency is exampled below:
-
-```ocaml
-transfer 10tz to owner
-```
-
-### Conditional
+#### Conditional
 
 The basic conditional expression is exampled below :
 
 ```ocaml
-if transferred > threshold then
-  transfer price to owner
-else
-  fail ("not enough")
+if transferred > threshold then (
+  transfer price to owner;
+  transfer 1tz to coder
+) else
+  fail("not enough");
 ```
 
 The `require` expression fails if the condition is not met:
@@ -218,44 +220,28 @@ The `failif` expression fails if the condition is met:
 failif (transferred <= threshold)
 ```
 
-### Asset collection
+## Function
 
-Consider the following car asset identified by its vin id:
+It is possible to declare functions with the `function` keyword. The main differences between entries and functions are:
 
-```text
-asset car identified by vin {
-  vin : string;
-  model : string;
-  year : int;
+* functions return a value with the `return` keyword
+* functions _**cannot**_ modify the contract's storage \(they are "pure"\)
+
+Typically functions help factorize computation codes.
+
+```javascript
+function get_rate (amount : tez) : rational {
+   var a : int  = amount;
+   return (a / 3600);
 }
 ```
 
-The following table gives the basic instructions to get, add, remove, update an asset. 
+Functions are called with the standard call syntax:
 
-| operation | expression |
-| :--- | :--- |
-| get an asset | `car.get (vid)` |
-| add an asset | `car.add ({ vin = "1GNEK13ZX3R298984"; model = "Bugatti Chiron"; year = 2018 })` |
-| remove an asset | `car.remove (vid)` |
-| update an asset | `car.update ("1GNEK13ZX3R298984", {year = 2019})` |
-| retrieve asset nb. i | `car.nth (i)` \(an asset collection is sorted\) |
-
-Advanced operations over a collection are listed in the table below:
-
-| operation | expression |
-| :--- | :--- |
-| count | `car.count ()`  |
-| sum of a field | `car.sum (year)` |
-| select a subset collection | `car.select (year >= 2019)` |
-| sort a collection | `car.sort (year)` |
-
-_Iteration_ over a collection is as follows:
-
-```ocaml
-for c in car do
-  ...
-done
+```javascript
+effect {
+   var r = get_rate(transferred);
+   if r < 3.14125 then fail("invalid transferred amount");
+}
 ```
-
-
 

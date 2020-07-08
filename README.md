@@ -114,7 +114,7 @@ The following table shows the selected solution foreach service and the main ben
 </table>
 
 {% hint style="warning" %}
-'Test' and 'Simulate' services will be available in 2020.
+'Test' and 'Simulate' services will be available in 2021.
 {% endhint %}
 
 The purpose of the archetype Test service is not to replace the standard test approach, but rather to enhance it with random test generation. The idea is to leverage formal properties to derive random and relevant tests.
@@ -152,7 +152,7 @@ Follow the link below to read more about the archetype language features.
 
 ## Contract library
 
-Archetype comes with a library of several dozen of contract archetypes. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
+Archetype comes with a library of several dozen of contracts. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
 
 The library covers some key blockchain processes :
 
@@ -160,17 +160,8 @@ The library covers some key blockchain processes :
 * decision process \(voting, auction\)
 * investment \(tokens, market place, financial notes\)
 * insurance
+* IOT
 * other frameworks example for comparison \(Hyper ledger, clause.io, ...\)
 
 Some of these contracts come with relevant properties. Feel free to submit any new property you may find relevant.
-
-{% page-ref page="contract-library/escrow/" %}
-
-{% page-ref page="contract-library/auction/" %}
-
-{% page-ref page="contract-library/governance/" %}
-
-{% page-ref page="contract-library/finance/" %}
-
-{% page-ref page="contract-library/tokens/" %}
 

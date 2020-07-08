@@ -773,7 +773,7 @@ var s : string option = unpack<string>(0x050100000009617263686574797065) // some
 
 * `contains`
 
-```javascript
+```css
 effect {
     var l : string list = ["1"; "2"; "3"];
     res := contains(l, "2");
@@ -782,7 +782,7 @@ effect {
 
 * `count` 
 
-```javascript
+```css
 effect {
     var l : string list = ["1"; "2"; "3"];
     res := count(l);
@@ -791,7 +791,7 @@ effect {
 
 * `nth` 
 
-```javascript
+```css
 effect {
     var l : string list = ["1"; "2"; "3"];
     res := nth(l, 1);
@@ -800,7 +800,7 @@ effect {
 
 * `prepend` adds an element to a list at the first position. 
 
-```javascript
+```css
 effect {
     var l : string list = ["1"; "2"; "3"];
     res := prepend(l, "0");
@@ -811,11 +811,11 @@ effect {
 
 * `contains` 
 
-```javascript
+```css
 archetype expr_method_asset_contains
 
 asset my_asset identified by id {
-  id : string;
+  id    : string;
   value : int;
 } initialized by {
   {"id0"; 0};
@@ -827,7 +827,7 @@ variable res : bool = false
 
 entry exec () {
   specification {
-    s0: res = true;
+    s0 : res = true;
   }
   effect {
     res := my_asset.contains("id0")
@@ -837,218 +837,74 @@ entry exec () {
 
 * `count` 
 
-```javascript
-archetype expr_method_asset_count
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
+```css
+effect {
     res := my_asset.count()
-  }
 }
 ```
 
 * `nth` 
 
-```javascript
-archetype expr_method_asset_nth
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
+```css
+effect {
     var a = my_asset.nth(1);
     res := a.value
-  }
 }
 ```
 
 * `head` 
 
-```javascript
-archetype expr_method_asset_head
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 4};
-  {"id1"; 3};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
+```css
+effect {
     var l = my_asset.head(2);
     var a = l.nth(1);
     res := a.value
-  }
 }
 ```
 
 * `tail` 
 
-```javascript
-archetype expr_method_asset_tail
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
+```css
+effect {
     var l = my_asset.tail(2);
     var a = l.nth(0);
     res := a.value
-  }
 }
 ```
 
 * `select` 
 
-```javascript
-archetype expr_method_asset_select
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 2;
-  }
-  effect {
+```css
+effect {
     var l = my_asset.select(the.id = "id2");
     var a = l.nth(0);
     res := a.value
-  }
 }
 ```
 
 * `sort` 
 
-```javascript
-archetype expr_method_asset_sort
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 3};
-  {"id1"; 2};
-  {"id2"; 1}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
+```css
+effect {
     var l = my_asset.sort(value);
     var a = l.nth(0);
     res := a.value
-  }
 }
 ```
 
 you can also sort with several criteria
 
-```javascript
-archetype multi_sort
-
-asset my_asset identified by id {
-  id : string;
-  v1 : int;
-  v2 : int;
-  v3 : int;
-} initialized by {
-  {"id0"; 1; 2; 7};
-  {"id1"; 1; 3; 9};
-  {"id2"; 1; 3; 8};
-  {"id3"; 1; 2; 6}
-}
-
-entry exec () {
-
-  effect {
-    var res = my_asset.sort(v1, asc(v2), desc (v3))
-    (* res = ["id0"; "id3", "id1", "id2"] *)
-  }
+```css
+effect {
+    var res = my_asset.sort(v1, asc(v2), desc (v3)) /* res = ["id0"; "id3", "id1", "id2"] */
 }
 ```
 
 * `sum` 
 
-```javascript
-archetype expr_method_asset_sum
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-entry exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
-    res := my_asset.sum(value)
-  }
+```css
+effect {
+    res := my_asset.sum(value) /* res = 3 */
 }
 ```
 
@@ -1058,11 +914,11 @@ entry exec () {
 
 Here is a full example with all sections of an action specification
 
-```javascript
+```css
 archetype contract_with_full_specification
 
 asset myasset {
-  id: string;
+  id : string;
   val: bool;
 }
 
@@ -1122,7 +978,7 @@ entry exec () {
 
 * `definition`
 
-```javascript
+```css
 definition mydef {
   x : myasset | forall y in col1, x.id = y.id1
 }
@@ -1130,7 +986,7 @@ definition mydef {
 
 * `predicate` 
 
-```javascript
+```css
 predicate mypredicate (a : int) {
   forall x in col1, forall y in col2, x.id1 = y.id2
 }
@@ -1138,13 +994,13 @@ predicate mypredicate (a : int) {
 
 * `variable` 
 
-```javascript
+```css
 variable myvar : int = 0
 ```
 
 * `shadow effect` 
 
-```javascript
+```css
 shadow effect {
   myvar := 3
 }
@@ -1152,7 +1008,7 @@ shadow effect {
 
 * `assert` 
 
-```javascript
+```css
 assert a1 {
   x = y
   invariant for myloop {
@@ -1164,7 +1020,7 @@ assert a1 {
 
 * `invariant` 
 
-```javascript
+```css
 invariant for myloop {
   x = 0;
   y = 0
@@ -1173,7 +1029,7 @@ invariant for myloop {
 
 * `postcondition` 
 
-```javascript
+```css
 postcondition s1 {
   x = y
   invariant for myloop {
@@ -1187,7 +1043,7 @@ One specification section is available at the top of the contract. But there is 
 
 * `contract invariant` 
 
-```javascript
+```css
 contract invariant c1 {
   true <> false
 }
@@ -1199,27 +1055,27 @@ All expression in effect are available in formula part.
 
 * `forall` universal quantifier
 
-```javascript
+```css
 q1: forall x : int, x = x;
 q2: forall x in my_asset, x.value = x.value;
 ```
 
 * `exists` existential quantifier
 
-```javascript
+```css
 q3: exists x : int, x = x;
 q4: exists x in my_asset, x.value = x.value;
 ```
 
 * `->` imply
 
-```javascript
+```css
 o1: true -> true;
 ```
 
 * `<->` equivalence
 
-```javascript
+```css
 o2: true <-> true;
 ```
 
@@ -1227,7 +1083,7 @@ o2: true <-> true;
 
 * `subsetof` 
 
-```javascript
+```css
 archetype expr_formula_asset_method_subset
 
 asset my_asset identified by id {
@@ -1249,12 +1105,11 @@ entry exec () {
     require (true)
   }
 }
-
 ```
 
 * `isempty` 
 
-```javascript
+```css
 archetype expr_formula_asset_method_isempty
 
 asset my_asset identified by id {
@@ -1282,37 +1137,37 @@ entry exec () {
 
 * `before` 
 
-```javascript
+```css
 s1: before.my_asset.isempty();
 ```
 
 * `at` 
 
-```javascript
+```css
 s2: at(lbl).my_asset.isempty();
 ```
 
 * `unmoved` 
 
-```javascript
+```css
 s3: unmoved.my_asset.isempty();
 ```
 
 * `added` 
 
-```javascript
+```css
 s4: added.my_asset.isempty();
 ```
 
 * `removed` 
 
-```javascript
+```css
 s5: removed.my_asset.isempty();
 ```
 
 * `iterated` 
 
-```javascript
+```css
 entry exec () {
   specification {
     postcondition p1 {
@@ -1334,7 +1189,7 @@ entry exec () {
 
 * `toiterate` 
 
-```javascript
+```css
 action exec () {
   specification {
     postcondition p1 {
@@ -1354,11 +1209,9 @@ action exec () {
 }
 ```
 
-### 
-
 ### Security predicate
 
-```javascript
+```css
 archetype lang_security
 
 constant admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
@@ -1390,57 +1243,55 @@ security {
 
 * `only_by_role` 
 
-```javascript
+```css
 s00 : only_by_role (anyentry, admin);
 ```
 
 * `only_in_action` 
 
-```javascript
+```css
 s01 : only_in_entry (anyentry, exec);
 ```
 
 * `only_by_role_in_action` 
 
-```javascript
+```css
 s02 : only_by_role_in_entry (anyentry, admin, exec);
 ```
 
 * `not_by_role` 
 
-```javascript
+```css
 s03 : not_by_role (anyentry, admin);
 ```
 
 * `not_in_action` 
 
-```javascript
+```css
 s04 : not_in_entry (anyentry, exec);
 ```
 
 * `not_by_role_in_action` 
 
-```javascript
+```css
 s05 : not_by_role_in_entry (anyentry, admin, exec);
 ```
 
 * `transferred_by` 
 
-```javascript
+```css
 s06 : transferred_by (anyentry);
 ```
 
 * `transferred_to` 
 
-```javascript
+```css
 s07 : transferred_to (anyentry);
 ```
 
 * `no_storage_fail` 
 
-```javascript
+```css
 s08 : no_storage_fail (anyentry);
 ```
-
-
 

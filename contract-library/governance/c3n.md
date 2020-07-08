@@ -38,30 +38,47 @@ NIL operation ;
 
 For those who are not fluent in stack machine, here is the transcription to Archetype:
 
-```text
+```javascript
 archetype c3n
 
+/* michelson source : https://better-call.dev/main/KT1Gbu1Gm2U47Pmq9VP7ZMy3ZLKecodquAh4/script */
+
 asset admins {
-  addr : address;
-}
-variable hash : string = "..." (* to set to initial value *)
-action register (newadmins : admins collection option,
-                 oldhash   : string,
-                 newhash   : string) {
-  require {
-    r1 : oldhash = hash;
-    r2 : admins.contains(caller);
-  }
-  effect {
-    hash := newhash;
-    let some newa = newadmins in
-      admins := newa
-    otherwise
-      ()
-  }
+    addr: address;
 }
 
+variable hash : string = "initialvalue"
+
+entry register (newadmins : ((pkey of admins) list) option, oldhash : string, newhash : string) {
+    specification {
+        postcondition p1 {
+            before.hash = oldhash
+        }
+        postcondition p2 {
+            hash = newhash
+        }
+        postcondition p3 {
+            before.admins.contains(caller)
+        }
+    }
+    require {
+        r1: oldhash = hash;
+    }
+    effect {
+        var test = false;
+        for admin in admins do
+            if admins[admin].addr = caller then
+            test := true;
+        done;
+        require (test = true);
+        hash := newhash;
+        if issome(newadmins) then (
+            admins.clear();
+            for a in getopt(newadmins) do
+                admins.add ({ a })
+            done
+        )
+    }
+}
 ```
-
-Quite straightforward, isn’t it?
 

@@ -27,10 +27,10 @@ All actions are called by the _admin_ role, which is ensured by security predica
 ```javascript
 archetype miles_with_expiration
 
-variable[%transferable%] admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+variable admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
 (* id is a string because it is generated off-chain *)
-asset mile identified by id sorted by expiration {
+asset mile identified by id {
    id         : string;
    amount     : int;
    expiration : date
@@ -41,26 +41,29 @@ asset mile identified by id sorted by expiration {
 (* a partition ensures there is no direct access to mile collection *)
 asset owner identified by addr {
   addr  : role;
-  miles : mile partition = [] (* injective (owner x mile) *)
+  miles : mile partition (* injective (owner x mile) *)
 }
 
-action add (ow : address, newmile : mile) {
+entry add (ow : address, newmile_id : string, newmile_amount : int, newmile_expiration : date) {
    called by admin
 
    require {
-     c1 : newmile.amount > 0;
+     c1 : newmile_amount > 0;
    }
 
    failif {
-     c2 : mile.contains(newmile.id);
+     c2 : mile.contains(newmile_id);
    }
 
    effect {
-     owner.addupdate (ow, { miles += [{id = newmile_id; amount = newmile_amount; expiration = newmile_expiration} ] })
+     if owner.contains(ow) then
+      owner[ow].miles.add ({newmile_id; newmile_amount; newmile_expiration})
+     else
+      owner.add ({ addr = ow; miles = [{newmile_id; newmile_amount; newmile_expiration}] })
    }
 }
 
-action consume (a : address, quantity : int) {
+entry consume (a : address, quantity : int) {
 
   specification {
 
@@ -77,16 +80,16 @@ action consume (a : address, quantity : int) {
     }
 
     postcondition p3 {
-      forall m in mile.removed(), m.expiration >= now
+      forall m in removed.mile, m.expiration >= now
       invariant for loop {
-        mile.removed().subsetof(by_expiration)
+        removed.mile.subsetof(by_expiration)
       }
     }
 
     postcondition p4 {
-      mile.added().isempty()
+      added.mile.isempty()
       invariant for loop {
-        mile.added().isempty()
+        added.mile.isempty()
       }
     }
   }
@@ -98,25 +101,24 @@ action consume (a : address, quantity : int) {
   }
 
   effect {
-    let ow = owner.get(a) in
-    let by_expiration = ow.miles.select(the.expiration > now) in
+    var by_expiration = owner[a].miles.sort(expiration).select(the.expiration > now);
     require (by_expiration.sum(the.amount) >= quantity);
-    let remainder = quantity in
+    var remainder = quantity;
     for : loop m in by_expiration do
       if remainder > 0
       then (
-        if m.amount > remainder
+        if mile[m].amount > remainder
         then (
-          mile.update(m.id, { amount  -= remainder });
+          mile.update(m, { amount -= remainder });
           remainder := 0
         )
-        else if m.amount = remainder
+        else if mile[m].amount = remainder
         then (
           remainder := 0;
-          ow.miles.remove(m.id)
+          owner[a].miles.remove(m)
         ) else (
-          remainder -= m.amount;
-          ow.miles.remove(m.id)
+          remainder -= mile[m].amount;
+          owner[a].miles.remove(m)
         )
       )
     done;
@@ -124,12 +126,12 @@ action consume (a : address, quantity : int) {
   }
 }
 
-action clear_expired () {
+entry clear_expired () {
   specification {
     postcondition s3 {
-      forall m in mile.removed(), m.expiration < now
+      forall m in removed.mile, m.expiration < now
       invariant for loop2 {
-        forall m in mile.removed(), m.expiration < now
+        forall m in removed.mile, m.expiration < now
       }
     }
   }
@@ -138,16 +140,16 @@ action clear_expired () {
 
   effect {
     for : loop2 o in owner do
-      o.miles.removeif (the.expiration < now)
+      owner[o].miles.removeif(the.expiration < now)
     done
   }
 }
 
 security {
-  (*  this ensures that any mile was added with the 'add' action *)
-  g1 : only_by_role (anyaction, admin);
-  g2 : only_in_action (remove (mile), [consume or clear_expired]);
-  g3 : not_in_action (add (mile), consume);
+  (*  this ensures that any mile was added with the 'add' entry *)
+  g1 : only_by_role (anyentry, admin);
+  g2 : only_in_entry (remove (mile), [consume or clear_expired]);
+  g3 : not_in_entry (add (mile), consume);
   g4 : no_storage_fail (add)
 }
 
