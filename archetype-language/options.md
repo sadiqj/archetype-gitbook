@@ -88,7 +88,10 @@ record geoloc {
 It is possible to read and assign values to the fields of a record:
 
 ```css
-var r : geoloc = { 48.8583701; 2.2944813 } /* Eiffel tower's location */
+var r : geoloc = { 
+  longitude = 48.8583701; 
+  latitude = 2.2944813 
+} /* Eiffel tower's location */
 var lo = r.longitude; /* lo = 48.8583701 */
 var la = r.latitude; /* la = 2.2944813 */
 /* let's go to another Eiffel's construction! */
