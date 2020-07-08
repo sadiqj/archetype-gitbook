@@ -630,7 +630,7 @@ var rat_int_div    : rational = 1.1 / 2;
 * `%` 
 
 ```javascript
-var int_int_modulo : int = 1 % 2;
+var int_int_modulo : nat = 1 % 2;
 ```
 
 ### Constants

@@ -6,38 +6,18 @@ description: >-
 
 # Numbers, Casts
 
-## Integers
-
-Integers are defined as follows:
-
-```javascript
-effect {
-  var n1 = 345;
-  var n2 = -5;
-  var n3 = 99999999999999999999999999999999999999999999999999999999999999999;
-}
-```
-
- Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
-
-The 4 arithmetics operations `+ * - div` and the 6 comparison operators `= <> < > <= >=` are available.
-
-Note that de `div` operator is the _euclidean_ division and returns an integer value.
-
 ## Naturals
 
 Naturals are positive integers. They are defined as follows:
 
 ```javascript
 effect {
-  var n1 : nat = 345;
-  var n2 : nat = 99999999999999999999999999999999999999999999999999999999999999;
+  var n1 = 345;
+  var n2 = 99999999999999999999999999999999999999999999999999999999999999;
 }
 ```
 
-Note that it is necessary to specify the `nat` type in the `var` declaration, otherwise you end up with an integer.
-
-The 4 arithmetics operations `+ * - div` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value.
+The 5 arithmetics operations `+ * - div %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
 
 ```javascript
 effect {
@@ -49,6 +29,26 @@ effect {
 ```
 
 Note that de `div` operator is the _euclidean_ division and returns a nat value.
+
+## Integers
+
+Integers are defined as follows:
+
+```javascript
+effect {
+  var n1 : int = 345;
+  var n2 : int = -5;
+  var n3 : int = 999999999999999999999999999999999999999999999999999999999999;
+}
+```
+
+Note that it is necessary to specify the `int` type in the `int` declaration, otherwise you end up with an natural.
+
+Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
+
+The 5 arithmetics operations `+ * - div %` and the 6 comparison operators `= <> < > <= >=` are available.
+
+Note that de `div` operator is the _euclidean_ division and returns an integer value.
 
 ## Tezis
 
