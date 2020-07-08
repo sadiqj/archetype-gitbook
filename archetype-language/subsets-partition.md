@@ -59,7 +59,7 @@ The proper way to modify the car collection is through the `cars` partition of a
 * `remove`
 * `clear`
 
-```css
+```javascript
 effect {
    fleet["f01"].cars.add({ "YS3ED48E5Y3070016"; "mustang"; 1968; 2});
    fleet["f01"].cars.addupdate("3VWCK21Y33M306146", { model = "escort"; 
@@ -76,7 +76,7 @@ The above instruction fails if the `fleet` collection does not contain `f01` or 
 
 When updating an asset with a partition field it is possible to add or remove assets with the `+=` and `-=` operators: 
 
-```css
+```javascript
 effect {
    fleet.update("f01", { cars += [{ "2HGFG11879H508413", "explorer", 2000, 4 }] });
    fleet.update("f02", { cars -= [ "YS3ED48E5Y3070016" ] });
