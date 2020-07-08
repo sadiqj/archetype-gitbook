@@ -734,24 +734,6 @@ var byt_slice : bytes  = slice(0xabcdef01, 1, 2);
 var str_length : int = length("abcdef");
 ```
 
-* `isnone`
-
-```javascript
-var b_issome : bool = isnone(none);
-```
-
-* `issome`
-
-```javascript
-var b_issome : bool = issome(some(1));
-```
-
-* `getopt`
-
-```javascript
-var res : int = getopt(some(1));
-```
-
 * `floor`
 
 ```javascript
@@ -782,6 +764,20 @@ var s : string option = unpack<string>(0x050100000009617263686574797065) // some
 
 ```cpp
 variable e : option<entrysig<nat>> = entrypoint(@KT1,"getbalance")
+```
+
+### Option
+
+* `issome`
+* `isnone`
+* `getopt`
+
+```css
+effect {
+    var t1 : bool = isnone(none);
+    var t2 : bool = issome(some(1));
+    var i  : int = getopt(some(1)); /* i = 1 */
+}
 ```
 
 ### List
