@@ -58,5 +58,21 @@ effect {
 
 ## Sets
 
+Sets are containers of unique objects. It is possible to add and remove an object, test if an object is in a set, and know the number of elements in a set. Sets may currently contain only builtin types: `int` `nat` `string` `bytes` `tez` `bool` `key_hash` `date` `duration` and `address`.
+
+Sets are built with `[ ; ]`:
+
+```javascript
+variable s : set<int> = [ 1; 3; 5; 12 ] 
+```
+
+The `set_contains` operator returns true if an element is an element of the set, false otherwise.
+
+The `set_add` operator returns a set with an extra element if the element is not already in the argument set.
+
+The `set_remove` operator returns a set with an element removed if the element was present in the argument set .
+
+The `set_length` operator returns the number of elements in the set.
+
 ## Maps
 
