@@ -23,11 +23,7 @@ archetype contract_called
 
 variable v : int = 0
 
-entry add_value(a : int, b : int) {
-  effect {
-    v := a + b
-  }
-}
+entry add_value(a : int, b : int) { v := a + b }
 ```
 
 In the calling contract, you need to:
@@ -47,7 +43,7 @@ The contract may then be called with the `transfer` instruction:
 
 ```javascript
 effect {
-    transfer 0tz to c call add_value(3,2);
+    transfer 0tz to c call add_value(3, 2);
 }
 ```
 
@@ -57,34 +53,14 @@ Note that the contract interface may _not_ list the entire target contract entry
 
 It is possible to declare a single entry point to a contract. The type for an entry point is `entrysig` followed by its signature. Operator `entrypoint` builds an entry point with the contract address and the name of the entry point.
 
-Say for example you want to call the `createtoken` entrypoint of the following contract:
-
-```javascript
-archetype token
-
-constant admin : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
-
-asset holder {
-  id : address;
-  nb : nat = 0;
-}
-
-entry createtoken(h : pkey<holder>, n : nat) {
-   called by admin
-   effect {
-      holder.addupdate(h, { nb += n });
-   }
-}
-```
-
-Then you may call the `createtoken` entry with the following:
+Then you may also call the `addvalue` entry with the following:
 
 ```javascript
 effect {
-   var ctopt : option<entrysig<address * nat>> = entrypoint(token,"createtoken");
+   var avopt : option<entrysig<int * int>> = entrypoint(c,"addvalue");
    if issome(ct) then (
-      var ct = getopt(ctopt);
-      transfer 0tz to entry ct(anaddress,10)
+      var av = getopt(ctopt);
+      transfer 0tz to entry av(3,2)
    )
    else fail("no contract found or no entrypoint 'createtoken' found")
 }
