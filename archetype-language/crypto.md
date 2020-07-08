@@ -23,7 +23,31 @@ Bytes literals are prefixed by `0x`.
 variable bvalue : bytes = 0x050100000009617263686574797065 // "archetype" in bytes
 ```
 
+### Expressions
+
+The following operators are available:
+
+* `concat`
+* `slice`
+
+```javascript
+effect {
+    var byt_concat : bytes  = concat(0x12, 0xef);
+    var byt_slice : bytes  = slice(0xabcdef01, 1, 2);
+}
+```
+
+Bytes values are comparable with `= <> < > <= >=` operators.
+
+### Hashing
+
 Hashing functions are available: `blake2b` `sha256` and `sha512`. They convert a byte value to the hashed byte value.
+
+```javascript
+var h = sha256(0x050100000009617263686574797065);
+```
+
+### pack, unpack
 
 It is possible to convert any value from and to a bytes value with `pack` and `unpack` operators.
 

@@ -493,8 +493,6 @@ var bool_bool_or  : bool = (true or false);
 var bool_bool_not : bool = not true;
 ```
 
-### Operator
-
 * `=` 
 
 ```javascript
@@ -629,36 +627,36 @@ var rat_int_div    : rational = 1.1 / 2;
 var int_int_modulo : int = 1 % 2;
 ```
 
-### Constant
+### Constants
 
 * `caller` 
 
 ```javascript
-var v : address = caller; (* SENDER *)
+var v : address = caller; /* the address calling the contract */
 ```
 
 * `source` 
 
 ```javascript
-var v : address = source; (* SOURCE *)
+var v : address = source; /* the address at the origin of the call */
 ```
 
 * `balance` 
 
 ```javascript
-var v : tez = balance; (* BALANCE *)
+var v : tez = balance; /* the contract's balance in tez */
 ```
 
 * `transferred` 
 
 ```javascript
-var v : tez = transferred; (* AMOUNT *)
+var v : tez = transferred; /* the amount of tez that comes with the call */
 ```
 
 * `now` 
 
 ```javascript
-var v : date = now; (* NOW *)
+var v : date = now; /* the date at execution */
 ```
 
 * `state` 
@@ -746,6 +744,24 @@ var neg_floor : int = floor(-5 / 3); // -2
 ```javascript
 var pos_ceil : int = ceil(5 / 3);  // 2
 var neg_ceil : int = ceil(-5 / 3); // -1
+```
+
+* `blake2b`
+
+```javascript
+var h : bytes = blake2b(0x050100000009617263686574797065);
+```
+
+* `sha256`
+
+```javascript
+var h : bytes = sha256(0x050100000009617263686574797065);
+```
+
+* `sha512`
+
+```javascript
+var h : bytes = sha512(0x050100000009617263686574797065);
 ```
 
 * `pack`
@@ -837,10 +853,6 @@ effect {
     var map_l    : int              = map_length(my_map);
 }
 ```
-
-### Record
-
-
 
 ### Asset Collection
 
