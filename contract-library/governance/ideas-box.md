@@ -12,7 +12,7 @@ In the process presented here, voters are each granted with 5 voting tokens that
 
 When the voting process is over, the box administrator may declare the selected ideas: the top 3 ideas are selected with the constraint that a selected idea must reach at least 6 votes.
 
-```javascript
+```css
 archetype ideasbox
 
 constant chairman : address = @tz1ZAQXACaEqryobpBoLbJUc2DjG5ZzrhARu
