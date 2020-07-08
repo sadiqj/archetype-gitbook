@@ -147,6 +147,15 @@ variable assoc : map<int, string> = []
 variable poll : set<address> = []
 ```
 
+* `record` declares a record structure.
+
+```css
+record r = {
+   s : string;
+   i : int;
+}
+```
+
 * `asset`  declares a collection of assets and the data an asset is composed of. For example, the following declares a collection of real estates described by an address, a location, and an owner:
 
 ```css
@@ -769,6 +778,12 @@ var v : bytes = pack("archetype")
 var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
 ```
 
+* `entrypoint`
+
+```cpp
+variable e : option<entrysig<nat>> = entrypoint(@KT1,"getbalance")
+```
+
 ### List
 
 * `contains`
@@ -785,6 +800,51 @@ effect {
     var p  = prepend(l,"0");
 }
 ```
+
+### Set
+
+* `set_add`
+* `set_remove`
+* `set_contains`
+* `set_length`
+
+```css
+effect {
+    var my_set : set<int> = [0; 1 ; 2; 3];
+    var new_set2 : set<int> = set_add(my_set, 4);
+    var new_set3 : set<int> = set_remove(my_set, 0);
+    var set_c    : bool     = set_contains(my_set, 2);
+    var c        : int      = set_length(my_set);
+}
+```
+
+### Map
+
+* `map_put`
+* `map_remove`
+* `[]`
+* `map_getopt`
+* `map_contains`
+* `map_length`
+
+```css
+effect {
+    var my_map : map<string, int> = [ ("k0", 3) ;
+                                      ("k1", 2) ;
+                                      ("k2", 1) ;
+                                      ("k3", 0) ];
+    var new_map1 : map<string, int> = map_put(my_map, "k4", 4);
+    var new_map2 : map<string, int> = map_remove(my_map, "k0");
+    var new_map3 : option<int>      = my_map["k0"];
+    var new_map4 : int              = map_getopt(my_map, "k0");
+    var map_c    : bool             = map_contains(my_map, "k0");
+    var map_l    : int              = map_length(my_map);
+}
+```
+
+### Record
+
+
 
 ### Asset Collection
 
