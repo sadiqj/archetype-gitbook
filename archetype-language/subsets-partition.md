@@ -197,7 +197,7 @@ effect {
 }
 ```
 
-{% hint style="info" %}
+{% hint style="warning" %}
 There is no guarantee that a referenced asset in the aggregate exists in the base collection.
 {% endhint %}
 
