@@ -57,6 +57,8 @@ The proper way to modify the car collection is through the `cars` partition of a
 * `add`
 * `addupdate`
 * `remove`
+* `removeif`
+* `removeall`
 * `clear`
 
 ```bash
@@ -71,6 +73,12 @@ effect {
 ```
 
 The above instruction fails if the `fleet` collection does not contain `f01` or if the `car` collection already contains `YS3ED48E5Y3070016`.
+
+{% hint style="info" %}
+Partitions are _synchronized_: every change in the partition \(add, remove, ...\) is synchronized with the base collection.
+
+In the example above,  car `YS3ED48E5Y3070016` is also added to the base `car` collection.
+{% endhint %}
 
 ### Update operators
 
@@ -131,7 +139,7 @@ effect {
 
 #### remove
 
-The `remove` instruction removes a reference from an aggregate. It _fails_ if the key is not in the aggregate.
+The `remove` instruction removes a reference from an aggregate. 
 
 ```javascript
 effect {
@@ -145,6 +153,10 @@ effect {
 }
 ```
 
+{% hint style="info" %}
+This does _**not**_ remove the asset from the base collection \(just the reference in the aggregate field\).
+{% endhint %}
+
 #### removeall
 
 The `removeall` instruction removes all references in the aggregate, which is empty as a result.
@@ -154,6 +166,10 @@ effect {
    driver["f01"].drivers.removeall();
 }
 ```
+
+{% hint style="info" %}
+This does _**not**_ remove assets from the base collection, just references in the aggregate field.
+{% endhint %}
 
 ### Update operators
 
