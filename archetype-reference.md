@@ -606,7 +606,7 @@ effect {
 ### list
 
 * `contains`
-* `count`
+* `length`
 * `nth`
 * `prepend`
 
@@ -614,7 +614,7 @@ effect {
 effect {
     var l : string list = ["1"; "2"; "3"];
     var t1 = contains(l, "2");
-    var t2 = count(l);
+    var t2 = length(l);
     var n  = nth(l);
     var p  = prepend(l,"0");
 }

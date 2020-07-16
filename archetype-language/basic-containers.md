@@ -10,11 +10,11 @@ effect {
 }
 ```
 
-The `count` operator returns the number of elements in the list.
+The `length` operator returns the number of elements in the list.
 
 ```javascript
 effect {
-  var c = count([1; 2; 3]);
+  var c = length([1; 2; 3]);
   if c = 3 then transfer 1tz to coder;
 }
 ```
