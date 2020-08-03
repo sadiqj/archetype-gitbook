@@ -1,3 +1,7 @@
+---
+description: Basic escrow process with state machine
+---
+
 # Basic
 
 This first example is a toy contract which defines a very basic escrow process.
