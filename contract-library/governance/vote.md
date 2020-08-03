@@ -4,7 +4,7 @@ description: Basic voting process
 
 # Voting process
 
-This archetype defines a basic voting process. The chairman is responsible for registering voters. The use of the `mutable` extension gives the chairman the extra right to modify the voting agenda, in Created state only.
+This archetype defines a basic voting process. The chairman is responsible for registering voters.
 
 The result of the vote is computed with the `bury` action: winners are ballots with the highest number of votes.
 
