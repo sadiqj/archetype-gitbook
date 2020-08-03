@@ -37,7 +37,7 @@ A signatory signs with:
 
 A “unanimity” transaction is generated when all signatories haves signed a quasi-equal value.
 
-![](../../.gitbook/assets/capture-de-cran-2020-08-03-a-17.18.37.png)
+![](../../.gitbook/assets/capture-de-cran-2020-08-03-a-17.36.41.png)
 
 Below is the archetype implementation:
 
