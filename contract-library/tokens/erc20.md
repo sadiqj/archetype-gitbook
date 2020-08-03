@@ -32,11 +32,9 @@ asset tokenHolder identified by holder {
 }
 
 entry dotransfer (dest : pkey<tokenHolder>, value : nat) {
-
-  failif {
-    f1 : tokenHolder[caller].tokens < value
+  require {
+    d0 : tokenHolder[caller].tokens >= value
   }
-
   effect {
     tokenHolder.addupdate( dest, { tokens += value });
     tokenHolder.update( caller, { tokens -= value })
@@ -62,7 +60,6 @@ entry transferFrom(from_ : address, to_ : address, value : nat) {
   effect {
     (* update allowance *)
     allowance.update((from_,to_), { amount -=  value });
-
     (* update token *)
     tokenHolder.addupdate(to_,   { tokens += value });
     tokenHolder.update(from_, { tokens -= value });
