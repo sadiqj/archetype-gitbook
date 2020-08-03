@@ -7,7 +7,7 @@ Factoring is enabled: the seller can sell the “invoice” to a creditor, and t
 A state machine is used to follow the different stages of the escrow transaction.
 
 {% code title="escrow\_penalty.arl" %}
-```ocaml
+```javascript
 archetype escrow_penalty
 
 variable buyer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
@@ -46,7 +46,7 @@ transition confirm () {
   to Confirmed when { balance = price + penalty }
 }
 
-transition transfer_ () {
+transition %transfer () {
   called by oracle
 
   from Confirmed
