@@ -45,7 +45,7 @@ archetype c3n
 
 variable admins : list<address> = []
 
-variable hash : bytes = "initialvalue"
+variable hash : bytes = 0x050100000009617263686574797065
 
 entry register (newadmins : option<list<address>> , oldhash : bytes, newhash : bytes) {
     require {
