@@ -33,7 +33,6 @@
   * [Ideas box](contract-library/governance/ideas-box.md)
   * [Voting process](contract-library/governance/vote.md)
   * [Competition](contract-library/governance/competition.md)
-  * [Mini DAO](contract-library/governance/dao.md)
   * [C3N](contract-library/governance/c3n.md)
 * [Digital Assets](contract-library/tokens/README.md)
   * [FA 1.2](contract-library/tokens/fa-1.2.md)
