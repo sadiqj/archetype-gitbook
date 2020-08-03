@@ -31,6 +31,7 @@
   * [Auction \(from Zilliqa\)](contract-library/auction/auction-from-zilliqa.md)
 * [Governance](contract-library/governance/README.md)
   * [Ideas box](contract-library/governance/ideas-box.md)
+  * [Numerical Unanimity](contract-library/governance/numerical-unanimity.md)
   * [Voting process](contract-library/governance/vote.md)
   * [Competition](contract-library/governance/competition.md)
   * [C3N](contract-library/governance/c3n.md)
