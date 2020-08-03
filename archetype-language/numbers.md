@@ -48,10 +48,10 @@ Integers are defined as follows:
 
 ```javascript
 effect {
-  var n1 : int = 3,458i;
+  var n1 : int = 3_458i;
   var n2 : int = -5i;
   var n3 : int = 99999999999999999999999999999999999999999999999999999999i;
-  var n4 : int = 10,000,000i;
+  var n4 : int = 10_000_000i;
 }
 ```
 
