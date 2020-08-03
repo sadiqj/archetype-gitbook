@@ -194,9 +194,10 @@ effect {
 }
 ```
 
-Note that the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`. 
+Note that:
 
-Note that conversion from rational to integer is done explicitly with operators `ceil` and `floor`.
+*  the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`
+* the conversion from rational to integer is done explicitly with operators `ceil` and `floor`
 
 
 
