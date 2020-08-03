@@ -103,12 +103,11 @@ entry sign (spid : string, v : int) {
    effect {
       sig_spec[spid].signatures.add({spid; caller; v });
       if sig_spec[spid].signatures.count() = length (sig_spec[spid].signatories) then (
-         var sigs = get_signatures(spid);
-         if check_sig_data (spid) then
-            transfer 0tz to entry self.unanimity(spid, sigs, sig_spec[spid].dev)
-         else
-            transfer 0tz to entry self.failed(spid, sigs, sig_spec[spid].dev);
-         sig_spec.remove(spid);
+        var sigs = get_signatures(spid);
+        var d = sig_spec[spid].dev;
+        var selfentry = if check_sig_data (spid) then self.unanimity else self.failed;
+        transfer 0tz to entry selfentry((spid, sigs, d));
+        sig_spec.remove(spid);
       );
    }
 }
