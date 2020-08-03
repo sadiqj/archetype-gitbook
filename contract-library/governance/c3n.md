@@ -1,6 +1,6 @@
 # C3N
 
-Last month saw the first smart contract deployed on Tezos by a government authority \(French cybercrime unit\)
+A French government authority \(cybercrime unit\) deployed a smart contract on Tezos.
 
 {% embed url="https://beincrypto.com/tezos-smart-contracts-used-by-french-army-since-september/" %}
 
