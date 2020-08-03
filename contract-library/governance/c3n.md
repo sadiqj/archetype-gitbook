@@ -36,7 +36,7 @@ NIL operation ;
 }
 ```
 
-For those who are not fluent in stack machine, here is the transcription to Archetype:
+For those who are not fluent in stack machine, here is a transcription to Archetype:
 
 ```javascript
 archetype c3n
