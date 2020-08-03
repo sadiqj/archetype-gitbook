@@ -4,7 +4,7 @@ description: >-
   rationals
 ---
 
-# Numbers, Casts
+# Numbers
 
 ## Naturals
 
@@ -13,9 +13,12 @@ Naturals are positive integers. They are defined as follows:
 ```javascript
 effect {
   var n1 : nat = 345;
-  var n2 : nat = 99999999999999999999999999999999999999999999999999999999999999;
+  var n2 : nat = 9999999999999999999999999999999999999999999999999999999;
+  var n3 : nat = 10_000_000;
 }
 ```
+
+Note that it is possible to structure large numbers by packs of 3 digits using the underscore character.
 
 3 arithmetics operations `+ * %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
 
@@ -45,9 +48,10 @@ Integers are defined as follows:
 
 ```javascript
 effect {
-  var n1 : int = 345i;
+  var n1 : int = 3,458i;
   var n2 : int = -5i;
-  var n3 : int = 999999999999999999999999999999999999999999999999999999999999i;
+  var n3 : int = 99999999999999999999999999999999999999999999999999999999i;
+  var n4 : int = 10,000,000i;
 }
 ```
 

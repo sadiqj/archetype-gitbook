@@ -8,7 +8,7 @@
   * [Constants, Variables](archetype-language/constants-variables.md)
   * [Strings](archetype-language/strings.md)
   * [Dates, Durations](archetype-language/dates-durations.md)
-  * [Numbers, Casts](archetype-language/numbers.md)
+  * [Numbers](archetype-language/numbers.md)
   * [Crypto](archetype-language/crypto.md)
   * [Transfers, contract calls](archetype-language/transfers.md)
   * [Composite types](archetype-language/options.md)
