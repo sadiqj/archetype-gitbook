@@ -36,6 +36,7 @@
   * [Mini DAO](contract-library/governance/dao.md)
   * [C3N](contract-library/governance/c3n.md)
 * [Digital Assets](contract-library/tokens/README.md)
+  * [FA 1.2](contract-library/tokens/fa-1.2.md)
   * [ERC20](contract-library/tokens/erc20.md)
   * [ICO](contract-library/tokens/ico.md)
   * [Coase](contract-library/tokens/coase.md)
