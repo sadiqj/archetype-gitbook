@@ -8,38 +8,32 @@ The standard may be found at this address:
 
 {% embed url="https://theethereum.wiki/w/index.php/ERC20\_Token\_Standard" %}
 
+Note that the implementation of the allowance data is an asset with a double key: the allower address and the spender address. 
+
 {% tabs %}
 {% tab title="erc20.arl" %}
 ```ocaml
 archetype erc20
 
-constant total : int = 1000000000000000
-variable onetoken : int = 1000000
-with {
-  i0: total > 0
-}
+constant total : nat = 1000000000000000
+variable onetoken : nat = 1000000
 
 asset allowance identified by allower spender {
   allower     : address;
   spender     : address;
-  amount      : int = 0;
-} with {
-  i2 : amount > 0;
+  amount      : nat = 0;
 }
 
 asset tokenHolder identified by holder {
   holder     : address;
-  tokens     : int = 0;
-} with {
-  i1: tokens >= 0;
+  tokens     : nat = 0;
 } initialized by {
   { holder = caller; tokens = total }
 }
 
-entry dotransfer (dest : pkey<tokenHolder>, value : int) {
+entry dotransfer (dest : pkey<tokenHolder>, value : nat) {
 
   failif {
-    f0 : value < 0;
     f1 : tokenHolder[caller].tokens < value
   }
 
@@ -49,30 +43,22 @@ entry dotransfer (dest : pkey<tokenHolder>, value : int) {
   }
 }
 
-entry approve(ispender : address, value : int) {
+entry approve(ispender : address, value : nat) {
   require {
     d1 : tokenHolder[caller].tokens >= value;
-  }
-  failif {
-    f2 : value <= 0;
   }
   effect {
     allowance.addupdate((caller, ispender), { amount += value });
   }
 }
 
-entry transferFrom(from_ : address, to_ : address, value : int) {
+entry transferFrom(from_ : address, to_ : address, value : nat) {
   require {
     (* d1: allowance.contains(from_); *)
     d2: allowance[(from_,to_)].spender = caller;
     d3: allowance[(from_,to_)].amount >= value;
+    d4: tokenHolder[from_].tokens >= value
   }
-
-  failif {
-    f3 : value < 0;
-    f4 : tokenHolder[from_].tokens < value
-  }
-
   effect {
     (* update allowance *)
     allowance.update((from_,to_), { amount -=  value });
@@ -82,8 +68,6 @@ entry transferFrom(from_ : address, to_ : address, value : int) {
     tokenHolder.update(from_, { tokens -= value });
   }
 }
-
-
 ```
 {% endtab %}
 {% endtabs %}
