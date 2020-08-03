@@ -23,7 +23,7 @@ For example, say 2 signatories must sign a value with an authorized deviation of
 
 ![](../../.gitbook/assets/capture-de-cran-2020-08-03-a-17.24.22.png)
 
-The unanimity logic is encoded by a smart contract that manages as many unanimity process as necessary. 
+The unanimity logic is encoded by a smart contract that manages as many unanimity processes as necessary. 
 
 The contract admin creates a specification for a consensus with:
 
@@ -35,7 +35,7 @@ A signatory signs with:
 * the consensus id
 * the value
 
-An “unanimity” transaction is generated when all signatories haves signed a quasi-equal value.
+A “unanimity” transaction is generated when all signatories haves signed a quasi-equal value.
 
 ![](../../.gitbook/assets/capture-de-cran-2020-08-03-a-17.18.37.png)
 
@@ -118,6 +118,7 @@ entry clear_expired () {
       sig_spec.select(the.expiration < now).clear();
    }
 }
-
 ```
+
+
 

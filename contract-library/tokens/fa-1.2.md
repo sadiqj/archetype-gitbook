@@ -15,7 +15,7 @@ archetype fa12
 
 constant totalsupply : nat = 1000000000000000
 
-asset allowance identified by addr_owner addr_spender {
+asset allowance identified by addr_owner addr_spender to big_map {
   addr_owner       : address;
   addr_spender     : address;
   amount           : nat;
