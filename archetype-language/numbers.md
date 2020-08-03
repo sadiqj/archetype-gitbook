@@ -17,7 +17,7 @@ effect {
 }
 ```
 
-4 arithmetics operations `+ * div %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
+3 arithmetics operations `+ * %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
 
 ```javascript
 effect {
@@ -29,6 +29,15 @@ effect {
 ```
 
 Note that de `div` operator is the _euclidean_ division and returns a nat value.
+
+The `abs` function is used to convert a integer value to a natural value.
+
+```javascript
+effect {
+    var a = 5i; /* a is typed 'int'*/
+    var b = abs(5); /* b is typed 'nat' */
+}
+```
 
 ## Integers
 
@@ -42,13 +51,11 @@ effect {
 }
 ```
 
-Note that it is necessary to specify the `int` type in the `int` declaration, otherwise you end up with an natural.
+Note that the literal syntax of positive integers uses the `i` suffix.
 
 Integer values are _big integers,_ meaning there is no real constraint on the value and it can be negative. __
 
 The 5 arithmetics operations `+ * - div %` and the 6 comparison operators `= <> < > <= >=` are available.
-
-Note that de `div` operator is the _euclidean_ division and returns an integer value.
 
 ## Tezis
 
