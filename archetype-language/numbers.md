@@ -196,8 +196,9 @@ effect {
 
 Note that:
 
-*  the conversion back to a duration line 4 is done by explicitly multiplying `t*d` by `1s`
-* the conversion from rational to integer is done explicitly with operators `ceil` and `floor`
+* the conversion form `int` to a `duration` \(line 4\) is done by multiplying `t*d` by `1s`
+* the conversion from `rational` to `int` is done with operators `ceil` and `floor`
+* the conversion from `int` to `nat` is done with `abs`
 
 
 
