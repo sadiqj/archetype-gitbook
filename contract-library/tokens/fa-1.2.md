@@ -13,7 +13,7 @@ Below is the archetype implementation:
 ```javascript
 archetype fa12
 
-constant totalsupply : nat = 1,000,000,000,000,000
+constant totalsupply : nat = 10,000,000
 
 asset allowance identified by addr_owner addr_spender to big_map {
   addr_owner       : address;
