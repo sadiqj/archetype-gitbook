@@ -57,5 +57,9 @@ entry getBalance (owner : address, cb : entrysig<nat>) {
 entry getTotalSupply (cb : entrysig<nat>) {
   transfer 0tz to entry cb(totalsupply);
 }
+
+specification {
+  s1 : ledger.sum(tokens) = totalsupply;
+}
 ```
 
