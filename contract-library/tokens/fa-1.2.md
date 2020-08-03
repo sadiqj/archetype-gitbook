@@ -21,7 +21,7 @@ asset allowance identified by addr_owner addr_spender to big_map {
   amount           : nat;
 }
 
-asset ledger identified by holder {
+asset ledger identified by holder to big_map {
   holder     : address;
   tokens     : nat = 0;
 } initialized by {
