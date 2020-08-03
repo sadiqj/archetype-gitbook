@@ -1,5 +1,5 @@
 ---
-description: The one and only
+description: Fungible token on Ethereum
 ---
 
 # ERC20
