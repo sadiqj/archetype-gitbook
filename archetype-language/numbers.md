@@ -12,19 +12,19 @@ Naturals are positive integers. They are defined as follows:
 
 ```javascript
 effect {
-  var n1 = 345;
-  var n2 = 99999999999999999999999999999999999999999999999999999999999999;
+  var n1 : nat = 345;
+  var n2 : nat = 99999999999999999999999999999999999999999999999999999999999999;
 }
 ```
 
-The 5 arithmetics operations `+ * - div %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
+4 arithmetics operations `+ * div %` and the 6 comparison operators `= <> < > <= >=` are available. Note however that the _difference_ operator returns an _integer_ value \(see integers section below\).
 
 ```javascript
 effect {
    var a : nat = 5;
    var b : nat = 7;
-   var c = a - b; /* -2 typed as intger */
-   var d = b - a; /* 2 typed as integer */
+   var c : int = a - b; /* -2 typed as intger */
+   var d : int = b - a; /* 2 typed as integer */
 }
 ```
 
@@ -36,9 +36,9 @@ Integers are defined as follows:
 
 ```javascript
 effect {
-  var n1 : int = 345;
-  var n2 : int = -5;
-  var n3 : int = 999999999999999999999999999999999999999999999999999999999999;
+  var n1 : int = 345i;
+  var n2 : int = -5i;
+  var n3 : int = 999999999999999999999999999999999999999999999999999999999999i;
 }
 ```
 
