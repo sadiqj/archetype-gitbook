@@ -1218,7 +1218,7 @@ contract invariant c1 {
 
 ### Expression
 
-All expression in effect are available in formula part.
+All expressions in effect are available in formula part.
 
 * `forall` universal quantifier
 
