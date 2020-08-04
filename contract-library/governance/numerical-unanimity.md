@@ -90,12 +90,10 @@ function check_sig_data(spid : string) : bool {
 
 entry unanimity (spid : string, l : list<address * int>, d : int) {
    called by selfaddress
-   effect { () }
 }
 
 entry failed (spid : string, l : list<address * int>, d : int) {
    called by selfaddress
-   effect { () }
 }
 
 entry sign (spid : string, v : int) {
