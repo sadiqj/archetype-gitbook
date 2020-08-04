@@ -132,7 +132,7 @@ Each framework identified in the previous section comes with a specific language
 
 As a consequence, in order to benefit from these framework, you need to develop several versions of the smart contract, one for each framework.
 
-The fondamental issue, beyond time and skills, is the issue of logical consistency between each version. 
+The fundamental issue, beyond time and skills, is the issue of logical consistency between each version. 
 
 How to make sure that the version for formal verification is consistent with the version for execution? Some verification frameworks have their own solution \(namely extraction\), but what about the consistency over the entire set of services?
 
