@@ -55,9 +55,11 @@ asset sig identified by id signatory {
 asset sig_spec {
    sid : string;
    signatories : list<address>;
-   dev : int; /* deviation toward avg. in nb. of percent */
+   dev : int; 
    expiration : date;
    signatures : partition<sig> = [];
+} with {
+   s0 : 0 <= dev <= 100;
 }
 
 entry create_sig (i : string, s : list<address>, d : int) {
