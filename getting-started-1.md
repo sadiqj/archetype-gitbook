@@ -6,12 +6,12 @@ Installation requires [opam](https://opam.ocaml.org/). Please refer to this [pag
 
 Once opam installed:
 
-```
+```text
 $ opam install archetype
 ```
 
 {% hint style="info" %}
- archetype version: 1.0.0
+archetype version: 1.0.0
 {% endhint %}
 
 ## VS code extension installation
@@ -29,10 +29,4 @@ ext install edukera.archetype
 ```
 
 The vscode extension is configured via the normal vscode settings screen.
-
-
-
-
-
- 
 

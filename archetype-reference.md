@@ -1,10 +1,10 @@
 # Reference
 
-An archetype contract is composed of declarations, actions \(aka entry points\) and optionally specification for formal verification.
+An archetype contract is composed of declarations, entry points and optionally specification for formal verification.
 
 ## Declarations
 
-* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's actions.
+* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's entry points.
 
 ```ocaml
 constant rate : rational = 0.2
@@ -25,15 +25,15 @@ states =
 | Fail
 ```
 
- `initial`  is used to declare the initial state value of the contract. 
+`initial` is used to declare the initial state value of the contract.
 
-* `action` declares an entry point of the contract. An action has the following sections:
-  * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have
+* `entry` declares an entry point of the contract. An entry has the following sections:
+  * `specification` \(optional\) to provide the _post conditions_ the entry is supposed to have
   * `accept transfer` \(optional\) to specify that transfer of tez is accepted 
-  * `called by` \(optional\) to declare which role may call this action
-  * `require` \(optional\) to list the necessary conditions for the action to be executed
+  * `called by` \(optional\) to declare which role may call this entry
+  * `require` \(optional\) to list the necessary conditions for the entry to be executed
   * `failif` \(optional\)to list the conditions which prevent from execution 
-  * `effect` is the code to execute by the action
+  * `effect` is the code to execute by the entry
 
 ```css
 entry an_entry_1 (arg1 : string, arg2 : int) {
@@ -53,7 +53,7 @@ entry an_entry_1 (arg1 : string, arg2 : int) {
 }
 ```
 
-* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an action \(except `effect`, see above\) plus:
+* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an entry \(except `effect`, see above\) plus:
   * `from` to specify the states the transition starts from
   * `to` to specify the states after the transition 
   * `when` \(optional\) to specify the transition condition
@@ -93,7 +93,7 @@ transition to_fail () {
 * `int` : integer values 
 * `rational` : floating value that can be expressed as the quotient or fraction of two integers 
 * `address` : account address
-* `role` : an address that can be used in action's called by section
+* `role` : an address that can be used in entry's called by section
 * `date` : date values
 * `duration` : duration values \(in second, minute, hour, day, week\)
 * `string` : string of characters
@@ -150,7 +150,7 @@ It is then possible to declare a variable of type _color_:
 variable c : color = Green
 ```
 
-* `contract` declares the signature of another existing contract to call in actions.
+* `contract` declares the signature of another existing contract to call in entries.
 
 ```c
 contract called_contract_sig {
@@ -192,7 +192,7 @@ my_partitioning_asset.asset_part.add(a_new_partitioned_asset)
 
 ## Effect
 
-An action's effect is composed of instructions separated by a semi-colon. 
+An entry's effect is composed of instructions separated by a semi-colon.
 
 ### Declaration
 
@@ -302,7 +302,6 @@ entry exec () {
     end
   }
 }
-
 ```
 
 * `for in do done` iterates over a collection.
@@ -410,7 +409,7 @@ constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 ```c
 // duration of 3 weeks 8 days 4 hours 34 minutes 18 seconds
-constant d : duration = 3w8d4h34m18s 
+constant d : duration = 3w8d4h34m18s
 ```
 
 * `date`
@@ -420,7 +419,7 @@ constant date0 : date = 2019-01-01
 constant date1 : date = 2019-01-01T01:02:03       
 constant date2 : date = 2019-01-01T01:02:03Z      
 constant date3 : date = 2019-01-01T00:00:00+01:00 
-constant date4 : date = 2019-01-01T00:00:00-05:30 
+constant date4 : date = 2019-01-01T00:00:00-05:30
 ```
 
 * `list`
@@ -439,10 +438,8 @@ constant op2 : int option = some(0)
 * `bytes`
 
 ```c
-constant bl : bytes = 0x12f12354356a 
+constant bl : bytes = 0x12f12354356a
 ```
-
-
 
 ### Operators
 
@@ -751,8 +748,6 @@ var v : bytes = pack("archetype")
 var s : string option = unpack<string>(0x050100000009617263686574797065) // some("archetype")
 ```
 
-### 
-
 ### List
 
 * `contains`
@@ -771,7 +766,6 @@ entry exec () {
     res := contains(l, "2")
   }
 }
-
 ```
 
 * `count` 
@@ -790,7 +784,6 @@ entry exec () {
     res := count(l)
   }
 }
-
 ```
 
 * `nth` 
@@ -809,7 +802,6 @@ entry exec () {
     res := nth(l, 1)
   }
 }
-
 ```
 
 * `prepend` adds an element to a list at the first position. 
@@ -1079,7 +1071,7 @@ entry exec () {
 
 ### Specification
 
-Here is a full example with all sections of an action specification
+Here is a full example with all sections of an entry specification
 
 ```javascript
 archetype contract_with_full_specification
@@ -1140,7 +1132,6 @@ entry exec () {
     assert a1
   }
 }
-
 ```
 
 * `definition`
@@ -1272,7 +1263,6 @@ entry exec () {
     require (true)
   }
 }
-
 ```
 
 * `isempty` 
@@ -1358,7 +1348,7 @@ entry exec () {
 * `toiterate` 
 
 ```javascript
-action exec () {
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1376,8 +1366,6 @@ action exec () {
   }
 }
 ```
-
-### 
 
 ### Security predicate
 
@@ -1408,7 +1396,6 @@ security {
   s07 : transferred_to (anyentry);
   s08 : no_storage_fail (anyentry);
 }
-
 ```
 
 * `only_by_role` 
@@ -1417,13 +1404,13 @@ security {
 s00 : only_by_role (anyentry, admin);
 ```
 
-* `only_in_action` 
+* `only_in_entry` 
 
 ```javascript
 s01 : only_in_entry (anyentry, exec);
 ```
 
-* `only_by_role_in_action` 
+* `only_by_role_in_entry` 
 
 ```javascript
 s02 : only_by_role_in_entry (anyentry, admin, exec);
@@ -1435,13 +1422,13 @@ s02 : only_by_role_in_entry (anyentry, admin, exec);
 s03 : not_by_role (anyentry, admin);
 ```
 
-* `not_in_action` 
+* `not_in_entry` 
 
 ```javascript
 s04 : not_in_entry (anyentry, exec);
 ```
 
-* `not_by_role_in_action` 
+* `not_by_role_in_entry` 
 
 ```javascript
 s05 : not_by_role_in_entry (anyentry, admin, exec);
@@ -1464,6 +1451,4 @@ s07 : transferred_to (anyentry);
 ```javascript
 s08 : no_storage_fail (anyentry);
 ```
-
-
 
