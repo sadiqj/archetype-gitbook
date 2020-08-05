@@ -83,6 +83,8 @@ entry getFoo(asender : address) {
 }
 ```
 
+The `entrysig` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
+
 ### Entrypoint
 
 The `entrypoint` function may be used to build an entrysig value from the name and the address. It returns an _option_ value of entrysig type, so that it is possible to handle the case when the entry point does not exist.
