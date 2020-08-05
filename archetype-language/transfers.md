@@ -33,6 +33,8 @@ effect {
 }
 ```
 
+Note that it _fails_ if the contract at address `c` does not provide an entry point annotated `%add_value`
+
 ### Self
 
 It is possible to call the current contract itself. Say the current contract has the `my_add_value` entry point; it is possible to call it from another entry point with the following instruction:
@@ -80,4 +82,27 @@ entry getFoo(asender : address) {
   transfer 0tz to asender call getBar<entrysig<int>>(self.setFoo) 
 }
 ```
+
+### Entrypoint
+
+The `entrypoint` function may be used to build an entrysig value from the name and the address. It returns an _option_ value of entrysig type, so that it is possible to handle the case when the entry point does not exist.
+
+The above _inspector_ contract may be rewritten as:
+
+```javascript
+archetype inspector
+
+variable foo : int = 0
+
+entry setFoo(v : int) { foo := v }
+
+entry getFoo(asender : address) { 
+  var entryopt = entrypoint<entrysig<int>>("%getBar", asender);
+  if issome(entryopt) then
+    transfer 0tz to entry (opt_get(entryopt))(self.setFoo)
+  else fail("could not find getBar entry")
+}
+```
+
+
 
