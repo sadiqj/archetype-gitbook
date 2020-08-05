@@ -131,7 +131,7 @@ A printer pretty-prints the IL as the target language.
 
 #### PascaLIGO
 
-The IL with the no-side-effect and asset-shallowing transforms is very close to the CamLIGO format. It just needs to be pretty printed.
+The IL with the no-side-effect and asset-shallowing transforms is very close to the PascaLIGO format. It just needs to be pretty printed.
 
 #### Why ml
 
