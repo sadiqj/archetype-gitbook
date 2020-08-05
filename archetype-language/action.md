@@ -14,6 +14,14 @@ entry main() {
 }
 ```
 
+If the required entry point name conflicts with a language keyword, you may prefix the id with % to bypass these constraints. For example, `transfer` is a the identifier reserved for the transfer instruction.  The following enables us to declare an entry point named transfer.
+
+```javascript
+entry %transfer () {
+   ...
+}
+```
+
 ### Arguments
 
 An entry may take arguments. For example, the entry below named "complete" takes two arguments `value` and `amount` , respectively of type `string` and `int`:
