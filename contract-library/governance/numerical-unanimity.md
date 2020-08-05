@@ -4,7 +4,7 @@ description: Anchors a unanimity regarding a numerical value
 
 # Numerical Unanimity
 
-The proof of unanimity is a transaction emitted if and only if all declared signatories have signed a value _close enough_ to the average signed value.
+The proof of unanimity is a transaction on the blockchain, emitted if and only if all declared signatories have signed a value _close enough_ to the average signed value.
 
 Let 
 
@@ -13,7 +13,7 @@ Let
 * _d_ be the percentage of deviation toward a
 * _S_ be the set of signed values. 
 
-The consensus is reached if:
+The unanimity is reached if:
 
 $$
 |S|=n \land \forall s \space in \space S, (1-\frac d 2)·a ≤ s  ≤ (1+\frac d 2)·a
@@ -25,7 +25,7 @@ For example, say 2 signatories must sign a value with an authorized deviation of
 
 The unanimity logic is encoded by a smart contract that manages as many unanimity processes as necessary. 
 
-The contract admin creates a specification for a consensus with:
+The contract admin address creates a specification for a consensus with:
 
 * a unique consensus identifier
 * the list of required signatories
