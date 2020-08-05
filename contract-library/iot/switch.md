@@ -74,7 +74,7 @@ entry start () {
 
 entry interrupt () {
     require {
-        r2: caller = getopt(user) and now < interruption
+        r2: caller = opt_get(user) and now < interruption
     }
     effect {
         transfer (get_return_tz()) to caller;
