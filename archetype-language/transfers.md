@@ -77,7 +77,7 @@ variable foo : int = 0
 entry setFoo(v : int) { foo := v }
 
 entry getFoo(asender : address) { 
-  transfert 0tz to asender call getBar<entrysig<int>>(self.setFoo) 
+  transfer 0tz to asender call getBar<entrysig<int>>(self.setFoo) 
 }
 ```
 
