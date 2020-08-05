@@ -98,8 +98,9 @@ entry setFoo(v : int) { foo := v }
 
 entry getFoo(asender : address) { 
   var entryopt = entrypoint<entrysig<int>>("%getBar", asender);
-  if issome(entryopt) then
-    transfer 0tz to entry (opt_get(entryopt))(self.setFoo)
+  if issome(entryopt) then (
+    var e = opt_get(entryopt);
+    transfer 0tz to entry e(self.setFoo))
   else fail("could not find getBar entry")
 }
 ```
