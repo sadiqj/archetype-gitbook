@@ -18,14 +18,14 @@ $ opam install archetype
 
 Please refer to this [page](https://code.visualstudio.com/download) to download and install VS code.
 
-Install through VS Code extensions. Search for `vscode-archetype`:
+Install through VS Code extensions. Search for `archetype`:
 
-[Visual Studio Code Marketplace: vscode-archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
+[Visual Studio Code Marketplace: archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
 
 Can also be installed with VS Code Quick Open: press `Cmd/Ctrl + P`, paste the following command, and press enter.
 
 ```text
-ext install edukera.vscode-archetype
+ext install edukera.archetype
 ```
 
 The vscode extension is configured via the normal vscode settings screen.
