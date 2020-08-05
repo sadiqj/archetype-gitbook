@@ -1,10 +1,10 @@
 # Reference
 
-An archetype contract is composed of declarations, actions \(aka entry points\) and optionally specification for formal verification.
+An archetype contract is composed of declarations, entry points and optionally specification for formal verification.
 
 ## Declarations
 
-* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's actions.
+* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's entry points.
 
 ```ocaml
 constant rate : rational = 0.2
@@ -27,13 +27,13 @@ states =
 
  `initial`  is used to declare the initial state value of the contract. 
 
-* `entry` declares an entry point of the contract. An action has the following sections:
-  * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have
+* `entry` declares an entry point of the contract. An _entry_ has the following sections:
+  * `specification` \(optional\) to provide the _post conditions_ the entry is supposed to have
   * `accept transfer` \(optional\) to specify that transfer of tez is accepted 
-  * `called by` \(optional\) to declare which role may call this action
-  * `require` \(optional\) to list the necessary conditions for the action to be executed
+  * `called by` \(optional\) to declare which role may call this entry
+  * `require` \(optional\) to list the necessary conditions for the entry to be executed
   * `failif` \(optional\)to list the conditions which prevent from execution 
-  * `effect` is the code to execute by the action
+  * `effect` is the code to execute by the entry
 
 ```css
 entry an_entry_1 (arg1 : string, arg2 : int) {
@@ -63,7 +63,7 @@ entry add(v : int) {
 }
 ```
 
-* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an action \(except `effect`, see above\) plus:
+* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an entry \(except `effect`, see above\) plus:
   * `from` to specify the states the transition starts from
   * `to` to specify the states after the transition 
   * `when` \(optional\) to specify the transition condition
@@ -104,7 +104,7 @@ transition to_fail () {
 * `nat` : positive integers
 * `rational` : floating value that can be expressed as the quotient or fraction of two integers 
 * `address` : account address
-* `role` : an address that can be used in action's called by section
+* `role` : an address that can be used in entry's called by section
 * `date` : date values
 * `duration` : duration values \(in second, minute, hour, day, week\)
 * `string` : string of characters
@@ -189,7 +189,7 @@ variable c : color = Green
 variable b : option<entrysig<nat>> = entrypoint(anaddress,"getbalce")
 ```
 
-* `contract` declares the signature of another existing contract to call in actions.
+* `contract` declares the signature of another existing contract to call in entries.
 
 ```css
 contract called_contract_sig {
@@ -227,7 +227,7 @@ As a consequence of the partition, a _partitioned_ asset cannot be straightforwa
 
 ## Effect
 
-An action's effect is composed of instructions separated by a semi-colon. 
+An entry's effect is composed of instructions separated by a semi-colon. 
 
 ### Declaration
 
@@ -760,7 +760,7 @@ transition mytr () {
 
 ### Specification
 
-Here is a full example with all sections of an action specification
+Here is a full example with all sections of an entry specification
 
 ```css
 archetype contract_with_full_specification
@@ -1038,7 +1038,7 @@ entry exec () {
 * `toiterate` 
 
 ```css
-action exec () {
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1095,13 +1095,13 @@ security {
 s00 : only_by_role (anyentry, admin);
 ```
 
-* `only_in_action` 
+* `only_in_entry` 
 
 ```css
 s01 : only_in_entry (anyentry, exec);
 ```
 
-* `only_by_role_in_action` 
+* `only_by_role_in_entry` 
 
 ```css
 s02 : only_by_role_in_entry (anyentry, admin, exec);
@@ -1113,13 +1113,13 @@ s02 : only_by_role_in_entry (anyentry, admin, exec);
 s03 : not_by_role (anyentry, admin);
 ```
 
-* `not_in_action` 
+* `not_in_entry` 
 
 ```css
 s04 : not_in_entry (anyentry, exec);
 ```
 
-* `not_by_role_in_action` 
+* `not_by_role_in_entry` 
 
 ```css
 s05 : not_by_role_in_entry (anyentry, admin, exec);
