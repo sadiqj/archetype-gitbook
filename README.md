@@ -8,17 +8,17 @@ Archetype is funded by the [Tezos Foundation](https://tezos.foundation/) and dev
 
 ## Smart contracts
 
-[Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs which are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were popularised in 2015 by Ethereum. They allow to read and write simple data on the blockchain. 
+[Smart contracts](https://en.wikipedia.org/wiki/Smart_contract) are programs that are executed on the [blockchain](https://en.wikipedia.org/wiki/Blockchain). They were popularised in 2015 by Ethereum. They allow us to read and write simple data on the blockchain. 
 
-Smart contracts unleash the full potential of the blockchain because they enable the development of a new class of application, called [Dapp](https://www.youtube.com/watch?v=CDQX8inMCt0), which benefits from blockchain's strengths \(decentralised, trust-less, immutable, governed by consensus in Tezos case, ...\). 
+Smart contracts unleash the full potential of the blockchain because they enable the development of a new class of application, called [Dapp](https://www.youtube.com/watch?v=CDQX8inMCt0), which benefits from blockchain's strengths \(decentralized, trust-less, immutable, governed by consensus in Tezos case, ...\). 
 
 A smart contract is similar to a [stored procedure](https://en.wikipedia.org/wiki/Stored_procedure) on a public distributed database. As such, it must ensure the **logical consistency and integrity** of the data.
 
 ## What's the problem?
 
-A smart contract is a _standard_ program, and, as such, it does not come with any guarantee that it will function correctly. We all have in mind the [TheDAO incident](https://www.vice.com/en_us/article/qkjz4x/thedao): a bug in the smart contract made it possible to withdraw several times the money you would put in the contract. As a result, more than 50 millions dollars were lost.
+A smart contract is a _standard_ program, and, as such, it does not come with any guarantee that it will function correctly. We all have in mind the [TheDAO incident](https://www.vice.com/en_us/article/qkjz4x/thedao): a bug in the smart contract made it possible to withdraw several times the money you would put in the contract. As a result, more than 50 million dollars were lost.
 
-It’s a highly non trivial question to decide whether a program is correct or not, even for the programmer. The best practice is to develop a set of tests the smart contract must pass before deployment. However, testing is limited by the capacity to figure out all possible situations of execution. 
+It’s a highly non-trivial question to decide whether a program is correct or not, even for the programmer. The best practice is to develop a set of tests the smart contract must pass before deployment. However, testing is limited by the capacity to figure out all possible situations of execution. 
 
 ## Required services
 
@@ -40,15 +40,15 @@ Yes of course.
 
 First, the guarantee you get is limited to the properties you have been able to identify. A critical property may still be forgotten!
 
-Second, you need to be skilled in _formal methods_ to formalise the contract properties, and even more to prove them, especially if they are complex.
+Second, you need to be skilled in _formal methods_ to formalize the contract properties, and even more to prove them, especially if they are complex.
 
 #### Test
 
-When program verification is too complex or too expensive, it is necessary to setup test batteries to provide standard quality insurance.
+When program verification is too complex or too expensive, it is necessary to set up test batteries to provide standard quality insurance.
 
 #### Simulate
 
-Observing a contract in action is a quick way to gain a reasonable level of insight into the behaviour of a smart contract.
+Observing a contract in action is a quick way to gain a reasonable level of insight into the behavior of a smart contract.
 
 #### Document
 
@@ -56,7 +56,7 @@ It is always good to read what the smart contract designer thinks about what it 
 
 #### Execute
 
-This last service is obvious, and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
+This last service is obvious and has to do with the possibility to execute the smart contract on the blockchain... Without this service, the others would not be relevant.
 
 ## Solution frameworks
 
@@ -64,7 +64,7 @@ For each of the services identified above, an existing framework has been select
 
 This selection is not definitive nor exhaustive. It should be considered as a starting point.
 
-The following table shows the selected solution foreach service and the main benefits from it:
+The following table shows the selected solution for each service and the main benefits from it:
 
 <table>
   <thead>
@@ -81,9 +81,9 @@ The following table shows the selected solution foreach service and the main ben
       </td>
       <td style="text-align:left">
         <p>High level of automation.</p>
-        <p>Why3 is a verification framework based on the Hoare Logic. It generates
-          verification tasks for external SMT solvers (alt-ergo, cvc, Z3, ...). Verification
-          tasks may also be exported to <a href="https://coq.inria.fr">coq</a>.</p>
+        <p>Why3 is a verification framework based on Hoare Logic. It generates verification
+          tasks for external SMT solvers (alt-ergo, CVC, Z3, ...). Verification tasks
+          may also be exported to <a href="https://coq.inria.fr">coq</a>.</p>
       </td>
     </tr>
     <tr>
@@ -96,7 +96,7 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">Simulate</td>
       <td style="text-align:left"><a href="https://gsuite.google.com/intl/en_za/products/sheets/">Google spreadsheets</a>
       </td>
-      <td style="text-align:left">Cloud based spreadsheet with complete scripting capability</td>
+      <td style="text-align:left">Cloud-based spreadsheet with complete scripting capability</td>
     </tr>
     <tr>
       <td style="text-align:left">Document</td>
@@ -108,7 +108,7 @@ The following table shows the selected solution foreach service and the main ben
       <td style="text-align:left">Execute</td>
       <td style="text-align:left"><a href="http://ligolang.org/">Ligo</a>
       </td>
-      <td style="text-align:left">High level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
+      <td style="text-align:left">High-level language which compiles to <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html">Michelson</a>.</td>
     </tr>
   </tbody>
 </table>
@@ -125,14 +125,14 @@ Each framework identified in the previous section comes with a specific language
 
 | Solution | Language | Type of language |
 | :--- | :--- | :--- |
-| Why3 | Whyml \(\*.mlw\) | ml language, like ocaml,  with specific instructions for verification |
+| Why3 | Whyml \(\*.mlw\) | ml language, like Ocaml,  with specific instructions for verification |
 | Google spreadsheets | Google script \(\*.gs\) | Similar to javascript |
 | Document | Markdown \(\*.md\) | plain text with minimalist formatting  instructions for maximum readability  \(unlike HTML markup tags\) |
 | Ligo | \*.ligo | ml language \(or pascal like\) |
 
-As a consequence, in order to benefit from these framework, you need to develop several versions of the smart contract, one for each framework.
+As a consequence, in order to benefit from these frameworks, you need to develop several versions of the smart contract, one for each framework.
 
-The fondamental issue, beyond time and skills, is the issue of logical consistency between each version. 
+The fundamental issue, beyond time and skills, is the issue of logical consistency between each version. 
 
 How to make sure that the version for formal verification is consistent with the version for execution? Some verification frameworks have their own solution \(namely extraction\), but what about the consistency over the entire set of services?
 
@@ -141,7 +141,7 @@ Hence the need for a ****single language to describe the business logic of an ar
 ![](.gitbook/assets/targets.png)
 
 {% hint style="info" %}
-In a nutshell, archetype is a programming language which is transcoded to target languages for specific services.
+In a nutshell, Archetype is a programming language that is transcoded to target languages for specific services.
 {% endhint %}
 
 As such, archetype may also serve as a target language for existing language to benefit from archetype services.  
@@ -152,7 +152,7 @@ Follow the link below to read more about the archetype language features.
 
 ## Contract library
 
-Archetype comes with a library of several dozen of contracts. Its purpose is to identify  typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
+Archetype comes with a library of several dozen contracts. Its purpose is to identify typical contracts to illustrate the archetype language, and bootstrap or inspire your development.
 
 The library covers some key blockchain processes :
 
@@ -160,7 +160,7 @@ The library covers some key blockchain processes :
 * decision process \(voting, auction\)
 * investment \(tokens, market place, financial notes\)
 * insurance
-* IOT
+* IoT
 * other frameworks example for comparison \(Hyper ledger, clause.io, ...\)
 
 Some of these contracts come with relevant properties. Feel free to submit any new property you may find relevant.
