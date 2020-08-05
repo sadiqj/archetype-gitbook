@@ -155,7 +155,7 @@ asset mile identified by id {
    amount     : int;
    expiration : date;
 } with {
-  i : amount > 0
+  i : amount > 0;
 }
 ```
 
