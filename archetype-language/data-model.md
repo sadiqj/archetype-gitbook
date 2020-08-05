@@ -11,7 +11,7 @@ An asset is defined by a set of fields, one of which is the identification field
 For example, the following defines a car asset:
 
 ```coffeescript
-asset car identified by vin {
+asset car identified {
   vin     : string;
   model   : string;
   year    : int;
@@ -19,7 +19,15 @@ asset car identified by vin {
 }
 ```
 
-When `identified by` is omitted, the first field is the identifier. 
+By default, the first field is used as the asset _identifier_. It is possible to specify another field with the `identified by` instruction. It is also possible to declare several fields to identify an asset:
+
+```coffeescript
+asset allowance identified by owner spender {
+  owner       : address;
+  spender     : address;
+  amount      : nat;
+}
+```
 
 ## Collection
 
