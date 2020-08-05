@@ -8,7 +8,7 @@ Archetype is an open source project developed in [Ocaml](https://ocaml.org/index
 
 The archetype compiler/transcoder reads an archetype source file \(with "arl" extension\) and generates transcoded versions of the contract in different languages.
 
-The first version provides [CamLIGO](http://ligolang.org/) syntax for execution, and [Why3](http://why3.lri.fr/) syntax for verification.
+The first version provides [PascalLIGO](http://ligolang.org/) syntax for execution, and [Why3](http://why3.lri.fr/) syntax for verification.
 
 This section describes the different steps of the transcoding process.
 
@@ -74,7 +74,7 @@ $ archetype basic_escrow.arl
 
 ### IL transforms
 
-Target languages \(CamLIGO, smartpy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
+Target languages \(PascalLIGO, SmartPy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
 
 #### Side effect removal
 
@@ -129,7 +129,7 @@ The other impact of this transform is to consider that all operations on asset c
 
 A printer pretty-prints the IL as the target language.
 
-#### CamLIGO
+#### PascaLIGO
 
 The IL with the no-side-effect and asset-shallowing transforms is very close to the CamLIGO format. It just needs to be pretty printed.
 
