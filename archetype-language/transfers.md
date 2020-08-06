@@ -103,7 +103,7 @@ entry getFoo(asender : address) {
   if issome(entryopt) then (
     var e = opt_get(entryopt);
     transfer 0tz to entry e(self.setFoo))
-  else fail("could not find getBar entry")
+  else fail("could not find getBar entry or invalid address")
 }
 ```
 
