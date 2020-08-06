@@ -346,23 +346,6 @@ done;               // res is 6
 transfer 2tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
 ```
 
-With the `contract` keyword presented above, it is possible to transfer to a contract and call an entry point. In the example below, the entry point `set_value` of contract `c` is called and `2tz` is transferred.
-
-```c
-contract contract_called_sig {
-   entry set_value (n : int)
-   entry add_value (a : int, b : int)
-}
-
-constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
-
-entry update_value(n : int) {
-  effect {
-    transfer 2tz to c call set_value(n);
-  }
-}
-```
-
 * `fail` aborts the execution. It prevents from deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
 
 ```c
@@ -575,8 +558,8 @@ constant bl : bytes = 0x12f12354356a
 * `pack` `unpack`
 
 ```javascript
-var b1  = concat(0x12, 0xef);
-var b2  = slice(0xabcdef01, 1, 2);
+var b1 = concat(0x12, 0xef);
+var b2 = slice(0xabcdef01, 1, 2);
 var h1 = blake2b(0x050100000009617263686574797065);
 var h2 = sha256(0x050100000009617263686574797065);
 var h3 = sha512(0x050100000009617263686574797065);
@@ -587,8 +570,8 @@ var s : string option = unpack<string>(0x050100000009617263686574797065);
 ### option
 
 ```c
-constant op1 : int option = none
-constant op2 : int option = some(0)
+constant op1 : option<int> = none
+constant op2 : option<int> = some(0)
 ```
 
 * `issome`
@@ -612,7 +595,7 @@ effect {
 
 ```css
 effect {
-    var l : string list = ["1"; "2"; "3"];
+    var l : list<string> = ["1"; "2"; "3"];
     var t1 = contains(l, "2");
     var t2 = length(l);
     var n  = nth(l);
@@ -754,6 +737,12 @@ transition mytr () {
     require (state = First)
   }
 }
+```
+
+* chainid 
+
+```javascript
+var v : chain_id = chainid;
 ```
 
 ## Verification
