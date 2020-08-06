@@ -15,13 +15,12 @@ variable chairperson : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 variable chairperson_tmp : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-/* vote start */
+(* vote start *)
 variable startDate : date = 2019-11-12T00:00:00
 
-/* vote deadline */
+(* vote deadline *)
 variable deadline : date = 2020-11-12T00:00:00
 
-/* assets */
 asset voter identified by addr {
   addr : role;
   hasVoted : bool
@@ -36,7 +35,7 @@ asset winner {
   winvalue : string
 }
 
-/* state machine */
+(* state machine *)
 states =
  | Created initial with { s1 : winner.isempty(); }
  | Voting          with { s2 : winner.isempty(); }
@@ -57,7 +56,7 @@ transition start () {
   to Voting when { now > startDate }
 }
 
-entry vote (val : pkey of ballot) {
+entry vote (val : pkey<ballot>) {
    require {
      c2 : voter.contains(caller);
      c3 : state = Voting;
@@ -80,7 +79,7 @@ transition bury () {
   from Voting
   to Buried
   with effect {
-    var nbvotesMax = 0;
+    var nbvotesMax : int = 0;
     for b in ballot do
       nbvotesMax := max(nbvotesMax, ballot[b].nbvotes)
     done;

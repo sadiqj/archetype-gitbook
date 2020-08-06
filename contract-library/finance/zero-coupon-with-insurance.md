@@ -13,13 +13,7 @@ variable issuer : role = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk (* seller 'Alice'
 variable owner : role  = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 (* buyer 'Bob'; receives 11 tez in one-year *)
 
-contract insurance { (* see guarantee_fund.arl *)
-  entry credit ()
-  entry add_contract (ic_addr : address, ic_max_transfer : tez)
-  entry pay (recipient : address, amount : tez)
-}
-
-variable zero_insur : insurance = @KT1TJrR7uovV5tFpsLBCKmx3x95pY6hMy775
+variable zero_insur : address = @KT1TJrR7uovV5tFpsLBCKmx3x95pY6hMy775
 
 variable price : tez = 10tz
 
@@ -74,7 +68,7 @@ transition collect () {
   with effect {
     if balance >= payment
     then transfer balance to owner
-    else transfer 0tz to zero_insur call pay(owner, payment)
+    else transfer 0tz to zero_insur call pay<address * tez>((owner, payment))
   }
 }
 

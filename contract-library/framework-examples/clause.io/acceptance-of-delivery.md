@@ -37,7 +37,7 @@ states =
  | Success
  | Fail
 
-transition[%signedbyall ([shipper; receiver])%] sign () {
+transition sign () {
   from Created
   to Signed
   when { balance = payment + incentiveR + incentiveS }
@@ -55,7 +55,7 @@ transition unilateral_abort () {
   }
 }
 
-transition[%signedbyall ([shipper; receiver])%] abort () {
+transition abort () {
   called by shipper or receiver
 
   from Signed
@@ -88,7 +88,7 @@ transition success () {
   when { now > (deliveryDate + businessDays) }
 }
 
-transition fail () {
+transition fail_ () {
   called by receiver
 
   from Delivered

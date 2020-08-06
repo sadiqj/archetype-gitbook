@@ -18,16 +18,16 @@ A storage optimisation is added to the above model. A mile is augmented with a _
 
 ![... modeled as one mile with a quantity value](../../.gitbook/assets/screenshot-2019-10-17-at-10.10.10.png)
 
-This optimisation comes with a cost of algorithmic complexity in the _consume_ action \(line 39\).
+This optimisation comes with a cost of algorithmic complexity in the _consume_ action \(line 75\).
 
-All actions are called by the _admin_ role, which is ensured by security predicate _s1_ \(line 109\).
+All actions are called by the _admin_ role, which is ensured by security predicate _g1_ \(line 120\).
 
 {% tabs %}
 {% tab title="miles\_with\_expiration.arl" %}
 ```javascript
 archetype miles_with_expiration
 
-variable admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+variable admin : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
 (* id is a string because it is generated off-chain *)
 asset mile identified by id {
@@ -41,7 +41,7 @@ asset mile identified by id {
 (* a partition ensures there is no direct access to mile collection *)
 asset owner identified by addr {
   addr  : role;
-  miles : mile partition (* injective (owner x mile) *)
+  miles : partition<mile> = [] (* injective (owner x mile) *)
 }
 
 entry add (ow : address, newmile_id : string, newmile_amount : int, newmile_expiration : date) {
@@ -56,10 +56,7 @@ entry add (ow : address, newmile_id : string, newmile_amount : int, newmile_expi
    }
 
    effect {
-     if owner.contains(ow) then
-      owner[ow].miles.add ({newmile_id; newmile_amount; newmile_expiration})
-     else
-      owner.add ({ addr = ow; miles = [{newmile_id; newmile_amount; newmile_expiration}] })
+     owner.addupdate (ow, { miles += [{id = newmile_id; amount = newmile_amount; expiration = newmile_expiration} ] })
    }
 }
 
@@ -102,7 +99,7 @@ entry consume (a : address, quantity : int) {
 
   effect {
     var by_expiration = owner[a].miles.sort(expiration).select(the.expiration > now);
-    require (by_expiration.sum(the.amount) >= quantity);
+    dorequire (by_expiration.sum(the.amount) >= quantity);
     var remainder = quantity;
     for : loop m in by_expiration do
       if remainder > 0

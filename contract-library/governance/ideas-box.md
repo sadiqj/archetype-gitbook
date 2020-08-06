@@ -82,6 +82,5 @@ specification {
     i1 : 5 * voter.count() = idea.sum(nbvotes) + voter.sum(remaining)
 }
 
-
 ```
 

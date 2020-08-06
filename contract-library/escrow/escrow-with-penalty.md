@@ -50,7 +50,7 @@ transition confirm () {
   to Confirmed when { balance = price + penalty }
 }
 
-transition %transfer () {
+transition transfer_ () {
   called by oracle
 
   from Confirmed

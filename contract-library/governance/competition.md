@@ -13,10 +13,10 @@ archetype competition
 
 variable organizer : role = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 
-/* start date */
+(* start date *)
 variable startdate : date = 2019-11-12T00:00:00
 
-/* deadline */
+(* deadline *)
 variable deadline : date = 2020-11-12T00:00:00
 
 variable prize : tez = 3500tz
@@ -29,7 +29,7 @@ asset submission {
   timestamp  : date;
 }
 
-/* state machine */
+(* state machine *)
 states =
  | Created     initial
  | InProgress
@@ -41,7 +41,7 @@ transition confirm () {
   to InProgress when { now > startdate }
 }
 
-entry submit (ckey : pkey of submission, pscore : int) {
+entry submit (ckey : pkey<submission>, pscore : int) {
   require {
     c1 : state = InProgress;
   }

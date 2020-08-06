@@ -55,7 +55,7 @@ asset sig identified by id signatory {
 asset sig_spec {
    sid : string;
    signatories : list<address>;
-   dev : int; 
+   dev : int; /* deviation toward avg. in nb. of percent */
    expiration : date;
    signatures : partition<sig> = [];
 } with {
@@ -118,6 +118,7 @@ entry clear_expired () {
       sig_spec.select(the.expiration < now).clear();
    }
 }
+
 ```
 
 

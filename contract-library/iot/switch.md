@@ -41,11 +41,12 @@ variable rate : rational = 1.2 // in time_unit / tez_unit
 variable time_unit : duration = 1h
 variable tez_unit : tez = 1tz
 
-variable user : address option = none
+variable user : option<address> = none
 
 variable read_interval : duration = 5s
 
-/* UTILS */
+// UTILS
+
 function get_rate_in_s_by_utz () : rational {
     var d : int = time_unit;
     var t : int = tez_unit;
@@ -57,7 +58,7 @@ function get_return_tz () : tez {
     return (res * 1utz)
 }
 
-/* ENTRIES */
+// ENTRIES
 entry start () {
     require {
         r1: now > interruption;
@@ -100,6 +101,7 @@ entry setunits (dunit : duration, tunit : tez) {
         tez_unit := tunit;
     }
 }
+
 ```
 
 The contract is available on the Carthage net to play with:

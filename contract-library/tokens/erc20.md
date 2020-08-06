@@ -13,8 +13,8 @@ The standard description may be found at this address:
 ```ocaml
 archetype erc20
 
-constant total : nat = 1000000000000000
-variable onetoken : nat = 1000000
+constant total : nat = 1_000_000_000_000_000
+variable onetoken : nat = 1_000_000
 
 asset allowance identified by owner spender {
   owner     : address;
@@ -29,7 +29,7 @@ asset tokenHolder identified by holder {
   { holder = caller; tokens = total }
 }
 
-entry %transfer (dest : pkey<tokenHolder>, value : nat) {
+entry dotransfer (dest : pkey<tokenHolder>, value : nat) {
   require {
     d0 : tokenHolder[caller].tokens >= value
   }
