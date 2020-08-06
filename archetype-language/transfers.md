@@ -10,7 +10,7 @@ effect {
 }
 ```
 
-where coder is a `role` variable.
+where `coder` is a `role` variable.
 
 ## Calling a contract
 
