@@ -128,7 +128,7 @@ The above fails if a key is not present in the car collection. It means that you
 
 #### add
 
-The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key:
+The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key: in the example below, the instruction fails if `"f01"` is not found, but _does not_ fail if  `YS3ED48E5Y3070016` is already present in the aggregate `drives`. 
 
 ```css
 effect {
@@ -139,7 +139,7 @@ effect {
 
 #### remove
 
-The `remove` instruction removes a reference from an aggregate. It _fails_ if the key is not in the aggregate.
+The `remove` instruction removes a reference from an aggregate. It _fails_ if the key is not in the base collection: in the example below, the instruction fails if `"f01"` is not found.
 
 ```css
 effect {
