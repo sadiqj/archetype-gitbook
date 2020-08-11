@@ -11,14 +11,16 @@ The `string` type comes with 3 operators:
   * the first argument is the offset \(starting from 0\)
   * the second argument is the length of the subset
 * `concat`: returns the concatenation two strings
+* `to_string` : converts a `nat` value to a string
 
 ```javascript
 effect {
-  var s1 := "this is ";
-  var s2 := "a string";
+  var s1 = "this is ";
+  var s2 = "a string";
   if slice(s2,2,6) = "string" then transfer 1tz to dev;
   if concat(s1,s2) = "this is a string" then transfer 1tz to dev;
   if length(s1) = 8 then transfer 1tz to dev;
+  if to_string(5) = "5" then transfer 1tz to dev;
 }
 ```
 
