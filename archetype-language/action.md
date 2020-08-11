@@ -236,7 +236,7 @@ The `dofailif` expression fails if the condition is met:
 dofailif (balance <= threshold, "NotEnoughBalance")
 ```
 
-It is possible to pass any Michelson-compliant typed value as the error message to the fail instructions above. 
+It is possible to pass any Michelson-compliant typed value as the error message of the fail instructions above. 
 
 For example, the following passes the balance and the threshold as additional error message information:
 
