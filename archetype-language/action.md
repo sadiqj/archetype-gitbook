@@ -218,6 +218,12 @@ if transferred > threshold then (
 
 #### Failing
 
+The `fail` instruction interrupts the execution. It reverts the contract storage to its initial state.
+
+```javascript
+fail("Error");
+```
+
 The `dorequire` expression fails if the condition is not met:
 
 ```text
@@ -230,7 +236,9 @@ The `dofailif` expression fails if the condition is met:
 dofailif (balance <= threshold, "NotEnoughBalance")
 ```
 
-It is possible to pass any Michelson-compliant typed value as the error message: for example, the following passes the balance and the threshold as additional error message information:
+It is possible to pass any Michelson-compliant typed value as the error message to the fail instructions above. 
+
+For example, the following passes the balance and the threshold as additional error message information:
 
 ```text
 dofailif (balance <= threshold, ("NotEnoughBalance",(balance,threshold)))
