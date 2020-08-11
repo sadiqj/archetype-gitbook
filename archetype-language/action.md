@@ -84,7 +84,7 @@ An entry is made of sections listed below:
           <li>transfers of currencies</li>
         </ul>
       </td>
-      <td style="text-align:left">no</td>
+      <td style="text-align:left">yes</td>
     </tr>
   </tbody>
 </table>
@@ -136,7 +136,7 @@ The following is the list of expressions that require a label:
       <td style="text-align:left">
         <p><code>require {</code>
         </p>
-        <p><code>  enough_transfer : transferred &gt; threshold</code>
+        <p><code>  r1 otherwise &quot;NotEnoughTransferred&quot; : transferred &gt; threshold</code>
         </p>
         <p><code>}</code>
         </p>
@@ -147,7 +147,7 @@ The following is the list of expressions that require a label:
       <td style="text-align:left">
         <p><code>failif {</code>
         </p>
-        <p><code>  not_enough_transfer : transferred &lt;= threshold</code>
+        <p><code>  f1 with &quot;NotEnoughTransferred&quot; : transferred &lt;= threshold</code>
         </p>
         <p><code>}</code>
         </p>
@@ -219,13 +219,19 @@ if transferred > threshold then (
 The `require` expression fails if the condition is not met:
 
 ```text
-require (transferred > threshold)
+dorequire (balance > threshold,"NotEnoughBalance")
 ```
 
 The `failif` expression fails if the condition is met:
 
 ```text
-failif (transferred <= threshold)
+dofailif (balance <= threshold, "NotEnoughBalance")
+```
+
+It is possible to pass any Michelson-compliant typed value as the error message: for example, the following passes the balance and the threshold as additional error message information:
+
+```text
+dofailif (balance <= threshold, ("NotEnoughBalance",(balance,threshold)))
 ```
 
 ## Function
