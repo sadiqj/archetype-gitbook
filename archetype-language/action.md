@@ -216,7 +216,7 @@ if transferred > threshold then (
   fail("not enough");
 ```
 
-### Fails
+#### Failing
 
 The `dorequire` expression fails if the condition is not met:
 
