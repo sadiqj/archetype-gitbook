@@ -171,6 +171,20 @@ effect {
 This does _**not**_ remove assets from the base collection, just references in the aggregate field.
 {% endhint %}
 
+#### removeif
+
+The `removeif` instruction removes references whose dereferenced asset verifies a predicate.
+
+```css
+effect {
+   driver["f01"].drivers.removeif(the.year > 2019);
+}
+```
+
+{% hint style="info" %}
+This does _**not**_ remove assets from the base collection, just references in the aggregate field.
+{% endhint %}
+
 ### Update operators
 
 When updating an asset with an aggregate field, it is possible to specify whether to add or remove asset references with the `+=` and `-=` operators: 
