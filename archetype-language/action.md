@@ -216,13 +216,15 @@ if transferred > threshold then (
   fail("not enough");
 ```
 
-The `require` expression fails if the condition is not met:
+### Fails
+
+The `dorequire` expression fails if the condition is not met:
 
 ```text
 dorequire (balance > threshold,"NotEnoughBalance")
 ```
 
-The `failif` expression fails if the condition is met:
+The `dofailif` expression fails if the condition is met:
 
 ```text
 dofailif (balance <= threshold, "NotEnoughBalance")
