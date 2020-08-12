@@ -69,10 +69,13 @@ effect {
                                                       nbdoors = 4  });
    fleet["f02"].cars.remove("2HGFG11879H508413");
    fleet["f02"].cars.clear();
+   fleet["f02"].cars.removeall(); /* equivalent to previous instruction */
 }
 ```
 
 The above instruction fails if the `fleet` collection does not contain `f01` or if the `car` collection already contains `YS3ED48E5Y3070016`.
+
+Note that the `clear` instruction is equivalent to the `removeall` instruction on a partition because partitions are synchronized. 
 
 {% hint style="info" %}
 Partitions are _synchronized_: every change in the partition \(add, remove, ...\) is synchronized with the base collection.
