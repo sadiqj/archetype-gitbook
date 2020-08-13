@@ -248,17 +248,3 @@ The tables below present a synthetic view of instructions and operators availabi
 
  \*  `add` for aggregate does not have the same signature though.
 
-| View operations | Collection | Partition | Aggregate |
-| :--- | :--- | :--- | :--- |
-| `count` | ok | ok | ok |
-| `sum` | ok | ok | ok |
-| `contains` | ok | ok | ok |
-| `nth` | ok | ok | ok |
-| `select` | ok | ok | ok |
-| `head` | ok | ok | ok |
-| `tail` | ok | ok | ok |
-| `sort` | ok | ok | ok |
-| `for` | ok | ok | ok |
-
-The above table illustrates that all view operations are available for collections, partitions and aggregates.
-
