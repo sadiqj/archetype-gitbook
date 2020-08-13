@@ -244,7 +244,9 @@ The tables below present a synthetic view of instructions and operators availabi
 | `remove` | ok | ok | ok |
 | `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
-| `clear` | ok | **na** | ok |
+| `clear` | ok | **na** | ok\*\* |
 
- \*  `add` for aggregate does not have the same signature though.
+ \*  `add` for aggregate takes an asset key as the argument
+
+\*\* `clear` on aggregate not only removes the assets in the base collection but also clears the aggregate
 
