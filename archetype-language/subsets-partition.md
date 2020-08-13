@@ -171,7 +171,7 @@ effect {
 ```
 
 {% hint style="info" %}
-This does _**not**_ remove assets from the base collection, just references in the aggregate field.
+`removeall` does _**not**_ remove assets from the base collection, just references in the aggregate field.
 {% endhint %}
 
 #### removeif
@@ -185,7 +185,7 @@ effect {
 ```
 
 {% hint style="info" %}
-This does _**not**_ remove assets from the base collection, just references in the aggregate field.
+`removeif` does _**not**_ remove assets from the base collection, just references in the aggregate field.
 {% endhint %}
 
 #### clear
@@ -197,6 +197,10 @@ effect {
    driver["f01"].drivers.clear();
 }
 ```
+
+{% hint style="info" %}
+`clear` _**does**_ remove assets from base collection.
+{% endhint %}
 
 ### Update operators
 
