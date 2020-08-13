@@ -244,6 +244,7 @@ The tables below present a synthetic view of instructions and operators availabi
 | `remove` | ok | ok | ok |
 | `removeall` | **na** | ok | ok |
 | `removeif` | ok | ok | ok |
+| `clear` | ok | **na** | ok |
 
  \*  `add` for aggregate does not have the same signature though.
 
@@ -258,7 +259,6 @@ The tables below present a synthetic view of instructions and operators availabi
 | `tail` | ok | ok | ok |
 | `sort` | ok | ok | ok |
 | `for` | ok | ok | ok |
-| `clear` | ok | ok | ok |
 
 The above table illustrates that all view operations are available for collections, partitions and aggregates.
 
