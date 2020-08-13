@@ -304,3 +304,7 @@ effect {
 }
 ```
 
+{% hint style="info" %}
+`clear` is the only view instruction that changes the contract data.
+{% endhint %}
+
