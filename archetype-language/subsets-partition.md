@@ -131,7 +131,7 @@ The above fails if a key is not present in the car collection. It means that you
 
 #### add
 
-The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key: in the example below, the instruction fails if `"f01"` is not found, but _does not_ fail if  `YS3ED48E5Y3070016` is already present in the aggregate `drives`. 
+The `add` instruction adds a key to an aggregate. It _fails_ if the base collection does not contain that key: in the example below, the instruction fails if `"YS3ED48E5Y3070016"` is not found in the car collection. It also fails if "f01" is not found in the driver collection. 
 
 ```css
 effect {
@@ -187,6 +187,16 @@ effect {
 {% hint style="info" %}
 This does _**not**_ remove assets from the base collection, just references in the aggregate field.
 {% endhint %}
+
+#### clear
+
+The `clear` instruction removes all references in the aggregate _**and**_ corresponding assets.
+
+```css
+effect {
+   driver["f01"].drivers.clear();
+}
+```
 
 ### Update operators
 
