@@ -62,7 +62,7 @@ $ why3 config --detect-provers
 
 #### Alt-ergo
 
-Alt-ergo is developped by LRI, where Why3 also comes from. The currently supported version is **2.3.1**.
+Alt-ergo is developed by LRI, where Why3 also comes from. The currently supported version is **2.3.1**.
 
 ```text
 $ opam install alt-ergo.2.3.1
@@ -70,7 +70,7 @@ $ opam install alt-ergo.2.3.1
 
 #### CVC4
 
-CVC4 is was initiated by researchers at Stanford. The currently supported version is **1.7**. Download the binary at the following page: 
+CVC4 is developed at Stanford. The currently supported version is **1.7**. Download the binary at the following page: 
 
 {% embed url="https://cvc4.github.io/downloads.html" %}
 
