@@ -74,7 +74,7 @@ forall x in removed.goods, x.expiration < now
 
 The schema below illustrates the three sets of assets resulting from the action effect:
 
-![action effect on asset collection](../../.gitbook/assets/effect-asset.png)
+![action effect on asset collection](../.gitbook/assets/effect-asset.png)
 
 This property could typically serve as a postcondition of the function `remove_obsolete`:
 

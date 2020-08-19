@@ -17,8 +17,7 @@
   * [Assets](archetype-language/data-model.md)
   * [Partitions, Aggregates](archetype-language/subsets-partition.md)
   * [State machine](archetype-language/state-machine.md)
-  * [Contract specification](archetype-language/contract-specification/README.md)
-    * [Postconditions](archetype-language/contract-specification/postconditions.md)
+  * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
 

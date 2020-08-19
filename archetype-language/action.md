@@ -166,7 +166,7 @@ The following is the list of expressions that require a label:
         </p>
         <p><code>}</code>
         </p>
-        <p>(see <a href="contract-specification/">Contract specification</a>)</p>
+        <p>(see <a href="contract-specification.md">Contract specification</a>)</p>
       </td>
     </tr>
     <tr>
@@ -178,7 +178,7 @@ The following is the list of expressions that require a label:
         </p>
         <p><code>}</code>
         </p>
-        <p>(see <a href="contract-specification/">Contract specification</a>)</p>
+        <p>(see <a href="contract-specification.md">Contract specification</a>)</p>
       </td>
     </tr>
   </tbody>
