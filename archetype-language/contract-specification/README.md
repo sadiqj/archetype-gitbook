@@ -6,7 +6,7 @@ description: Formalise contract properties
 
 ## Properties
 
-A property is a _logical formula_ about the relations between data values and/or asset collections properties. It is made of:
+A property is a _logical formula_ about the state of the contract's storage data \(variable, asset collections, ...\). It is made of:
 
 * logical connectors: `and`, `or`, `->` \(logical implication\), `not`, ...
 * quantifiers: the universal quantifier `forall` and the existential quantifier `exists`
@@ -26,6 +26,14 @@ It reads that any stored bid value is less or equal than max\_bid.
 {% hint style="info" %}
 To practice the formalisation of logical properties, you can solve online [edukera](https://app.edukera.com/?qt=4) formalisation exercises.
 {% endhint %}
+
+Five kinds of properties may be distinguished:
+
+* _postcondition_: a postcondition says something about the evolution of the storage data after the execution of an entry point
+* _contract invariant_: an invariant is a property about the contract storage that is true before and after any call to entry points \(asset invariant are a special case of contract invariant\)
+* _loop invariant_: a loop invariant is an invariant property applied to the body of a loop instruction: it says what stays true throughout the iteration process
+* _exceptional property_: an exceptional property says something about the storage data at failing point
+* _assert_: an assert property is a property local to an execution point; as such it may relate local execution variables as well as storage data
 
 ## Postconditions
 
