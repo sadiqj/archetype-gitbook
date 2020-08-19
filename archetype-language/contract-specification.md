@@ -33,7 +33,7 @@ Five kinds of properties may be distinguished:
 * _contract invariant_: an invariant is a property about the contract storage that is true before and after any call to entry points \(asset invariant are a special case of contract invariant\)
 * _loop invariant_: a loop invariant is an invariant property applied to the body of a loop instruction: it says what stays true throughout the iteration process
 * _exceptional property_: an exceptional property says something about the storage data at failing point
-* _assert_: an assert property is a property local to an execution point; as such it may relate local execution variables as well as storage data
+* _assert_: an assert property is a property local to an execution point; as such it may relate local execution variables to storage data
 
 ## Postconditions
 
