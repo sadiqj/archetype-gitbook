@@ -11,7 +11,7 @@ $ opam install archetype
 ```
 
 {% hint style="info" %}
- current archetype version: 1.1.2
+ current archetype version: **1.1.2**
 {% endhint %}
 
 ## VS code extension installation
@@ -36,13 +36,13 @@ Archetype generates Why3 file format \(mlw\) for contract verification purpose.
 
 ### Why3
 
-The current version of why3 is 1.3.1. It is installed with opam:
+The current version of why3 is **1.3.2**. It is installed with opam:
 
 ```text
 $ opam install why3
 ```
 
-You also need to install the Why3 IDE \(interface\) \(currently 1.3.1\):
+You also need to install the Why3 IDE \(interface\) \(currently 1.3.2\):
 
 ```text
 $ opam install why3-ide
@@ -76,7 +76,7 @@ CVC4 is developed at Stanford. The currently supported version is **1.7**. Downl
 
 #### Z3
 
-Z3 is developped by Microsoft. The currently supported version is 4.7.1. Download the binary at the following page:
+Z3 is developped by Microsoft. The currently supported version is **4.7.1**. Download the binary at the following page:
 
 {% embed url="https://github.com/Z3Prover/z3/releases/tag/z3-4.7.1" %}
 
