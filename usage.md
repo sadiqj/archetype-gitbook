@@ -1,11 +1,11 @@
 # Usage
 
-## Command line
+## Command-line
 
-To transcode say an archetype file escrow.arl to `ligo`:
+To transcode an archetype file `escrow.arl` to `michelson`:
 
 ```text
-$ archetype -t ligo escrow.arl
+$ archetype escrow.arl
 ```
 
 To transcode to `whyml`:
@@ -19,9 +19,13 @@ To list available target languages:
 ```text
 $ archetype --list-target
   ligo
-  scaml
   whyml
-  markdown
+```
+
+To transcode to `ligo`:
+
+```text
+$ archetype -t ligo escrow.arl
 ```
 
 To list available commands:
@@ -43,38 +47,10 @@ Available options:
   --typed                Display type in ast output
   -ap                    Display all parenthesis in printer
   --typed                Same as -ap
-  -ws                    With storage
-  --with-storage         Same as -ws
-  -sa                    Transform to shallow asset
-  --shallow-asset        Same as -sa
-  -skv                   Split key value of collection of asset
-  --split-key-values     Same as -skv
-  -nse                   Transform to no side effect
-  --no-side-effect       Same as -nse
-  -nr                    Remove rational
-  --no-rational          Same as -nr
-  -ndd                   Remove date and duration
-  --no-date-duration     Same as -ndd
-  -pas                   Process asset state
-  --process-asset-state  Same as -pas
-  -raf                   Replace field by update
-  --remove-assignfield   Same as -raf
-  -rau                   Remove add_update method
-  --remove-add-update    Same as -rau
-  -ru                    Remove update method
-  --remove-update        Same as -ru
-  -mu                    Merge update
-  --merge-update         Same as -mu
-  -ne                    Remove enum and match with
-  --no-enum              Same as -ne
-  -rfd                   Remove function of left value from dot access field asset
-  --remove-fun-dotasset  Same as -rfd
-  -evi                   Evaluate initial value
-  --eval-initial-value   Same as -evi
-  -aes                   Add explicit sort
-  --add-explicit-sort    Same as -aes
   -fp                    Focus property (with whyml target only)
   --focus-property       Same as -fp
+  -sci                   Set caller address for initialization
+  --set-caller-init      Same as -sci
   -ptc                   Print type contract in archetype syntax
   --print-type-contract  Same as -ptc
   -lsp <request>         Generate language server protocol response to <resquest>
@@ -93,13 +69,7 @@ Available options:
   --version              Same as -v
   -help                  Display this list of options
   --help                 Display this list of options
-
-
 ```
-
-{% hint style="warning" %}
- Some features are still under development
-{% endhint %}
 
 ## VS code extension
 
@@ -109,5 +79,17 @@ The archetype extension provides:
 * [LSP](https://microsoft.github.io/language-server-protocol/) support
 * transcoding commands
 
-![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
+![](.gitbook/assets/screenshot-2020-06-25-at-14.10.42.png)
+
+The archetype extension provides commands to compile to Michelson via Ligo, and to launch the why3 IDE for verification:
+
+![Archetype extension&apos;s commands](.gitbook/assets/screenshot-2020-06-25-at-13.40.11.png)
+
+These commands assume that Ligo, why3, and why3 IDE are already installed.
+
+{% embed url="http://why3.lri.fr/" %}
+
+{% embed url="https://ligolang.org/" %}
+
+
 
