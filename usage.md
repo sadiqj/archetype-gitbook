@@ -2,7 +2,7 @@
 
 ## Command-line
 
-To transcode say an archetype file escrow.arl to `ligo`:
+To transcode an archetype file say `escrow.arl` to `ligo`:
 
 ```text
 $ archetype -t ligo escrow.arl
