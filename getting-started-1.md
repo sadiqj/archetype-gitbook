@@ -44,7 +44,7 @@ Archetype generates Why3 file format \(mlw\) for contract verification purpose.
 
 The current version of why3 is **1.3.3**. It is installed with opam:
 
-```text
+```bash
 $ opam install why3
 ```
 
