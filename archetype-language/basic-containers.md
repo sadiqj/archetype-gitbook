@@ -68,30 +68,30 @@ Sets are built with `[ ; ]`:
 variable s : set<int> = [ 1; 3; 5; 12 ] 
 ```
 
-The `set_contains` operator returns true if an element is an element of the set, false otherwise.
+The `contains` operator returns true if an element is an element of the set, false otherwise.
 
 ```javascript
 effect {
   var s : set<int> = [0; 1 ; 2; 3];
-  var t : bool     = set_contains(s, 2); /* true */
+  var t : bool     = contains(s, 2); /* true */
 }
 ```
 
-The `set_add` operator returns a set with an extra element if the element is not already in the argument set. It returns the same set if the element is already in the set. 
+The `add` operator returns a set with an extra element if the element is not already in the argument set. It returns the same set if the element is already in the set. 
 
 ```javascript
 effect {
   var s : set<int> = [0; 1 ; 2; 3];
-  var s1 = set_add(s, 5); /* [0; 1 ; 2; 3; 5] */
+  var s1 = add(s, 5); /* [0; 1 ; 2; 3; 5] */
 }
 ```
 
-The `set_remove` operator returns a set with an element removed if the element was present in the argument set . It returns the same set if the element is not in the set.
+The `remove` operator returns a set with an element removed if the element was present in the argument set . It returns the same set if the element is not in the set.
 
 ```javascript
 effect {
   var s : set<int> = [0; 1 ; 2; 3];
-  var s1 = set_remove(s, 2); /* [0; 1 ; 3] */
+  var s1 = remove(s, 2); /* [0; 1 ; 3] */
 }
 ```
 
@@ -100,7 +100,7 @@ The `set_length` operator returns the number of elements in the set.
 ```javascript
 effect {
   var s : set<int> = [0; 1 ; 2; 3];
-  var l = set_length(s); /* 4 */
+  var l = length(s); /* 4 */
 }
 ```
 
@@ -116,21 +116,21 @@ Maps are built with `[ ( , ) ;  ]`:
 variable m : map<int,string> = [ (0,"a string"); (1,"another string") ]
 ```
 
-The `map_put` operator returns a map with a new pair \(key,value\) if the key is not associated in the argument map. It returns the same map otherwise.
+The `put` operator returns a map with a new pair \(key,value\) if the key is not associated in the argument map. It returns the same map otherwise.
 
 ```javascript
 effect {
   var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
-  var m2 = map_put(m, 2, "and another ...");
+  var m2 = put(m, 2, "and another ...");
 }
 ```
 
-The `map_remove` operator returns a map that does not pair the argument key.
+The `remove` operator returns a map that does not pair the argument key.
 
 ```javascript
 effect {
   var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
-  var m2 = map_remove(m, 0); /* [ (1,"another string") ] */
+  var m2 = remove(m, 0); /* [ (1,"another string") ] */
 }
 ```
 
@@ -144,13 +144,13 @@ effect {
 }
 ```
 
-The `map_contains` operator returns true if the map associates a value to the argument key, false otherwise.
+The `contains` operator returns true if the map associates a value to the argument key, false otherwise.
 
 ```javascript
 effect {
   var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
-  var t = map_contains(m, 0);  /* true */
-  var v = map_contains(m, 42); /* false */
+  var t = contains(m, 0);  /* true */
+  var v = contains(m, 42); /* false */
 }
 ```
 
@@ -159,7 +159,7 @@ The `map_length` operator returns the number of pairs in the map.
 ```javascript
 effect {
   var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
-  var l = map_length(m); /* 2 */
+  var l = length(m); /* 2 */
 }
 ```
 
