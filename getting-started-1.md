@@ -57,7 +57,7 @@ $ opam install why3-ide
 The IDE uses GTK library that may need to be installed with the proper system-dependent package management system \(`apt` for linux, `brew` for mac os, ...\).
 
 {% hint style="info" %}
-Visit the official [why3](http://why3.lri.fr/) website for more information.
+Visit the official [Why3](http://why3.lri.fr/) website for more information.
 {% endhint %}
 
 ### Solvers
