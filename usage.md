@@ -85,7 +85,7 @@ The archetype extension provides:
 
 The archetype extension provides commands to compile to Michelson via Ligo, and to launch the why3 IDE for verification:
 
-![](.gitbook/assets/capture-de-cran-2020-09-12-a-15.34.41.png)
+![](.gitbook/assets/capture-de-cran-2020-09-12-a-15.38.13.png)
 
 
 
