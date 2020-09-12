@@ -31,9 +31,9 @@ ext install edukera.archetype
 The vscode extension is configured via the normal vscode settings screen.
 
 {% hint style="warning" %}
-Under Mac OS, make sure that VS Code inherits from opam's environement variables, so that `archetype` command is known.  
+Make sure that VS Code inherits from opam's environement variables, so that `archetype` command is known.  
 
-For example, insert `eval $(opam env)` in the shell profile file \(`.bash_profile` or `.zshrc`\) and launch VS code from Terminal with `open -a Visual \Studio \Code` \(or an alias\). 
+For example on MacOS, insert `eval $(opam env)` in the shell profile file \(`.bash_profile` or `.zshrc`\) and launch VS code from Terminal with `open -a Visual \Studio \Code` \(or an alias\). 
 {% endhint %}
 
 ## Verification tools
