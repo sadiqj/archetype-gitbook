@@ -22,7 +22,7 @@ $ archetype --list-target
   whyml
 ```
 
-To transcode to `ligo`:
+To transcode to `Ligo`:
 
 ```text
 $ archetype -t ligo escrow.arl
