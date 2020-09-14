@@ -69,7 +69,7 @@ getter getBar () { return bar }
 entry setBar (b : int) { bar := b }
 ```
 
-It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following standard entry declaration:
+It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following entry declaration:
 
 ```javascript
 entry getBar (cb : entrysig<int>) { transfer 0tz to entry cb(bar) }
