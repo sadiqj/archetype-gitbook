@@ -77,6 +77,8 @@ entry getBar (cb : entrysig<int>) { transfer 0tz to entry cb(bar) }
 
 The `entrysig` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
 
+The difference between the `getter` and `entry` versions of the `getBar` entry above is that the callback argument is _anonymous_ in the `getter` version.
+
 The archetype version of the _inspector_ contract \(see article above\):
 
 ```javascript
