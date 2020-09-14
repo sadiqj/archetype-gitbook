@@ -49,7 +49,7 @@ entry add_1_3 () {
 }
 ```
 
-### Callback
+### Getter & entrysig
 
 A common pattern for contracts to exchange values is to call an entry point with a callback.
 
@@ -64,10 +64,18 @@ archetype sender
 
 variable bar : int = 0
 
-entry getBar (cb : entrysig<int>) { transfer 0tz to entry cb(bar) }
+getter getBar () { return bar }
 
 entry setBar (b : int) { bar := b }
 ```
+
+It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following standard entry declaration:
+
+```javascript
+entry getBar (cb : entrysig<int>) { transfer 0tz to entry cb(bar) }
+```
+
+The `entrysig` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
 
 The archetype version of the _inspector_ contract \(see article above\):
 
@@ -82,8 +90,6 @@ entry getFoo(asender : address) {
   transfer 0tz to asender call getBar<entrysig<int>>(self.setFoo) 
 }
 ```
-
-The `entrysig` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
 
 ### Entrypoint
 
