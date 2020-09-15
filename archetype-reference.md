@@ -459,13 +459,15 @@ constant s : string = "hello world"
 * `slice`
 * `length`
 * `<` `>` `=` `<>` `<=` `>=`
+* `to_string`
 
 ```javascript
 var s1 = "str1" + "str2"; /* concat */
 var s2 = slice("abcdef", 1, 2);
-var l = length("archetype");
+var l  = length("archetype");
 var b1 = "a" <> "b";
 var b2 = "a" < "b";
+var s  = to_string(42)
 ```
 
 ### tez

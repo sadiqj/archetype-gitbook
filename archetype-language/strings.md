@@ -11,7 +11,7 @@ The `string` type comes with 3 operators:
   * the first argument is the offset \(starting from 0\)
   * the second argument is the length of the subset
 * `concat`: returns the concatenation two strings
-* `to_string` : converts a `nat` value to a string
+* `to_string` : converts a nat value to a string
 
 ```javascript
 effect {
