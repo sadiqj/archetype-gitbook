@@ -22,12 +22,6 @@ $ archetype --list-target
   whyml
 ```
 
-To transcode to `Ligo`:
-
-```text
-$ archetype -t ligo escrow.arl
-```
-
 To list available commands:
 
 ```bash
