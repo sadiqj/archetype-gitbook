@@ -8,7 +8,7 @@ Archetype provides the possibility to add metadata to the contract according to 
 
 {% embed url="https://gitlab.com/tzip/tzip/-/blob/master/proposals/tzip-16/tzip-16.md" %}
 
-In a nutshell, the contract contains a big map named `%metadata` with an emtpy entry associated to the information where to find the metadata, either in this same big map or on an external resource \(other contract, off-chain server\).
+In a nutshell, metadata is stored in a big map named `%metadata` with an emtpy entry associated to the information where to find the metadata: either in this same big map or on an external resource \(other contract, off-chain server\).
 
 Archetype provides the possiblity either to store the metadata in the `%metadata` bigmap or on an off-chain server. It may be done at compilation time, or from the contract code.
 
