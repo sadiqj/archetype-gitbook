@@ -99,10 +99,10 @@ $ ./archetype.exe --metadata-uri "http://archetype-lang.org/simple.json" -c simp
 
 ```javascript
 entry setmetadata (m : bytes) {
-  metadata := put(metadata, "here", m);
+  set_metadata(m);
 }
 getter getmetadatauri () : bytes {
-  return metadata[""];
+  return get_metadata();
 }
 ```
 
