@@ -17,6 +17,7 @@
   * [Assets](archetype-language/data-model.md)
   * [Partitions, Aggregates](archetype-language/subsets-partition.md)
   * [State machine](archetype-language/state-machine.md)
+  * [Metadata \(TZIP-16\)](archetype-language/metadata-tzip-16.md)
   * [Contract specification](archetype-language/contract-specification.md)
 
 ## Contract library
