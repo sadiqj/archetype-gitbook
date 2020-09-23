@@ -1,8 +1,8 @@
----
-description: (from version 1.2.1)
----
-
 # Metadata \(TZIP-16\)
+
+{% hint style="warning" %}
+Will be available in version 1.2.1 \(currently available in [dev](https://github.com/edukera/archetype-lang/tree/dev) branch\)
+{% endhint %}
 
 Archetype provides the possibility to add metadata to the contract according to the TZIP-16 specification:
 
