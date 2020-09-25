@@ -6,7 +6,7 @@ The `transfer` instruction is used to transfer Tezis to an account.
 
 ```javascript
 effect {
-  transfer 1tz to coder;
+  transfer 1tez to coder;
 }
 ```
 
@@ -29,7 +29,7 @@ The contract may then be called with the `transfer ... to ... call ...` instruct
 ```javascript
 effect {
     var c = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
-    transfer 0tz to c call add_value<nat>(3);
+    transfer 0tez to c call add_value<nat>(3);
 }
 ```
 
@@ -45,7 +45,7 @@ entry my_add_value(int a, int b) {
 }
 
 entry add_1_3 () {
-   transfer 0tz to entry self.my_add_value(1,3)
+   transfer 0tez to entry self.my_add_value(1,3)
 }
 ```
 
@@ -89,7 +89,7 @@ variable foo : int = 0
 entry setFoo(v : int) { foo := v }
 
 entry getFoo(asender : address) { 
-  transfer 0tz to asender call getBar<entrysig<int>>(self.setFoo) 
+  transfer 0tez to asender call getBar<entrysig<int>>(self.setFoo) 
 }
 ```
 
@@ -110,7 +110,7 @@ entry getFoo(asender : address) {
   var entryopt = entrypoint<entrysig<int>>("%getBar", asender);
   if issome(entryopt) then (
     var e = opt_get(entryopt);
-    transfer 0tz to entry e(self.setFoo))
+    transfer 0tez to entry e(self.setFoo))
   else fail("could not find getBar entry or invalid address")
 }
 ```
