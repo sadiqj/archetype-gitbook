@@ -11,7 +11,7 @@ constant rate : rational = 0.2
 ```
 
 ```ocaml
-variable price : tez = 10tez
+variable price : tez = 10tz
 ```
 
 * `states`  declares contract's possible states. It is then possible to use _transitions_ to change the contract states \(see below\)
@@ -473,7 +473,7 @@ var s  = to_string(42)
 ### tez
 
 ```css
-constant ctz  : tez = 1tez
+constant ctz  : tez = 1tz
 constant cmtz : tez = 1mtz
 constant cutz : tez = 1utz
 ```
