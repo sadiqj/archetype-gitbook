@@ -198,7 +198,7 @@ specification entry approve(spender : address, value : nat) {
   }
 }
 
-specification entry getAllowance (owner : address, spender : address) {
+specification getter getAllowance (owner : address, spender : address) {
   postcondition getallowance_p1 { // creates one op
     length (operations) = 1
   }
@@ -207,7 +207,7 @@ specification entry getAllowance (owner : address, spender : address) {
   }
 }
 
-specification entry getBalance (owner : address) {
+specification getter getBalance (owner : address) {
   postcondition getbalance_p1 { // creates one op
     length (operations) = 1
   }
@@ -216,7 +216,7 @@ specification entry getBalance (owner : address) {
   }
 }
 
-specification getter geTotalSupply () {
+specification getter getTotalSupply () {
   postcondition gettotalsupply_p1 { // creates one op
     length (operations) = 1
   }
