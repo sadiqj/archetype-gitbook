@@ -1,6 +1,8 @@
 # Formal properties
 
-> See [presentation article](./4-fa12-archetype).
+See presentation article:
+
+{% embed url="https://assets.tqtezos.com/docs/token-contracts/fa12/4-fa12-archetype/" %}
 
 ## Declarations
 
@@ -8,7 +10,7 @@ The contract declares two assets:
 
 ### **ledger asset**
 
-```text
+```coffeescript
 asset ledger identified by holder to big_map {
   holder     : address;
   tokens     : nat = 0;
@@ -21,7 +23,7 @@ The `ledger` asset is the cap table: it holds the number of tokens for each toke
 
 ### **allowance asset**
 
-```text
+```coffeescript
 asset allowance identified by addr_owner addr_spender to big_map {
   addr_owner       : address;
   addr_spender     : address;
@@ -33,7 +35,7 @@ The `allowance` asset stores the amount of tokens that can be spent by `addr_spe
 
 ## Contract invariant
 
-```text
+```javascript
 ledger.sum(tokens) = totalsupply
 ```
 
@@ -43,7 +45,7 @@ ledger.sum(tokens) = totalsupply
 
 Archetype implementation:
 
-```text
+```coffeescript
 entry %transfer (%from : address, %to : address, value : nat) {
   require {
     r1 otherwise "NotEnoughBalance" : ledger[%from].tokens >= value;
@@ -64,7 +66,7 @@ entry %transfer (%from : address, %to : address, value : nat) {
 
 #### **1.1/ Effect on %from token holder**
 
-```text
+```ocaml
 %from <> %to ->
 let some before_ledger_from = before.ledger[%from] in
 let some after_ledger_from  = ledger[%from] in
@@ -79,7 +81,7 @@ otherwise false
 
 #### **1.2/ Effect on %to token holder**
 
-```text
+```ocaml
 %from <> %to ->
 let some after_ledger_to = ledger[%to] in
 let some before_ledger_to = before.ledger[%to] in
@@ -95,7 +97,7 @@ otherwise false
 
 #### **1.3/ No effect on ledger**
 
-```text
+```ocaml
 %from = %to -> ledger = before.ledger
 ```
 
@@ -103,7 +105,7 @@ otherwise false
 
 #### **1.4/ Unchanged ledger records**
 
-```text
+```ocaml
 forall tokenholder in ledger,
 tokenholder.holder <> %from ->
 tokenholder.holder <> %to ->
@@ -114,7 +116,7 @@ before.ledger[tokenholder.holder] = some(tokenholder)
 
 #### **1.5/ Removed ledger records**
 
-```text
+```ocaml
 removed.ledger.isempty()
 ```
 
@@ -122,7 +124,7 @@ removed.ledger.isempty()
 
 #### **1.6/ Added ledger records**
 
-```text
+```ocaml
 let some before_to = before.ledger[%to] in
   added.ledger.isempty()
 otherwise
@@ -135,7 +137,7 @@ otherwise
 
 #### **2.1/ Effect on \(%from,caller\) allowance record**
 
-```text
+```ocaml
 caller <> %from ->
 let some before_from_caller = before.allowance[(%from,caller)] in
 let some after_from_caller = allowance[(%from,caller)] in
@@ -151,7 +153,7 @@ otherwise true
 
 #### **2.1/ No effect on allowance**
 
-```text
+```ocaml
 caller = %from -> allowance = before.allowance
 ```
 
@@ -159,7 +161,7 @@ caller = %from -> allowance = before.allowance
 
 #### **2.2/ Unchanged allowance records**
 
-```text
+```ocaml
 forall a in allowance,
 a.addr_owner <> %from and a.addr_spender <> caller ->
 before.allowance[(a.addr_owner,a.addr_spender)] = some(a)
@@ -169,7 +171,7 @@ before.allowance[(a.addr_owner,a.addr_spender)] = some(a)
 
 #### **2.3/ Added and removed allowance records**
 
-```text
+```javascript
 removed.allowance.isempty() and added.allowance.isempty()
 ```
 
@@ -179,7 +181,7 @@ removed.allowance.isempty() and added.allowance.isempty()
 
 #### **3.1/ Not Enough Balance**
 
-```text
+```ocaml
 fails with (msg : string) :
   let some after_ledger_from = ledger[%from] in
     msg = "NotEnoughBalance" and
@@ -191,7 +193,7 @@ fails with (msg : string) :
 
 #### **3.2/ Not Enough Allowance**
 
-```text
+```javascript
 fails with (msg : string * (nat * nat)) :
   let some after_allowance_from_caller = allowance[(%from,caller)] in
     msg = ("NotEnoughAllowance", (value, after_allowance_from_caller.amount)) and
@@ -204,7 +206,7 @@ fails with (msg : string * (nat * nat)) :
 
 ### **4/ Effect on operations**
 
-```text
+```javascript
 length (operations) = 0
 ```
 
@@ -214,7 +216,7 @@ length (operations) = 0
 
 Archetype implementation:
 
-```text
+```coffeescript
 entry approve(spender : address, value : nat) {
   var k = (caller, spender);
   if allowance.contains(k) then (
@@ -227,7 +229,7 @@ entry approve(spender : address, value : nat) {
 
 ### **1/ Effect on ledger**
 
-```text
+```ocaml
 ledger = before.ledger
 ```
 
@@ -237,7 +239,7 @@ ledger = before.ledger
 
 #### **2.1/ Effect on \(caller,spender\) allowance record**
 
-```text
+```ocaml
 let some after_allowance_caller_spender = allowance[(caller,spender)] in
 let some before_allowance_caller_spender = before.allowance[(caller,spender)] in
   after_allowance_caller_spender = { before_allowance_caller_spender with
@@ -256,7 +258,7 @@ otherwise false
 
 #### **2.2/ Unchanged allowance records**
 
-```text
+```ocaml
 forall a in allowance,
 (a.addr_owner, a.addr_spender) <> (caller, spender) ->
 before.allowance[(a.addr_owner, a.addr_spender)] = some(a)
@@ -266,7 +268,7 @@ before.allowance[(a.addr_owner, a.addr_spender)] = some(a)
 
 #### **2.3/ Added allowance records**
 
-```text
+```javascript
 let some allowance_caller_spender = before.allowance[(caller, spender)] in
   added.allowance.isempty()
 otherwise
@@ -277,7 +279,7 @@ otherwise
 
 #### **2.4/ Removed allowance records**
 
-```text
+```javascript
 removed.allowance.isempty()
 ```
 
@@ -285,7 +287,7 @@ removed.allowance.isempty()
 
 #### **3/ Explicit fail**
 
-```text
+```ocaml
 fails with (msg : (string * nat)) :
 let some allowance_caller_spender = allowance[(caller,spender)] in
   msg = ("UnsafeAllowanceChange", allowance_caller_spender.amount) and
@@ -302,7 +304,7 @@ Indeed, according to properties 1.3 and 2.1 of the `transfer` entry, this has no
 
 #### **4/ Effect on operations**
 
-```text
+```javascript
 length (operations) = 0
 ```
 
@@ -312,7 +314,7 @@ length (operations) = 0
 
 Archetype implementation:
 
-```text
+```objectivec
 getter getAllowance (owner : address, spender : address) : nat {
   return (allowance[(owner, spender)].amount)
 }
@@ -320,7 +322,7 @@ getter getAllowance (owner : address, spender : address) : nat {
 
 ### **1/ Effect on ledger**
 
-```text
+```javascript
 ledger = before.ledger
 ```
 
@@ -328,7 +330,7 @@ ledger = before.ledger
 
 ### **2/ Effect on allowance**
 
-```text
+```javascript
 allowance = before.allowance
 ```
 
@@ -340,7 +342,7 @@ No explicit fail. The entry implicitely fails though if the provided callback is
 
 ### **4/ Effect on operations**
 
-```text
+```javascript
 length (operations) = 1
 ```
 
@@ -350,7 +352,7 @@ length (operations) = 1
 
 Archetype implementation:
 
-```text
+```coffeescript
 getter getBalance (owner : address) : nat {
   return (ledger[owner].tokens)
 }
@@ -358,7 +360,7 @@ getter getBalance (owner : address) : nat {
 
 ### **1/ Effect on ledger**
 
-```text
+```javascript
 ledger = before.ledger
 ```
 
@@ -366,7 +368,7 @@ ledger = before.ledger
 
 ### **2/ Effect on allowance**
 
-```text
+```javascript
 allowance = before.allowance
 ```
 
@@ -378,7 +380,7 @@ No explicit fail. The entry implicitely fails though if the provided callback is
 
 ### **4/ Effect on operations**
 
-```text
+```javascript
 length (operations) = 1
 ```
 
@@ -388,7 +390,7 @@ length (operations) = 1
 
 Archetype implementation:
 
-```text
+```coffeescript
 getter getTotalSupply () : nat {
   return totalsupply
 }
@@ -396,7 +398,7 @@ getter getTotalSupply () : nat {
 
 ### **1/ Effect on ledger**
 
-```text
+```ocaml
 ledger = before.ledger
 ```
 
@@ -404,7 +406,7 @@ ledger = before.ledger
 
 ### **2/ Effect on allowance**
 
-```text
+```javascript
 allowance = before.allowance
 ```
 
@@ -416,7 +418,7 @@ No explicit fail. The entry implicitely fails though if the provided callback is
 
 ### **4/ Effect on operations**
 
-```text
+```javascript
 length (operations) = 1
 ```
 
