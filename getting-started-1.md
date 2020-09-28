@@ -18,19 +18,26 @@ This is installing archetype in the current switch. This may fail if archetype d
 
 ### From source
 
-On Debian/Ubuntu Linux distribution:
+On Debian/Ubuntu Linux distribution, assuming `opam` and `git` are installed:
 
 ```text
-$ sudo apt-get install build-essential git m4 unzip rsync curl bubblewrap libev-dev libgmp-dev pkg-config libhidapi-dev git opam
 $ git clone https://github.com/edukera/archetype-lang.git
 $ cd archetype-lang
 $ make build-deps
 $ make
 ```
 
-### From binary
+This creates a local opam switch.
 
-Coming soon
+### From binary 
+
+#### AMD 64 Linux
+
+
+
+#### MacOS
+
+
 
 
 
