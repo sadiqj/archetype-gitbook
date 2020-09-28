@@ -28,6 +28,10 @@ $ make build-deps
 $ make
 ```
 
+### From binary
+
+
+
 {% hint style="info" %}
  current archetype version: **1.2.1**
 {% endhint %}
