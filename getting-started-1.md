@@ -4,10 +4,28 @@
 
 Installation requires [opam](https://opam.ocaml.org/). Please refer to this [page](https://opam.ocaml.org/doc/Install.html) for opam installation instructions.
 
+### With Opam
+
 Once opam installed:
 
 ```
 $ opam install archetype
+```
+
+{% hint style="warning" %}
+This is installing archetype in the current switch. This may fail if archetype dependencies are not compliant with the current switch. In that case, use the installation from the source presented below.
+{% endhint %}
+
+### From source
+
+On Debian/Ubuntu Linux distribution:
+
+```text
+$ sudo apt-get install build-essential git m4 unzip rsync curl bubblewrap libev-dev libgmp-dev pkg-config libhidapi-dev git opam
+$ git clone https://github.com/edukera/archetype-lang.git
+$ cd archetype-lang
+$ make build-deps
+$ make
 ```
 
 {% hint style="info" %}
