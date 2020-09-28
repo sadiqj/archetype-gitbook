@@ -30,6 +30,8 @@ $ make
 
 ### From binary
 
+Coming soon
+
 
 
 {% hint style="info" %}
