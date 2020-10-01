@@ -92,7 +92,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some before_ledger_from = before.ledger[%from] in
     let some after_ledger_from  = ledger[%from] in
     after_ledger_from = { before_ledger_from with
-      tokens = (before_ledger_from.tokens - value)
+      tokens = abs(before_ledger_from.tokens - value)
     }
     otherwise false otherwise false
   }
@@ -101,7 +101,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some after_ledger_to = ledger[%to] in
     let some before_ledger_to = before.ledger[%to] in
       after_ledger_to = { before_ledger_to with
-        tokens = (before_ledger_to.tokens + value)
+        tokens = before_ledger_to.tokens + value
       }
     otherwise
       after_ledger_to = { holder = %to; tokens = value }
@@ -134,7 +134,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some after_from_caller = allowance[(%from,caller)] in
       before_from_caller.amount > value ->
       after_from_caller = { before_from_caller with
-        amount = (before_from_caller.amount - value)
+        amount = abs(before_from_caller.amount - value)
       }
     otherwise false
     otherwise true

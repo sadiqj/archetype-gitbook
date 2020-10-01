@@ -8,7 +8,7 @@ Archetype is an open source project developed in [Ocaml](https://ocaml.org/index
 
 The archetype compiler/transcoder reads an archetype source file \(with "arl" extension\) and generates transcoded versions of the contract in different languages.
 
-The first version provides [CamLIGO](http://ligolang.org/) syntax for execution, and [Why3](http://why3.lri.fr/) syntax for verification.
+The first version provides [PascalLIGO](http://ligolang.org/) syntax for execution, and [Why3](http://why3.lri.fr/) syntax for verification.
 
 This section describes the different steps of the transcoding process.
 
@@ -74,7 +74,7 @@ $ archetype basic_escrow.arl
 
 ### IL transforms
 
-Target languages \(CamLIGO, smartpy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
+Target languages \(PascalLIGO, SmartPy, why3 ml, ...\) are obtained by applying transforms to the IL. This section presents the main transforms.
 
 #### Side effect removal
 
@@ -125,56 +125,13 @@ storage {
 
 The other impact of this transform is to consider that all operations on asset collections \(select, sum, max, ...\) take a collection of keys for argument, rather than a collection of assets.
 
-#### Shallow assets
-
-When the target language's asset storage policy is to use a map between an asset identifier and the asset record, asset fields that are collections of assets needs to be transformed to a list of identifiers. Such assets are called _shallow assets_ \(they do not contain actual asset values\)
-
-For example, consider the following Archetype situation:
-
-```ocaml
-asset a1 identified by id1 {
-  id1 : int;
-}
-
-asset a2 identified by id2 {
-  id2 : int;
-  a1s : a1 partition;
-}
-
-asset a3 identified by id3 {
-  id3       : int;
-  a2s       : a2 partition;
-  other_a1s : a1 partition;
-}
-
-action add (a : a3) {
-  effect {
-      a3.add a
-  }
-}
-```
-
-Here we consider that type `a3` holds the asset values of its fields `a2s` and `other_a1s`.
-
-With the map storage policy, these fields are just identifiers lists; hence the actual value of the assets have to be passed as arguments of the `add` action, as illustrated below:
-
-```ocaml
-let add (a : a3) 
-        (a_a2s : a2 collection)
-        (a_a2s_a1s : (a1 collection) collection) 
-        (a_other_a1s : a1 collection) = 
-  s.add_a3 a a_a2s a_a2s_a1s a_other_a1s
-```
-
-Here the types `a1` `a2` and `a3` are shallow types.
-
 ### Printers
 
 A printer pretty-prints the IL as the target language.
 
-#### CamLIGO
+#### PascaLIGO
 
-The IL with the no-side-effect and asset-shallowing transforms is very close to the CamLIGO format. It just needs to be pretty printed.
+The IL with the no-side-effect and asset-shallowing transforms is very close to the PascaLIGO format. It just needs to be pretty printed.
 
 #### Why ml
 
@@ -198,7 +155,7 @@ asset mile identified by id {
    amount     : int;
    expiration : date;
 } with {
-  i : amount > 0
+  i : amount > 0;
 }
 ```
 

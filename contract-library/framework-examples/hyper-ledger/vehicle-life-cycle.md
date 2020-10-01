@@ -16,7 +16,6 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/vehicle-lifecycle-network" %}
 
-{% code title="vehicle\_lifecycle.arl" %}
 ```ocaml
 archetype vehicle_lifecycle
 
@@ -34,7 +33,7 @@ enum order_state =
   | Delivered
 
 asset vehicledetail {
-  idv : string;
+  idv    : string;
   dcolor : string;
 }
 
@@ -44,73 +43,79 @@ asset manufacturer {
 
 asset order {
   oid           : string;
-  amanufacturer : pkey of manufacturer;
-  orderer       : pkey of owner;
-  details       : pkey of vehicledetail;
+  amanufacturer : pkey<manufacturer>;
+  orderer       : pkey<owner>;
+  details       : pkey<vehicledetail>;
 } with states order_state
 
 enum vehicle_state =
-  | Off_the_road               initial
+  | Off_the_road
   | Active
   | Scrapped
 
 asset vehicle identified by vin {
    vin          : string;
-   aowner       : pkey of owner;
-   detail       : pkey of vehicledetail;
+   aowner       : pkey<owner>;
+   detail       : pkey<vehicledetail>;
    color        : string;
-} with states vehicle_state
+   vstate       : vehicle_state = Off_the_road;
+}
 
-action placeOrder (neworder : order) {
-  called by neworder.orderer
+entry placeOrder (iid           : string,
+                  imanufacturer : pkey<manufacturer>,
+                  iorderer      : pkey<owner>,
+                  idetails      : pkey<vehicledetail>) {
+  called by iorderer
   effect {
-    order.add(neworder)
+    order.add({ iid; imanufacturer; iorderer; idetails})
   }
 }
 
-transition assign_vin (avin : string, adetail : pkey of vehicledetail) on (ok : pkey of order) {
-  called by order.get(ok).orderer
+transition assign_vin (avin : string, adetail : pkey<vehicledetail>) on (ok : pkey<order>) {
+  called by order[ok].orderer
 
   from Placed
   to Vin_assigned
   with effect {
-     vehicle.add ({ vin = avin; aowner = order.get(ok).orderer; detail = adetail; color = vehicledetail.get(adetail).dcolor })
+     vehicle.add ({ vin = avin; aowner = order[ok].orderer; detail = adetail; color = vehicledetail[adetail].dcolor })
   }
 }
 
-transition assign_owner () on (ok : pkey of order) {
+transition assign_owner () on (ok : pkey<order>) {
   from any
   to Owner_assigned
   with effect {
     (* set vehicle state *)
-    vehicle.get(order.get(ok)).set_state(Active)
+    vehicle[vehicledetail[order[ok].details].idv].vstate := Active;
   }
 }
 
-action vehicleTransfer (buyer : pkey of owner, vk : pkey of vehicle) {
-  called by [%delegable%] vehicle.get(vk).aowner
+entry vehicleTransfer (buyer : pkey<owner>, vk : pkey<vehicle>) {
+  called by vehicle[vk].aowner
   effect {
-    vehicle.get(vk).aowner := buyer
+    vehicle[vk].aowner := buyer
   }
 }
 
-transition scrapVehicle () on (vk : pkey of vehicle) {
-  called by vehicle.get(vk).aowner
-
-  from (Off_the_road or Active)
-  to Scrapped
+entry scrapVehicle (vk : pkey<vehicle>) {
+  called by vehicle[vk].aowner
+  require {
+      r1: vehicle[vk].vstate = Off_the_road or vehicle[vk].vstate = Active
+  }
+  effect {
+      vehicle[vk].vstate := Scrapped
+  }
 }
 
-action scrapVehiclebyColor (acolor : string) {
+entry scrapVehiclebyColor (acolor : string) {
   effect {
     for v in vehicle.select(color = acolor) do
-      v.set_state(Scrapped)
+      vehicle[v].vstate := Scrapped
     done
   }
 }
 
 ```
-{% endcode %}
 
 
 
