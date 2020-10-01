@@ -143,7 +143,7 @@ let some before_from_caller = before.allowance[(%from,caller)] in
 let some after_from_caller = allowance[(%from,caller)] in
   before_from_caller.amount > value ->
   after_from_caller = { before_from_caller with
-    amount = (before_from_caller.amount - value)
+    amount = abs (before_from_caller.amount - value)
   }
 otherwise false
 otherwise true
