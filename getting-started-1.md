@@ -29,18 +29,6 @@ $ make
 
 This creates a local opam switch.
 
-### From binary 
-
-#### AMD 64 Linux
-
-
-
-#### MacOS
-
-
-
-
-
 {% hint style="info" %}
  current archetype version: **1.2.1**
 {% endhint %}
