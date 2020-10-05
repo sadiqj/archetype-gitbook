@@ -13,7 +13,7 @@ $ opam install archetype
 ```
 
 {% hint style="warning" %}
-This is installing archetype in the current switch. This may fail if archetype dependencies are not compliant with the current switch. In that case, use the installation from the source presented below.
+This is installing archetype in the current switch. This may fail if archetype dependencies are not compliant with the current switch. In that case, you may create a dedicated switch or use the installation from the source presented below.
 {% endhint %}
 
 ### From source
