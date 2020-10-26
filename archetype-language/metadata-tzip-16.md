@@ -37,10 +37,6 @@ entry exec () { n := 42; }
 ```
 {% endcode %}
 
-{% hint style="warning" %}
-Will be available in version 1.2.1 \(currently available in [dev](https://github.com/edukera/archetype-lang/tree/dev) branch\)
-{% endhint %}
-
 ## At compilation
 
 ### In storage
