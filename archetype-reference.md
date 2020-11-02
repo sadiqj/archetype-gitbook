@@ -548,6 +548,7 @@ constant bl : bytes = 0x12f12354356a
 ```
 
 * `slice`
+* `length`
 * `concat`
 * `=` `<>`
 * `blake2b` `sha256` `sha512` 
