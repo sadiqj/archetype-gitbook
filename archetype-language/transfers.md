@@ -6,7 +6,7 @@ The `transfer` instruction is used to transfer Tezis to an account.
 
 ```javascript
 effect {
-  transfer 1tez to coder;
+  transfer 1tz to coder;
 }
 ```
 
