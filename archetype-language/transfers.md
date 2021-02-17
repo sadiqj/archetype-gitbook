@@ -29,7 +29,7 @@ The contract may then be called with the `transfer ... to ... call ...` instruct
 ```javascript
 effect {
     var c = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
-    transfer 0tez to c call add_value<nat>(3);
+    transfer 0tz to c call add_value<nat>(3);
 }
 ```
 
@@ -45,11 +45,11 @@ entry my_add_value(int a, int b) {
 }
 
 entry add_1_3 () {
-   transfer 0tez to entry self.my_add_value(1,3)
+   transfer 0tz to entry self.my_add_value(1,3)
 }
 ```
 
-### Getter & entrysig
+### Getter & contract
 
 A common pattern for contracts to exchange values is to call an entry point with a callback.
 
@@ -72,10 +72,10 @@ entry setBar (b : int) { bar := b }
 It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following entry declaration:
 
 ```javascript
-entry getBar (cb : entrysig<int>) { transfer 0tz to entry cb(bar) }
+entry getBar (cb : contract<int>) { transfer 0tz to entry cb(bar) }
 ```
 
-The `entrysig` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
+The `contract` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  
 
 The difference between the `getter` and `entry` versions of the `getBar` entry above is that the callback argument is _anonymous_ in the `getter` version.
 
@@ -89,13 +89,13 @@ variable foo : int = 0
 entry setFoo(v : int) { foo := v }
 
 entry getFoo(asender : address) { 
-  transfer 0tez to asender call getBar<entrysig<int>>(self.setFoo) 
+  transfer 0tz to asender call getBar<contract<int>>(self.setFoo) 
 }
 ```
 
 ### Entrypoint
 
-The `entrypoint` function may be used to build an entrysig value from the name and the address. It returns an _option_ value of entrysig type, so that it is possible to handle the case when the entry point does not exist.
+The `entrypoint` function may be used to build a `contract` value from the name and the address. It returns an _option_ value of contract type, so that it is possible to handle the case when the entry point does not exist.
 
 The above _inspector_ contract may be rewritten as:
 
@@ -107,10 +107,10 @@ variable foo : int = 0
 entry setFoo(v : int) { foo := v }
 
 entry getFoo(asender : address) { 
-  var entryopt = entrypoint<entrysig<int>>("%getBar", asender);
+  var entryopt = entrypoint<contract<int>>("%getBar", asender);
   if issome(entryopt) then (
     var e = opt_get(entryopt);
-    transfer 0tez to entry e(self.setFoo))
+    transfer 0tz to entry e(self.setFoo))
   else fail("could not find getBar entry or invalid address")
 }
 ```
