@@ -57,7 +57,7 @@ getter getAllowance (owner : address, spender : address) : nat {
 }
 
 getter getBalance (owner : address) : nat {
-  return (ledger[owner].tokens)
+  return (if (ledger.contains(owner)) then ledger[owner].tokens else 0)
 }
 
 getter getTotalSupply () : nat {
@@ -92,7 +92,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some before_ledger_from = before.ledger[%from] in
     let some after_ledger_from  = ledger[%from] in
     after_ledger_from = { before_ledger_from with
-      tokens = abs(before_ledger_from.tokens - value)
+      tokens = abs (before_ledger_from.tokens - value)
     }
     otherwise false otherwise false
   }
@@ -101,7 +101,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some after_ledger_to = ledger[%to] in
     let some before_ledger_to = before.ledger[%to] in
       after_ledger_to = { before_ledger_to with
-        tokens = before_ledger_to.tokens + value
+        tokens = (before_ledger_to.tokens + value)
       }
     otherwise
       after_ledger_to = { holder = %to; tokens = value }
@@ -114,9 +114,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     forall tokenholder in ledger,
       tokenholder.holder <> %from ->
       tokenholder.holder <> %to ->
-      let some before_th = before.ledger[tokenholder.holder] in
-        tokenholder = before_th
-      otherwise false // no other ledger is added
+      before.ledger[tokenholder.holder] = some(tokenholder)
   }
   postcondition transfer_p5 { // no ledger asset is removed
     removed.ledger.isempty()
@@ -134,7 +132,7 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
     let some after_from_caller = allowance[(%from,caller)] in
       before_from_caller.amount > value ->
       after_from_caller = { before_from_caller with
-        amount = abs(before_from_caller.amount - value)
+        amount = abs (before_from_caller.amount - value)
       }
     otherwise false
     otherwise true
@@ -145,12 +143,14 @@ specification entry %transfer (%from : address, %to : address, value : nat) {
   postcondition transfer_p9 { // other allowance assets are unchanged
     forall a in allowance,
       a.addr_owner <> %from and a.addr_spender <> caller ->
-      let some before_a = before.allowance[(a.addr_owner, a.addr_spender)] in
-        a = before_a
-      otherwise true
+      before.allowance[(a.addr_owner, a.addr_spender)] = some(a)
   }
   postcondition transfer_p10 { // no allowance is added or removed
     removed.allowance.isempty() and added.allowance.isempty()
+  }
+
+  postcondition transfer_p11 { // no operation generated
+    length (operations) = 0
   }
 }
 
@@ -177,9 +177,7 @@ specification entry approve(spender : address, value : nat) {
   postcondition approve_p2 { // other allowance assets are unchanged
     forall a in allowance,
       (a.addr_owner, a.addr_spender) <> (caller, spender) ->
-      let some before_a = before.allowance[(a.addr_owner, a.addr_spender)] in
-        a = before_a
-      otherwise false // no other allowance asset is added
+      before.allowance[(a.addr_owner, a.addr_spender)] = some(a)
   }
 
   postcondition approve_p3 { // added allowance
@@ -195,6 +193,10 @@ specification entry approve(spender : address, value : nat) {
 
   postcondition approve_p5 {
     ledger = before.ledger
+  }
+
+  postcondition approve_p6 { // no operation generated
+    length (operations) = 0
   }
 }
 
@@ -224,6 +226,7 @@ specification getter getTotalSupply () {
     ledger = before.ledger and allowance = before.allowance
   }
 }
+
 
 ```
 
