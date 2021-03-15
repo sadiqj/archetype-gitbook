@@ -1,11 +1,11 @@
 # Usage
 
-## Command line
+## Command-line
 
-To transcode say an archetype file escrow.arl to `ligo`:
+To transcode an archetype file `escrow.arl` to `michelson`:
 
 ```text
-$ archetype -t ligo escrow.arl
+$ archetype escrow.arl
 ```
 
 To transcode to `whyml`:
@@ -18,88 +18,86 @@ To list available target languages:
 
 ```text
 $ archetype --list-target
-  ligo
-  scaml
+target available:
+  michelson
+  michelson-storage
   whyml
-  markdown
+  javascript
 ```
 
 To list available commands:
 
 ```bash
 $ archetype --help
-usage : archetype [-t <lang> | -pt | -ext | -tast | [-ws] [-sa] [-skv] [-nse] | -lsp <request>] [-r | -json] <file>
+usage : archetype [-t <lang> | -pt | -ast | -mdl | -ir | -c | -lsp <request> ] [ -sci <caller_address> ] [ -mu <json_metatdata_uri> | -ms <path_to_json_metatdata> ] [ -r ] <file>
 
 Available options:
-  -t <lang>              Transcode to <lang> language
-  --target               Same as -t
-  --list-target          List available target languages
-  -pt                    Generate parse tree
-  --parse-tree           Same as -pt
-  -ext                   Process extensions
-  --extensions           Same as -ext
-  -ast                   Generate typed ast
-  --typed-ast            Same as -ast
-  --typed                Display type in ast output
-  -ap                    Display all parenthesis in printer
-  --typed                Same as -ap
-  -ws                    With storage
-  --with-storage         Same as -ws
-  -sa                    Transform to shallow asset
-  --shallow-asset        Same as -sa
-  -skv                   Split key value of collection of asset
-  --split-key-values     Same as -skv
-  -nse                   Transform to no side effect
-  --no-side-effect       Same as -nse
-  -nr                    Remove rational
-  --no-rational          Same as -nr
-  -ndd                   Remove date and duration
-  --no-date-duration     Same as -ndd
-  -pas                   Process asset state
-  --process-asset-state  Same as -pas
-  -raf                   Replace field by update
-  --remove-assignfield   Same as -raf
-  -rau                   Remove add_update method
-  --remove-add-update    Same as -rau
-  -ru                    Remove update method
-  --remove-update        Same as -ru
-  -mu                    Merge update
-  --merge-update         Same as -mu
-  -ne                    Remove enum and match with
-  --no-enum              Same as -ne
-  -rfd                   Remove function of left value from dot access field asset
-  --remove-fun-dotasset  Same as -rfd
-  -evi                   Evaluate initial value
-  --eval-initial-value   Same as -evi
-  -aes                   Add explicit sort
-  --add-explicit-sort    Same as -aes
-  -fp                    Focus property (with whyml target only)
-  --focus-property       Same as -fp
-  -ptc                   Print type contract in archetype syntax
-  --print-type-contract  Same as -ptc
-  -lsp <request>         Generate language server protocol response to <resquest>
-  --list-lsp-request     List available request for lsp
-  --service <service>    Generate service response to <service>
-  --list-services        List available services
-  -m                     Pretty print model tree
-  --model                Same as -m
-  -r                     Print raw model tree
-  --raw                  Same as -r
-  -ry                    Print raw model tree
-  --raw-whytree          Same as -r
-  -json                  Print JSON format
-  -V <id>                process specication identifiers
-  -v                     Show version number and exit
-  --version              Same as -v
-  -help                  Display this list of options
-  --help                 Display this list of options
-
+  -c compile                               to michelson
+  --compile                                Same as -c
+  -d decompile                             from michelson
+  --decompile                              Same as -d
+  -t <lang>                                Transcode to <lang> language
+  --target                                 Same as -t
+  --list-target                            List available target languages
+  -pt                                      Generate parse tree
+  --parse-tree                             Same as -pt
+  -ast                                     Generate typed ast
+  --typed-ast                              Same as -ast
+  -mdl                                     Generate model
+  --model                                  Same as -mdl
+  -omdl                                    Generate optimized model
+  --optimized-model                        Same as -omdl
+  -fp                                      Focus property (with whyml target only)
+  --focus-property                         Same as -fp
+  -sci                                     Set caller address for initialization
+  --set-caller-init                        Same as -sci
+  -mu                                      Set metadata uri
+  --metadata-uri                           Same as -mu
+  -ms                                      Set metadata in storage
+  --metadata-storage                       Same as -ms
+  -lsp <request>                           Generate language server protocol response to <resquest>
+  --list-lsp-request                       List available request for lsp
+  --service <service>                      Generate service response to <service>
+  --list-services                          List available services
+  -m                                       Pretty print model tree
+  --model                                  Same as -m
+  -r                                       Print raw model tree
+  --raw                                    Same as -r
+  -ry                                      Print raw model tree
+  --raw-whytree                            Same as -r
+  -ir                                      Generate intermediate representation
+  --intermediate-representation            Same as -ir
+  -dir                                     Generate intermediate decompilation
+  --d-intermediate-representation          Same as -dir
+  -rdir                                    Generate reduced intermediate decompilation
+  --reduced-d-intermediate-representation  Same as -rdir
+  -sdir                                    
+  -mici                                    Output micheline
+  -mi                                      Output michelson
+  -ri                                      Print raw intermediate representation
+  --raw-ir                                 Same as -ri
+  -rm                                      Print raw michelson
+  --raw-michelson                          Same as -rm
+  -j                                       Json
+  --json                                   Same as -j
+  -rj                                      Raw Json
+  --raw-json                               Same as -rj
+  --trace                                  Activate trace
+  --expr                                   
+  --type                                   
+  --with-contract                          
+  --show-entries                           Show entries
+  --entrypoint                             
+  --only-code                              
+  --init                                   Initialize parameters
+  --no-js-header                           No javascript header
+  -V <id>                                  process specication identifiers
+  -v                                       Show version number and exit
+  --version                                Same as -v
+  -help                                    Display this list of options
+  --help                                   Display this list of options
 
 ```
-
-{% hint style="warning" %}
- Some features are still under development
-{% endhint %}
 
 ## VS code extension
 
@@ -109,5 +107,11 @@ The archetype extension provides:
 * [LSP](https://microsoft.github.io/language-server-protocol/) support
 * transcoding commands
 
-![](.gitbook/assets/screenshot-2019-08-04-at-14.59.59.png)
+![](.gitbook/assets/screenshot-2020-06-25-at-14.10.42.png)
+
+The archetype extension provides commands to compile to Michelson, and to launch the why3 IDE for verification:
+
+![](.gitbook/assets/vscode_archetype_commands.png)
+
+
 
