@@ -30,7 +30,7 @@ $ make
 This creates a local opam switch.
 
 {% hint style="info" %}
- current archetype version: **1.2.1**
+ current archetype version: **1.2.2**
 {% endhint %}
 
 ## VS code extension installation
