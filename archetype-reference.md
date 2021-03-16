@@ -147,6 +147,15 @@ variable assoc : map<int, string> = []
 variable poll : set<address> = []
 ```
 
+* `or` declares a or type
+
+```css
+variable ls : or<nat, string> = left<string>(1)
+variable lc : or<nat, string> = left<nat, string>(1)
+variable rs : or<nat, string> = right<nat>("mystr")
+variable rc : or<nat, string> = right<nat, string>("mystr")
+```
+
 * `record` declares a record structure.
 
 ```css
@@ -310,7 +319,59 @@ entry exec () {
     end
   }
 }
+```
 
+```css
+archetype expr_control_match_list
+
+variable res : nat = 0
+
+entry exec() {
+  var l : list<nat> = [1];
+  res :=
+  match l with
+  | hd::t -> hd
+  | []    -> 0
+  end
+}
+```
+
+```css
+archetype expr_control_match_option
+
+variable res : nat = 0
+
+entry exec() {
+  var o : option<nat> = some(3);
+  res :=
+  match o with
+  | some(v) -> v
+  | none -> 0
+  end
+}
+```
+
+```css
+archetype expr_control_match_or
+
+variable a : nat = 0
+variable b : int = 0
+
+entry exec() {
+  var l : or<nat, int> = left<int>(2);
+  a :=
+  match l with
+  | left(v)  -> v
+  | right(v) -> 0
+  end;
+
+  var r : or<nat, int> = right<nat>(3i);
+  b :=
+  match r with
+  | left(v)  -> 0i
+  | right(v) -> v
+  end
+}
 ```
 
 * `for in do done` iterates over a collection.
