@@ -17,8 +17,8 @@ A partition is used when an asset _belongs_ to one and exactly one other asset. 
 asset car {
    vin     : string;
    model   : string;
-   year    : int;
-   nbdoors : int;
+   year    : nat;
+   nbdoors : nat;
 }
 
 asset fleet {

@@ -34,7 +34,7 @@ effect {
   var d1 = 55w; // 55 weeks
   var d2 = 3d;  // 3 days
   var d3 = d1 + d2 // equal to '55w3d'
-  var d2 = 10*d3 // 555 weeks
+  var d2 = 10 * d3 // 555 weeks
 }
 ```
 

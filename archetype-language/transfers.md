@@ -40,7 +40,7 @@ Note that it _fails_ if the contract at address `c` does not provide an entry po
 It is possible to call the current contract itself. Say the current contract has the `my_add_value` entry point; it is possible to call it from another entry point with the following instruction:
 
 ```javascript
-entry my_add_value(int a, int b) {
+entry my_add_value(a : nat, b : nat) {
    sum := a + b;
 }
 
@@ -62,17 +62,17 @@ The archetype version of the _sender_ contract \(see article above\):
 ```javascript
 archetype sender
 
-variable bar : int = 0
+variable bar : nat = 0
 
 getter getBar () { return bar }
 
-entry setBar (b : int) { bar := b }
+entry setBar (b : nat) { bar := b }
 ```
 
 It uses the `getter` keyword used to declare an entry point to the contract called "getBar"; the Michelson version of this entry actually takes a callback function \(a setter\) used to set/use the `bar` value in another contract. It is syntactic sugar equivalent to the following entry declaration:
 
 ```javascript
-entry getBar (cb : contract<int>) { transfer 0tz to entry cb(bar) }
+entry getBar (cb : contract<nat>) { transfer 0tz to entry cb(bar) }
 ```
 
 The `contract` type is used to declare the callback type; it is parametrized by the signature of the callback, represented as the tuple of argument types.  

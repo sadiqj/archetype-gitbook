@@ -14,8 +14,8 @@ For example, the following defines a car asset:
 asset car identified {
   vin     : string;
   model   : string;
-  year    : int;
-  nbdoors : int;
+  year    : nat;
+  nbdoors : nat;
 }
 ```
 
@@ -198,7 +198,7 @@ myasset.sort(f1).sort(f2);
 The solution is to pass the fields as arguments to the `sort` operator:
 
 ```javascript
-myasset.sort(f1,f2);
+myasset.sort(f1, f2);
 ```
 
 {% hint style="info" %}

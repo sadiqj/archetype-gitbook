@@ -318,7 +318,7 @@ entry exec () {
 ```ocaml
  var res = 0;
  for a in an_asset do
-   res += a.a_val;
+   res += an_asset[a].a_val;
  done;
 ```
 

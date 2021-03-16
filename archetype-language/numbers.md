@@ -101,13 +101,13 @@ Archetype provides the 4 arithmetic operations `+ - * /` and the minus sign on r
 
 ```javascript
 effect {
-  var r1 := 8/6;  // transcoded to (4,3)
-  var r2 := 1.8;    // transcoded to (9,5)
-  var rpl := r1+r2; // will execute to (6,15)
-  var rmi := r1-r2; // will execute to (-7,15)
-  var rmu := r1*r2; // will execute to (4,5)
-  var rdi := r1/r2: // will execute to (20,27)
-  var rms := -r1    // will execute to (-4,3) 
+  var r1 := 8 / 6;    // transcoded to (4,3)
+  var r2 := 1.8;      // transcoded to (9,5)
+  var rpl := r1 + r2; // will execute to (6,15)
+  var rmi := r1 - r2; // will execute to (-7,15)
+  var rmu := r1 * r2; // will execute to (4,5)
+  var rdi := r1 / r2: // will execute to (20,27)
+  var rms := -r1      // will execute to (-4,3) 
 }
 ```
 
@@ -115,10 +115,10 @@ It is also possible to mix integers and rationals:
 
 ```javascript
 effect {
-  var r := 5/3;
+  var r := 5 / 3;
   var n := 4;
-  var rtn := r*n; // will execute to (20/3)
-  var rpn := r+n; // will execute to (17/3)
+  var rtn := r * n; // will execute to (20/3)
+  var rpn := r + n; // will execute to (17/3)
 }
 ```
 
@@ -127,18 +127,18 @@ It is also possible to mix rationals and _tezis_ values, in that order. However 
 ```javascript
 effect {
   var r := 80%;
-  var a := 56tez;
-  var res := r*a;
+  var a := 56tz;
+  var res := r * a;
 }
 ```
 
 In the example above, the `res` value is `44800000utz` . The process is the following:
 
 1. convert a to _utez_ \(smallest unit\)
-2. compute the rational \(here 3\*56000000/4 = 168000000/4\)
+2. compute the rational \(here 3 \* 56000000 / 4 = 168000000 / 4\)
 3. execute the euclidean division \(44800000\)
 
-Note that the term `a*r`  is not accepted as `res` value \(line 4 above\): rationals come first.
+Note that the term `a * r`  is not accepted as `res` value \(line 4 above\): rationals come first.
 
 ### Comparison
 
@@ -166,7 +166,7 @@ There is no explicit cast \(conversion operator\) from a rational to a tez value
 ```javascript
 effect {
   var a := 2.5;
-  transfer (a*1tez) from source to dest;
+  transfer (a * 1tz) from source to dest;
 }
 ```
 
@@ -200,7 +200,7 @@ effect {
 
 Note that:
 
-* the conversion form `int` to a `duration` \(line 4\) is done by multiplying `t*d` by `1s`
+* the conversion form `int` to a `duration` \(line 4\) is done by multiplying `t * d` by `1s`
 * the conversion from `rational` to `int` is done with operators `ceil` and `floor`
 * the conversion from `int` to `nat` is done with `abs`
 

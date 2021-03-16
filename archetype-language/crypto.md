@@ -41,7 +41,7 @@ Bytes values are comparable with `= <> < > <= >=` operators.
 
 ### Hashing
 
-Hashing functions are available: `blake2b` `sha256` and `sha512`. They convert a byte value to the hashed byte value.
+Hashing functions are available: `blake2b` `sha256`  `sha512`  `keccak` and `sha3` They convert a byte value to the hashed byte value.
 
 ```javascript
 var h = sha256(0x050100000009617263686574797065);

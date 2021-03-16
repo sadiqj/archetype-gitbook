@@ -34,13 +34,13 @@ entry testopt (a : option<int>) {
 
 #### Get 
 
-`getopt` is the operator to extract the value from a `some` option value. It _fails_ if the value is `none`.
+`opt_get` is the operator to extract the value from a `some` option value. It _fails_ if the value is `none`.
 
 ```css
 effect {
-  var a := some("a string");
+  var a = some("a string");
   if issome(a) then (
-    if getopt(a) = "a string" then transfer 1tz to coder;
+    if opt_get(a) = "a string" then transfer 1tz to coder;
   );
 }
 ```

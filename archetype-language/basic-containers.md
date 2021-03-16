@@ -42,7 +42,7 @@ It is possible to iterate over a list with the `for do done` loop syntax:
 effect {
   var l = [3; 4; 5];
   for i in l do
-    transfer (i*1tz) to coder;
+    transfer (i * 1tz) to coder;
   done; // coder receives 12tz ...
 } 
 ```
@@ -65,14 +65,14 @@ Sets may currently contain only builtin types: `int` `nat` `string` `bytes` `tez
 Sets are built with `[ ; ]`:
 
 ```javascript
-variable s : set<int> = [ 1; 3; 5; 12 ] 
+variable s : set<nat> = [ 1; 3; 5; 12 ] 
 ```
 
 The `contains` operator returns true if an element is an element of the set, false otherwise.
 
 ```javascript
 effect {
-  var s : set<int> = [0; 1 ; 2; 3];
+  var s : set<nat> = [0; 1 ; 2; 3];
   var t : bool     = contains(s, 2); /* true */
 }
 ```
@@ -81,7 +81,7 @@ The `add` operator returns a set with an extra element if the element is not alr
 
 ```javascript
 effect {
-  var s : set<int> = [0; 1 ; 2; 3];
+  var s : set<nat> = [0; 1 ; 2; 3];
   var s1 = add(s, 5); /* [0; 1 ; 2; 3; 5] */
 }
 ```
@@ -90,7 +90,7 @@ The `remove` operator returns a set with an element removed if the element was p
 
 ```javascript
 effect {
-  var s : set<int> = [0; 1 ; 2; 3];
+  var s : set<nat> = [0; 1 ; 2; 3];
   var s1 = remove(s, 2); /* [0; 1 ; 3] */
 }
 ```
@@ -99,7 +99,7 @@ The `set_length` operator returns the number of elements in the set.
 
 ```javascript
 effect {
-  var s : set<int> = [0; 1 ; 2; 3];
+  var s : set<nat> = [0; 1 ; 2; 3];
   var l = length(s); /* 4 */
 }
 ```
@@ -113,14 +113,14 @@ Key values may currently be only builtin types : `int` `nat` `string` `bytes` `t
 Maps are built with `[ ( , ) ;  ]`:
 
 ```javascript
-variable m : map<int,string> = [ (0,"a string"); (1,"another string") ]
+variable m : map<nat, string> = [ (0, "a string"); (1, "another string") ]
 ```
 
 The `put` operator returns a map with a new pair \(key,value\) if the key is not associated in the argument map. It returns the same map otherwise.
 
 ```javascript
 effect {
-  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m : map<nat, string> = [ (0, "a string"); (1, "another string") ];
   var m2 = put(m, 2, "and another ...");
 }
 ```
@@ -129,7 +129,7 @@ The `remove` operator returns a map that does not pair the argument key.
 
 ```javascript
 effect {
-  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m : map<nat, string> = [ (0, "a string"); (1, "another string") ];
   var m2 = remove(m, 0); /* [ (1,"another string") ] */
 }
 ```
@@ -138,9 +138,9 @@ The `[ ]`operator returns an option of the value associated to the argument key.
 
 ```javascript
 effect {
-  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m : map<nat, string> = [ (0, "a string"); (1, "another string") ];
   var v = m[1]; /* some("another string") */
-  var v = m[42]; /* none */
+  var v2 = m[42]; /* none */
 }
 ```
 
@@ -148,17 +148,17 @@ The `contains` operator returns true if the map associates a value to the argume
 
 ```javascript
 effect {
-  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m : map<nat, string> = [ (0, "a string"); (1, "another string") ];
   var t = contains(m, 0);  /* true */
-  var v = contains(m, 42); /* false */
+  var f = contains(m, 42); /* false */
 }
 ```
 
-The `map_length` operator returns the number of pairs in the map.
+The `length` operator returns the number of pairs in the map.
 
 ```javascript
 effect {
-  var m : map<int,string> = [ (0,"a string"); (1,"another string") ];
+  var m : map<nat, string> = [ (0, "a string"); (1, "another string") ];
   var l = length(m); /* 2 */
 }
 ```

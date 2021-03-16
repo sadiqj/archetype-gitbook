@@ -255,8 +255,8 @@ Typically functions help factorize computation codes.
 
 ```javascript
 function get_rate (amount : tez) : rational {
-   var a : int  = amount;
-   return (a / 3600);
+   var a : nat  = amount;
+   return (a / 3600)
 }
 ```
 
