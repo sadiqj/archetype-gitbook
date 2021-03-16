@@ -87,18 +87,6 @@ The following table shows the selected solution for each service and the main be
       </td>
     </tr>
     <tr>
-      <td style="text-align:left">Test</td>
-      <td style="text-align:left"><a href="https://www.cs.tufts.edu/~nr/cs257/archive/john-hughes/quick.pdf">Quick-check</a>
-      </td>
-      <td style="text-align:left">Automated random test generation</td>
-    </tr>
-    <tr>
-      <td style="text-align:left">Simulate</td>
-      <td style="text-align:left"><a href="https://gsuite.google.com/intl/en_za/products/sheets/">Google spreadsheets</a>
-      </td>
-      <td style="text-align:left">Cloud-based spreadsheet with complete scripting capability</td>
-    </tr>
-    <tr>
       <td style="text-align:left">Document</td>
       <td style="text-align:left"><a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>
       </td>
@@ -106,10 +94,6 @@ The following table shows the selected solution for each service and the main be
     </tr>
   </tbody>
 </table>
-
-{% hint style="warning" %}
-'Test' and 'Simulate' services will be available in 2021.
-{% endhint %}
 
 The purpose of the archetype Test service is not to replace the standard test approach, but rather to enhance it with random test generation. The idea is to leverage formal properties to derive random and relevant tests.
 
@@ -120,7 +104,6 @@ Each framework identified in the previous section comes with a specific language
 | Solution | Language | Type of language |
 | :--- | :--- | :--- |
 | Why3 | Whyml \(\*.mlw\) | ml language, like Ocaml,  with specific instructions for verification |
-| Google spreadsheets | Google script \(\*.gs\) | Similar to javascript |
 | Document | Markdown \(\*.md\) | plain text with minimalist formatting  instructions for maximum readability  \(unlike HTML markup tags\) |
 
 As a consequence, in order to benefit from these frameworks, you need to develop several versions of the smart contract, one for each framework.
