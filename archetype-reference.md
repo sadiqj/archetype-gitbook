@@ -471,7 +471,7 @@ constant i : nat = 1
 constant j : nat = 42
 ```
 
-* `+` `-` `*` `div` `%` 
+* `+` `-` `*` `div` `%` `|>>` `<<|`
 * `<` `>` `=` `<>` `<=` `>=`
 * `min` `max`
 * `abs`
@@ -484,6 +484,8 @@ var n3 = 45 div 2; /* 22 (euclidean division) */
 var n4 = 45 % 2; /* 1 (modulo) */ 
 var n5 = min(5, 6);
 var n6 = abs(-6);
+var nlsr = 2 |>> 1; // 4
+var nlsl = 2 <<| 1; // 1
 ```
 
 ### int
@@ -732,6 +734,26 @@ effect {
 }
 ```
 
+### record
+
+record can be shaped with `as`, like below:
+
+```css
+record my_record {
+  a: int;
+  b: nat;
+  c: string;
+} as (((x, %_), z))
+
+variable r : my_record = {1i; 2; "mystr"}
+```
+
+generates in michelson :
+
+```css
+storage (pair (pair (int %x) nat) (string %z))
+```
+
 ### asset 
 
 * `contains`
@@ -827,13 +849,13 @@ transition mytr () {
 }
 ```
 
-* chainid 
+* `chainid`
 
 ```javascript
 var v : chain_id = chainid;
 ```
 
-* unit
+* `unit`
 
 ```css
 variable u0 : unit = ()
