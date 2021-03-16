@@ -4,7 +4,7 @@ An archetype contract is composed of declarations, entry points, and optionally 
 
 ## Declarations
 
-* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's entry points.
+* `constant` and `variables` declare global variables. A constant value cannot be modified in the contract's entry points.
 
 ```ocaml
 constant rate : rational = 0.2
@@ -113,7 +113,8 @@ transition to_fail () {
 * `key` : key value
 * `signature` : signature value
 * `key_hash` : key hash value
-* `chain_id` : chain id value
+* `chain_id`: chain id value
+* `unit` : unit value
 
 ## Composite types
 
@@ -184,6 +185,13 @@ enum color =
 | Red
 | Green
 | Blue
+```
+
+```css
+enum t =
+| A of nat
+| B of string
+| C
 ```
 
 It is then possible to declare a variable of type _color_:
@@ -370,6 +378,26 @@ entry exec() {
   match r with
   | left(v)  -> 0i
   | right(v) -> v
+  end
+}
+```
+
+```css
+archetype enum_with_args
+
+enum t =
+| A of nat
+| B of nat
+| C
+
+variable res : nat = 0
+
+entry exec() {
+  var o : t = A(1);
+
+  match o with
+  | A v | B v -> res := v
+  | C -> res := 0
   end
 }
 ```
@@ -803,6 +831,13 @@ transition mytr () {
 
 ```javascript
 var v : chain_id = chainid;
+```
+
+* unit
+
+```css
+variable u0 : unit = ()
+variable u1 : unit = Unit
 ```
 
 ## Verification
