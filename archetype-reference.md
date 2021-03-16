@@ -520,6 +520,8 @@ constant f : rational = 1.1
 constant g : rational = -1.1
 constant r : rational = 2 / 6
 constant t : rational = -2 / 6
+constant p0 : rational = 1%
+constant p1 : rational = 1.1%
 ```
 
 * `+` `-` `*` `/`  
