@@ -194,16 +194,17 @@ enum t =
 | C
 ```
 
-It is then possible to declare a variable of type _color_:
+It is then possible to declare variables:
 
 ```css
 variable c : color = Green
+variable v : t = A(0)
 ```
 
 * `contract` is the type of contract entry point signature.
 
 ```css
-variable b : option<contract<nat>> = entrypoint(anaddress, "getbalance")
+variable b : option<contract<nat>> = entrypoint<nat>("%getValue", selfaddress)
 ```
 
 It is then possible to declare a contract value of type _called\_contract\_sig_ and set its address:
@@ -642,7 +643,7 @@ constant bl : bytes = 0x12f12354356a
 * `length`
 * `concat`
 * `=` `<>`
-* `blake2b` `sha256` `sha512` 
+* `blake2b` `sha256` `sha512` `keccak` `sha3`
 * `pack` `unpack`
 
 ```javascript
@@ -651,6 +652,8 @@ var b2 = slice(0xabcdef01, 1, 2);
 var h1 = blake2b(0x050100000009617263686574797065);
 var h2 = sha256(0x050100000009617263686574797065);
 var h3 = sha512(0x050100000009617263686574797065);
+var h4 = keccak(0x050100000009617263686574797065);
+var h5 = sha3(0x050100000009617263686574797065);
 var b3 = pack("archetype");
 var s : string option = unpack<string>(0x050100000009617263686574797065);
 ```
@@ -658,8 +661,8 @@ var s : string option = unpack<string>(0x050100000009617263686574797065);
 ### option
 
 ```c
-constant op1 : option<int> = none
-constant op2 : option<int> = some(0)
+constant op1 : option<nat> = none
+constant op2 : option<nat> = some(0)
 ```
 
 * `issome`
@@ -670,13 +673,12 @@ constant op2 : option<int> = some(0)
 effect {
     var t1 : bool = isnone(none);
     var t2 : bool = issome(some(1));
-    var i  : int = opt_get(some(1i)); /* i = 1 */
+    var i  : nat  = opt_get(some(1)); /* i = 1 */
 }
 ```
 
 ### list
 
-* `head_tail`
 * `contains`
 * `length`
 * `nth`
@@ -702,9 +704,9 @@ effect {
 
 ```css
 effect {
-    var my_set : set<int> = [0; 1 ; 2; 3];
-    var new_set2 : set<int> = add(my_set, 4);
-    var new_set3 : set<int> = remove(my_set, 0);
+    var my_set   : set<nat> = [0; 1 ; 2; 3];
+    var new_set2 : set<nat> = add(my_set, 4);
+    var new_set3 : set<nat> = remove(my_set, 0);
     var set_c    : bool     = contains(my_set, 2);
     var c        : nat      = length(my_set);
 }
@@ -721,14 +723,14 @@ effect {
 
 ```css
 effect {
-    var my_map : map<string, int> = [ ("k0", 3) ;
+    var my_map : map<string, nat> = [ ("k0", 3) ;
                                       ("k1", 2) ;
                                       ("k2", 1) ;
                                       ("k3", 0) ];
-    var new_map1 : map<string, int> = put(my_map, "k4", 4);
-    var new_map2 : map<string, int> = remove(my_map, "k0");
-    var new_map3 : option<int>      = my_map["k0"];
-    var new_map4 : int              = getopt(my_map, "k0");
+    var new_map1 : map<string, nat> = put(my_map, "k4", 4);
+    var new_map2 : map<string, nat> = remove(my_map, "k0");
+    var new_map3 : option<nat>      = my_map["k0"];
+    var new_map4 : nat              = getopt(my_map, "k0");
     var map_c    : bool             = contains(my_map, "k0");
     var map_l    : nat              = length(my_map);
 }
@@ -838,7 +840,6 @@ states =
 | First
 | Second
 | Third
-
 
 transition mytr () {
   from First
@@ -1005,7 +1006,7 @@ contract invariant c1 {
 
 ### Expression
 
-All expression in effect are available in formula part.
+All expressions in effect are available in the formula part.
 
 * `forall` universal quantifier
 
