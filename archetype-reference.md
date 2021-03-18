@@ -99,21 +99,21 @@ transition to_fail () {
 
 ## Builtin types
 
-* `bool` : boolean values
-* `int` : integer values 
-* `nat` : positive integers
-* `rational` : floating value that can be expressed as the quotient or fraction of two integers 
 * `address` : account address
-* `role` : an address that can be used in entry's called by section
+* `bool` : boolean values
+* `bytes` : bytes sequence
+* `chain_id`: chain id value
 * `date` : date values
 * `duration` : duration values \(in second, minute, hour, day, week\)
+* `int` : integer values 
+* `key` : key value
+* `key_hash` : key hash value
+* `nat` : positive integers
+* `rational` : floating value that can be expressed as the quotient or fraction of two integers 
+* `role` : an address that can be used in entry's called by section
+* `signature` : signature value
 * `string` : string of characters
 * `tez` : Tezos currency
-* `bytes` : bytes sequence
-* `key` : key value
-* `signature` : signature value
-* `key_hash` : key hash value
-* `chain_id`: chain id value
 * `unit` : unit value
 
 ## Composite types
@@ -142,6 +142,12 @@ variable vals : list<string> = []
 variable assoc : map<int, string> = []
 ```
 
+* `big_map` declares a big map from a non-composite builtin type to any type.
+
+```csharp
+variable assoc : big_map<int, string> = []
+```
+
 * `set` declares a set of non-composite builtin type values.
 
 ```csharp
@@ -164,6 +170,12 @@ record r {
    s : string;
    i : int;
 }
+```
+
+* `lambda` declares a lambda type
+
+```css
+variable vlambda : lambda<nat, int> = lambda<int>((x : nat) -> x - 1)
 ```
 
 * `asset`  declares a collection of assets and the data an asset is composed of. For example, the following declares a collection of real estates described by an address, a location, and an owner:
@@ -233,6 +245,17 @@ asset partitioning_asset {
 ```
 
 As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see [Partitions, Reference](archetype-language/subsets-partition.md) section\). 
+
+
+
+## Other type
+
+* `operation`
+
+```css
+var e   : contract<unit> = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg;
+var op  : operation = mkoperation(0tz, e, ());
+```
 
 ## Effect
 
@@ -863,6 +886,14 @@ var v : chain_id = chainid;
 ```css
 variable u0 : unit = ()
 variable u1 : unit = Unit
+```
+
+* `operations` is the list of `operation` returned after effect execution of an entry
+
+```css
+entry exec(op  : operation) {
+  operations := prepend(operations, op);
+}
 ```
 
 ## Verification
