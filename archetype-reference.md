@@ -498,7 +498,6 @@ constant j : nat = 42
 * `+` `-` `*` `div` `%` `|>>` `<<|`
 * `<` `>` `=` `<>` `<=` `>=`
 * `min` `max`
-* `abs`
 
 ```javascript
 var n1 = 1 + 2; 
@@ -507,7 +506,7 @@ var n2 = 3 * 4;
 var n3 = 45 div 2; /* 22 (euclidean division) */
 var n4 = 45 % 2; /* 1 (modulo) */ 
 var n5 = min(5, 6);
-var n6 = abs(-6);
+var n6 = abs(-6); // see abs below
 var nlsr = 2 |>> 1; // 4
 var nlsl = 2 <<| 1; // 1
 ```
@@ -516,12 +515,13 @@ var nlsl = 2 <<| 1; // 1
 
 ```c
 constant i : int = 1i
-constant j : int = -42
+constant j : int = -42;
 ```
 
 * `+` `-` `*` `div` `%` 
 * `<` `>` `=` `<>` `<=` `>=`
 * `min` `max` 
+* `abs`
 
 ```javascript
 var a : int = 1i;
