@@ -95,7 +95,7 @@ effect {
 }
 ```
 
-The `set_length` operator returns the number of elements in the set.
+The `length` operator returns the number of elements in the set.
 
 ```javascript
 effect {
