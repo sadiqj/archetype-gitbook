@@ -1,10 +1,10 @@
 # Reference
 
-An archetype contract is composed of declarations, actions \(aka entry points\) and optionally specification for formal verification.
+An archetype contract is composed of declarations, entry points, and optionally specification for formal verification.
 
 ## Declarations
 
-* `constant` and `variables`  declare global variables. A constant value cannot be modified in the contract's actions.
+* `constant` and `variables` declare global variables. A constant value cannot be modified in the contract's entry points.
 
 ```ocaml
 constant rate : rational = 0.2
@@ -27,16 +27,16 @@ states =
 
  `initial`  is used to declare the initial state value of the contract. 
 
-* `action` declares an entry point of the contract. An action has the following sections:
-  * `specification` \(optional\) to provide the _post conditions_ the action is supposed to have
+* `entry` declares an entry point of the contract. An _entry_ has the following sections:
+  * `specification` \(optional\) to provide the _post conditions_ the entry is supposed to have
   * `accept transfer` \(optional\) to specify that transfer of tez is accepted 
-  * `called by` \(optional\) to declare which role may call this action
-  * `require` \(optional\) to list the necessary conditions for the action to be executed
-  * `failif` \(optional\)to list the conditions which prevent from execution 
-  * `effect` is the code to execute by the action
+  * `called by` \(optional\) to declare which role may call this entry
+  * `require` \(optional\) to list the necessary conditions for the entry to be executed
+  * `failif` \(optional\) to list the conditions which prevent from execution 
+  * `effect` is the code to execute by the entry
 
 ```css
-action an_action_1 (arg1 : string, arg2 : int) {
+entry an_entry_1 (arg1 : string, arg2 : int) {
   specification {
     // see 'specification' section below
   }
@@ -53,26 +53,36 @@ action an_action_1 (arg1 : string, arg2 : int) {
 }
 ```
 
-* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an action \(except `effect`, see above\) plus:
+An entry with just an effect section may omit the effect section syntax:
+
+```css
+variable val : nat = 0
+
+entry add(v : nat) {
+  val += v;
+}
+```
+
+* `transition` declares an entry point of the contract that changes the state of the contract. A transition has the same sections as an entry \(except `effect`, see above\) plus:
   * `from` to specify the states the transition starts from
   * `to` to specify the states after the transition 
   * `when` \(optional\) to specify the transition condition
   * `with effect` to specify the effect of the transition
 
 ```c
-states 
+states =
 | Created initial
 | Confirmed
 | Canceled
 | Success
 | Fail
 
-transition confirm {
+transition confirm () {
   from Created
   to Confirmed
-  when { transferred > 10 tz }
+  when { transferred > 10tz }
   with effect {
-    transfer 1tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
+    transfer 1tz to @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
   }
 }
 ```
@@ -80,7 +90,7 @@ transition confirm {
 It is possible to specify several `to ... when .... with effect ...` sections in a transition. It is possible to specify a list of original states for the transition to start from:
 
 ```c
-transition fail {
+transition to_fail () {
   from Created or Confirmed
   to Fail
   when { ... }
@@ -89,45 +99,93 @@ transition fail {
 
 ## Builtin types
 
-* `bool` : boolean values
-* `int` : integer values 
-* `rational` : floating value that can be expressed as the quotient or fraction of two integers 
 * `address` : account address
-* `role` : an address that can be used in action's called by section
+* `bool` : boolean values
+* `bytes` : bytes sequence
+* `chain_id`: chain id value
 * `date` : date values
 * `duration` : duration values \(in second, minute, hour, day, week\)
+* `int` : integer values 
+* `key` : key value
+* `key_hash` : key hash value
+* `nat` : positive integers
+* `rational` : floating value that can be expressed as the quotient or fraction of two integers 
+* `role` : an address that can be used in entry's called by section
+* `signature` : signature value
 * `string` : string of characters
 * `tez` : Tezos currency
-* `bytes` : bytes sequence
+* `unit` : unit value
 
 ## Composite types
 
-* `*` declares a tuple made of other types.
+* `*` is the type of tuples.
 
 ```c
 constant pair : int * string = (1, "astr")
 ```
 
-* `option` declares an option of type.
+* `option` is the type of optional value.
 
-```c
-constant value : int option = none
+```csharp
+constant value : option<int> = none
 ```
 
 * `list` declares a list of any type \(builtin or composed\)
 
-```javascript
-variable vals : string list = []
+```csharp
+variable vals : list<string> = []
 ```
 
-* `asset`  declares a collection of asset and the data an asset is composed of. For example the following declares a collection of real estates described by an address, a location and an owner:
+* `map` declares a map from a non-composite builtin type to any type.
 
-```yaml
+```csharp
+variable assoc : map<int, string> = []
+```
+
+* `big_map` declares a big map from a non-composite builtin type to any type.
+
+```csharp
+variable assoc : big_map<int, string> = []
+```
+
+* `set` declares a set of non-composite builtin type values.
+
+```csharp
+variable poll : set<address> = []
+```
+
+* `or` declares a or type
+
+```css
+variable ls : or<nat, string> = left<string>(1)
+variable lc : or<nat, string> = left<nat, string>(1)
+variable rs : or<nat, string> = right<nat>("mystr")
+variable rc : or<nat, string> = right<nat, string>("mystr")
+```
+
+* `record` declares a record structure.
+
+```css
+record r {
+   s : string;
+   i : int;
+}
+```
+
+* `lambda` declares a lambda type
+
+```css
+variable vlambda : lambda<nat, int> = lambda<int>((x : nat) -> x - 1)
+```
+
+* `asset`  declares a collection of assets and the data an asset is composed of. For example, the following declares a collection of real estates described by an address, a location, and an owner:
+
+```css
 asset real_estate identified by addr {
-  addr : string;
+  addr      : string;
   xlocation : string;
   ylocation : string;
-  owner : address;
+  owner     : address;
 }
 ```
 
@@ -141,19 +199,24 @@ enum color =
 | Blue
 ```
 
-It is then possible to declare a variable of type _color_:
-
-```ocaml
-variable c : color = Green
+```css
+enum t =
+| A of nat
+| B of string
+| C
 ```
 
-* `contract` declares the signature of another existing contract to call in actions.
+It is then possible to declare variables:
 
-```c
-contract called_contract_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
-}
+```css
+variable c : color = Green
+variable v : t = A(0)
+```
+
+* `contract` is the type of contract entry point signature.
+
+```css
+variable b : option<contract<nat>> = entrypoint<nat>("%getValue", selfaddress)
 ```
 
 It is then possible to declare a contract value of type _called\_contract\_sig_ and set its address:
@@ -162,34 +225,41 @@ It is then possible to declare a contract value of type _called\_contract\_sig_ 
 constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
 ```
 
-* `collection` declares an asset field as a collection of another asset.
+* `aggregate` declares an asset field as an aggregate of another asset.
 
-```yaml
-asset an_asset identified by id {
-  id : string;
-  a_val : int;
-  asset_col : another_asset collection
+```css
+asset an_asset {
+  id     : string;
+  a_val  : int;
+  col    : aggregate<another_asset>;
 }
 ```
 
-* `partition` declares an asset field as a collection of another asset. The difference with `collection` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
+* `partition` declares an asset field as a collection of another asset. The difference with `aggregate` is that a partition ensures at compilation that every _partitioned_ asset \(i.e. element of the partition\) belongs to one and only _partitioning_ asset.
 
-```yaml
-asset partitioning_asset identified by id {
-  id : string;
-  asset_part : partitioned_asset partition;
+```css
+asset partitioning_asset {
+  id   : string;
+  part : partition<partionned_asset>;
 }
 ```
 
-As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see operation below\). This has to be done via a partition field:
+As a consequence of the partition, a _partitioned_ asset cannot be straightforwardly added or removed to its global collection with `add` and `remove` \(see [Partitions, Reference](archetype-language/subsets-partition.md) section\). 
 
-```yaml
-my_partitioning_asset.asset_part.add(a_new_partitioned_asset)
+
+
+## Other type
+
+* `operation`
+
+```css
+var e   : contract<unit> = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg;
+var op  : operation = mkoperation(0tz, e, ());
 ```
 
 ## Effect
 
-An action's effect is composed of instructions separated by a semi-colon. 
+An entry's effect is composed of instructions separated by a semi-colon. 
 
 ### Declaration
 
@@ -216,41 +286,23 @@ d += 3w; // d := i + 3w, date d is now previous d plus 3 weeks
 
 ### Effects on asset collection
 
-* `add` enables to add an asset to an asset collection. It fails if the asset key is already present in the collection.
-
-```javascript
-an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' example
-```
-
-* `update` enables to update an existing asset; it takes as arguments the id of the asset to update and the list of effects on the asset. It fails if the id is not present in the asset collection.
-
-```javascript
-an_asset.update("RJRUEQDECSTG", { a_value += 3 });
-```
-
-* `addupdate` is similar to update except that it adds the asset if its identifier is not present in the collection.
-
-```javascript
-an_asset.addupdate("RJRUEQDECSTG", { a_value += 3 });
-```
-
-* `remove` removes a an asset from its collection. 
-
-```javascript
-an_asset.remove("RJRUEQDECSTG");
-```
-
-* `removeif` enables removing assets under a condition.
+* `add` : adds an asset to an asset collection \(fails if the asset key is already present in the collection\)
+* `update` : updates an asset \(fails if the id is not present in the asset collection\)
+* `addupdate` is similar to update except that it adds the asset only if its identifier is not present in the collection
+* `remove` removes an asset from its collection \(does not fail\).
+* `removeif` enables removing assets under a condition
+* `clear` clears an asset collection
 
 ```c
+an_asset.add({ id = "RJRUEQDECSTG", asset_col = [] }); // see 'collection' example
+an_asset.update("RJRUEQDECSTG", { a_value += 3 });
+an_asset.addupdate("RJRUEQDECSTG", { a_value += 3 });
+an_asset.remove("RJRUEQDECSTG");
 an_asset.removeif(a_val > 10); // "a_val" is an asset field
-```
-
-* `clear` clears an asset collection.
-
-```javascript
 an_asset.clear();
 ```
+
+See [Assets](archetype-language/data-model.md) section for details.
 
 ### Control
 
@@ -272,7 +324,7 @@ if i > 0 then (
 );
 ```
 
-* `match ... with ... end` FIXME
+* `match ... with ... end` 
 
 ```javascript
 archetype effect_control_matchwith
@@ -286,7 +338,7 @@ enum t =
 
 variable res : int = 0
 
-action exec () {
+entry exec () {
   specification {
     s0: res = 1;
   }
@@ -299,7 +351,79 @@ action exec () {
     end
   }
 }
+```
 
+```css
+archetype expr_control_match_list
+
+variable res : nat = 0
+
+entry exec() {
+  var l : list<nat> = [1];
+  res :=
+  match l with
+  | hd::t -> hd
+  | []    -> 0
+  end
+}
+```
+
+```css
+archetype expr_control_match_option
+
+variable res : nat = 0
+
+entry exec() {
+  var o : option<nat> = some(3);
+  res :=
+  match o with
+  | some(v) -> v
+  | none -> 0
+  end
+}
+```
+
+```css
+archetype expr_control_match_or
+
+variable a : nat = 0
+variable b : int = 0
+
+entry exec() {
+  var l : or<nat, int> = left<int>(2);
+  a :=
+  match l with
+  | left(v)  -> v
+  | right(v) -> 0
+  end;
+
+  var r : or<nat, int> = right<nat>(3i);
+  b :=
+  match r with
+  | left(v)  -> 0i
+  | right(v) -> v
+  end
+}
+```
+
+```css
+archetype enum_with_args
+
+enum t =
+| A of nat
+| B of nat
+| C
+
+variable res : nat = 0
+
+entry exec() {
+  var o : t = A(1);
+
+  match o with
+  | A v | B v -> res := v
+  | C -> res := 0
+  end
+}
 ```
 
 * `for in do done` iterates over a collection.
@@ -307,7 +431,7 @@ action exec () {
 ```ocaml
  var res = 0;
  for a in an_asset do
-   res += a.a_val;
+   res += an_asset[a].a_val;
  done;
 ```
 
@@ -326,91 +450,195 @@ done;               // res is 6
 transfer 2tz to @tz1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
 ```
 
-With the `contract` keyword presented above, it is possible to transfer to a contract and call an entry point. In the example below, the entry point `set_value` of contract `c` is called and `2tz` is transferred.
-
-```c
-contract contract_called_sig {
-   action set_value (n : int)
-   action add_value (a : int, b : int)
-}
-
-constant c : called_contract_sig = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm
-
-action update_value(n : int) {
-  effect {
-    transfer 2tz to c call set_value(n);
-  }
-}
-```
-
 * `fail` aborts the execution. It prevents from deploying the contract on the blockchain. As a consequence the storage is left unchanged when executed.
 
 ```c
 fail("a message");
 ```
 
-* `require` and `failif` fail if the argument condition is respectively false and true. `require(t)` is  sugar for `if t then fail("")`.
+* `dorequire` and `dofailif` fail if the argument condition is respectively false and true. `dorequire(t, msg)` is  sugar for `if t then fail(msg)`.
 
 ```c
-require(val > 0);
-failif(val <= 0);
+dorequire(val > 0, "KO");
+dofailif(val <= 0, "KO");
 ```
 
 ## Expressions
 
-### Literals
+### bool
 
-* `boolean`
-
-```c
+```javascript
 constant x : bool = true
 constant y : bool = false
 ```
 
-* `integer`
+* `and` 
+* `or` 
+* `not` 
+* `=`
+* `<>`
+* `xor`
 
-```c
-constant i : int = 1
-constant j : int = -42
+```javascript
+var b1 = (true and false);
+var b2 = (true or false);
+var b3 = not true;
+var b4 = true = false;
+var b5 = true <> false;
+var b6 = true xor false;
 ```
 
-* `rational`
+### nat
+
+```javascript
+constant i : nat = 1
+constant j : nat = 42
+```
+
+* `+` `-` `*` `div` `%` `|>>` `<<|`
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var n1 = 1 + 2; 
+var i1 : int = 1 - 2; /* difference of nats return an integer value */
+var n2 = 3 * 4;
+var n3 = 45 div 2; /* 22 (euclidean division) */
+var n4 = 45 % 2; /* 1 (modulo) */ 
+var n5 = min(5, 6);
+var n6 = abs(-6); // see abs below
+var nlsr = 2 |>> 1; // 4
+var nlsl = 2 <<| 1; // 1
+```
+
+### int
+
+```c
+constant i : int = 1i
+constant j : int = -42;
+```
+
+* `+` `-` `*` `div` `%` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max` 
+* `abs`
+
+```javascript
+var a : int = 1i;
+var b : int = 2i;
+var c : int = 3i;
+var d : int = 4i;
+var i1 = a + b; 
+var i2 = b - a;
+var i3 = c * d;
+var i4 = d div c; 
+var n1 = d % c; 
+var i5 = max(6i, 8i);
+```
+
+### rational
 
 ```c
 constant f : rational = 1.1
 constant g : rational = -1.1
-constant r : rational = 2 div 6
-constant t : rational = -2 div 6
+constant r : rational = 2 / 6
+constant t : rational = -2 / 6
+constant p0 : rational = 1%
+constant p1 : rational = 1.1%
 ```
 
-* `string`
+* `+` `-` `*` `/`  
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max` `abs` `floor` `ceil`
+
+```javascript
+var b1 = (1 / 2) <> 2;
+var b2 =  1 <> (2 / 3);
+var b3 = (1 / 2) = (2 / 4);
+var b4 = (1 / 2) < (2 / 4);
+var r1 = (4 / 5) + (7 / 6);
+var r2 = 3 + (1 / 2);
+var r3 = (4 / 3) * (3 / 4);
+var r4 = (8 / 9) / (3 / 7);
+var i1 = floor(5 / 3);  // int 1
+var i2 = floor(-5 / 3); // int -2
+var i3 = ceil(5 / 3);   // int 2
+var i4 = ceil(-5 / 3);  // int -1
+```
+
+### string
 
 ```c
 constant s : string = "hello world"
 ```
 
-* `tez`
+* `concat` `+`
+* `slice`
+* `length`
+* `<` `>` `=` `<>` `<=` `>=`
+* `to_string`
 
-```c
+```javascript
+var s1 = "str1" + "str2"; /* concat */
+var s2 = slice("abcdef", 1, 2);
+var l  = length("archetype");
+var b1 = "a" <> "b";
+var b2 = "a" < "b";
+var s  = to_string(42)
+```
+
+### tez
+
+```css
 constant ctz  : tez = 1tz
 constant cmtz : tez = 1mtz
 constant cutz : tez = 1utz
 ```
 
-* `address` / `role`
+* `+` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var b1 = 1tz <= 2tz;
+var b2 = 1tz < 2tz;
+var b3 = 1tz <> 2tz;
+var t1 = 1tz + 1tz;
+var t2 = 2 * 4tz;
+var t3 = 1/2 * 8tz;
+```
+
+### address
 
 ```c
 constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 ```
 
-* `duration`
+* `=` `<>` 
+
+```javascript
+var b1 = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
+```
+
+### duration
 
 ```c
 // duration of 3 weeks 8 days 4 hours 34 minutes 18 seconds
 constant d : duration = 3w8d4h34m18s 
 ```
 
-* `date`
+* `+` `-` 
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+
+```javascript
+var b1 = 1h > 2h;
+var b2 = 1h >= 2h;
+var d1 = 1h + 2s;
+var d2 = 1h - 2s; /* absolute value */
+```
+
+### date
 
 ```c
 constant date0 : date = 2019-01-01                
@@ -420,217 +648,217 @@ constant date3 : date = 2019-01-01T00:00:00+01:00
 constant date4 : date = 2019-01-01T00:00:00-05:30 
 ```
 
-* `list`
+* `<` `>` `=` `<>` `<=` `>=`
+* `min` `max`
+* `date_from_timestamp`
 
-```c
-constant mylist : int list = [1; 2; 3]
+```javascript
+var b1 = 2020-01-01 > 2020-12-31;
+var b2 = 2020-01-01 >= 2020-12-31;
+var d1 = 2020-01-01 + 1d;
+var d2 = 2020-01-01 - 1d;
+var d3 = date_from_timestamp(1609372800i) // int to date
 ```
 
-* `option`
-
-```c
-constant op1 : int option = none
-constant op2 : int option = some(0)
-```
-
-* `bytes`
+### bytes
 
 ```c
 constant bl : bytes = 0x12f12354356a 
 ```
 
-### Operators
-
-#### Logical
-
-* `and` operator of logical conjunction
-
-```javascript
-var bool_bool_and : bool = (true and false);
-```
-
-* `or` operator of logical disjunction
+* `slice`
+* `length`
+* `concat`
+* `=` `<>`
+* `blake2b` `sha256` `sha512` `keccak` `sha3`
+* `pack` `unpack`
 
 ```javascript
-var bool_bool_or  : bool = (true or false);
+var b1 = concat(0x12, 0xef);
+var b2 = slice(0xabcdef01, 1, 2);
+var h1 = blake2b(0x050100000009617263686574797065);
+var h2 = sha256(0x050100000009617263686574797065);
+var h3 = sha512(0x050100000009617263686574797065);
+var h4 = keccak(0x050100000009617263686574797065);
+var h5 = sha3(0x050100000009617263686574797065);
+var b3 = pack("archetype");
+var s : string option = unpack<string>(0x050100000009617263686574797065);
 ```
 
-* `not` operator of logical negation
+### option
+
+```c
+constant op1 : option<nat> = none
+constant op2 : option<nat> = some(0)
+```
+
+* `issome`
+* `isnone`
+* `opt_get`
+
+```css
+effect {
+    var t1 : bool = isnone(none);
+    var t2 : bool = issome(some(1));
+    var i  : nat  = opt_get(some(1)); /* i = 1 */
+}
+```
+
+### list
+
+* `contains`
+* `length`
+* `nth`
+* `prepend`
+
+```css
+effect {
+    var l : list<string> = ["1"; "2"; "3"];
+    var ht = head_tail(l);
+    var t1 = contains(l, "2");
+    var t2 = length(l);
+    var n  = nth(l);
+    var p  = prepend(l,"0");
+}
+```
+
+### set
+
+* `add`
+* `remove`
+* `contains`
+* `length`
+
+```css
+effect {
+    var my_set   : set<nat> = [0; 1 ; 2; 3];
+    var new_set2 : set<nat> = add(my_set, 4);
+    var new_set3 : set<nat> = remove(my_set, 0);
+    var set_c    : bool     = contains(my_set, 2);
+    var c        : nat      = length(my_set);
+}
+```
+
+### map
+
+* `put`
+* `remove`
+* `[]`
+* `getopt`
+* `contains`
+* `length`
+
+```css
+effect {
+    var my_map : map<string, nat> = [ ("k0", 3) ;
+                                      ("k1", 2) ;
+                                      ("k2", 1) ;
+                                      ("k3", 0) ];
+    var new_map1 : map<string, nat> = put(my_map, "k4", 4);
+    var new_map2 : map<string, nat> = remove(my_map, "k0");
+    var new_map3 : option<nat>      = my_map["k0"];
+    var new_map4 : nat              = getopt(my_map, "k0");
+    var map_c    : bool             = contains(my_map, "k0");
+    var map_l    : nat              = length(my_map);
+}
+```
+
+### record
+
+record can be shaped with `as`, like below:
+
+```css
+record my_record {
+  a: int;
+  b: nat;
+  c: string;
+} as (((x, %_), z))
+
+variable r : my_record = {1i; 2; "mystr"}
+```
+
+generates in michelson :
+
+```css
+storage (pair (pair (int %x) nat) (string %z))
+```
+
+### asset 
+
+* `contains`
+* `count`
+* `nth`
+* `head`
+* `tail`
+* `select`
+* `sort`
+* `sum`
+
+```css
+archetype expr_method_asset_contains
+
+asset my_asset identified by id {
+  id    : string;
+  value : int;
+} initialized by {
+  {"id0"; 0i};
+  {"id1"; 1i};
+  {"id2"; 2i}
+}
+
+variable res : bool = false
+
+entry exec () {
+  specification {
+    s0 : res = true;
+  }
+  effect {
+    var t = my_asset.contains("id0");
+    var c = my_asset.count();
+    var n = my_asset.nth(1);
+    var l1 = my_asset.head(3);
+    var l2 = my_asset.tail(2);
+    var l3 = my_asset.select(the.id < "id2");
+    var l4 = my_asset.sort(value);
+    var l5 = my_asset.sort(v1, asc(v2), desc (v3));
+    var s = my_asset.sum(value);
+  }
+}
+```
+
+### Constants
+
+* `caller` 
 
 ```javascript
-var bool_bool_not : bool = not true;
+var v : address = caller; /* the address calling the contract */
 ```
 
-### Operator
-
-* `=` FIXME
+* `source` 
 
 ```javascript
-var int_int_eq   : bool = 1 = 2;
-var rat_int_eq   : bool = (1 div 2) = 2;
-var int_rat_eq   : bool = 1 = (2 div 3);
-var rat_rat_eq   : bool = (1 div 3) = (2 div 3);
-var tez_tez_eq   : bool = 1tz = 2tz;
-var dur_dur_eq   : bool = 1h = 2h;
-var date_date_eq : bool = 2020-01-01 = 2020-12-31;
-var bool_bool_eq : bool = true = false;
-var addr_addr_eq : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg = @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
-var str_str_eq   : bool = "a" = "b";
+var v : address = source; /* the address at the origin of the call */
 ```
 
-* `<>` FIXME
+* `balance` 
 
 ```javascript
-var int_int_ne   : bool = 1 <> 2;
-var rat_int_ne   : bool = (1 div 2) <> 2;
-var int_rat_ne   : bool = 1 <> (2 div 3);
-var rat_rat_ne   : bool = (1 div 2) <> (2 div 3);
-var tez_tez_ne   : bool = 1tz <> 2tz;
-var dur_dur_ne   : bool = 1h <> 2h;
-var date_date_ne : bool = 2020-01-01 <> 2020-12-31;
-var bool_bool_ne : bool = true <> false;
-var addr_addr_ne : bool = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
-var str_str_ne   : bool = "a" <> "b";
+var v : tez = balance; /* the contract's balance in tez */
 ```
 
-* `<` FIXME
+* `transferred` 
 
 ```javascript
-var int_int_lt   : bool = 1 < 2;
-var rat_int_lt   : bool = (1 div 2) < 2;
-var int_rat_lt   : bool = 1 < (2 div 3);
-var rat_rat_lt   : bool = (1 div 2) < (2 div 3);
-var tez_tez_lt   : bool = 1tz < 2tz;
-var dur_dur_lt   : bool = 1h < 2h;
-var date_date_lt : bool = 2020-01-01 < 2020-12-31;
+var v : tez = transferred; /* the amount of tez that comes with the call */
 ```
 
-* `<=` FIXME
+* `now` 
 
 ```javascript
-var int_int_le   : bool = 1 <= 2;
-var rat_int_le   : bool = (1 div 2) <= 2;
-var int_rat_le   : bool = 1 <= (2 div 3);
-var rat_rat_le   : bool = (1 div 2) <= (2 div 3);
-var tez_tez_le   : bool = 1tz <= 2tz;
-var dur_dur_le   : bool = 1h <= 2h;
-var date_date_le : bool = 2020-01-01 <= 2020-12-31;
+var v : date = now; /* the date at execution */
 ```
 
-* `>` FIXME
-
-```javascript
-var int_int_gt   : bool = 1 > 2;
-var rat_int_gt   : bool = (1 div 2) > 2;
-var int_rat_gt   : bool = 1 > (2 div 3);
-var rat_rat_gt   : bool = (1 div 2) > (2 div 3);
-var tez_tez_gt   : bool = 1tz > 2tz;
-var dur_dur_gt   : bool = 1h > 2h;
-var date_date_gt : bool = 2020-01-01 > 2020-12-31;
-```
-
-* `>=` FIXME
-
-```javascript
-var int_int_ge   : bool = 1 >= 2;
-var rat_int_ge   : bool = (1 div 2) >= 2;
-var int_rat_ge   : bool = 1 >= (2 div 3);
-var rat_rat_ge   : bool = (1 div 2) >= (2 div 3);
-var tez_tez_ge   : bool = 1tz >= 2tz;
-var dur_dir_ge   : bool = 1h >= 2h;
-var date_date_ge : bool = 2020-01-01 >= 2020-12-31;
-```
-
-### Arithmetic
-
-* `+` FIXME
-
-```javascript
-var int_int_plus   : int      = 1 + 2;
-var rat_rat_plus   : rational = 1.1 + 1.2;
-var int_rat_plus   : rational = 1 + 1.2;
-var rat_int_plus   : rational = 1.1 + 2;
-var dur_dur_plus   : duration = 1h + 2s;
-var date_dur_plus  : date     = 2020-01-01 + 1d;
-var dur_date_plus  : date     = 1d + 2020-01-01;
-var str_str_plus   : string   = "str1" + "str2"; (* concat *)
-var tez_tez_plus   : tez      = 2tz + 1tz;
-```
-
-* `-` FIXME
-
-```javascript
-var int_int_minus   : int       = 1 - 2;
-var rat_rat_minus   : rational  = 1.1 - 1.2;
-var int_rat_minus   : rational  = 1 - 1.2;
-var rat_int_minus   : rational  = 1.1 - 2;
-var date_date_minus : duration  = 2020-01-01 - 2019-12-31; (* absolute value *)
-var dur_dur_minus   : duration  = 1h - 2s; (* absolute value *)
-var date_dur_minus  : date      = 2020-01-01 - 1d;
-var tez_tez_minus   : tez       = 2tz - 1tz;
-```
-
-* `*` FIXME
-
-```javascript
-var int_int_mult   : int      = 1 * 2;
-var rat_rat_mult   : rational = 1.1 * 1.2;
-var int_rat_mult   : rational = 1 * 1.2;
-var rat_int_mult   : rational = 1.1 * 2;
-var int_dur_mult   : duration = 2 * 1h;
-var int_tez_mult   : tez      = 1 * 1tz;
-var rat_tez_mult   : tez      = 1.1 * 1tz;
-```
-
-* `/` FIXME
-
-```javascript
-var int_int_div    : int = 1 / 2;
-var rat_rat_div    : rational = 1.1 / 1.2;
-var int_rat_div    : rational = 1 / 1.2;
-var rat_int_div    : rational = 1.1 / 2;
-var dur_int_div    : duration = 1h / 2;
-```
-
-* `%` FIXME
-
-```javascript
-var int_int_modulo : int = 1 % 2;
-```
-
-### Constant
-
-* `caller` FIXME
-
-```javascript
-var v : address = caller; (* SENDER *)
-```
-
-* `source` FIXME
-
-```javascript
-var v : address = source; (* SOURCE *)
-```
-
-* `balance` FIXME
-
-```javascript
-var v : tez = balance; (* BALANCE *)
-```
-
-* `transferred` FIXME
-
-```javascript
-var v : tez = transferred; (* AMOUNT *)
-```
-
-* `now` FIXME
-
-```javascript
-var v : date = now; (* NOW *)
-```
-
-* `state` FIXME
+* `state` 
 
 ```javascript
 archetype sample_state
@@ -639,7 +867,6 @@ states =
 | First
 | Second
 | Third
-
 
 transition mytr () {
   from First
@@ -650,385 +877,24 @@ transition mytr () {
 }
 ```
 
-### Builtin functions
-
-* `min` FIXME
+* `chainid`
 
 ```javascript
-var int_int_min   : int  = min(1, 2);
-var rat_int_min   : rat  = min(1 div 2, 1);
-var int_rat_min   : rat  = min(2, 1 div 3);
-var rat_rat_min   : rat  = min(1 div 2, 1 div 3);
-var date_date_min : date = min(2020-01-01, 2020-12-31);
-var dur_dur_min   : dur  = min(1h, 1s);
-var tez_tez_min   : tez  = min(1tz, 2tz);
+var v : chain_id = chainid;
 ```
 
-* `max` FIXME
+* `unit`
 
-```javascript
-var int_int_max   : int  = max(1, 2);
-var rat_int_max   : rat  = max(1 div 2, 1);
-var int_rat_max   : rat  = max(2, 1 div 3);
-var rat_rat_max   : rat  = max(1 div 2, 1 div 3);
-var date_date_max : date = max(2020-01-01, 2020-12-31);
-var dur_dur_max   : dur  = max(1h, 1s);
-var tez_tez_max   : tez  = max(1tz, 2tz);
+```css
+variable u0 : unit = ()
+variable u1 : unit = Unit
 ```
 
-* `abs` FIXME
-
-```javascript
-var int_abs : int = abs(-1);
-var rat_abs : rat = abs(-1 div 2);
-```
-
-### List
-
-* `contains` FIXME
-
-```javascript
-archetype expr_list_contains
-
-variable res : bool = false
-
-action exec () {
-  specification {
-    s0: res = true;
-  }
-  effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := contains(l, "2")
-  }
-}
-
-```
-
-* `count` FIXME
-
-```javascript
-archetype expr_list_count
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := count(l)
-  }
-}
-
-```
-
-* `nth` FIXME
-
-```javascript
-archetype expr_list_nth
-
-variable res : string = ""
-
-action exec () {
-  specification {
-    s0: res = "2";
-  }
-  effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := nth(l, 1)
-  }
-}
-
-```
-
-* `prepend` adds an element to a list at the first position. 
-
-```javascript
-archetype expr_list_prepend
-
-variable res : string list = []
-
-action exec () {
-  specification {
-    s0: res = ["0"; "1"; "2"; "3"];
-  }
-  effect {
-    var l : string list = ["1"; "2"; "3"];
-    res := prepend(l, "0");
-  }
-}
-```
-
-### Asset Collection
-
-* `contains` FIXME
-
-```javascript
-archetype expr_method_asset_contains
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : bool = false
-
-action exec () {
-  specification {
-    s0: res = true;
-  }
-  effect {
-    res := my_asset.contains("id0")
-  }
-}
-```
-
-* `count` FIXME
-
-```javascript
-archetype expr_method_asset_count
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
-    res := my_asset.count()
-  }
-}
-```
-
-* `get` FIXME
-
-```javascript
-archetype expr_method_asset_get
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var a = my_asset.get("id1");
-    res := a.value
-  }
-}
-```
-
-* `nth` FIXME
-
-```javascript
-archetype expr_method_asset_nth
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var a = my_asset.nth(1);
-    res := a.value
-  }
-}
-```
-
-* `head` FIXME
-
-```javascript
-archetype expr_method_asset_head
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 4};
-  {"id1"; 3};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
-    var l = my_asset.head(2);
-    var a = l.nth(1);
-    res := a.value
-  }
-}
-```
-
-* `tail` FIXME
-
-```javascript
-archetype expr_method_asset_tail
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var l = my_asset.tail(2);
-    var a = l.nth(0);
-    res := a.value
-  }
-}
-```
-
-* `select` FIXME
-
-```javascript
-archetype expr_method_asset_select
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 2;
-  }
-  effect {
-    var l = my_asset.select(the.id = "id2");
-    var a = l.nth(0);
-    res := a.value
-  }
-}
-```
-
-* `sort` FIXME
-
-```javascript
-archetype expr_method_asset_sort
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 3};
-  {"id1"; 2};
-  {"id2"; 1}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 1;
-  }
-  effect {
-    var l = my_asset.sort(value);
-    var a = l.nth(0);
-    res := a.value
-  }
-}
-```
-
-you can also sort with several criteria
-
-```javascript
-archetype multi_sort
-
-asset my_asset identified by id {
-  id : string;
-  v1 : int;
-  v2 : int;
-  v3 : int;
-} initialized by {
-  {"id0"; 1; 2; 7};
-  {"id1"; 1; 3; 9};
-  {"id2"; 1; 3; 8};
-  {"id3"; 1; 2; 6}
-}
-
-action exec () {
-
-  effect {
-    var res = my_asset.sort(v1, asc(v2), desc (v3))
-    (* res = ["id0"; "id3", "id1", "id2"] *)
-  }
-}
-```
-
-* `sum` FIXME
-
-```javascript
-archetype expr_method_asset_sum
-
-asset my_asset identified by id {
-  id : string;
-  value : int;
-} initialized by {
-  {"id0"; 0};
-  {"id1"; 1};
-  {"id2"; 2}
-}
-
-variable res : int = 0
-
-action exec () {
-  specification {
-    s0: res = 3;
-  }
-  effect {
-    res := my_asset.sum(value)
-  }
+* `operations` is the list of `operation` returned after effect execution of an entry
+
+```css
+entry exec(op  : operation) {
+  operations := prepend(operations, op);
 }
 ```
 
@@ -1036,13 +902,13 @@ action exec () {
 
 ### Specification
 
-Here is a full example with all sections of an action specification
+Here is a full example with all sections of an entry specification
 
-```javascript
+```css
 archetype contract_with_full_specification
 
 asset myasset {
-  id: string;
+  id : string;
   val: bool;
 }
 
@@ -1054,7 +920,7 @@ asset col2 {
   id2 : string;
 }
 
-action exec () {
+entry exec () {
  specification {
 
     definition mydef {
@@ -1100,39 +966,39 @@ action exec () {
 
 ```
 
-* `definition` FIXME
+* `definition`
 
-```javascript
+```css
 definition mydef {
   x : myasset | forall y in col1, x.id = y.id1
 }
 ```
 
-* `predicate` FIXME
+* `predicate` 
 
-```javascript
+```css
 predicate mypredicate (a : int) {
   forall x in col1, forall y in col2, x.id1 = y.id2
 }
 ```
 
-* `variable` FIXME
+* `variable` 
 
-```javascript
+```css
 variable myvar : int = 0
 ```
 
-* `shadow effect` FIXME
+* `shadow effect` 
 
-```javascript
+```css
 shadow effect {
   myvar := 3
 }
 ```
 
-* `assert` FIXME
+* `assert` 
 
-```javascript
+```css
 assert a1 {
   x = y
   invariant for myloop {
@@ -1142,18 +1008,18 @@ assert a1 {
 }
 ```
 
-* `invariant` FIXME
+* `invariant` 
 
-```javascript
+```css
 invariant for myloop {
   x = 0;
   y = 0
 }
 ```
 
-* `postcondition` FIXME
+* `postcondition` 
 
-```javascript
+```css
 postcondition s1 {
   x = y
   invariant for myloop {
@@ -1165,9 +1031,9 @@ postcondition s1 {
 
 One specification section is available at the top of the contract. But there is neither `shadow effect` nor `postcondition`, which is replaced by `contract invariant` for the last one.
 
-* `contract invariant` FIXME
+* `contract invariant` 
 
-```javascript
+```css
 contract invariant c1 {
   true <> false
 }
@@ -1175,39 +1041,39 @@ contract invariant c1 {
 
 ### Expression
 
-All expression in effect are available in formula part.
+All expressions in effect are available in the formula part.
 
 * `forall` universal quantifier
 
-```javascript
+```css
 q1: forall x : int, x = x;
 q2: forall x in my_asset, x.value = x.value;
 ```
 
 * `exists` existential quantifier
 
-```javascript
+```css
 q3: exists x : int, x = x;
 q4: exists x in my_asset, x.value = x.value;
 ```
 
 * `->` imply
 
-```javascript
+```css
 o1: true -> true;
 ```
 
 * `<->` equivalence
 
-```javascript
+```css
 o2: true <-> true;
 ```
 
 ### Asset expression
 
-* `subsetof` FIXME
+* `subsetof` 
 
-```javascript
+```css
 archetype expr_formula_asset_method_subset
 
 asset my_asset identified by id {
@@ -1219,7 +1085,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.subsetof(my_asset);
@@ -1229,12 +1095,11 @@ action exec () {
     require (true)
   }
 }
-
 ```
 
-* `isempty` FIXME
+* `isempty` 
 
-```javascript
+```css
 archetype expr_formula_asset_method_isempty
 
 asset my_asset identified by id {
@@ -1246,7 +1111,7 @@ asset my_asset identified by id {
   {"id2"; 2}
 }
 
-action exec () {
+entry exec () {
 
   specification {
     s: my_asset.isempty();
@@ -1260,40 +1125,40 @@ action exec () {
 
 ### Extra asset collection
 
-* `before` FIXME
+* `before` 
 
-```javascript
+```css
 s1: before.my_asset.isempty();
 ```
 
-* `at` FIXME
+* `at` 
 
-```javascript
+```css
 s2: at(lbl).my_asset.isempty();
 ```
 
-* `unmoved` FIXME
+* `unmoved` 
 
-```javascript
-s3: my_asset.unmoved.isempty();
+```css
+s3: unmoved.my_asset.isempty();
 ```
 
-* `added` FIXME
+* `added` 
 
-```javascript
-s4: my_asset.added.isempty();
+```css
+s4: added.my_asset.isempty();
 ```
 
-* `removed` FIXME
+* `removed` 
 
-```javascript
-s5: my_asset.removed.isempty();
+```css
+s5: removed.my_asset.isempty();
 ```
 
-* `iterated` FIXME
+* `iterated` 
 
-```javascript
-action exec2 () {
+```css
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1312,10 +1177,10 @@ action exec2 () {
 }
 ```
 
-* `toiterate` FIXME
+* `toiterate` 
 
-```javascript
-action exec3 () {
+```css
+entry exec () {
   specification {
     postcondition p1 {
       true
@@ -1334,11 +1199,9 @@ action exec3 () {
 }
 ```
 
-### 
-
 ### Security predicate
 
-```javascript
+```css
 archetype lang_security
 
 constant admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
@@ -1348,79 +1211,77 @@ asset my_asset identified by id {
   value : int;
 }
 
-action exec () {
+entry exec () {
   effect {
-    require true
+    ()
   }
 }
 
 security {
-  s00 : only_by_role (anyaction, admin);
-  s01 : only_in_action (anyaction, exec);
-  s02 : only_by_role_in_action (anyaction, admin, exec);
-  s03 : not_by_role (anyaction, admin);
-  s04 : not_in_action (anyaction, exec);
-  s05 : not_by_role_in_action (anyaction, admin, exec);
-  s06 : transferred_by (anyaction);
-  s07 : transferred_to (anyaction);
-  s08 : no_storage_fail (anyaction);
+  s00 : only_by_role (anyentry, admin);
+  s01 : only_in_entry (anyentry, exec);
+  s02 : only_by_role_in_entry (anyentry, admin, exec);
+  s03 : not_by_role (anyentry, admin);
+  s04 : not_in_entry (anyentry, exec);
+  s05 : not_by_role_in_entry (anyentry, admin, exec);
+  s06 : transferred_by (anyentry);
+  s07 : transferred_to (anyentry);
+  s08 : no_storage_fail (anyentry);
 }
 
 ```
 
-* `only_by_role` FIXME
+* `only_by_role` 
 
-```javascript
-s00 : only_by_role (anyaction, admin);
+```css
+s00 : only_by_role (anyentry, admin);
 ```
 
-* `only_in_action` FIXME
+* `only_in_entry` 
 
-```javascript
-s01 : only_in_action (anyaction, exec);
+```css
+s01 : only_in_entry (anyentry, exec);
 ```
 
-* `only_by_role_in_action` FIXME
+* `only_by_role_in_entry` 
 
-```javascript
-s02 : only_by_role_in_action (anyaction, admin, exec);
+```css
+s02 : only_by_role_in_entry (anyentry, admin, exec);
 ```
 
-* `not_by_role` FIXME
+* `not_by_role` 
 
-```javascript
-s03 : not_by_role (anyaction, admin);
+```css
+s03 : not_by_role (anyentry, admin);
 ```
 
-* `not_in_action` FIXME
+* `not_in_entry` 
 
-```javascript
-s04 : not_in_action (anyaction, exec);
+```css
+s04 : not_in_entry (anyentry, exec);
 ```
 
-* `not_by_role_in_action` FIXME
+* `not_by_role_in_entry` 
 
-```javascript
-s05 : not_by_role_in_action (anyaction, admin, exec);
+```css
+s05 : not_by_role_in_entry (anyentry, admin, exec);
 ```
 
-* `transferred_by` FIXME
+* `transferred_by` 
 
-```javascript
-s06 : transferred_by (anyaction);
+```css
+s06 : transferred_by (anyentry);
 ```
 
-* `transferred_to` FIXME
+* `transferred_to` 
 
-```javascript
-s07 : transferred_to (anyaction);
+```css
+s07 : transferred_to (anyentry);
 ```
 
-* `no_storage_fail` FIXME
+* `no_storage_fail` 
 
-```javascript
-s08 : no_storage_fail (anyaction);
+```css
+s08 : no_storage_fail (anyentry);
 ```
-
-
 
