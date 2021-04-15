@@ -31,7 +31,7 @@ effect {
 }
 ```
 
-Note that de `div` operator is the _euclidean_ division and returns a nat value.
+Note that the `div` operator is the _euclidean_ division and returns a nat value.
 
 The `abs` function is used to convert a integer value to a natural value.
 
@@ -122,7 +122,7 @@ effect {
 }
 ```
 
-It is also possible to mix rationals and _tezis_ values, in that order. However the result is a value in _tezis_. 
+It is also possible to mix rationals and _tezies_ values, in that order. However, the result is a value in _tezies_. 
 
 ```javascript
 effect {
@@ -135,7 +135,7 @@ effect {
 In the example above, the `res` value is `44800000utz` . The process is the following:
 
 1. convert a to _utez_ \(smallest unit\)
-2. compute the rational \(here 3 \* 56000000 / 4 = 168000000 / 4\)
+2. compute the rational \(here 4 \* 56000000 / 5 = 224000000 / 5\)
 3. execute the euclidean division \(44800000\)
 
 Note that the term `a * r`  is not accepted as `res` value \(line 4 above\): rationals come first.
