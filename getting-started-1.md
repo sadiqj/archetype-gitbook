@@ -9,7 +9,7 @@ Installation requires [opam](https://opam.ocaml.org/). Please refer to this [pag
 Once opam installed:
 
 ```
-$ opam install archetype
+opam install archetype
 ```
 
 {% hint style="warning" %}
@@ -64,13 +64,13 @@ Archetype generates Why3 file format \(mlw\) for contract verification purpose.
 The current version of why3 is **1.4.0**. It is installed with opam:
 
 ```bash
-$ opam install why3
+opam install why3
 ```
 
-You also need to install the Why3 IDE \(interface\) \(currently 1.3.3\):
+You also need to install the Why3 IDE \(interface\) \(currently 1.4.0\):
 
 ```text
-$ opam install why3-ide
+opam install why3-ide
 ```
 
 The IDE uses GTK library that may need to be installed with the proper system-dependent package management system \(`apt` for linux, `brew` for mac os, ...\).
@@ -86,7 +86,7 @@ Why3 itself generates contracts' proof obligations and transcodes them to severa
 Each solver needs to be installed separately. Once the solvers are installed \(see below\), they need to be detected by Why3 with the following command:
 
 ```text
-$ why3 config detect
+why3 config detect
 ```
 
 #### Alt-ergo
@@ -94,7 +94,7 @@ $ why3 config detect
 Alt-ergo is developed by LRI, where Why3 also comes from. The currently supported version is **2.4.0**.
 
 ```text
-$ opam install alt-ergo.2.4.0
+opam install alt-ergo.2.4.0
 ```
 
 #### CVC4
