@@ -61,7 +61,7 @@ Archetype generates Why3 file format \(mlw\) for contract verification purpose.
 
 ### Why3
 
-The current version of why3 is **1.3.3**. It is installed with opam:
+The current version of why3 is **1.4.0**. It is installed with opam:
 
 ```bash
 $ opam install why3
@@ -86,15 +86,15 @@ Why3 itself generates contracts' proof obligations and transcodes them to severa
 Each solver needs to be installed separately. Once the solvers are installed \(see below\), they need to be detected by Why3 with the following command:
 
 ```text
-$ why3 config --detect-provers
+$ why3 config detect
 ```
 
 #### Alt-ergo
 
-Alt-ergo is developed by LRI, where Why3 also comes from. The currently supported version is **2.3.1**.
+Alt-ergo is developed by LRI, where Why3 also comes from. The currently supported version is **2.4.0**.
 
 ```text
-$ opam install alt-ergo.2.3.1
+$ opam install alt-ergo.2.4.0
 ```
 
 #### CVC4
