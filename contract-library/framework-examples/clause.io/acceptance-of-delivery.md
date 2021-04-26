@@ -8,7 +8,6 @@
 
 {% embed url="https://github.com/clauseHQ/cicero-template-library/tree/master/src/acceptance-of-delivery" %}
 
-{% code title="acceptance\_of\_delivery.arl" %}
 ```ocaml
 archetype clause_io_acceptance_of_delivery
 
@@ -38,7 +37,7 @@ states =
  | Success
  | Fail
 
-transition[%signedbyall ([shipper; receiver])%] sign () {
+transition sign () {
   from Created
   to Signed
   when { balance = payment + incentiveR + incentiveS }
@@ -56,7 +55,7 @@ transition unilateral_abort () {
   }
 }
 
-transition[%signedbyall ([shipper; receiver])%] abort () {
+transition abort () {
   called by shipper or receiver
 
   from Signed
@@ -89,7 +88,7 @@ transition success () {
   when { now > (deliveryDate + businessDays) }
 }
 
-transition fail () {
+transition fail_ () {
   called by receiver
 
   from Delivered
@@ -98,5 +97,4 @@ transition fail () {
 }
 
 ```
-{% endcode %}
 
