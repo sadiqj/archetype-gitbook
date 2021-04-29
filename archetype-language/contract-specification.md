@@ -334,7 +334,7 @@ Archetype provides the following predicates:
 
 {% tabs %}
 {% tab title="ROLE" %}
-* a variable typed `role`  
+* a variable typed `address`  
 * a list of `ROLE` separated by `or`
 {% endtab %}
 

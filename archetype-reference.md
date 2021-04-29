@@ -40,7 +40,7 @@ entry an_entry_1 (arg1 : string, arg2 : int) {
   specification {
     // see 'specification' section below
   }
-  called by a_role
+  called by val_address
   require {
     r1 : arg2 > 0 
   }
@@ -110,7 +110,6 @@ transition to_fail () {
 * `key_hash` : key hash value
 * `nat` : positive integers
 * `rational` : floating value that can be expressed as the quotient or fraction of two integers 
-* `role` : an address that can be used in entry's called by section
 * `signature` : signature value
 * `string` : string of characters
 * `tez` : Tezos currency
@@ -1217,7 +1216,7 @@ entry exec () {
 ```css
 archetype lang_security
 
-constant admin : role = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
+constant admin : address = @tz1aazS5ms5cbGkb6FN1wvWmN7yrMTTcr6wB
 
 asset my_asset identified by id {
   id : string;

@@ -18,11 +18,11 @@ Note that constant values are _not_ transcoded to contract storage: they may be 
 
 ## Variable
 
-A variable is a global value that can be changed. The following snippet defines 2 global variables named `seller` and `buyer` typed role equal to a \(here random\) addresses:
+A variable is a global value that can be changed. The following snippet defines 2 global variables named `seller` and `buyer` typed address equal to a \(here random\) addresses:
 
 ```ocaml
-variable seller : role = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
-variable buyer  : role = @tz1KUbontHGor25CztkksC8RvjUWAbXYJuNr
+variable seller : address = @tz1KksC8RvjUWAbXYJuNrUbontHGor25Cztk
+variable buyer  : address = @tz1KUbontHGor25CztkksC8RvjUWAbXYJuNr
 ```
 
 

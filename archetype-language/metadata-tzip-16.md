@@ -102,3 +102,33 @@ getter getmetadatauri () : bytes {
 }
 ```
 
+You can also define metadata on contract code:
+
+### In storage
+
+```javascript
+archetype with_metadata_uri
+with metadata `{
+  "symbol": "MTK",
+  "name": "MyToken",
+  "decimals": "1",
+  "description": "description of MyToken",
+  "thumbnailUri": "https://completium.com/img/logo_completium_128.png"
+}`
+
+entry exec () {
+  ()
+}
+```
+
+### In URI
+
+```javascript
+archetype with_metadata_uri
+with metadata "https://completium.com/metadata/token_metadata.json"
+
+entry exec () {
+  ()
+}
+```
+
