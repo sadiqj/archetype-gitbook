@@ -286,7 +286,7 @@ It is possible to iterate a view with the `for ... in ... do ... end` loop instr
 effect {
    for k in car.select(the.year >= 2010) do
      car.update(k, { nbdoors += 1 } );
-   end;
+   done;
 }
 ```
 
