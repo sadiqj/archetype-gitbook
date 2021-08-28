@@ -2,58 +2,25 @@
 
 ## Installation
 
-Installation requires [opam](https://opam.ocaml.org/). Please refer to this [page](https://opam.ocaml.org/doc/Install.html) for opam installation instructions.
-
-### With Opam
-
-Once opam installed:
-
-```
-opam install archetype
-```
-
-{% hint style="warning" %}
-This is installing archetype in the current switch. This may fail if archetype dependencies are not compliant with the current switch. In that case, you may create a dedicated switch or use the installation from the source presented below.
-{% endhint %}
-
-### From source
-
-On Debian/Ubuntu Linux distribution, assuming `opam` and `git` are installed:
+Archetype compiler comes with the [Completium CLI](https://completium.com/docs/cli) :
 
 ```text
-$ git clone https://github.com/edukera/archetype-lang.git
-$ cd archetype-lang
-$ make build-deps
-$ make
+npm i @completium/completium-cli -g
 ```
 
-This creates a local opam switch.
+To know the current version of Archetype:
 
-{% hint style="info" %}
- current archetype version: **1.2.4**
-{% endhint %}
+```text
+completium-cli archetype version
+```
+
+The current version is `1.2.7`.
 
 ## VS code extension installation
 
-Please refer to this [page](https://code.visualstudio.com/download) to download and install VS code.
-
-Install through VS Code extensions. Search for `archetype`:
+Archetype also comes with the Archetype [VS code](https://code.visualstudio.com/download) extension:
 
 [Visual Studio Code Marketplace: archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
-
-Can also be installed with VS Code Quick Open: press `Cmd/Ctrl + P`, paste the following command, and press enter.
-
-```text
-ext install edukera.archetype
-```
-
-The vscode extension is configured via the normal vscode settings screen.
-
-{% hint style="warning" %}
-Make sure that VS Code inherits from opam's environement variables, so that `archetype` command is known.  
-
-For example on MacOS, insert `eval $(opam env)` in the shell profile file \(`.bash_profile` or `.zshrc`\) and launch VS code from Terminal with `open -a Visual \Studio \Code` \(or an alias\). 
-{% endhint %}
 
 ## Verification tools
 
