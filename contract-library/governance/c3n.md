@@ -1,6 +1,6 @@
 # C3N
 
-Last month saw the first smart contract deployed on Tezos by a government authority \(French cybercrime unit\)
+A French government authority \(cybercrime unit\) deployed a smart contract on Tezos.
 
 {% embed url="https://beincrypto.com/tezos-smart-contracts-used-by-french-army-since-september/" %}
 
@@ -36,32 +36,26 @@ NIL operation ;
 }
 ```
 
-For those who are not fluent in stack machine, here is the transcription to Archetype:
+Below is the transcription to Archetype:
 
-```text
+```javascript
 archetype c3n
 
-asset admins {
-  addr : address;
-}
-variable hash : string = "..." (* to set to initial value *)
-action register (newadmins : admins collection option,
-                 oldhash   : string,
-                 newhash   : string) {
-  require {
-    r1 : oldhash = hash;
-    r2 : admins.contains(caller);
-  }
-  effect {
-    hash := newhash;
-    let some newa = newadmins in
-      admins := newa
-    otherwise
-      ()
-  }
-}
+/* michelson source : https://better-call.dev/main/KT1Gbu1Gm2U47Pmq9VP7ZMy3ZLKecodquAh4/script */
 
+variable admins : list<address> = [caller]
+
+variable hash : bytes = 0x050100000009617263686574797065
+
+entry register (newadmins : option<list<address>> , oldhash : bytes, newhash : bytes) {
+    require {
+        r1: oldhash = hash;
+        r2: contains(admins,caller);
+    }
+    effect {
+        hash := newhash;
+        if issome(newadmins) then admins := opt_get(newadmins)
+    }
+}
 ```
-
-Quite straightforward, isn’t it?
 

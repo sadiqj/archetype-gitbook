@@ -14,7 +14,6 @@
 
 {% embed url="https://github.com/hyperledger/composer-sample-networks/tree/master/packages/animaltracking-network" %}
 
-{% code title="animal-tracking.arl" %}
 ```ocaml
 archetype animal_tracking
 
@@ -31,36 +30,35 @@ enum movement_e =
 asset animal_a identified by ida {
   ida      : string;
   typ      : animal_e;
-  location : pkey of field_a;
+  location : pkey<field_a>;
 } with states movement_e
 
 asset business_a identified by id {
   id        : string;
-  incomings : animal_a collection;
+  incomings : aggregate<animal_a>;
 }
 
 asset field_a identified by name {
   name     : string;
-  business : pkey of business_a;
+  business : pkey<business_a>;
 }
 
-transition transit (fk : string) on (ak : pkey of animal_a) {
+transition transit (fk : string) on (ak : pkey<animal_a>) {
   from In_field
   to In_transit
   with effect {
-    business_a.get(field_a.get(fk).business).incomings.add(animal_a.get(ak))
+    business_a[field_a[fk].business].incomings.add(ak)
   }
 }
 
-transition arrival (toField : pkey of field_a) on (ak : pkey of animal_a) {
+transition arrival (toField : pkey<field_a>) on (ak : pkey<animal_a>) {
   from In_transit
   to In_field
   with effect {
-    animal_a.get(ak).location := toField;
-    business_a.get(field_a.get(toField).business).incomings.remove(ak)
+    animal_a[ak].location := toField;
+    business_a[field_a[toField].business].incomings.remove(ak)
   }
 }
 
 ```
-{% endcode %}
 
