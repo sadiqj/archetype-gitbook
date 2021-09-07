@@ -496,7 +496,7 @@ constant j : nat = 42
 
 * `+` `-` `*` `div` `%` `|>>` `<<|`
 * `<` `>` `=` `<>` `<=` `>=`
-* `min` `max`
+* `min` `max`  `subnat`
 
 ```javascript
 var n1 = 1 + 2; 
@@ -508,6 +508,8 @@ var n5 = min(5, 6);
 var n6 = abs(-6); // see abs below
 var nlsr = 2 |>> 1; // 4
 var nlsl = 2 <<| 1; // 1
+var n7 = sub_nat(5,6); // fails
+var n8 = sub_nat(6,5); // 1
 ```
 
 ### int

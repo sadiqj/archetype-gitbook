@@ -28,6 +28,8 @@ effect {
    var b : nat = 7;
    var c : int = a - b; /* -2 typed as intger */
    var d : int = b - a; /* 2 typed as integer */
+   var e : nat = sub_nat(a,b); /* fails with "NegResult" */
+   var f : nat = sub_nat(b,a); /* f = 2 */
 }
 ```
 
