@@ -616,6 +616,7 @@ constant a : address = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg
 ```
 
 * `=` `<>` 
+* `contract_address` `key_address`  \(converts contract and key to address\)
 
 ```javascript
 var b1 = @tz1Lc2qBKEWCBeDU8npG6zCeCqpmaegRi6Jg <> @tz1bfVgcJC4ukaQSHUe1EbrUd5SekXeP9CWk;
