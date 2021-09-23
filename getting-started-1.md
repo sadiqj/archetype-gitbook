@@ -6,6 +6,7 @@ Archetype compiler comes with the [Completium CLI](https://completium.com/docs/c
 
 ```text
 npm i @completium/completium-cli -g
+completium-cli init
 ```
 
 To know the current version of Archetype:
