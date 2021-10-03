@@ -2,33 +2,42 @@
 
 ## Installation
 
-Installation requires [opam](https://opam.ocaml.org/). Please refer to this [page](https://opam.ocaml.org/doc/Install.html) for opam installation instructions.
+Archetype compiler comes with the [Completium CLI](https://completium.com/docs/cli) :
 
-Once opam installed:
-
+```text
+npm i @completium/completium-cli -g
+completium-cli init
 ```
-$ opam install archetype
+
+To know the current version of Archetype:
+
+```text
+completium-cli archetype version
 ```
 
-{% hint style="warning" %}
- archetype is still in alpha version \(0.1.13\) 
-{% endhint %}
+The current version is `1.2.9`.
 
 ## VS code extension installation
 
-Please refer to this [page](https://code.visualstudio.com/download) to download and install VS code.
+Archetype also comes with the Archetype [VS code](https://code.visualstudio.com/download) extension:
 
-Install through VS Code extensions. Search for `vscode-archetype`:
+[Visual Studio Code Marketplace: archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
 
-[Visual Studio Code Marketplace: vscode-archetype](https://marketplace.visualstudio.com/items?itemName=edukera.archetype)
+## Verification tools
 
-Can also be installed with VS Code Quick Open: press `Cmd/Ctrl + P`, paste the following command, and press enter.
+Archetype generates Why3 file format \(mlw\) for contract verification purpose. 
 
-```text
-ext install edukera.vscode-archetype
-```
+Follow instructions on the page below to install Why3 and solvers \(Alt-Ergo, CVC4, Z3\):
 
-The vscode extension is configured via the normal vscode settings screen.
+{% embed url="https://www.lri.fr/~marche/MPRI-2-36-1/install.html" %}
+
+
+
+
+
+
+
+
 
 
 
