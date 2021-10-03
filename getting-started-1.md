@@ -19,7 +19,7 @@ The current version is `1.2.9`.
 
 ## Binaries
 
-Linux and Mac OS binaries versions are available:
+Linux and Mac OS binaries are available:
 
 {% embed url="https://github.com/edukera/archetype-lang/releases/tag/1.2.9" %}
 
