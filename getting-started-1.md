@@ -17,6 +17,12 @@ completium-cli archetype version
 
 The current version is `1.2.9`.
 
+## Binaries
+
+Linux and Mac OS binaries versions are available:
+
+{% embed url="https://github.com/edukera/archetype-lang/releases/tag/1.2.9" %}
+
 ## VS code extension installation
 
 Archetype also comes with the Archetype [VS code](https://code.visualstudio.com/download) extension:
