@@ -21,7 +21,7 @@ archetype contract_called
 
 variable v : nat = 0
 
-entry add_value(x : nat) { v := x }
+entry add_value(x : nat) { v += x }
 ```
 
 The contract may then be called with the `transfer ... to ... call ...` instruction:
