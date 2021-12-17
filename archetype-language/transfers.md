@@ -29,11 +29,11 @@ The contract may then be called with the `transfer ... to ... call ...` instruct
 ```javascript
 effect {
     var c = @KT1RNB9PXsnp7KMkiMrWNMRzPjuefSWojBAm;
-    transfer 0tz to c call add_value<nat>(3);
+    transfer 0tz to c call set_value<nat>(3);
 }
 ```
 
-Note that it _fails_ if the contract at address `c` does not provide an entry point annotated `%add_value`
+Note that it _fails_ if the contract at address `c` does not provide an entry point annotated `%set_value`
 
 ### Self
 
